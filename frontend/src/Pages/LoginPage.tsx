@@ -1,3 +1,4 @@
+import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +10,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Moon, Sun } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function LoginPage() {
+  const navigate = useNavigate()
+  const {theme, setTheme} = useTheme()
   return (
     <div className="flex mx-auto justify-center items-center min-h-screen">
       <Card className="w-full max-w-sm">
@@ -19,8 +24,9 @@ export function LoginPage() {
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
-          <CardAction>
-            <Button variant="link">Sign Up</Button>
+          <CardAction className="flex items-center">
+            <Button variant={'ghost'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun /> : <Moon />}</Button>
+            <Button variant="link" onClick={()=> navigate('/signup')}>Sign Up</Button>
           </CardAction>
         </CardHeader>
         <CardContent>

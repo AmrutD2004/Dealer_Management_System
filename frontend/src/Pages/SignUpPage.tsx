@@ -1,4 +1,6 @@
+import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
+import { Sun, Moon, Loader2 } from "lucide-react"
 import {
   Card,
   CardAction,
@@ -9,24 +11,61 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { createPlatformUser } from "@/api/endpoint";
+import { toast } from "@/components/ui/toast";
+import { cn } from "cn";
 
 export function SignUpPage() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    console.log({
-      name,
-      email,
-      password,
-    });
-  };
-
+  type platformUser = {
+    email: string,
+    passwordHash: string
+  }
+  const navigate = useNavigate()
+  const { theme, setTheme } = useTheme()
+  const [loading, setLoading] = useState<boolean>(false)
+  const [formData, setFormData] = useState<platformUser>({
+    email: '',
+    passwordHash: ''
+  })
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true)
+    try {
+      const payload = {
+        email: formData.email,
+        passwordHash: formData.passwordHash
+      }
+      console.log('sending data', payload)
+      const data = await createPlatformUser(payload)
+      if (data?.success) {
+        toast.add({
+          type: 'success',
+          description: data?.message
+        })
+      }
+      if (!data?.success) {
+        toast.add({
+          type: 'error',
+          description: data?.message
+        })
+      }
+    } catch (error: any) {
+      console.log(error)
+      toast.add({
+        type: 'error',
+        description: error?.response?.data?.message
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
+  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
   return (
     <div className="flex mx-auto justify-center items-center min-h-screen">
       <Card className="w-full max-w-sm">
@@ -37,8 +76,9 @@ export function SignUpPage() {
             Enter your information below to create your account
           </CardDescription>
 
-          <CardAction>
-            <Button variant="link" type="button">
+          <CardAction className="flex items-center">
+            <Button variant={'ghost'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun /> : <Moon />}</Button>
+            <Button variant="link" onClick={() => navigate('/login')} type="button">
               Login
             </Button>
           </CardAction>
@@ -48,18 +88,6 @@ export function SignUpPage() {
           {/* Form starts here */}
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
-              {/* Name */}
-              <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
-
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Enter Your Name Here...."
-                  required
-                />
-              </div>
 
               {/* Email */}
               <div className="grid gap-2">
@@ -71,6 +99,7 @@ export function SignUpPage() {
                   type="email"
                   placeholder="abc@example.com"
                   required
+                  onChange={handleChange}
                 />
               </div>
 
@@ -80,16 +109,17 @@ export function SignUpPage() {
 
                 <Input
                   id="password"
-                  name="password"
+                  name="passwordHash"
                   type="password"
                   placeholder="••••••••••"
                   required
+                  onChange={handleChange}
                 />
               </div>
 
               {/* Submit */}
-              <Button type="submit" className="w-full">
-                Sign Up
+              <Button type="submit" disabled={loading} className={cn(`${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}w-full`)}>
+                {loading ? <span className="flex items-center gap-2"><Loader2 className="animate-spin" />Signing up...</span> : 'Sign Up'}
               </Button>
             </div>
           </form>
