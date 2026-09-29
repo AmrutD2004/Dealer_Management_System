@@ -3,17 +3,16 @@ import { prisma } from "../../prisma/lib/prisma";
 import bcrypt from 'bcrypt'
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
-import { platform } from "os";
-
 
 const jwtsecret = process.env.JWT_SECRET;
 export const createPlatformUser = async (req: Request, res: Response) => {
     const { email, passwordHash } = req.body;
+
     if (!email || !passwordHash) {
-        return res.status(400).json({
-            success: false,
-            message: 'All fields are required'
-        })
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required",
+      });
     }
     try {
         const count = await prisma.platformUser.count()

@@ -1,18 +1,14 @@
+
+
 import { platformUserLogin } from "@/api/endpoint";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import type { platformuserLoginType } from "@/Types/platformUserType";
+
 import { cn } from "cn";
 import { Loader2, Moon, Sun } from "lucide-react";
 import { useState } from "react";
@@ -118,5 +114,6 @@ export function LoginPage() {
         </CardContent>
       </Card>
     </div>
+
   );
 }

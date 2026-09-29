@@ -19,4 +19,15 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    /*
+     * shadcn primitives intentionally colocate variants and hooks
+     * (buttonVariants, useSidebar, toast) with their components and are
+     * overwritten by `shadcn add`, so the fast-refresh rule is waived.
+     */
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])
