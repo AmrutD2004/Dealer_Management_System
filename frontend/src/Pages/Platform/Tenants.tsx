@@ -1,7 +1,6 @@
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 
 import {
-  TenantCreateDialog,
   TenantEditDialog,
   TenantViewDialog,
   TenantsFilters,
@@ -34,9 +33,6 @@ export default function Tenants() {
     itemsPerPage,
     onPageChange,
 
-    isCreateOpen,
-    onCreateOpenChange,
-
     isViewOpen,
     onViewOpenChange,
 
@@ -49,7 +45,6 @@ export default function Tenants() {
     onEditTenant,
     onEditFromView,
 
-    onCreateTenant,
     onUpdateTenant,
     onActivateTenant,
     onSuspendTenant,
@@ -59,7 +54,7 @@ export default function Tenants() {
     <DashboardLayout>
       <div className="min-h-screen bg-slate-50 p-6">
         <div className="mx-auto max-w-[1600px] space-y-6">
-          <TenantsHeader onCreate={() => onCreateOpenChange(true)} />
+          <TenantsHeader />
 
           <TenantsStats tenants={tenants} />
 
@@ -93,12 +88,6 @@ export default function Tenants() {
             }
           />
         </div>
-
-        <TenantCreateDialog
-          open={isCreateOpen}
-          onOpenChange={onCreateOpenChange}
-          onSubmit={onCreateTenant}
-        />
 
         <TenantViewDialog
           open={isViewOpen}

@@ -1,6 +1,8 @@
 import type {
+  Branch,
   SubscriptionPlan,
   SubscriptionStatus,
+  TenantAdmin,
   TenantDraft,
 } from "./types";
 
@@ -95,6 +97,47 @@ export const asChoice = <T extends string>(
   return (value ?? fallback) as T;
 };
 
+export const emptyBranchForm: Branch = {
+  branchCode: "",
+  branchName: "",
+  email: "",
+  phone: "",
+  address: "",
+  locality: "",
+  city: "",
+  state: "",
+  country: "India",
+  pincode: "",
+};
+
+export const emptyTenantAdminForm: TenantAdmin = {
+  employeeCode: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  email: "",
+  mobileNo: "",
+  password: "",
+};
+
+/*
+ * Create is blocked until the tenant itself, its first branch
+ * and its first admin are all identifiable.
+ */
+
+export const isTenantDraftValid = (draft: TenantDraft): boolean =>
+  Boolean(
+    draft.tenantName.trim() &&
+      draft.email.trim() &&
+      draft.gstNumber.trim() &&
+      draft.branch.branchCode.trim() &&
+      draft.branch.branchName.trim() &&
+      draft.admin.employeeCode.trim() &&
+      draft.admin.email.trim() &&
+      draft.admin.mobileNo.trim() &&
+      draft.admin.password.trim(),
+  );
+
 export const emptyTenantForm: TenantDraft = {
   tenantCode: "",
   tenantName: "",
@@ -109,4 +152,7 @@ export const emptyTenantForm: TenantDraft = {
   plan: "BASIC",
   subscriptionStatus: "TRIAL",
   isActive: true,
+
+  branch: { ...emptyBranchForm },
+  admin: { ...emptyTenantAdminForm },
 };
