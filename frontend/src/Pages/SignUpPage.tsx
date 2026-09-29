@@ -1,130 +1,110 @@
-import { useTheme } from "@/components/theme-provider";
+import { useState, type FormEvent, type ChangeEvent } from "react";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+
+import { AuthCard } from "@/components/AuthCard";
+import { Field } from "@/components/Field";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Loader2 } from "lucide-react"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { createPlatformUser } from "@/api/endpoint";
 import { toast } from "@/components/ui/toast";
-import { cn } from "cn";
+import {
+  createPlatformUser,
+  type ApiResponse,
+  type PlatformUserPayload,
+} from "@/api/endpoint";
+
+const GENERIC_ERROR = "Something went wrong. Please try again.";
+
+function getErrorMessage(error: unknown): string {
+  if (!axios.isAxiosError<ApiResponse>(error)) {
+    return GENERIC_ERROR;
+  }
+
+  return error.response?.data?.message ?? GENERIC_ERROR;
+}
 
 export function SignUpPage() {
-  type platformUser = {
-    email: string,
-    passwordHash: string
-  }
-  const navigate = useNavigate()
-  const { theme, setTheme } = useTheme()
-  const [loading, setLoading] = useState<boolean>(false)
-  const [formData, setFormData] = useState<platformUser>({
-    email: '',
-    passwordHash: ''
-  })
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true)
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState<PlatformUserPayload>({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setFormData((previous) => ({ ...previous, [name]: value }));
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setLoading(true);
+
     try {
-      const payload = {
-        email: formData.email,
-        passwordHash: formData.passwordHash
-      }
-      console.log('sending data', payload)
-      const data = await createPlatformUser(payload)
-      if (data?.success) {
-        toast.add({
-          type: 'success',
-          description: data?.message
-        })
-      }
-      if (!data?.success) {
-        toast.add({
-          type: 'error',
-          description: data?.message
-        })
-      }
-    } catch (error: any) {
-      console.log(error)
+      const data = await createPlatformUser(formData);
+
       toast.add({
-        type: 'error',
-        description: error?.response?.data?.message
-      })
-      setLoading(false)
+        type: data.success ? "success" : "error",
+        description: data.message ?? GENERIC_ERROR,
+      });
+    } catch (error) {
+      toast.add({ type: "error", description: getErrorMessage(error) });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
+  };
+
   return (
-    <div className="flex mx-auto justify-center items-center min-h-screen">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>Create Your Account Here</CardTitle>
+    <AuthCard
+      title="Create Your Account Here"
+      description="Enter your information below to create your account"
+      linkLabel="Login"
+      linkTo="/login"
+    >
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-6">
+          <Field label="Email" htmlFor="email">
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="abc@example.com"
+              required
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </Field>
 
-          <CardDescription>
-            Enter your information below to create your account
-          </CardDescription>
+          <Field label="Password" htmlFor="password">
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="••••••••••"
+              required
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </Field>
 
-          <CardAction className="flex items-center">
-            <Button variant={'ghost'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun /> : <Moon />}</Button>
-            <Button variant="link" onClick={() => navigate('/login')} type="button">
-              Login
-            </Button>
-          </CardAction>
-        </CardHeader>
-
-        <CardContent>
-          {/* Form starts here */}
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-6">
-
-              {/* Email */}
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="abc@example.com"
-                  required
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Password */}
-              <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
-
-                <Input
-                  id="password"
-                  name="passwordHash"
-                  type="password"
-                  placeholder="••••••••••"
-                  required
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Submit */}
-              <Button type="submit" disabled={loading} className={cn(`${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}w-full`)}>
-                {loading ? <span className="flex items-center gap-2"><Loader2 className="animate-spin" />Signing up...</span> : 'Sign Up'}
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full items-center justify-center gap-2 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="animate-spin" />
+                Signing up...
+              </>
+            ) : (
+              "Sign Up"
+            )}
+          </Button>
+        </div>
+      </form>
+    </AuthCard>
   );
 }

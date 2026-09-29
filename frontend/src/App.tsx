@@ -1,21 +1,46 @@
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import {BrowserRouter ,  Routes , Route } from "react-router-dom"
-import { LoginPage } from './Pages/LoginPage'
-import { SignUpPage } from "./Pages/SignUpPage"
-import { Toaster } from "./components/ui/toast"
+import { Toaster } from "./components/ui/toast";
+import { Skeleton } from "./components/ui/skeleton";
+
+const LoginPage = lazy(() =>
+  import("./Pages/LoginPage").then((m) => ({ default: m.LoginPage })),
+);
+const SignUpPage = lazy(() =>
+  import("./Pages/SignUpPage").then((m) => ({ default: m.SignUpPage })),
+);
+const Dashboard = lazy(() => import("./Pages/Dashboard"));
+const Tenants = lazy(() => import("./Pages/Platform/Tenants"));
+
+function RouteFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <Skeleton className="h-8 w-48" />
+    </div>
+  );
+}
+
 const App = () => {
   return (
     <>
-    <Toaster />
+      <Toaster />
       <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<LoginPage />}/>
-        <Route path='/signup' element={< SignUpPage/>}/>
-      </Routes>
-    
-    </BrowserRouter>
-    </>
-  )
-}
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
 
-export default App
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+            <Route path="/dashboard" element={<Dashboard />} />
+
+            <Route path="/tenants" element={<Tenants />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </>
+  );
+};
+
+export default App;
