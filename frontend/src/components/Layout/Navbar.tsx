@@ -32,7 +32,7 @@ const breadcrumbPageClass =
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-30 flex h-[80px] w-full items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
+    <header className="fixed flex h-[80px] w-full items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
       <div className="flex w-full items-center justify-between px-6 lg:px-9">
         {/* Left: sidebar toggle + breadcrumb title */}
 
@@ -42,23 +42,7 @@ export default function Navbar() {
           <Separator orientation="vertical" className="h-6" />
 
           <div>
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="#" className={breadcrumbLinkClass}>
-                    RDO
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-
-                <BreadcrumbSeparator />
-
-                <BreadcrumbItem>
-                  <BreadcrumbPage className={breadcrumbPageClass}>
-                    Overview
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+              
 
             <h1 className="mt-1 text-[18px] font-semibold text-[#1C2B34]">
               Overview
@@ -68,7 +52,7 @@ export default function Navbar() {
 
         {/* Right: actions */}
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 fixed right-0">
           <Button
             variant="outline"
             size="icon"
@@ -88,29 +72,6 @@ export default function Navbar() {
 
             <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#F8B52C]" />
           </Button>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={
-                <Button
-                  variant="outline"
-                  className="h-10 gap-2 border-[#DEDAD4] bg-white px-3 text-[13px] font-medium text-[#27343C] shadow-sm hover:bg-[#F7F6F3]"
-                />
-              }
-            >
-              <MapPin size={15} className="text-[#087EAE]" />
-
-              <span className="hidden sm:inline">{BRANCHES[0]}</span>
-
-              <ChevronDown size={14} className="text-[#71818B]" />
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent align="end" className="w-48">
-              {BRANCHES.map((branch) => (
-                <DropdownMenuItem key={branch}>{branch}</DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
 
           <Separator orientation="vertical" className="mx-1 h-8" />
 
