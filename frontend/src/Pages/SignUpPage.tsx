@@ -16,16 +16,13 @@ import { useState } from "react";
 import { createPlatformUser } from "@/api/endpoint";
 import { toast } from "@/components/ui/toast";
 import { cn } from "cn";
+import type { platformuserCreateType } from "@/Types/platformUserType";
 
 export function SignUpPage() {
-  type platformUser = {
-    email: string,
-    passwordHash: string
-  }
   const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
   const [loading, setLoading] = useState<boolean>(false)
-  const [formData, setFormData] = useState<platformUser>({
+  const [formData, setFormData] = useState<platformuserCreateType>({
     email: '',
     passwordHash: ''
   })
