@@ -151,7 +151,7 @@ export function AppSidebar() {
   return (
     <Sidebar
       collapsible="icon"
-      className="border-none"
+      className="border-none z-50"
       style={
         {
           "--sidebar-width": "246px",

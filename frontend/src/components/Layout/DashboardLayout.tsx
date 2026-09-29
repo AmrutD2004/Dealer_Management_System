@@ -26,7 +26,7 @@ export default function DashboardLayout({
 
         {/* Main */}
 
-        <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex flex-1 flex-col">
 
           {/* Navbar */}
 
@@ -35,7 +35,7 @@ export default function DashboardLayout({
 
           {/* Page Content */}
 
-          <main className="flex-1">
+          <main className="flex-1 overflow-x-auto mt-20 bg-[#F8F7F4]">
             {children}
           </main>
 

@@ -32,7 +32,7 @@ const breadcrumbPageClass =
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-30 flex h-[80px] w-full items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
+    <header className=" fixed w-full flex h-[80px]  items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
       <div className="flex w-full items-center justify-between px-6 lg:px-9">
         {/* Left: sidebar toggle + breadcrumb title */}
 
@@ -42,24 +42,6 @@ export default function Navbar() {
           <Separator orientation="vertical" className="h-6" />
 
           <div>
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="#" className={breadcrumbLinkClass}>
-                    RDO
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-
-                <BreadcrumbSeparator />
-
-                <BreadcrumbItem>
-                  <BreadcrumbPage className={breadcrumbPageClass}>
-                    Overview
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-
             <h1 className="mt-1 text-[18px] font-semibold text-[#1C2B34]">
               Overview
             </h1>
@@ -68,7 +50,7 @@ export default function Navbar() {
 
         {/* Right: actions */}
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 fixed right-0">
           <Button
             variant="outline"
             size="icon"

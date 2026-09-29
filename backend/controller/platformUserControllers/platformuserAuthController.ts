@@ -87,7 +87,7 @@ export const login = async (req: Request, res: Response) => {
                 message : 'Invalid credentials'
             })
         }
-        const token = jwt.sign({puId : isUserExist?.id, puRole : isUserExist?.role}, jwtsecret, {expiresIn : '5m'})
+        const token = jwt.sign({id : isUserExist?.id, role : isUserExist?.role}, jwtsecret, {expiresIn : '5m'})
         res.cookie('token', token, {
             httpOnly : true,
             sameSite : process.env.NODE_ENV === 'production' ? 'none' : 'lax',

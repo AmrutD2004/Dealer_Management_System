@@ -37,6 +37,9 @@ export function LoginPage() {
           type: 'success',
           description: data?.message
         })
+        setTimeout(() => {
+          navigate('/dashboard')
+        }, 1000)
       }
       if (!data?.success) {
         toast.add({
@@ -47,9 +50,6 @@ export function LoginPage() {
           email: '',
           passwordHash: ''
         })
-        // setTimeout(() => {
-        //   navigate('/dashboard')
-        // }, 1000)
       }
     } catch (error: any) {
       console.log(error)
