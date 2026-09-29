@@ -50,6 +50,13 @@ export function SignUpPage() {
           type: 'error',
           description: data?.message
         })
+        setFormData({
+          email: '',
+          passwordHash: ''
+        })
+        setTimeout(() => {
+          navigate('/login')
+        }, 1000)
       }
     } catch (error: any) {
       console.log(error)
