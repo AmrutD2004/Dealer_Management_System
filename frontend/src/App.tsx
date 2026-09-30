@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "./components/ui/toast";
 import { Skeleton } from "./components/ui/skeleton";
 
-import { TenantsProvider } from "./components/Tenants";
 
 const LoginPage = lazy(() =>
   import("./Pages/LoginPage").then((m) => ({ default: m.LoginPage })),
@@ -29,7 +28,7 @@ const App = () => {
     <>
       <Toaster />
       <BrowserRouter>
-        <TenantsProvider>
+       
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
@@ -47,7 +46,7 @@ const App = () => {
               <Route path="/tenants/create" element={<TenantCreate />} />
             </Routes>
           </Suspense>
-        </TenantsProvider>
+        
       </BrowserRouter>
     </>
   );

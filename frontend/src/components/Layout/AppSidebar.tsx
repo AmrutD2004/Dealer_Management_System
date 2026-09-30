@@ -2,15 +2,7 @@ import { useLocation, Link } from "react-router-dom";
 
 import {
   Building2,
-  Car,
   ChevronDown,
-  ClipboardList,
-  FileText,
-  LayoutDashboard,
-  Package,
-  Settings,
-  SlidersHorizontal,
-  Users,
   Wrench,
   type LucideIcon,
 } from "lucide-react";
@@ -152,7 +144,7 @@ export function AppSidebar() {
   return (
     <Sidebar
       collapsible="icon"
-      className="border-none"
+      className="border-none z-50"
       style={
         {
           "--sidebar-width": "246px",

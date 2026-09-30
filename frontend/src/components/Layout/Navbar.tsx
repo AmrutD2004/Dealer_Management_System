@@ -1,14 +1,6 @@
-import { Bell, ChevronDown, MapPin, Search } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -19,20 +11,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-const BRANCHES = ["Nagpur Branch", "Pune Branch", "Mumbai Branch"];
-
 const iconButtonClass =
   "h-10 w-10 border-[#DEDAD4] bg-white text-[#71818B] shadow-sm hover:bg-[#F7F6F3]";
 
-const breadcrumbLinkClass =
-  "text-[9px] font-semibold uppercase tracking-[2px] text-[#087EAE]";
-
-const breadcrumbPageClass =
-  "text-[9px] font-semibold uppercase tracking-[2px] text-[#71818B]";
-
 export default function Navbar() {
   return (
-    <header className="fixed flex h-[80px] w-full items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
+    <header className=" fixed w-full flex h-[80px]  items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
+    
       <div className="flex w-full items-center justify-between px-6 lg:px-9">
         {/* Left: sidebar toggle + breadcrumb title */}
 
@@ -42,8 +27,6 @@ export default function Navbar() {
           <Separator orientation="vertical" className="h-6" />
 
           <div>
-              
-
             <h1 className="mt-1 text-[18px] font-semibold text-[#1C2B34]">
               Overview
             </h1>

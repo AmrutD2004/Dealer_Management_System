@@ -8,6 +8,5 @@ export { TenantCreateForm } from "./TenantCreateForm";
 export { TenantViewDialog } from "./TenantViewDialog";
 export { TenantEditDialog } from "./TenantEditDialog";
 
-export { TenantsProvider } from "./TenantsProvider";
-export { useTenantsStore } from "./tenants-context";
-export type { TenantsContextValue } from "./tenants-context";
+
+
