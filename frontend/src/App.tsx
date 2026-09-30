@@ -33,6 +33,11 @@ const App = () => {
     <>
       <Toaster />
       <BrowserRouter>
+       
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
         <TenantsProvider>
           <PlansProvider>
             <Suspense fallback={<RouteFallback />}>
@@ -49,6 +54,10 @@ const App = () => {
 
                 <Route path="/tenants" element={<Tenants />} />
 
+              <Route path="/tenants/create" element={<TenantCreate />} />
+            </Routes>
+          </Suspense>
+        
                 <Route path="/tenants/create" element={<TenantCreate />} />
 
                 <Route path="/plans" element={<Plans />} />

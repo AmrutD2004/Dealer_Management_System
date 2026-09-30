@@ -50,7 +50,6 @@ export function LoginPage() {
           email: '',
           passwordHash: ''
         })
-        
       }
     } catch (error: any) {
       console.log(error)

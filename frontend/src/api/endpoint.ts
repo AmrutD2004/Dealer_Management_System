@@ -15,3 +15,8 @@ export const platformUserLogin = async (payload: {}) => {
     const response = await api.post(`/api/platformuser/login`, payload)
     return await response.data;
 }
+
+export const tenantCreation = async (formData : {})=>{
+    const response = await api.post(`/api/tenant/create`, formData)
+    return await response.data;
+}

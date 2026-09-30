@@ -1,11 +1,11 @@
-import { platformUserLogin } from "@/api/endpoint";
+import { createPlatformUser } from "@/api/endpoint";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
-import type { platformuserLoginType } from "@/Types/platformUserType";
+import type { platformuserCreateType } from "@/Types/platformUserType";
 
 import { cn } from "cn";
 import { Loader2, Moon, Sun } from "lucide-react";
@@ -16,7 +16,7 @@ export function SignUpPage() {
   const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
   const [loading, setLoading] = useState<boolean>(false)
-  const [formData, setFormData] = useState<platformuserLoginType>({
+  const [formData, setFormData] = useState<platformuserCreateType>({
     email: '',
     passwordHash: ''
   })
@@ -32,13 +32,15 @@ export function SignUpPage() {
         email: formData.email,
         passwordHash: formData.passwordHash
       }
-      console.log('sending data', payload)
-      const data = await platformUserLogin(payload)
+      const data = await createPlatformUser(payload)
       if (data?.success) {
         toast.add({
           type: 'success',
           description: data?.message
         })
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000)
       }
       if (!data?.success) {
         toast.add({
@@ -49,11 +51,9 @@ export function SignUpPage() {
           email: '',
           passwordHash: ''
         })
-        setTimeout(() => {
-          navigate('/login')
-        }, 1000)
+        
       }
-    }  catch (error : any) {
+    }  catch (error : unknown) {
       toast.add({ type: "error", description: error });
     } finally {
       setLoading(false);
@@ -64,13 +64,13 @@ export function SignUpPage() {
    <div className="flex mx-auto justify-center items-center min-h-screen">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Create your account</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your information to create your account
           </CardDescription>
           <CardAction className="flex items-center">
             <Button variant={'ghost'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun /> : <Moon />}</Button>
-            <Button variant="link" onClick={() => navigate('/signup')}>Sign Up</Button>
+            <Button variant="link" onClick={() => navigate('/login')}>Login</Button>
           </CardAction>
         </CardHeader>
         <CardContent>
