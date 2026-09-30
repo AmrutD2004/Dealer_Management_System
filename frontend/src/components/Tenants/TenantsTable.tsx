@@ -7,6 +7,7 @@ import {
   Eye,
   MoreHorizontal,
   Pencil,
+  Trash2,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -45,6 +46,7 @@ interface TenantsTableProps {
   onEdit: (tenant: Tenant) => void;
   onActivate: (tenantId: string) => void;
   onSuspend: (tenantId: string) => void;
+  onDelete: (tenant: Tenant) => void;
   footer?: ReactNode;
 }
 
@@ -55,6 +57,7 @@ export function TenantsTable({
   onEdit,
   onActivate,
   onSuspend,
+  onDelete,
   footer,
 }: TenantsTableProps) {
   return (
@@ -223,6 +226,16 @@ export function TenantsTable({
                             </DropdownMenuItem>
                           )
                         }
+
+                          <DropdownMenuSeparator />
+
+                          <DropdownMenuItem
+                            onClick={() => onDelete(tenant)}
+                            className="text-red-600 focus:text-red-600"
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete Tenant
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

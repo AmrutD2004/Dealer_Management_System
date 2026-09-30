@@ -5,6 +5,7 @@ import { Toaster } from "./components/ui/toast";
 import { Skeleton } from "./components/ui/skeleton";
 
 import { TenantsProvider } from "./components/Tenants";
+import { PlansProvider } from "./components/Plans";
 
 const LoginPage = lazy(() =>
   import("./Pages/LoginPage").then((m) => ({ default: m.LoginPage })),
@@ -12,9 +13,12 @@ const LoginPage = lazy(() =>
 const SignUpPage = lazy(() =>
   import("./Pages/SignUpPage").then((m) => ({ default: m.SignUpPage })),
 );
-const Dashboard = lazy(() => import("./Pages/Dashboard"));
+const PlatformDashboard = lazy(
+  () => import("./Pages/Platform/PlatformDashboard"),
+);
 const Tenants = lazy(() => import("./Pages/Platform/Tenants"));
 const TenantCreate = lazy(() => import("./Pages/Platform/TenantCreate"));
+const Plans = lazy(() => import("./Pages/Platform/Plans"));
 
 function RouteFallback() {
   return (
@@ -30,23 +34,32 @@ const App = () => {
       <Toaster />
       <BrowserRouter>
         <TenantsProvider>
-          <Suspense fallback={<RouteFallback />}>
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
+          <PlansProvider>
+            <Suspense fallback={<RouteFallback />}>
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
 
-              <Route
-                path="/"
-                element={<Navigate to="/dashboard" replace />}
-              />
+                <Route
+                  path="/"
+                  element={<Navigate to="/dashboard" replace />}
+                />
 
-              <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={<PlatformDashboard />} />
 
-              <Route path="/tenants" element={<Tenants />} />
+                <Route path="/tenants" element={<Tenants />} />
 
-              <Route path="/tenants/create" element={<TenantCreate />} />
-            </Routes>
-          </Suspense>
+                <Route path="/tenants/create" element={<TenantCreate />} />
+
+                <Route path="/plans" element={<Plans />} />
+
+                <Route
+                  path="*"
+                  element={<Navigate to="/dashboard" replace />}
+                />
+              </Routes>
+            </Suspense>
+          </PlansProvider>
         </TenantsProvider>
       </BrowserRouter>
     </>

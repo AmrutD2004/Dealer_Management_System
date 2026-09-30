@@ -7,7 +7,10 @@ export { TenantsPagination } from "./TenantsPagination";
 export { TenantCreateForm } from "./TenantCreateForm";
 export { TenantViewDialog } from "./TenantViewDialog";
 export { TenantEditDialog } from "./TenantEditDialog";
+export { TenantDeleteDialog } from "./TenantDeleteDialog";
 
 export { TenantsProvider } from "./TenantsProvider";
 export { useTenantsStore } from "./tenants-context";
 export type { TenantsContextValue } from "./tenants-context";
+
+export type { Tenant, TenantDraft, Branch, TenantAdmin } from "./types";

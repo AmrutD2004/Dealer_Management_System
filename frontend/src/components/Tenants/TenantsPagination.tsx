@@ -43,7 +43,7 @@ export function TenantsPagination({
           <ChevronLeft className="h-4 w-4" />
         </Button>
 
-        <span className="min-w-[90px] text-center text-sm text-slate-600">
+        <span className="min-w-22.5 text-center text-sm text-slate-600">
           Page {currentPage} of {totalPages}
         </span>
 

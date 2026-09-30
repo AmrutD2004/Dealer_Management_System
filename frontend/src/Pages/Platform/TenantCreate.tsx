@@ -33,7 +33,7 @@ export default function TenantCreate() {
   return (
     <DashboardLayout>
       <div className="min-h-screen bg-slate-50 p-6">
-        <div className="mx-auto max-w-[900px] space-y-6">
+        <div className="mx-auto max-w-225 space-y-6">
           {/* Header */}
 
           <div className="mt-20 flex items-start justify-between gap-4">

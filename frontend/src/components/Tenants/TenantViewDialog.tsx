@@ -28,7 +28,12 @@ interface TenantViewDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   tenant: Tenant | null;
-  onEdit: (tenant: Tenant) => void;
+
+  /*
+   * Optional so read-only surfaces such as the dashboard can reuse
+   * the dialog without offering an edit affordance.
+   */
+  onEdit?: (tenant: Tenant) => void;
 }
 
 export function TenantViewDialog({
@@ -155,16 +160,18 @@ export function TenantViewDialog({
             </div>
 
             <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  onOpenChange(false);
-                  onEdit(tenant);
-                }}
-              >
-                <Pencil className="mr-2 h-4 w-4" />
-                Edit Tenant
-              </Button>
+              {onEdit && (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    onOpenChange(false);
+                    onEdit(tenant);
+                  }}
+                >
+                  <Pencil className="mr-2 h-4 w-4" />
+                  Edit Tenant
+                </Button>
+              )}
 
               <Button onClick={() => onOpenChange(false)}>Close</Button>
             </DialogFooter>

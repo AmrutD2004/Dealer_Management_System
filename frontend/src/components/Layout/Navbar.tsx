@@ -1,4 +1,5 @@
-import { Bell, ChevronDown, MapPin, Search } from "lucide-react";
+import { Bell, Search } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -19,8 +20,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-const BRANCHES = ["Nagpur Branch", "Pune Branch", "Mumbai Branch"];
-
 const iconButtonClass =
   "h-10 w-10 border-[#DEDAD4] bg-white text-[#71818B] shadow-sm hover:bg-[#F7F6F3]";
 
@@ -30,9 +29,49 @@ const breadcrumbLinkClass =
 const breadcrumbPageClass =
   "text-[9px] font-semibold uppercase tracking-[2px] text-[#71818B]";
 
+interface Crumb {
+  label: string;
+
+  /* Present only on crumbs that are links to an ancestor page. */
+  to?: string;
+}
+
+const PLATFORM: Crumb = { label: "Platform", to: "/dashboard" };
+
+/*
+ * The title and the breadcrumb both come from this trail, so adding a
+ * page means adding one entry here rather than another conditional.
+ */
+
+const getCrumbTrail = (pathname: string): Crumb[] => {
+  switch (pathname) {
+    case "/tenants":
+      return [PLATFORM, { label: "Tenant Management" }];
+
+    case "/tenants/create":
+      return [
+        PLATFORM,
+        { label: "Tenant Management", to: "/tenants" },
+        { label: "Create Tenant" },
+      ];
+
+    case "/plans":
+      return [PLATFORM, { label: "Subscription Plans" }];
+
+    default:
+      return [PLATFORM, { label: "Overview" }];
+  }
+};
+
 export default function Navbar() {
+  const { pathname } = useLocation();
+
+  const trail = getCrumbTrail(pathname);
+
+  const pageTitle = trail[trail.length - 1].label;
+
   return (
-    <header className="fixed flex h-[80px] w-full items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
+    <header className="fixed flex h-20 w-full items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
       <div className="flex w-full items-center justify-between px-6 lg:px-9">
         {/* Left: sidebar toggle + breadcrumb title */}
 
@@ -42,10 +81,37 @@ export default function Navbar() {
           <Separator orientation="vertical" className="h-6" />
 
           <div>
-              
+            <Breadcrumb>
+              <BreadcrumbList>
+                {trail.map((crumb, index) => {
+                  const isFirst = index === 0;
+
+                  const isLast = index === trail.length - 1;
+
+                  return (
+                    <BreadcrumbItem key={crumb.label}>
+                      {!isFirst && <BreadcrumbSeparator />}
+
+                      {crumb.to && !isLast ? (
+                        <BreadcrumbLink
+                          className={breadcrumbLinkClass}
+                          render={<Link to={crumb.to} />}
+                        >
+                          {crumb.label}
+                        </BreadcrumbLink>
+                      ) : (
+                        <BreadcrumbPage className={breadcrumbPageClass}>
+                          {crumb.label}
+                        </BreadcrumbPage>
+                      )}
+                    </BreadcrumbItem>
+                  );
+                })}
+              </BreadcrumbList>
+            </Breadcrumb>
 
             <h1 className="mt-1 text-[18px] font-semibold text-[#1C2B34]">
-              Overview
+              {pageTitle}
             </h1>
           </div>
         </div>

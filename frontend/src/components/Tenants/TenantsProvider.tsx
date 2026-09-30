@@ -123,6 +123,12 @@ export function TenantsProvider({ children }: { children: ReactNode }) {
     [setTenantActive],
   );
 
+  const handleDeleteTenant = useCallback((tenantId: string) => {
+    setTenants((previous) =>
+      previous.filter((tenant) => tenant.id !== tenantId),
+    );
+  }, []);
+
   const value = useMemo(
     () => ({
       tenants,
@@ -131,6 +137,7 @@ export function TenantsProvider({ children }: { children: ReactNode }) {
       onUpdateTenant: handleUpdateTenant,
       onActivateTenant: handleActivateTenant,
       onSuspendTenant: handleSuspendTenant,
+      onDeleteTenant: handleDeleteTenant,
     }),
     [
       tenants,
@@ -138,6 +145,7 @@ export function TenantsProvider({ children }: { children: ReactNode }) {
       handleUpdateTenant,
       handleActivateTenant,
       handleSuspendTenant,
+      handleDeleteTenant,
     ],
   );
 
