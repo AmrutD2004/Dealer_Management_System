@@ -106,3 +106,49 @@ export const login = async (req: Request, res: Response) => {
         })
     }
 }
+
+export const isAuthenticated = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    if (!puId && !puRole) {
+        return res.status(400).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    try {
+        const data = await prisma.platformUser.findUnique({
+            where: { id: puId }
+        })
+        return res.status(200).json({
+            success: true,
+            data: data,
+            message: 'User is authenticated'
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server Error ${err}`
+        })
+    }
+}
+
+export const logout = async (req: Request, res: Response) => {
+    try {
+        res.clearCookie('token', {
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production' ? true : false,
+            path: '/'
+        })
+        return res.status(200).json({
+            success: true,
+            message: 'Logout successfull'
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}

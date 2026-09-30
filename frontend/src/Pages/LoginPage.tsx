@@ -7,15 +7,17 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
+import { PlatformUserContext } from "@/contexts/platformUserContext";
 import type { platformuserLoginType } from "@/Types/platformUserType";
 
 import { cn } from "cn";
 import { Loader2, Moon, Sun } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function LoginPage() {
   const navigate = useNavigate()
+  const { setIsLoggedIn } = useContext(PlatformUserContext)
   const { theme, setTheme } = useTheme()
   const [loading, setLoading] = useState<boolean>(false)
   const [formData, setFormData] = useState<platformuserLoginType>({
@@ -33,6 +35,7 @@ export function LoginPage() {
       console.log('sending data', payload)
       const data = await platformUserLogin(payload)
       if (data?.success) {
+        setIsLoggedIn(true)
         toast.add({
           type: 'success',
           description: data?.message
@@ -51,7 +54,7 @@ export function LoginPage() {
           passwordHash: ''
         })
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.log(error)
       toast.add({
         type: 'error',
