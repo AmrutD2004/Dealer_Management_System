@@ -1,18 +1,25 @@
 import { useCallback, useMemo, useState } from "react";
 
-import { initialTenants } from "@/components/Tenants/data";
-import { getToday } from "@/components/Tenants/helpers";
+import { useTenantsStore } from "@/components/Tenants";
 
-import type { Tenant, TenantDraft } from "@/components/Tenants/types";
+import type { Tenant } from "@/components/Tenants/types";
 
 const ITEMS_PER_PAGE = 5;
 
 export function useTenants() {
-  /* =======================================================
-     TENANT DATA
-  ======================================================= */
+  /*
+   * The collection itself lives in TenantsProvider so that it
+   * survives navigating to /tenants/create and back.
+   */
 
-  const [tenants, setTenants] = useState<Tenant[]>(initialTenants);
+  const {
+    tenants,
+
+    onCreateTenant,
+    onUpdateTenant,
+    onActivateTenant,
+    onSuspendTenant,
+  } = useTenantsStore();
 
   /* =======================================================
      FILTER STATE
@@ -35,8 +42,6 @@ export function useTenants() {
   /* =======================================================
      DIALOG STATE
   ======================================================= */
-
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   const [isViewOpen, setIsViewOpen] = useState(false);
 
@@ -132,90 +137,6 @@ export function useTenants() {
   }, []);
 
   /* =======================================================
-     CREATE TENANT
-  ======================================================= */
-
-  const handleCreateTenant = useCallback(
-    (draft: TenantDraft) => {
-      const nextNumber = tenants.length + 1;
-
-      const today = getToday();
-
-      const tenant: Tenant = {
-        id: crypto.randomUUID(),
-
-        tenantCode:
-          draft.tenantCode.trim() || `TEN-${String(nextNumber).padStart(3, "0")}`,
-
-        tenantName: draft.tenantName.trim(),
-
-        email: draft.email.trim(),
-
-        phone: draft.phone.trim(),
-
-        gstNumber: draft.gstNumber.trim(),
-
-        address: draft.address.trim(),
-
-        city: draft.city.trim(),
-
-        state: draft.state.trim(),
-
-        country: draft.country.trim() || "India",
-
-        pincode: draft.pincode.trim(),
-
-        plan: draft.plan,
-
-        subscriptionStatus: draft.subscriptionStatus,
-
-        isActive: draft.isActive,
-
-        createdAt: today,
-
-        updatedAt: today,
-      };
-
-      setTenants((previous) => [tenant, ...previous]);
-
-      setPage(1);
-    },
-    [tenants.length],
-  );
-
-  /* =======================================================
-     UPDATE TENANT
-  ======================================================= */
-
-  const handleUpdateTenant = useCallback((tenant: Tenant) => {
-    setTenants((previous) =>
-      previous.map((item) => (item.id === tenant.id ? tenant : item)),
-    );
-  }, []);
-
-  /* =======================================================
-     ACTIVATE / SUSPEND TENANT
-  ======================================================= */
-
-  const setTenantActive = useCallback((tenantId: string, isActive: boolean) => {
-    setTenants((previous) =>
-      previous.map((tenant) =>
-        tenant.id === tenantId ? { ...tenant, isActive } : tenant,
-      ),
-    );
-  }, []);
-
-  const handleActivateTenant = useCallback(
-    (tenantId: string) => setTenantActive(tenantId, true),
-    [setTenantActive],
-  );
-
-  const handleSuspendTenant = useCallback(
-    (tenantId: string) => setTenantActive(tenantId, false),
-    [setTenantActive],
-  );
-
-  /* =======================================================
      OPEN VIEW / EDIT
   ======================================================= */
 
@@ -270,9 +191,6 @@ export function useTenants() {
     onPageChange: setPage,
 
     /* Dialogs */
-    isCreateOpen,
-    onCreateOpenChange: setIsCreateOpen,
-
     isViewOpen,
     onViewOpenChange: setIsViewOpen,
 
@@ -287,9 +205,9 @@ export function useTenants() {
     onEditFromView: handleEditFromView,
 
     /* Mutations */
-    onCreateTenant: handleCreateTenant,
-    onUpdateTenant: handleUpdateTenant,
-    onActivateTenant: handleActivateTenant,
-    onSuspendTenant: handleSuspendTenant,
+    onCreateTenant,
+    onUpdateTenant,
+    onActivateTenant,
+    onSuspendTenant,
   };
 }

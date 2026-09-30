@@ -51,7 +51,7 @@ export function LoginPage() {
           passwordHash: ''
         })
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.log(error)
       toast.add({
         type: 'error',
