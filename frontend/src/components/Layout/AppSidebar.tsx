@@ -3,6 +3,8 @@ import { useLocation, Link } from "react-router-dom";
 import {
   Building2,
   ChevronDown,
+  LayoutDashboard,
+  ShieldCheck,
   Wrench,
   type LucideIcon,
 } from "lucide-react";
@@ -57,7 +59,12 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
   // },
   {
     label: "Platform",
-    items: [{ title: "Tenants", url: "/tenants", icon: Building2 }],
+    items: [
+      { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
+      { title: "Platform Users", url: "/platform-users", icon: ShieldCheck },
+      { title: "Tenant Management", url: "/tenants", icon: Building2 },
+      // { title: "Subscription Plans", url: "/plans", icon: CreditCard },
+    ],
   },
 ];
 

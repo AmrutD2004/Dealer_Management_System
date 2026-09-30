@@ -10,14 +10,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useLocation } from "react-router-dom";
 
 const iconButtonClass =
   "h-10 w-10 border-[#DEDAD4] bg-white text-[#71818B] shadow-sm hover:bg-[#F7F6F3]";
 
 export default function Navbar() {
+  const { pathname } = useLocation();
+
+  // const trail = getCrumbTrail(pathname);
+
+  // const pageTitle = trail[trail.length - 1].label;
+
   return (
-    <header className=" fixed w-full flex h-[80px]  items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
-    
+    <header className="fixed flex h-[80px] w-full items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
       <div className="flex w-full items-center justify-between px-6 lg:px-9">
         {/* Left: sidebar toggle + breadcrumb title */}
 
@@ -28,7 +34,7 @@ export default function Navbar() {
 
           <div>
             <h1 className="mt-1 text-[18px] font-semibold text-[#1C2B34]">
-              Overview
+              
             </h1>
           </div>
         </div>

@@ -4,17 +4,36 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "./components/ui/toast";
 import { Skeleton } from "./components/ui/skeleton";
 
+import { TenantsProvider } from "./components/Tenants";
+import { PlansProvider } from "./components/Plans";
+import { PlatformUsersProvider } from "./components/PlatformUsers";
 
+// Lazy-loaded pages
 const LoginPage = lazy(() =>
-  import("./Pages/LoginPage").then((m) => ({ default: m.LoginPage })),
+  import("./Pages/LoginPage").then((m) => ({
+    default: m.LoginPage,
+  })),
 );
+
 const SignUpPage = lazy(() =>
-  import("./Pages/SignUpPage").then((m) => ({ default: m.SignUpPage })),
+  import("./Pages/SignUpPage").then((m) => ({
+    default: m.SignUpPage,
+  })),
 );
-const Dashboard = lazy(() => import("./Pages/Dashboard"));
+
+const PlatformDashboard = lazy(
+  () => import("./Pages/Platform/PlatformDashboard"),
+);
+
 const Tenants = lazy(() => import("./Pages/Platform/Tenants"));
+
 const TenantCreate = lazy(() => import("./Pages/Platform/TenantCreate"));
 
+const Plans = lazy(() => import("./Pages/Platform/Plans"));
+
+const PlatformUsers = lazy(() => import("./Pages/Platform/PlatformUsers"));
+
+// Loading fallback
 function RouteFallback() {
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -27,26 +46,47 @@ const App = () => {
   return (
     <>
       <Toaster />
+
       <BrowserRouter>
-       
-          <Suspense fallback={<RouteFallback />}>
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
+        <TenantsProvider>
+          <PlansProvider>
+            <PlatformUsersProvider>
+              <Suspense fallback={<RouteFallback />}>
+                <Routes>
+                  {/* Authentication */}
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignUpPage />} />
 
-              <Route
-                path="/"
-                element={<Navigate to="/dashboard" replace />}
-              />
+                  {/* Default route */}
+                  <Route
+                    path="/"
+                    element={<Navigate to="/dashboard" replace />}
+                  />
 
-              <Route path="/dashboard" element={<Dashboard />} />
+                  {/* Platform Admin */}
+                  <Route path="/dashboard" element={<PlatformDashboard />} />
 
-              <Route path="/tenants" element={<Tenants />} />
+                  {/* Platform User Management */}
+                  <Route path="/platform-users" element={<PlatformUsers />} />
 
-              <Route path="/tenants/create" element={<TenantCreate />} />
-            </Routes>
-          </Suspense>
-        
+                  {/* Tenant Management */}
+                  <Route path="/tenants" element={<Tenants />} />
+
+                  <Route path="/tenants/create" element={<TenantCreate />} />
+
+                  {/* Plan Management */}
+                  <Route path="/plans" element={<Plans />} />
+
+                  {/* Unknown routes */}
+                  <Route
+                    path="*"
+                    element={<Navigate to="/dashboard" replace />}
+                  />
+                </Routes>
+              </Suspense>
+            </PlatformUsersProvider>
+          </PlansProvider>
+        </TenantsProvider>
       </BrowserRouter>
     </>
   );

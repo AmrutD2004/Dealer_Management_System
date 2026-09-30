@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-interface TenantsPaginationProps {
+interface PlatformUsersPaginationProps {
   currentPage: number;
   totalPages: number;
   totalCount: number;
@@ -10,13 +10,13 @@ interface TenantsPaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export function TenantsPagination({
+export function PlatformUsersPagination({
   currentPage,
   totalPages,
   totalCount,
   itemsPerPage,
   onPageChange,
-}: TenantsPaginationProps) {
+}: PlatformUsersPaginationProps) {
   const firstVisible =
     totalCount === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
 
