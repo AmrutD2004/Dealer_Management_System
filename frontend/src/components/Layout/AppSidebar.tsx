@@ -2,15 +2,7 @@ import { useLocation, Link } from "react-router-dom";
 
 import {
   Building2,
-  Car,
   ChevronDown,
-  ClipboardList,
-  FileText,
-  LayoutDashboard,
-  Package,
-  Settings,
-  SlidersHorizontal,
-  Users,
   Wrench,
   type LucideIcon,
 } from "lucide-react";
@@ -44,25 +36,25 @@ interface NavItem {
 }
 
 const navGroups: Array<{ label: string; items: NavItem[] }> = [
-  {
-    label: "Workspace",
-    items: [
-      { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
-      { title: "Job Cards", url: "/job-cards", icon: ClipboardList },
-      { title: "Customers", url: "/customers", icon: Users },
-      { title: "Vehicles", url: "/vehicles", icon: Car },
-      { title: "Setup", url: "/setup", icon: SlidersHorizontal },
-    ],
-  },
-  {
-    label: "Operations",
-    items: [
-      { title: "Workshop", url: "/workshop", icon: Wrench },
-      { title: "Inventory", url: "/inventory", icon: Package },
-      { title: "Reports", url: "/reports", icon: FileText },
-      { title: "Settings", url: "/settings", icon: Settings },
-    ],
-  },
+  // {
+  //   label: "Workspace",
+  //   items: [
+  //     { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
+  //     { title: "Job Cards", url: "/job-cards", icon: ClipboardList },
+  //     { title: "Customers", url: "/customers", icon: Users },
+  //     { title: "Vehicles", url: "/vehicles", icon: Car },
+  //     { title: "Setup", url: "/setup", icon: SlidersHorizontal },
+  //   ],
+  // },
+  // {
+  //   label: "Operations",
+  //   items: [
+  //     { title: "Workshop", url: "/workshop", icon: Wrench },
+  //     { title: "Inventory", url: "/inventory", icon: Package },
+  //     { title: "Reports", url: "/reports", icon: FileText },
+  //     { title: "Settings", url: "/settings", icon: Settings },
+  //   ],
+  // },
   {
     label: "Platform",
     items: [{ title: "Tenants", url: "/tenants", icon: Building2 }],
@@ -78,12 +70,12 @@ const menuButtonClass =
 function NavGroup({
   label,
   items,
-  activeUrl,
+  pathname,
   onNavigate,
 }: {
   label: string;
   items: NavItem[];
-  activeUrl: string;
+  pathname: string;
   onNavigate: () => void;
 }) {
   return (
@@ -95,7 +87,8 @@ function NavGroup({
       <SidebarGroupContent>
         <SidebarMenu className="gap-1">
           {items.map((item) => {
-            const isActive = activeUrl === item.url;
+            const isActive =
+              pathname === item.url || pathname.startsWith(`${item.url}/`);
 
             const Icon = item.icon;
 
@@ -187,7 +180,7 @@ export function AppSidebar() {
             key={group.label}
             label={group.label}
             items={group.items}
-            activeUrl={pathname}
+            pathname={pathname}
             onNavigate={handleNavigate}
           />
         ))}

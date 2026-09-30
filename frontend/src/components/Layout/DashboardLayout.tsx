@@ -17,7 +17,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
 
-      <div className="flex min-h-screen w-full bg-[#F8F7F4]">
+      <div className="flex min-h-screen w-full bg-[#F8F7F4] overflow-hidden">
 
         {/* Sidebar */}
 

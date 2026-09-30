@@ -1,14 +1,6 @@
-import { Bell, ChevronDown, MapPin, Search } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -19,20 +11,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-const BRANCHES = ["Nagpur Branch", "Pune Branch", "Mumbai Branch"];
-
 const iconButtonClass =
   "h-10 w-10 border-[#DEDAD4] bg-white text-[#71818B] shadow-sm hover:bg-[#F7F6F3]";
-
-const breadcrumbLinkClass =
-  "text-[9px] font-semibold uppercase tracking-[2px] text-[#087EAE]";
-
-const breadcrumbPageClass =
-  "text-[9px] font-semibold uppercase tracking-[2px] text-[#71818B]";
 
 export default function Navbar() {
   return (
     <header className=" fixed w-full flex h-[80px]  items-center border-b border-[#E4E0DA] bg-[#FBFAF8]">
+    
       <div className="flex w-full items-center justify-between px-6 lg:px-9">
         {/* Left: sidebar toggle + breadcrumb title */}
 
@@ -70,29 +55,6 @@ export default function Navbar() {
 
             <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#F8B52C]" />
           </Button>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={
-                <Button
-                  variant="outline"
-                  className="h-10 gap-2 border-[#DEDAD4] bg-white px-3 text-[13px] font-medium text-[#27343C] shadow-sm hover:bg-[#F7F6F3]"
-                />
-              }
-            >
-              <MapPin size={15} className="text-[#087EAE]" />
-
-              <span className="hidden sm:inline">{BRANCHES[0]}</span>
-
-              <ChevronDown size={14} className="text-[#71818B]" />
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent align="end" className="w-48">
-              {BRANCHES.map((branch) => (
-                <DropdownMenuItem key={branch}>{branch}</DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
 
           <Separator orientation="vertical" className="mx-1 h-8" />
 

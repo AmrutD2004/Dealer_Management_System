@@ -4,6 +4,12 @@ import bcrypt from 'bcrypt'
 
 export const createTenant = async (req: Request, res: Response) => {
     const { puId, puRole } = req.user;
+    if(puRole !== 'SUPER_ADMIN'){
+        return res.status(401).json({
+            success : false,
+            message : 'Not authoried to perform operation'
+        })
+    }
     const {
         //Tenant Details
         tenant_name, tenant_email, tenant_phone, tenant_gst_number, tenant_address, tenant_register_city, tenant_register_state, tenant_register_country, tenant_register_pincode, tenant_sub_plan, tenant_sub_status,
@@ -13,41 +19,48 @@ export const createTenant = async (req: Request, res: Response) => {
         // Initial Tenant Admin Details
         first_name, middle_name, last_name, email, phone_no, passwordHash
     } = req.body
-    if (
-        !tenant_name ||
-        !tenant_email ||
-        !tenant_phone ||
-        !tenant_gst_number ||
-        !tenant_address ||
-        !tenant_register_city ||
-        !tenant_register_state ||
-        !tenant_register_country ||
-        !tenant_register_pincode ||
-        !tenant_sub_plan ||
-        !tenant_sub_status ||
+    const requiredFields = {
+        tenant_name,
+        tenant_email,
+        tenant_phone,
+        tenant_gst_number,
+        tenant_address,
+        tenant_register_city,
+        tenant_register_state,
+        tenant_register_country,
+        tenant_register_pincode,
+        tenant_sub_plan,
+        tenant_sub_status,
 
         // Initial Branch Details
-        !tenant_initial_branchName ||
-        !tenant_initial_branchEmail ||
-        !tenant_initial_branchPhone ||
-        !tenant_initial_branchAddress ||
-        !tenant_initial_branchLocality ||
-        !tenant_initial_branchCity ||
-        !tenant_initial_branchState ||
-        !tenant_initial_branchCountry ||
-        !tenant_initial_branchPincode ||
+        tenant_initial_branchName,
+        tenant_initial_branchEmail,
+        tenant_initial_branchPhone,
+        tenant_initial_branchAddress,
+        tenant_initial_branchLocality,
+        tenant_initial_branchCity,
+        tenant_initial_branchState,
+        tenant_initial_branchCountry,
+        tenant_initial_branchPincode,
 
         // Initial Tenant Admin Details
-        !first_name ||
-        !middle_name ||
-        !last_name ||
-        !email ||
-        !phone_no ||
-        !passwordHash
-    ) {
+        first_name,
+        middle_name,
+        last_name,
+        email,
+        phone_no,
+        passwordHash,
+    };
+
+    const missingFields = Object.entries(requiredFields)
+        .filter(([, value]) => !value)
+        .map(([key]) => key);
+
+    if (missingFields.length > 0) {
         return res.status(400).json({
             success: false,
-            message: 'All fields are required',
+            message: `Missing required fields: ${missingFields.join(", ")}`,
+            missingFields,
         });
     }
     const isTenantExists = await prisma.tenant.findFirst({
@@ -260,6 +273,9 @@ export const createTenant = async (req: Request, res: Response) => {
             }
         });
     } catch (error) {
-
+        return res.status(500).json({
+            success : false,
+            message : `Server error ${error}`
+        })
     }
 }

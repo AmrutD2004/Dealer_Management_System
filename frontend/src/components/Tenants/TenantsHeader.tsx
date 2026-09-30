@@ -1,15 +1,12 @@
 import { Building2, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 
-interface TenantsHeaderProps {
-  onCreate: () => void;
-}
-
-export function TenantsHeader({ onCreate }: TenantsHeaderProps) {
+export function TenantsHeader() {
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <div>
+      <div className="mt-20">
         <div className="flex items-center gap-2">
           <Building2 className="h-6 w-6 text-slate-700" />
 
@@ -23,7 +20,10 @@ export function TenantsHeader({ onCreate }: TenantsHeaderProps) {
         </p>
       </div>
 
-      <Button onClick={onCreate} className="gap-2">
+      <Button
+        render={<Link to="/tenants/create" />}
+        className="gap-2 mt-20"
+      >
         <Plus className="h-4 w-4" />
         Create Tenant
       </Button>

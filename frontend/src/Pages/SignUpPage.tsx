@@ -53,7 +53,7 @@ export function SignUpPage() {
         })
         
       }
-    }  catch (error : any) {
+    }  catch (error : unknown) {
       toast.add({ type: "error", description: error });
     } finally {
       setLoading(false);

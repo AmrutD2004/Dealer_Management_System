@@ -1,4 +1,4 @@
-import { Filter, Search } from "lucide-react";
+import { Filter } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,33 +13,8 @@ import {
 
 import { asChoice } from "./helpers";
 
-interface TenantsFiltersProps {
-  search: string;
-  onSearchChange: (value: string) => void;
 
-  statusFilter: string;
-  onStatusFilterChange: (value: string) => void;
-
-  planFilter: string;
-  onPlanFilterChange: (value: string) => void;
-
-  subscriptionFilter: string;
-  onSubscriptionFilterChange: (value: string) => void;
-
-  onReset: () => void;
-}
-
-export function TenantsFilters({
-  search,
-  onSearchChange,
-  statusFilter,
-  onStatusFilterChange,
-  planFilter,
-  onPlanFilterChange,
-  subscriptionFilter,
-  onSubscriptionFilterChange,
-  onReset,
-}: TenantsFiltersProps) {
+export function TenantsFilters() {
   return (
     <Card className="border-slate-200 shadow-sm">
       <CardContent className="p-4">
@@ -50,8 +25,8 @@ export function TenantsFilters({
             
 
             <Input
-              value={search}
-              onChange={(event) => onSearchChange(event.target.value)}
+              // value={search}
+              // onChange={(event) => onSearchChange(event.target.value)}
               placeholder="Search tenant, code, email, phone or GST..."
               
             />
@@ -60,10 +35,8 @@ export function TenantsFilters({
           {/* Tenant Status */}
 
           <Select
-            value={statusFilter}
-            onValueChange={(value) =>
-              onStatusFilterChange(asChoice(value, "ALL"))
-            }
+            // value={statusFilter}
+           
           >
             <SelectTrigger className="w-full xl:w-[180px]">
               <SelectValue />
@@ -81,8 +54,8 @@ export function TenantsFilters({
           {/* Plan */}
 
           <Select
-            value={planFilter}
-            onValueChange={(value) => onPlanFilterChange(asChoice(value, "ALL"))}
+            // value={planFilter}
+            
           >
             <SelectTrigger className="w-full xl:w-[180px]">
               <SelectValue />
@@ -102,10 +75,7 @@ export function TenantsFilters({
           {/* Subscription */}
 
           <Select
-            value={subscriptionFilter}
-            onValueChange={(value) =>
-              onSubscriptionFilterChange(asChoice(value, "ALL"))
-            }
+            
           >
             <SelectTrigger className="w-full xl:w-[190px]">
               <SelectValue />
@@ -128,7 +98,7 @@ export function TenantsFilters({
 
           {/* Reset */}
 
-          <Button variant="outline" onClick={onReset} className="gap-2">
+          <Button variant="outline" className="gap-2">
             <Filter className="h-4 w-4" />
             Reset
           </Button>
