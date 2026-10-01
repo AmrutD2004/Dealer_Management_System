@@ -7,9 +7,9 @@ import { PlatformUserContextProvider } from "./contexts/PlatformUserContext";
 import PlatformuserProtected from "./Protecteds/PlatformuserProtected";
 import { Loader2 } from "lucide-react";
 
-
 import { TenantsProvider } from "./components/Tenants";
 import { PlansProvider } from "./components/Plans";
+import { PlatformUsersProvider } from "./components/PlatformUsers";
 
 
 // Lazy-loaded pages
@@ -78,6 +78,45 @@ const App = () => {
           
         </Suspense>
 
+        <TenantsProvider>
+          <PlansProvider>
+            <PlatformUsersProvider>
+              <Suspense fallback={<RouteFallback />}>
+                <Routes>
+                  {/* Authentication */}
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignUpPage />} />
+
+                  {/* Default route */}
+                  <Route
+                    path="/"
+                    element={<Navigate to="/dashboard" replace />}
+                  />
+
+                  {/* Platform Admin */}
+                  <Route path="/dashboard" element={<PlatformDashboard />} />
+
+                  {/* Platform User Management */}
+                  <Route path="/platform-users" element={<PlatformUsers />} />
+
+                  {/* Tenant Management */}
+                  <Route path="/tenants" element={<Tenants />} />
+
+                  <Route path="/tenants/create" element={<TenantCreate />} />
+
+                  {/* Plan Management */}
+                  <Route path="/plans" element={<Plans />} />
+
+                  {/* Unknown routes */}
+                  <Route
+                    path="*"
+                    element={<Navigate to="/dashboard" replace />}
+                  />
+                </Routes>
+              </Suspense>
+            </PlatformUsersProvider>
+          </PlansProvider>
+        </TenantsProvider>
       </BrowserRouter>
     </>
   );

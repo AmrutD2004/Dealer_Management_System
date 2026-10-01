@@ -1,10 +1,15 @@
 import { LayoutDashboard, Plus } from "lucide-react";
+
 import { Link, useNavigate } from "react-router-dom";
+
+
 
 import { Button } from "@/components/ui/button";
 
 export function DashboardHeader() {
+
   const navigate = useNavigate()
+
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div className="mt-20">
@@ -20,8 +25,8 @@ export function DashboardHeader() {
           A snapshot of every organization running on the DMS platform.
         </p>
       </div>
-
       <Button onClick={()=> navigate("/tenants/create")} className="gap-2 mt-20">
+
         <Plus className="h-4 w-4" />
         Create Tenant
       </Button>

@@ -1,6 +1,9 @@
+
 import type { Plan } from "./types";
 
 const getToday = (): string => new Date().toISOString().split("T")[0];
+
+
 
 const today = getToday();
 

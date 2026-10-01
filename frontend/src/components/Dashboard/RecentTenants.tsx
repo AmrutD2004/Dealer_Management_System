@@ -1,6 +1,7 @@
 import { ArrowRight, Building2, Eye } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -68,22 +69,43 @@ const getSubscriptionStatusLabel = (status: SubscriptionStatus): string => {
   }
 };
 
-export function RecentTenants() {
   const navigate = useNavigate()
+
+import type { Tenant } from "@/components/Tenants/types";
+
+const MAX_ROWS = 5;
+
+interface RecentTenantsProps {
+  tenants: Tenant[];
+  onView: (tenant: Tenant) => void;
+}
+
+export function RecentTenants({ tenants, onView }: RecentTenantsProps) {
+  const recentTenants = [...tenants]
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .slice(0, MAX_ROWS);
+
   return (
     <Card className="border-slate-200 shadow-sm">
       <CardHeader className="border-b border-slate-100">
         <CardTitle className="text-base">Recently Added Tenants</CardTitle>
 
         <p className="text-sm text-slate-500">
+
           The most recently registered organizations
+
+          The {MAX_ROWS} most recently registered organizations
         </p>
 
         <CardAction>
           <Button
             variant="outline"
             size="sm"
+
             onClick={() => navigate("/tenants")}
+
+            render={<Link to="/tenants" />}
+
             className="gap-2"
           >
             View all
@@ -93,7 +115,69 @@ export function RecentTenants() {
       </CardHeader>
 
       <CardContent className="p-0">
+        {recentTenants.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <Building2 className="mb-2 h-8 w-8 text-slate-300" />
 
+            <p className="font-medium text-slate-700">No tenants yet</p>
+
+            <p className="text-sm text-slate-500">
+              Create the first organization to get started.
+            </p>
+          </div>
+        ) : (
+          <ul className="divide-y divide-slate-100">
+            {recentTenants.map((tenant) => (
+              <li
+                key={tenant.id}
+                className="flex flex-wrap items-center gap-4 px-6 py-4"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100">
+                  <Building2 className="h-5 w-5 text-slate-600" />
+                </div>
+
+                <div className="min-w-[180px] flex-1">
+                  <p className="font-medium text-slate-900">
+                    {tenant.tenantName}
+                  </p>
+
+                  <p className="text-xs text-slate-500">{tenant.tenantCode}</p>
+                </div>
+
+                <span className="text-sm text-slate-600">
+                  {getPlanLabel(tenant.plan)}
+                </span>
+
+                <Badge
+                  variant="outline"
+                  className={getSubscriptionStatusClass(
+                    tenant.subscriptionStatus,
+                  )}
+                >
+                  {getSubscriptionStatusLabel(tenant.subscriptionStatus)}
+                </Badge>
+
+                <Badge
+                  variant="outline"
+                  className={getActiveStatusClass(tenant.isActive)}
+                >
+                  {getActiveStatusLabel(tenant.isActive)}
+                </Badge>
+
+                <span className="text-sm text-slate-500">{tenant.createdAt}</span>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label={`View ${tenant.tenantName}`}
+                  onClick={() => onView(tenant)}
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
       </CardContent>
     </Card>
   );

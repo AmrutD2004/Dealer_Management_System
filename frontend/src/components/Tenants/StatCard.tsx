@@ -3,6 +3,14 @@ import type { ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export function StatCard() {
+
+interface StatCardProps {
+  title: string;
+  value: ReactNode;
+  icon: ReactNode;
+  iconClass: string;
+}
+
   return (
     <Card className="border-slate-200 shadow-sm">
       <CardContent className="p-5">
