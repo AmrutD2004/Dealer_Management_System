@@ -33,3 +33,23 @@ export interface userCreateType {
     mobileNo: string,
     passwordHash: string
 }
+
+export interface tenantType {
+    id: number,
+    tenantCode: string,
+    tenantName: string
+    email: string,
+    phone: string,
+    gstNumber: string,
+    address: string,
+    city: string,
+    state: string,
+    country: string,
+    pincode: string
+    subscriptionPlan: string,
+    subscriptionStatus: string,
+    isActive: boolean,
+    createdBy: number,
+    createdAt: string,
+    updatedAt: string
+}

@@ -8,6 +8,7 @@ export interface TenantsContextValue {
   onUpdateTenant: (tenant: Tenant) => void;
   onActivateTenant: (tenantId: string) => void;
   onSuspendTenant: (tenantId: string) => void;
+  onDeleteTenant: (tenantId: string) => void;
 }
 
 export const TenantsContext = createContext<TenantsContextValue | null>(null);

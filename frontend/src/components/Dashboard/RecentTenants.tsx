@@ -1,20 +1,17 @@
-import { Building2, Pencil } from "lucide-react";
+import { ArrowRight, Building2, Eye } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-import { InfoItem } from "./InfoItem";
-
-import type { Tenant, SubscriptionPlan, SubscriptionStatus } from "./types";
+import type { SubscriptionPlan, SubscriptionStatus } from "@/components/Tenants/types";
 
 const getActiveStatusClass = (isActive: boolean): string =>
   isActive
@@ -71,14 +68,33 @@ const getSubscriptionStatusLabel = (status: SubscriptionStatus): string => {
   }
 };
 
-
-
-export function TenantViewDialog() {
+export function RecentTenants() {
+  const navigate = useNavigate()
   return (
-    <Dialog >
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[700px]">
-        
-      </DialogContent>
-    </Dialog>
+    <Card className="border-slate-200 shadow-sm">
+      <CardHeader className="border-b border-slate-100">
+        <CardTitle className="text-base">Recently Added Tenants</CardTitle>
+
+        <p className="text-sm text-slate-500">
+          The most recently registered organizations
+        </p>
+
+        <CardAction>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate("/tenants")}
+            className="gap-2"
+          >
+            View all
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </CardAction>
+      </CardHeader>
+
+      <CardContent className="p-0">
+
+      </CardContent>
+    </Card>
   );
 }

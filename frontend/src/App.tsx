@@ -3,22 +3,41 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { Toaster } from "./components/ui/toast";
 import { Skeleton } from "./components/ui/skeleton";
-import { PlatformUserContextProvider } from "./contexts/platformUserContext";
+import { PlatformUserContextProvider } from "./contexts/PlatformUserContext";
 import PlatformuserProtected from "./Protecteds/PlatformuserProtected";
 import { Loader2 } from "lucide-react";
 
 
+import { TenantsProvider } from "./components/Tenants";
+import { PlansProvider } from "./components/Plans";
 
+
+// Lazy-loaded pages
 const LoginPage = lazy(() =>
-  import("./Pages/LoginPage").then((m) => ({ default: m.LoginPage })),
+  import("./Pages/LoginPage").then((m) => ({
+    default: m.LoginPage,
+  })),
 );
+
 const SignUpPage = lazy(() =>
-  import("./Pages/SignUpPage").then((m) => ({ default: m.SignUpPage })),
+  import("./Pages/SignUpPage").then((m) => ({
+    default: m.SignUpPage,
+  })),
 );
-const Dashboard = lazy(() => import("./Pages/Dashboard"));
+
+const PlatformDashboard = lazy(
+  () => import("./Pages/Platform/PlatformDashboard"),
+);
+
 const Tenants = lazy(() => import("./Pages/Platform/Tenants"));
+
 const TenantCreate = lazy(() => import("./Pages/Platform/TenantCreate"));
 
+const Plans = lazy(() => import("./Pages/Platform/Plans"));
+
+const PlatformUsers = lazy(() => import("./Pages/Platform/PlatformUsers"));
+
+// Loading fallback
 function RouteFallback() {
   return (
     <div className='max-w-7xl mx-auto'>
@@ -33,7 +52,9 @@ const App = () => {
   return (
     <>
       <Toaster />
+
       <BrowserRouter>
+
 
         <Suspense fallback={<RouteFallback />}>
           <Routes>
@@ -46,12 +67,15 @@ const App = () => {
               element={<Navigate to="/dashboard" replace />}
             />
 
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<PlatformDashboard />} />
 
             <Route path="/tenants" element={<PlatformUserContextProvider><PlatformuserProtected><Tenants /></PlatformuserProtected></PlatformUserContextProvider>} />
 
             <Route path="/tenants/create" element={<PlatformUserContextProvider><PlatformuserProtected><TenantCreate /></PlatformuserProtected></PlatformUserContextProvider>} />
+
+            <Route path="/platform-users" element={<PlatformUserContextProvider><PlatformuserProtected><PlatformUsers /></PlatformuserProtected></PlatformUserContextProvider>} />
           </Routes>
+          
         </Suspense>
 
       </BrowserRouter>

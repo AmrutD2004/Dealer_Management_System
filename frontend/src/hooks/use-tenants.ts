@@ -1,30 +1,69 @@
 import { useCallback, useMemo, useState } from "react";
 
-import { initialTenants } from "@/components/Tenants/data";
-import { getToday } from "@/components/Tenants/helpers";
+import { useSearchParams } from "react-router-dom";
 
-import type { Tenant, TenantDraft } from "@/components/Tenants/types";
+import { useTenantsStore } from "@/components/Tenants";
+
+import type { Tenant } from "@/components/Tenants/types";
 
 const ITEMS_PER_PAGE = 5;
 
-export function useTenants() {
-  /* =======================================================
-     TENANT DATA
-  ======================================================= */
+/*
+ * Dashboard shortcuts deep-link into a pre-filtered list, e.g.
+ * /tenants?status=SUSPENDED. Only known values are accepted so a
+ * hand-typed query string cannot put the page in an odd state.
+ */
 
-  const [tenants, setTenants] = useState<Tenant[]>(initialTenants);
+const readParam = (value: string | null, allowed: string[]): string =>
+  value && allowed.includes(value) ? value : "ALL";
+
+export function useTenants() {
+  /*
+   * The collection itself lives in TenantsProvider so that it
+   * survives navigating to /tenants/create and back.
+   */
+
+  const {
+    tenants,
+
+    onCreateTenant,
+    onUpdateTenant,
+    onActivateTenant,
+    onSuspendTenant,
+    onDeleteTenant,
+  } = useTenantsStore();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   /* =======================================================
      FILTER STATE
+
+     The dropdown filters live in the query string so that
+     dashboard shortcuts such as /tenants?status=SUSPENDED land on
+     an already filtered list. The free text search stays local so
+     that typing is never gated on a router navigation.
   ======================================================= */
 
   const [search, setSearch] = useState("");
 
-  const [statusFilter, setStatusFilter] = useState("ALL");
+  const statusFilter = readParam(searchParams.get("status"), [
+    "ACTIVE",
+    "SUSPENDED",
+  ]);
 
-  const [planFilter, setPlanFilter] = useState("ALL");
+  const planFilter = readParam(searchParams.get("plan"), [
+    "BASIC",
+    "PRO",
+    "PREMIUM",
+  ]);
 
-  const [subscriptionFilter, setSubscriptionFilter] = useState("ALL");
+  const subscriptionFilter = readParam(searchParams.get("subscription"), [
+    "TRIAL",
+    "ACTIVE",
+    "SUSPENDED",
+    "EXPIRED",
+    "CANCELLED",
+  ]);
 
   /* =======================================================
      PAGINATION
@@ -36,11 +75,11 @@ export function useTenants() {
      DIALOG STATE
   ======================================================= */
 
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-
   const [isViewOpen, setIsViewOpen] = useState(false);
 
   const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
 
@@ -108,112 +147,50 @@ export function useTenants() {
     setPage(1);
   }, []);
 
-  const handleStatusFilterChange = useCallback((value: string) => {
-    setStatusFilter(value);
-    setPage(1);
-  }, []);
+  const applyFilter = useCallback(
+    (key: string, value: string) => {
+      setPage(1);
 
-  const handlePlanFilterChange = useCallback((value: string) => {
-    setPlanFilter(value);
-    setPage(1);
-  }, []);
+      setSearchParams(
+        (previous) => {
+          const next = new URLSearchParams(previous);
 
-  const handleSubscriptionFilterChange = useCallback((value: string) => {
-    setSubscriptionFilter(value);
-    setPage(1);
-  }, []);
+          /* The default is dropped so the URL stays readable. */
+
+          if (!value || value === "ALL") {
+            next.delete(key);
+          } else {
+            next.set(key, value);
+          }
+
+          return next;
+        },
+        { replace: true },
+      );
+    },
+    [setSearchParams],
+  );
+
+  const handleStatusFilterChange = useCallback(
+    (value: string) => applyFilter("status", value),
+    [applyFilter],
+  );
+
+  const handlePlanFilterChange = useCallback(
+    (value: string) => applyFilter("plan", value),
+    [applyFilter],
+  );
+
+  const handleSubscriptionFilterChange = useCallback(
+    (value: string) => applyFilter("subscription", value),
+    [applyFilter],
+  );
 
   const resetFilters = useCallback(() => {
     setSearch("");
-    setStatusFilter("ALL");
-    setPlanFilter("ALL");
-    setSubscriptionFilter("ALL");
     setPage(1);
-  }, []);
-
-  /* =======================================================
-     CREATE TENANT
-  ======================================================= */
-
-  const handleCreateTenant = useCallback(
-    (draft: TenantDraft) => {
-      const nextNumber = tenants.length + 1;
-
-      const today = getToday();
-
-      const tenant: Tenant = {
-        id: crypto.randomUUID(),
-
-        tenantCode:
-          draft.tenantCode.trim() || `TEN-${String(nextNumber).padStart(3, "0")}`,
-
-        tenantName: draft.tenantName.trim(),
-
-        email: draft.email.trim(),
-
-        phone: draft.phone.trim(),
-
-        gstNumber: draft.gstNumber.trim(),
-
-        address: draft.address.trim(),
-
-        city: draft.city.trim(),
-
-        state: draft.state.trim(),
-
-        country: draft.country.trim() || "India",
-
-        pincode: draft.pincode.trim(),
-
-        plan: draft.plan,
-
-        subscriptionStatus: draft.subscriptionStatus,
-
-        isActive: draft.isActive,
-
-        createdAt: today,
-
-        updatedAt: today,
-      };
-
-      setTenants((previous) => [tenant, ...previous]);
-
-      setPage(1);
-    },
-    [tenants.length],
-  );
-
-  /* =======================================================
-     UPDATE TENANT
-  ======================================================= */
-
-  const handleUpdateTenant = useCallback((tenant: Tenant) => {
-    setTenants((previous) =>
-      previous.map((item) => (item.id === tenant.id ? tenant : item)),
-    );
-  }, []);
-
-  /* =======================================================
-     ACTIVATE / SUSPEND TENANT
-  ======================================================= */
-
-  const setTenantActive = useCallback((tenantId: string, isActive: boolean) => {
-    setTenants((previous) =>
-      previous.map((tenant) =>
-        tenant.id === tenantId ? { ...tenant, isActive } : tenant,
-      ),
-    );
-  }, []);
-
-  const handleActivateTenant = useCallback(
-    (tenantId: string) => setTenantActive(tenantId, true),
-    [setTenantActive],
-  );
-
-  const handleSuspendTenant = useCallback(
-    (tenantId: string) => setTenantActive(tenantId, false),
-    [setTenantActive],
-  );
+    setSearchParams(new URLSearchParams(), { replace: true });
+  }, [setSearchParams]);
 
   /* =======================================================
      OPEN VIEW / EDIT
@@ -243,6 +220,30 @@ export function useTenants() {
     [],
   );
 
+  /*
+   * Delete is confirmed in a dialog first, so the row action only
+   * has to arm it; the actual removal happens in handleDeleteTenant.
+   */
+
+  const handleRequestDeleteTenant = useCallback((tenant: Tenant) => {
+    setSelectedTenant(tenant);
+    setIsDeleteOpen(true);
+  }, []);
+
+  const handleDeleteTenant = useCallback(
+    (tenant: Tenant) => {
+      onDeleteTenant(tenant.id);
+
+      /* Drop the row-level dialog state if it was the one that fired. */
+
+      setIsViewOpen(false);
+      setIsEditOpen(false);
+      setIsDeleteOpen(false);
+      setSelectedTenant(null);
+    },
+    [onDeleteTenant],
+  );
+
   return {
     tenants,
 
@@ -270,14 +271,14 @@ export function useTenants() {
     onPageChange: setPage,
 
     /* Dialogs */
-    isCreateOpen,
-    onCreateOpenChange: setIsCreateOpen,
-
     isViewOpen,
     onViewOpenChange: setIsViewOpen,
 
     isEditOpen,
     onEditOpenChange: setIsEditOpen,
+
+    isDeleteOpen,
+    onDeleteOpenChange: setIsDeleteOpen,
 
     selectedTenant,
 
@@ -285,11 +286,13 @@ export function useTenants() {
     onViewTenant: handleViewTenant,
     onEditTenant: handleEditTenant,
     onEditFromView: handleEditFromView,
+    onRequestDeleteTenant: handleRequestDeleteTenant,
 
     /* Mutations */
-    onCreateTenant: handleCreateTenant,
-    onUpdateTenant: handleUpdateTenant,
-    onActivateTenant: handleActivateTenant,
-    onSuspendTenant: handleSuspendTenant,
+    onCreateTenant,
+    onUpdateTenant,
+    onActivateTenant,
+    onSuspendTenant,
+    onDeleteTenant: handleDeleteTenant,
   };
 }

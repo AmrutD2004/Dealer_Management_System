@@ -7,7 +7,7 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
-import { PlatformUserContext } from "@/contexts/platformUserContext";
+import { PlatformUserContext } from "@/contexts/PlatformUserContext";
 import type { platformuserLoginType } from "@/Types/platformUserType";
 
 import { cn } from "cn";

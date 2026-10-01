@@ -2,10 +2,11 @@ import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
 import { initialTenants } from "./data";
-import { getToday } from "./helpers";
 import { TenantsContext } from "./tenants-context";
 
 import type { Tenant, TenantDraft } from "./types";
+
+const getToday = (): string => new Date().toISOString().split("T")[0];
 
 /*
  * The tenant list is owned above the router so it survives the
@@ -123,6 +124,12 @@ export function TenantsProvider({ children }: { children: ReactNode }) {
     [setTenantActive],
   );
 
+  const handleDeleteTenant = useCallback((tenantId: string) => {
+    setTenants((previous) =>
+      previous.filter((tenant) => tenant.id !== tenantId),
+    );
+  }, []);
+
   const value = useMemo(
     () => ({
       tenants,
@@ -131,6 +138,7 @@ export function TenantsProvider({ children }: { children: ReactNode }) {
       onUpdateTenant: handleUpdateTenant,
       onActivateTenant: handleActivateTenant,
       onSuspendTenant: handleSuspendTenant,
+      onDeleteTenant: handleDeleteTenant,
     }),
     [
       tenants,
@@ -138,6 +146,7 @@ export function TenantsProvider({ children }: { children: ReactNode }) {
       handleUpdateTenant,
       handleActivateTenant,
       handleSuspendTenant,
+      handleDeleteTenant,
     ],
   );
 
