@@ -1,13 +1,7 @@
-import {
-  Ban,
-  CheckCircle2,
-  Eye,
-  MoreHorizontal,
-  Pencil,
-  ShieldCheck,
-  Trash2,
-  UserX,
-} from "lucide-react";
+import { useContext, useState } from "react";
+import dayjs from "dayjs";
+
+import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -28,107 +22,118 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import {
-  formatLastLogin,
-  getFullName,
-  getInitials,
-  getRoleClass,
-  getRoleLabel,
-  getStatusClass,
-  getStatusLabel,
-} from "./helpers";
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 
-import type { PlatformUser } from "./types";
+import { getRoleClass, getRoleLabel } from "./helpers";
+import { PlatformUserDeleteDialog } from "./PlatformUserDeleteDialog";
+import { PlatformUserEditDialog } from "./PlatformUserEditDialog";
+import { PlatformUserViewDialog } from "./PlatformUserViewDialog";
 
-interface PlatformUsersTableProps {
-  platformUsers: PlatformUser[];
+import type { platformUserInfo } from "@/Types/platformUserType";
+import { PlatformUserContext } from "@/contexts/PlatformUserContext";
+import { cn } from "cn";
 
-  onView: (user: PlatformUser) => void;
-  onEdit: (user: PlatformUser) => void;
-  onAssignRole: (user: PlatformUser) => void;
-  onActivate: (userId: string) => void;
-  onDeactivate: (userId: string) => void;
-  onSuspend: (userId: string) => void;
-  onDelete: (user: PlatformUser) => void;
-}
+type RowAction = "view" | "edit" | "delete" | null;
 
-export function PlatformUsersTable({
-  platformUsers,
-  onView,
-  onEdit,
-  onAssignRole,
-  onActivate,
-  onDeactivate,
-  onSuspend,
-  onDelete,
-}: PlatformUsersTableProps) {
+export function PlatformUsersTable() {
+  const { platfornUserList, platformUserCount, fetchPlatformUsersList, platformUserSkip, platformUserTake, setPlatformUserSkip, setPlatformUserTake } =
+    useContext(PlatformUserContext);
+
+  const [selectedUser, setSelectedUser] = useState<platformUserInfo | null>(
+    null,
+  );
+
+  const [action, setAction] = useState<RowAction>(null);
+
+  const isOpen = (target: Exclude<RowAction, null>) => action === target;
+
+  const close = () => setAction(null);
+
+  const openFor = (target: Exclude<RowAction, null>, user: platformUserInfo) => {
+    setSelectedUser(user);
+    setAction(target);
+  };
+
+  /* Mutations refetch so the table always reflects the server. */
+
+  const refresh = () => fetchPlatformUsersList();
+
+  const noOfPages = Math.ceil(platformUserCount / platformUserTake)
+  const handlePrevious = () => {
+    setPlatformUserSkip((prev: number) =>
+      Math.max(prev - platformUserTake, 0)
+    )
+  }
+
+  const handleNext = () => {
+    if (platformUserSkip + platformUserTake < platformUserCount) {
+      setPlatformUserSkip((prev: number) => prev + platformUserTake)
+    }
+  }
   return (
     <Card className="border-slate-200 shadow-sm">
-      <CardHeader className="border-b border-slate-100">
+      <CardHeader className="border-b border-slate-100 flex flex-row items-center justify-between">
         <CardTitle className="text-base">All Platform Users</CardTitle>
+        <span className="text-sm text-slate-500">
+          {platformUserCount} {platformUserCount === 1 ? "user" : "users"}
+        </span>
       </CardHeader>
 
       <CardContent className="p-0">
-        {platformUsers.length === 0 ? (
-          <div className="px-4 py-16 text-center">
-            <p className="text-sm font-medium text-slate-900">
-              No platform users found
-            </p>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-20">ID</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Created</TableHead>
+              <TableHead>Updated</TableHead>
+              <TableHead className="w-12 text-right">
+                <span className="sr-only">Actions</span>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
 
-            <p className="mt-1 text-sm text-slate-500">
-              Try a different search, or add a new platform user.
-            </p>
-          </div>
-        ) : (
-          <Table>
-            <TableHeader>
+          <TableBody>
+            {platfornUserList.length === 0 ? (
               <TableRow>
-                <TableHead>User</TableHead>
-
-                <TableHead>Contact</TableHead>
-
-                <TableHead>Role</TableHead>
-
-                <TableHead>Status</TableHead>
-
-                <TableHead>Last Sign In</TableHead>
-
-                <TableHead className="w-12 text-right">
-                  <span className="sr-only">Actions</span>
-                </TableHead>
+                <TableCell
+                  colSpan={6}
+                  className="text-center py-10 text-slate-500"
+                >
+                  No platform users found.
+                </TableCell>
               </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {platformUsers.map((user) => (
+            ) : (
+              platfornUserList.map((user: platformUserInfo) => (
                 <TableRow key={user.id}>
-                  {/* User */}
+                  {/* ID */}
+
+                  <TableCell>
+                    <span className="font-mono text-xs text-slate-600">
+                      {user.id}
+                    </span>
+                  </TableCell>
+
+                  {/* Email */}
 
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
                         <AvatarFallback className="bg-slate-100 text-xs font-semibold text-slate-600">
-                          {getInitials(user)}
+                          {user.email.split("@")[0].slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
 
-                      <div className="min-w-0">
-                        <p className="font-medium text-slate-900">
-                          {getFullName(user)}
-                        </p>
-
-                        <p className="text-xs text-slate-500">{user.userCode}</p>
-                      </div>
+                      <span className="text-slate-700">{user.email}</span>
                     </div>
-                  </TableCell>
-
-                  {/* Contact */}
-
-                  <TableCell>
-                    <p className="text-slate-700">{user.email}</p>
-
-                    <p className="text-xs text-slate-500">{user.phone}</p>
                   </TableCell>
 
                   {/* Role */}
@@ -142,21 +147,16 @@ export function PlatformUsersTable({
                     </Badge>
                   </TableCell>
 
-                  {/* Status */}
+                  {/* Created */}
 
-                  <TableCell>
-                    <Badge
-                      variant="outline"
-                      className={getStatusClass(user.status)}
-                    >
-                      {getStatusLabel(user.status)}
-                    </Badge>
+                  <TableCell className="text-slate-600 text-sm">
+                    {dayjs(user.createdAt).format("DD MMM YYYY")}
                   </TableCell>
 
-                  {/* Last sign in */}
+                  {/* Updated */}
 
-                  <TableCell className="text-slate-600">
-                    {formatLastLogin(user.lastLoginAt)}
+                  <TableCell className="text-slate-600 text-sm">
+                    {dayjs(user.updatedAt).format("DD MMM YYYY")}
                   </TableCell>
 
                   {/* Actions */}
@@ -168,73 +168,101 @@ export function PlatformUsersTable({
                           <Button
                             variant="ghost"
                             size="icon"
-                            aria-label={`Actions for ${getFullName(user)}`}
+                            aria-label={`Actions for ${user.email}`}
                           />
                         }
                       >
                         <MoreHorizontal className="h-4 w-4" />
                       </DropdownMenuTrigger>
 
-                      <DropdownMenuContent align="end" className="w-52">
-                        <DropdownMenuItem onClick={() => onView(user)}>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => openFor("view", user)}
+                        >
                           <Eye className="mr-2 h-4 w-4" />
-                          View Details
+                          View
                         </DropdownMenuItem>
 
-                        <DropdownMenuItem onClick={() => onEdit(user)}>
+                        <DropdownMenuItem
+                          onClick={() => openFor("edit", user)}
+                        >
                           <Pencil className="mr-2 h-4 w-4" />
-                          Edit User
+                          Edit
                         </DropdownMenuItem>
-
-                        <DropdownMenuItem onClick={() => onAssignRole(user)}>
-                          <ShieldCheck className="mr-2 h-4 w-4" />
-                          Assign Role
-                        </DropdownMenuItem>
-
-                        <DropdownMenuSeparator />
-
-                        {user.status === "ACTIVE" ? (
-                          <>
-                            <DropdownMenuItem
-                              onClick={() => onDeactivate(user.id)}
-                            >
-                              <UserX className="mr-2 h-4 w-4" />
-                              Revoke Access
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem
-                              onClick={() => onSuspend(user.id)}
-                              className="text-red-600 focus:text-red-600"
-                            >
-                              <Ban className="mr-2 h-4 w-4" />
-                              Suspend User
-                            </DropdownMenuItem>
-                          </>
-                        ) : (
-                          <DropdownMenuItem onClick={() => onActivate(user.id)}>
-                            <CheckCircle2 className="mr-2 h-4 w-4 text-green-600" />
-                            Activate User
-                          </DropdownMenuItem>
-                        )}
 
                         <DropdownMenuSeparator />
 
                         <DropdownMenuItem
-                          onClick={() => onDelete(user)}
                           className="text-red-600 focus:text-red-600"
+                          onClick={() => openFor("delete", user)}
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
-                          Remove User
+                          Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
+              ))
+            )}
+          </TableBody>
+        </Table>
+        <div className="w-full flex items-center justify-center gap-4 mt-10">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem><Button
+                variant="outline"
+                disabled={platformUserSkip === 0}
+                onClick={handlePrevious}
+              >
+                <PaginationPrevious />
+              </Button>
+              </PaginationItem>
+              {[...Array(noOfPages).keys()].map((i) => {
+                const pageNext = i * platformUserTake
+                return (
+                  <PaginationItem>
+                    <Button className={cn('rounded-lg')} onClick={() => setPlatformUserSkip(pageNext)} variant={platformUserSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                  </PaginationItem>
+                )
+              })}
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <Button
+                  variant="outline"
+                  disabled={platformUserSkip + platformUserTake >= platformUserCount}
+                  onClick={handleNext}
+
+                >
+                  <PaginationNext />
+                </Button>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
       </CardContent>
+
+      <PlatformUserViewDialog
+        open={isOpen("view")}
+        onOpenChange={(open) => !open && close()}
+        user={selectedUser}
+      />
+
+      <PlatformUserEditDialog
+        open={isOpen("edit")}
+        onOpenChange={(open) => !open && close()}
+        user={selectedUser}
+        onSaved={refresh}
+      />
+
+      <PlatformUserDeleteDialog
+        open={isOpen("delete")}
+        onOpenChange={(open) => !open && close()}
+        user={selectedUser}
+        onDeleted={refresh}
+      />
     </Card>
   );
 }

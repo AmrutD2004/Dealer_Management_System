@@ -1,5 +1,3 @@
-import { getToday } from "@/components/Tenants/helpers";
-
 import type {
   PlatformUser,
   PlatformUserDraft,
@@ -7,7 +5,7 @@ import type {
   PlatformUserStatus,
 } from "./types";
 
-export { getToday };
+export const getToday = (): string => new Date().toISOString().split("T")[0];
 
 /* The platform team is a closed set, so both maps are total. */
 

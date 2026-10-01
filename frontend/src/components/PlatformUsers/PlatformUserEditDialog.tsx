@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import { Loader2 } from "lucide-react";
+
+import { Field } from "@/components/Field";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,183 +21,168 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { Field } from "@/components/Field";
+import { PLATFORM_USER_ROLES, getRoleLabel } from "./helpers";
 
-import { asChoice } from "@/components/Tenants/helpers";
-
-import { getFullName } from "./helpers";
-
-import type { PlatformUser, PlatformUserStatus } from "./types";
+import type { platformUserInfo, platformUserUpdateType } from "@/Types/platformUserType";
+import { updatePlatformUser } from "@/api/endpoint";
+import { toast } from "@/components/ui/toast";
+import { getApiErrorMessage } from "@/lib/utils";
 
 interface PlatformUserEditDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  user: PlatformUser | null;
-  onSave: (user: PlatformUser) => void;
-  loading?: boolean;
+  user: platformUserInfo | null;
+  onSaved: () => void;
 }
 
 export function PlatformUserEditDialog({
   open,
   onOpenChange,
   user,
-  onSave,
-  loading = false,
+  onSaved,
 }: PlatformUserEditDialogProps) {
-  const [draft, setDraft] = useState<PlatformUser | null>(null);
-
-  /*
-   * Work on a copy so cancelling never mutates the row in the table,
-   * and re-seed the draft every time the dialog opens.
-   */
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<platformUserUpdateType>({
+    email: "",
+    passwordHash: "",
+    role: "SUPPORT_ADMIN",
+  });
 
   const [wasOpen, setWasOpen] = useState(open);
+
+  /* Reseed the form from the selected row each time the dialog opens. */
 
   if (open !== wasOpen) {
     setWasOpen(open);
 
-    setDraft(open && user ? { ...user } : null);
+    if (open && user) {
+      setFormData({
+        email: user.email,
+        passwordHash: "",
+        role: user.role,
+      });
+
+      setLoading(false);
+    }
   }
 
-  const update = <K extends keyof PlatformUser>(
-    key: K,
-    value: PlatformUser[K],
-  ) => {
-    setDraft((previous) => (previous ? { ...previous, [key]: value } : previous));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const isValid = Boolean(
-    draft?.firstName.trim() &&
-      draft?.lastName.trim() &&
-      draft?.email.trim() &&
-      draft?.phone.trim(),
-  );
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const handleSave = () => {
-    if (!draft || !isValid || loading) {
+    if (!user) {
       return;
     }
 
-    onSave(draft);
+    setLoading(true);
+
+    try {
+      const data = await updatePlatformUser(user.id, {
+        email: formData.email,
+        /* Blank means "keep the current password". */
+
+        passwordHash: formData.passwordHash || undefined,
+        role: formData.role,
+      });
+
+      if (data?.success) {
+        toast.add({ type: "success", description: data?.message });
+
+        onSaved();
+        onOpenChange(false);
+      } else {
+        toast.add({ type: "error", description: data?.message });
+      }
+    } catch (err) {
+      toast.add({
+        type: "error",
+        description: getApiErrorMessage(err),
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[700px]">
-        {draft && (
-          <>
-            <DialogHeader>
-              <DialogTitle>Edit Platform User</DialogTitle>
+      <DialogContent className="sm:max-w-[460px]">
+        <DialogHeader>
+          <DialogTitle>Edit Platform User</DialogTitle>
 
-              <DialogDescription>
-                Update {getFullName(draft)}&apos;s profile and platform access.
-                Use &quot;Assign Role&quot; to change what they can do.
-              </DialogDescription>
-            </DialogHeader>
+          <DialogDescription>
+            Update the account for {user?.email}. Leave the password blank to
+            keep the current one.
+          </DialogDescription>
+        </DialogHeader>
 
-            <div className="space-y-6 py-4">
-              {/* Profile */}
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4 py-4">
+            <Field label="Email *">
+              <Input
+                name="email"
+                type="email"
+                placeholder="name@redogroup.com"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </Field>
 
-              <div>
-                <h3 className="mb-4 text-sm font-semibold text-slate-900">
-                  Profile
-                </h3>
+            <Field label="Platform Role">
+              <Select
+                name="role"
+                value={formData.role}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    role: value as platformUserUpdateType["role"],
+                  }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <Field label="First Name *">
-                    <Input
-                      value={draft.firstName}
-                      onChange={(event) =>
-                        update("firstName", event.target.value)
-                      }
-                    />
-                  </Field>
+                <SelectContent>
+                  {PLATFORM_USER_ROLES.map((role) => (
+                    <SelectItem key={role} value={role}>
+                      {getRoleLabel(role)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
 
-                  <Field label="Middle Name">
-                    <Input
-                      value={draft.middleName}
-                      onChange={(event) =>
-                        update("middleName", event.target.value)
-                      }
-                    />
-                  </Field>
+            <Field label="New Password">
+              <Input
+                name="passwordHash"
+                type="password"
+                placeholder="Leave blank to keep current"
+                value={formData.passwordHash}
+                onChange={handleChange}
+              />
+            </Field>
+          </div>
 
-                  <Field label="Last Name *">
-                    <Input
-                      value={draft.lastName}
-                      onChange={(event) =>
-                        update("lastName", event.target.value)
-                      }
-                    />
-                  </Field>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancel
+            </Button>
 
-                  <Field label="User Code">
-                    <Input value={draft.userCode} disabled />
-                  </Field>
+            <Button type="submit" disabled={loading || !formData.email}>
+              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
 
-                  <Field label="Email *">
-                    <Input
-                      type="email"
-                      value={draft.email}
-                      onChange={(event) => update("email", event.target.value)}
-                    />
-                  </Field>
-
-                  <Field label="Phone *">
-                    <Input
-                      value={draft.phone}
-                      onChange={(event) => update("phone", event.target.value)}
-                    />
-                  </Field>
-                </div>
-              </div>
-
-              {/* Access */}
-
-              <div>
-                <h3 className="mb-4 text-sm font-semibold text-slate-900">
-                  Platform Access
-                </h3>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <Field label="Access Status">
-                    <Select
-                      value={draft.status}
-                      onValueChange={(value) =>
-                        update(
-                          "status",
-                          asChoice<PlatformUserStatus>(value, "ACTIVE"),
-                        )
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-
-                      <SelectContent>
-                        <SelectItem value="ACTIVE">Active</SelectItem>
-
-                        <SelectItem value="INACTIVE">Inactive</SelectItem>
-
-                        <SelectItem value="SUSPENDED">Suspended</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </Field>
-                </div>
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button variant="outline" onClick={() => onOpenChange(false)}>
-                Cancel
-              </Button>
-
-              <Button onClick={handleSave} disabled={!isValid || loading}>
-                Save Changes
-              </Button>
-            </DialogFooter>
-          </>
-        )}
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

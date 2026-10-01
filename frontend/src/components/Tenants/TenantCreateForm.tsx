@@ -168,10 +168,10 @@ export function TenantCreateForm({ onCancel }: props) {
     }
   }
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
+    <form className="space-y-4" onSubmit={handleSubmit}>
       {/* Tenant Details */}
       <FormSection title="Tenant Details" withSeparator={false}>
-        <Field label="Tenant Name *" className="sm:col-span-2">
+        <Field label="Tenant Name *" >
           <Input name="tenantName" placeholder="ABC Motors Pvt Ltd" onChange={handleTenantChange} />
         </Field>
 
@@ -179,7 +179,7 @@ export function TenantCreateForm({ onCancel }: props) {
           <Input name="email" type="email" placeholder="admin@company.com" onChange={handleTenantChange} />
         </Field>
 
-        <Field label="Phone">
+        <Field label="Phone *">
           <Input name="phone" placeholder="98765 43210" onChange={handleTenantChange} />
         </Field>
 
@@ -187,23 +187,23 @@ export function TenantCreateForm({ onCancel }: props) {
           <Input name="gstNumber" placeholder="27AAECA1234A1Z5" onChange={handleTenantChange} />
         </Field>
 
-        <Field label="Address" className="sm:col-span-2">
+        <Field label="Address *" className="sm:col-span-2">
           <Textarea name="address" placeholder="Business address" onChange={handleTenantChange} />
         </Field>
 
-        <Field label="City">
+        <Field label="City *">
           <Input name="city" placeholder="Pune" onChange={handleTenantChange} />
         </Field>
 
-        <Field label="State">
+        <Field label="State *">
           <Input name="state" placeholder="Maharashtra" onChange={handleTenantChange} />
         </Field>
 
-        <Field label="Country">
+        <Field label="Country *">
           <Input name="country" placeholder="India" onChange={handleTenantChange} />
         </Field>
 
-        <Field label="Pincode">
+        <Field label="Pincode *">
           <Input name="pincode" placeholder="411001" onChange={handleTenantChange} />
         </Field>
       </FormSection>
@@ -251,10 +251,6 @@ export function TenantCreateForm({ onCancel }: props) {
           <Input name="email" type="email" placeholder="branch@company.com" onChange={handleBranchChange} />
         </Field>
 
-        <Field label="Phone">
-          <Input name="phone" placeholder="98765 43210" onChange={handleBranchChange} />
-        </Field>
-
         <Field label="Address 1" className="sm:col-span-2">
           <Textarea name="address1" placeholder="Branch address" onChange={handleBranchChange} />
         </Field>
@@ -278,6 +274,10 @@ export function TenantCreateForm({ onCancel }: props) {
           <Input name="country" placeholder="India" onChange={handleBranchChange} />
         </Field>
 
+        <Field label="Phone">
+          <Input name="phone" placeholder="98765 43210" onChange={handleBranchChange} />
+        </Field>
+        
         <Field label="Pincode">
           <Input name="pincode" placeholder="411038" onChange={handleBranchChange} />
         </Field>
@@ -306,7 +306,7 @@ export function TenantCreateForm({ onCancel }: props) {
           <Input name="mobileNo" placeholder="98765 43210" onChange={handleUserChange} />
         </Field>
 
-        <Field label="Password *" className="sm:col-span-2">
+        <Field label="Password *" >
           <Input name="passwordHash" type="password" placeholder="••••••••••" onChange={handleUserChange} />
         </Field>
       </FormSection>

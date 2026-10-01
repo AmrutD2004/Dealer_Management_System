@@ -2,7 +2,6 @@ export { PlatformUsersHeader } from "./PlatformUsersHeader";
 export { PlatformUsersStats } from "./PlatformUsersStats";
 export { PlatformUsersFilters } from "./PlatformUsersFilters";
 export { PlatformUsersTable } from "./PlatformUsersTable";
-export { PlatformUsersPagination } from "./PlatformUsersPagination";
 
 export { PlatformUserViewDialog } from "./PlatformUserViewDialog";
 export { PlatformUserCreateDialog } from "./PlatformUserCreateDialog";

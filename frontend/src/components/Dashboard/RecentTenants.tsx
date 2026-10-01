@@ -1,5 +1,5 @@
 import { ArrowRight, Building2, Eye } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 import { Badge } from "@/components/ui/badge";
@@ -69,8 +69,6 @@ const getSubscriptionStatusLabel = (status: SubscriptionStatus): string => {
   }
 };
 
-  const navigate = useNavigate()
-
 import type { Tenant } from "@/components/Tenants/types";
 
 const MAX_ROWS = 5;
@@ -101,8 +99,6 @@ export function RecentTenants({ tenants, onView }: RecentTenantsProps) {
           <Button
             variant="outline"
             size="sm"
-
-            onClick={() => navigate("/tenants")}
 
             render={<Link to="/tenants" />}
 

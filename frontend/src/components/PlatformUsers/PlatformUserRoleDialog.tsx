@@ -12,9 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { asChoice } from "@/components/Tenants/helpers";
-
-import { cn } from "@/lib/utils";
+import { asChoice, cn } from "@/lib/utils";
 
 import { PLATFORM_USER_ROLES, getFullName, getRoleLabel } from "./helpers";
 

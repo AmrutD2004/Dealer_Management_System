@@ -5,6 +5,20 @@ import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 
 const jwtsecret = process.env.JWT_SECRET;
+
+/*
+ * Never expose the credential hash to a client, so every read that
+ * reaches the frontend goes through this projection.
+ */
+
+const platformUserPublicFields = {
+    id: true,
+    email: true,
+    role: true,
+    createdAt: true,
+    updatedAt: true
+} as const;
+
 export const createPlatformUser = async (req: Request, res: Response) => {
     const { email, passwordHash } = req.body;
 
@@ -117,7 +131,8 @@ export const isAuthenticated = async (req: Request, res: Response) => {
     }
     try {
         const data = await prisma.platformUser.findUnique({
-            where: { id: puId }
+            where: { id: puId },
+            select: platformUserPublicFields
         })
         return res.status(200).json({
             success: true,
@@ -156,7 +171,7 @@ export const logout = async (req: Request, res: Response) => {
 
 export const addPlatformUsers = async (req: Request, res: Response) => {
     const { puId, puRole } = req.user;
-    const { email, passwordHash } = req.body;
+    const { email, passwordHash, role } = req.body;
     if (!puId && !puRole) {
         return res.status(401).json({
             success: false,
@@ -189,7 +204,8 @@ export const addPlatformUsers = async (req: Request, res: Response) => {
         const data = await prisma.platformUser.create({
             data: {
                 email: email,
-                passwordHash: hashedPassword
+                passwordHash: hashedPassword,
+                role : role
             }
         })
         return res.status(201).json({
@@ -228,17 +244,16 @@ export const editPlatformUser = async (req: Request, res: Response) => {
             message: 'Not authorized to perform operation'
         })
     }
-    if (!email || !passwordHash) {
+    if (!email) {
         return res.status(400).json({
             success: false,
-            message: 'All fields are required'
+            message: 'Email is required'
         })
     } try {
-        const hashedPassword = await bcrypt.hash(passwordHash, 10)
         const data = await prisma.platformUser.update({
             data: {
                 email: email,
-                passwordHash: hashedPassword,
+                ...(passwordHash ? { passwordHash: await bcrypt.hash(passwordHash, 10) } : {}),
                 role: role
             },
             where: { id: Number(id) }
@@ -248,6 +263,60 @@ export const editPlatformUser = async (req: Request, res: Response) => {
             message : 'Data Updated'
         })
 
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+
+export const deletePlatformUser = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    if (!puId && !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    if (puRole !== 'SUPER_ADMIN') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    if (Number(id) === puId) {
+        return res.status(400).json({
+            success: false,
+            message: 'You cannot delete your own account'
+        })
+    }
+    try {
+        const isUserExist = await prisma.platformUser.findUnique({
+            where: { id: Number(id) },
+            select: { id: true }
+        })
+        if (!isUserExist) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+        await prisma.platformUser.delete({
+            where: { id: Number(id) }
+        })
+        return res.status(200).json({
+            success: true,
+            message: 'User deleted successfully'
+        })
     } catch (err) {
         console.log(err)
         return res.status(500).json({
@@ -270,7 +339,8 @@ export const getListOfPlatformUsers = async (req: Request, res: Response) => {
         const totalPlatformUsersCount = await prisma.platformUser.count()
         const platformUsersList = await prisma.platformUser.findMany({
             skip: Number(skip),
-            take: Number(take)
+            take: Number(take),
+            select: platformUserPublicFields
         })
         return res.status(200).json({
             success: true,
@@ -302,7 +372,8 @@ export const getPlatformUserById = async (req: Request, res: Response) => {
     }
     try{
         const getPlatformUserDetails = await prisma.platformUser.findUnique({
-            where : {id : Number(id)}
+            where : {id : Number(id)},
+            select: platformUserPublicFields
         }) 
         return res.status(200).json({
             success : true,
