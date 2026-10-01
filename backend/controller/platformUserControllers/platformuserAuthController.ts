@@ -204,3 +204,115 @@ export const addPlatformUsers = async (req: Request, res: Response) => {
         })
     }
 }
+
+
+export const editPlatformUser = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    const { email, passwordHash, role } = req.body;
+    if (!puId && !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    if (puRole !== 'SUPER_ADMIN') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    if (!email || !passwordHash) {
+        return res.status(400).json({
+            success: false,
+            message: 'All fields are required'
+        })
+    } try {
+        const hashedPassword = await bcrypt.hash(passwordHash, 10)
+        const data = await prisma.platformUser.update({
+            data: {
+                email: email,
+                passwordHash: hashedPassword,
+                role: role
+            },
+            where: { id: Number(id) }
+        })
+        return res.status(201).json({
+            success : true,
+            message : 'Data Updated'
+        })
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+
+export const getListOfPlatformUsers = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { skip, take } = req.query;
+    if (!puId && !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    try {
+        const totalPlatformUsersCount = await prisma.platformUser.count()
+        const platformUsersList = await prisma.platformUser.findMany({
+            skip: Number(skip),
+            take: Number(take)
+        })
+        return res.status(200).json({
+            success: true,
+            data: platformUsersList,
+            count: totalPlatformUsersCount
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+export const getPlatformUserById = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    if (!puId && !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    try{
+        const getPlatformUserDetails = await prisma.platformUser.findUnique({
+            where : {id : Number(id)}
+        }) 
+        return res.status(200).json({
+            success : true,
+            data : getPlatformUserDetails
+        })
+    }catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
