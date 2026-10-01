@@ -1,41 +1,23 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
+import type { ReactNode } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { Toaster } from "./components/ui/toast";
-import { Skeleton } from "./components/ui/skeleton";
 import { PlatformUserContextProvider } from "./contexts/PlatformUserContext";
 import PlatformuserProtected from "./Protecteds/PlatformuserProtected";
 import { Loader2 } from "lucide-react";
 
+import { LoginPage } from "./Pages/LoginPage";
+import { SignUpPage } from "./Pages/SignUpPage";
+import PlatformDashboard from "./Pages/Platform/PlatformDashboard";
+import Tenants from "./Pages/Platform/Tenants";
+import TenantCreate from "./Pages/Platform/TenantCreate";
+import Plans from "./Pages/Platform/Plans";
+import PlatformUsers from "./Pages/Platform/PlatformUsers";
+
 import { TenantsProvider } from "./components/Tenants";
 import { PlansProvider } from "./components/Plans";
 import { PlatformUsersProvider } from "./components/PlatformUsers";
-
-
-// Lazy-loaded pages
-const LoginPage = lazy(() =>
-  import("./Pages/LoginPage").then((m) => ({
-    default: m.LoginPage,
-  })),
-);
-
-const SignUpPage = lazy(() =>
-  import("./Pages/SignUpPage").then((m) => ({
-    default: m.SignUpPage,
-  })),
-);
-
-const PlatformDashboard = lazy(
-  () => import("./Pages/Platform/PlatformDashboard"),
-);
-
-const Tenants = lazy(() => import("./Pages/Platform/Tenants"));
-
-const TenantCreate = lazy(() => import("./Pages/Platform/TenantCreate"));
-
-const Plans = lazy(() => import("./Pages/Platform/Plans"));
-
-const PlatformUsers = lazy(() => import("./Pages/Platform/PlatformUsers"));
 
 // Loading fallback
 function RouteFallback() {
@@ -48,43 +30,33 @@ function RouteFallback() {
   );
 }
 
+const protectedRoute = (element: ReactNode) => (
+  <PlatformUserContextProvider>
+    <PlatformuserProtected>{element}</PlatformuserProtected>
+  </PlatformUserContextProvider>
+);
+
 const App = () => {
   return (
     <>
       <Toaster />
 
       <BrowserRouter>
-
-
-        <Suspense fallback={<RouteFallback />}>
-          <Routes>
-
-            <Route path="/login" element={<PlatformUserContextProvider><LoginPage /></PlatformUserContextProvider>} />
-            <Route path="/signup" element={<SignUpPage />} />
-
-            <Route
-              path="/"
-              element={<Navigate to="/dashboard" replace />}
-            />
-
-            <Route path="/dashboard" element={<PlatformDashboard />} />
-
-            <Route path="/tenants" element={<PlatformUserContextProvider><PlatformuserProtected><Tenants /></PlatformuserProtected></PlatformUserContextProvider>} />
-
-            <Route path="/tenants/create" element={<PlatformUserContextProvider><PlatformuserProtected><TenantCreate /></PlatformuserProtected></PlatformUserContextProvider>} />
-
-            <Route path="/platform-users" element={<PlatformUserContextProvider><PlatformuserProtected><PlatformUsers /></PlatformuserProtected></PlatformUserContextProvider>} />
-          </Routes>
-          
-        </Suspense>
-
         <TenantsProvider>
           <PlansProvider>
             <PlatformUsersProvider>
               <Suspense fallback={<RouteFallback />}>
                 <Routes>
                   {/* Authentication */}
-                  <Route path="/login" element={<LoginPage />} />
+                  <Route
+                    path="/login"
+                    element={
+                      <PlatformUserContextProvider>
+                        <LoginPage />
+                      </PlatformUserContextProvider>
+                    }
+                  />
+
                   <Route path="/signup" element={<SignUpPage />} />
 
                   {/* Default route */}
@@ -97,12 +69,21 @@ const App = () => {
                   <Route path="/dashboard" element={<PlatformDashboard />} />
 
                   {/* Platform User Management */}
-                  <Route path="/platform-users" element={<PlatformUsers />} />
+                  <Route
+                    path="/platform-users"
+                    element={protectedRoute(<PlatformUsers />)}
+                  />
 
                   {/* Tenant Management */}
-                  <Route path="/tenants" element={<Tenants />} />
+                  <Route
+                    path="/tenants"
+                    element={protectedRoute(<Tenants />)}
+                  />
 
-                  <Route path="/tenants/create" element={<TenantCreate />} />
+                  <Route
+                    path="/tenants/create"
+                    element={protectedRoute(<TenantCreate />)}
+                  />
 
                   {/* Plan Management */}
                   <Route path="/plans" element={<Plans />} />

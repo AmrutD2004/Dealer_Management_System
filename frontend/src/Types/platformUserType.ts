@@ -3,6 +3,12 @@ export interface platformuserCreateType {
     passwordHash: string
 }
 
+export interface platformNewuserCreateType {
+    email: string,
+    passwordHash: string,
+    role : string
+}
+
 export interface platformuserLoginType {
     email: string,
     passwordHash: string

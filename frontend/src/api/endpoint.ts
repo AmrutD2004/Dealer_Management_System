@@ -16,6 +16,7 @@ export const platformUserLogin = async (payload: {}) => {
     return await response.data;
 }
 
+
 export const isAuth = async () => {
     const response = await api.get(`/api/platformuser/auth`)
     return await response.data;
@@ -30,4 +31,9 @@ export const getTenantList = async (skip : number, take : number) => {
     const response = await api.get(`/api/tenant/get?skip=${skip}&take=${take}`)
     return await response.data;
 
+}
+
+export const createNewPlatformUser = async(payload : {})=>{
+    const response = await api.post(`/api/platform/newuser/create`, payload)
+    return await response.data;
 }

@@ -20,7 +20,7 @@ import {
 
 import { Field } from "@/components/Field";
 
-import { asChoice } from "@/components/Tenants/helpers";
+import { asChoice } from "@/lib/utils";
 
 import { getFullName } from "./helpers";
 

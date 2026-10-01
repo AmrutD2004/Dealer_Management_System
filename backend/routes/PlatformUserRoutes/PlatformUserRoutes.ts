@@ -8,5 +8,5 @@ const platformuserRoutes = Router()
 platformuserRoutes.post('/platformuser/create', createPlatformUser)
 platformuserRoutes.post('/platformuser/login', login)
 platformuserRoutes.get('/platformuser/auth', platformUserAuth ,isAuthenticated)
-platformuserRoutes.post('/platformuser/newuser/create', platformUserAuth, addPlatformUsers)
+platformuserRoutes.post('/platform/newuser/create', platformUserAuth, addPlatformUsers)
 export default platformuserRoutes

@@ -156,7 +156,7 @@ export const logout = async (req: Request, res: Response) => {
 
 export const addPlatformUsers = async (req: Request, res: Response) => {
     const { puId, puRole } = req.user;
-    const { email, passwordHash } = req.body;
+    const { email, passwordHash, role } = req.body;
     if (!puId && !puRole) {
         return res.status(401).json({
             success: false,
@@ -189,7 +189,8 @@ export const addPlatformUsers = async (req: Request, res: Response) => {
         const data = await prisma.platformUser.create({
             data: {
                 email: email,
-                passwordHash: hashedPassword
+                passwordHash: hashedPassword,
+                role : role
             }
         })
         return res.status(201).json({

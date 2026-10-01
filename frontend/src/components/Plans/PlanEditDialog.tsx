@@ -21,11 +21,9 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Field } from "@/components/Field";
 
-<<<<<<< HEAD
-=======
-import { asChoice } from "@/components/Tenants/helpers";
 
->>>>>>> b9df0aec96c0f34f33694e6f3fedd0ffa66e7396
+
+
 import {
   featuresToText,
   isPlanValid,

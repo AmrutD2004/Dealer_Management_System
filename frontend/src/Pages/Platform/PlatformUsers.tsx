@@ -206,6 +206,7 @@ export default function PlatformUsers() {
 
         <PlatformUserCreateDialog
           open={isCreateOpen}
+         
           onOpenChange={onCreateOpenChange}
           onCreate={handleCreate}
         />
@@ -227,6 +228,7 @@ export default function PlatformUsers() {
 
         <PlatformUserDeleteDialog
           open={isDeleteOpen}
+          
           onOpenChange={onDeleteOpenChange}
           user={selectedUser}
           onConfirm={handleDelete}
