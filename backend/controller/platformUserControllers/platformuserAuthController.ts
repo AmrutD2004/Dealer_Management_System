@@ -5,6 +5,20 @@ import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 
 const jwtsecret = process.env.JWT_SECRET;
+
+/*
+ * Never expose the credential hash to a client, so every read that
+ * reaches the frontend goes through this projection.
+ */
+
+const platformUserPublicFields = {
+    id: true,
+    email: true,
+    role: true,
+    createdAt: true,
+    updatedAt: true
+} as const;
+
 export const createPlatformUser = async (req: Request, res: Response) => {
     const { email, passwordHash } = req.body;
 
@@ -117,7 +131,8 @@ export const isAuthenticated = async (req: Request, res: Response) => {
     }
     try {
         const data = await prisma.platformUser.findUnique({
-            where: { id: puId }
+            where: { id: puId },
+            select: platformUserPublicFields
         })
         return res.status(200).json({
             success: true,
@@ -198,6 +213,173 @@ export const addPlatformUsers = async (req: Request, res: Response) => {
             message: 'User Created'
         })
     } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+
+
+export const editPlatformUser = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    const { email, passwordHash, role } = req.body;
+    if (!puId && !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    if (puRole !== 'SUPER_ADMIN') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    if (!email) {
+        return res.status(400).json({
+            success: false,
+            message: 'Email is required'
+        })
+    } try {
+        const data = await prisma.platformUser.update({
+            data: {
+                email: email,
+                ...(passwordHash ? { passwordHash: await bcrypt.hash(passwordHash, 10) } : {}),
+                role: role
+            },
+            where: { id: Number(id) }
+        })
+        return res.status(201).json({
+            success : true,
+            message : 'Data Updated'
+        })
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+
+export const deletePlatformUser = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    if (!puId && !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    if (puRole !== 'SUPER_ADMIN') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    if (Number(id) === puId) {
+        return res.status(400).json({
+            success: false,
+            message: 'You cannot delete your own account'
+        })
+    }
+    try {
+        const isUserExist = await prisma.platformUser.findUnique({
+            where: { id: Number(id) },
+            select: { id: true }
+        })
+        if (!isUserExist) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+        await prisma.platformUser.delete({
+            where: { id: Number(id) }
+        })
+        return res.status(200).json({
+            success: true,
+            message: 'User deleted successfully'
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+
+export const getListOfPlatformUsers = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { skip, take } = req.query;
+    if (!puId && !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    try {
+        const totalPlatformUsersCount = await prisma.platformUser.count()
+        const platformUsersList = await prisma.platformUser.findMany({
+            skip: Number(skip),
+            take: Number(take),
+            select: platformUserPublicFields
+        })
+        return res.status(200).json({
+            success: true,
+            data: platformUsersList,
+            count: totalPlatformUsersCount
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+export const getPlatformUserById = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    if (!puId && !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    try{
+        const getPlatformUserDetails = await prisma.platformUser.findUnique({
+            where : {id : Number(id)},
+            select: platformUserPublicFields
+        }) 
+        return res.status(200).json({
+            success : true,
+            data : getPlatformUserDetails
+        })
+    }catch (err) {
         console.log(err)
         return res.status(500).json({
             success: false,
