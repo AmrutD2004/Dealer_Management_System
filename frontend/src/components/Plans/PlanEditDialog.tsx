@@ -21,8 +21,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Field } from "@/components/Field";
 
+<<<<<<< HEAD
+=======
 import { asChoice } from "@/components/Tenants/helpers";
 
+>>>>>>> b9df0aec96c0f34f33694e6f3fedd0ffa66e7396
 import {
   featuresToText,
   isPlanValid,
@@ -32,6 +35,9 @@ import {
 } from "./helpers";
 
 import type { BillingCycle, Plan } from "./types";
+
+const asChoice = <T extends string>(value: string, fallback: T): T =>
+  (value as T) ?? fallback;
 
 interface PlanEditDialogProps {
   open: boolean;
@@ -192,12 +198,6 @@ export function PlanEditDialog({
                   <Field label="Billing Cycle">
                     <Select
                       value={draft.billingCycle}
-                      onValueChange={(value) =>
-                        update(
-                          "billingCycle",
-                          asChoice<BillingCycle>(value, "MONTHLY"),
-                        )
-                      }
                     >
                       <SelectTrigger>
                         <SelectValue />

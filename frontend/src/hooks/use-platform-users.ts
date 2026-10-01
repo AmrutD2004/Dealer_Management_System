@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { usePlatformUsersStore } from "@/components/PlatformUsers";
-import { countSuperAdmins, getFullName } from "@/components/PlatformUsers/helpers";
+
 
 import type {
   PlatformUser,
@@ -12,6 +12,12 @@ import type {
 } from "@/components/PlatformUsers/types";
 
 const ITEMS_PER_PAGE = 5;
+
+const getFullName = (user: PlatformUser): string =>
+  `${user.firstName} ${user.middleName ? `${user.middleName} ` : ""}${user.lastName}`.trim();
+
+const countSuperAdmins = (users: PlatformUser[]): number =>
+  users.filter((user) => user.role === "SUPER_ADMIN" && user.status === "ACTIVE").length;
 
 /*
  * Only known values are accepted so a hand-typed query string cannot

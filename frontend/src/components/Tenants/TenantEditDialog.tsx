@@ -21,8 +21,6 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Field } from "@/components/Field";
 
-import { asChoice } from "./helpers";
-
 import type {
   SubscriptionPlan,
   SubscriptionStatus,
@@ -228,7 +226,7 @@ export function TenantEditDialog({
                       onValueChange={(value) =>
                         update(
                           "plan",
-                          asChoice<SubscriptionPlan>(value, "BASIC"),
+                          (value as SubscriptionPlan) ?? "BASIC",
                         )
                       }
                     >
@@ -254,7 +252,7 @@ export function TenantEditDialog({
                       onValueChange={(value) =>
                         update(
                           "subscriptionStatus",
-                          asChoice<SubscriptionStatus>(value, "TRIAL"),
+                          (value as SubscriptionStatus) ?? "TRIAL",
                         )
                       }
                     >

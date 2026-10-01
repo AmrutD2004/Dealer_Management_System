@@ -1,5 +1,4 @@
 import DashboardLayout from "@/components/Layout/DashboardLayout";
-import { useTenants } from "@/hooks/use-tenants";
 
 import {
   TenantDeleteDialog,
@@ -7,13 +6,11 @@ import {
   TenantViewDialog,
   TenantsFilters,
   TenantsHeader,
-  TenantsPagination,
   TenantsTable,
 } from "@/components/Tenants";
 
 
 export default function Tenants() {
-  const { tenants } = useTenants();
 
   return (
     <DashboardLayout>

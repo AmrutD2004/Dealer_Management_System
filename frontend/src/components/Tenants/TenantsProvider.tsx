@@ -2,10 +2,11 @@ import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
 import { initialTenants } from "./data";
-import { getToday } from "./helpers";
 import { TenantsContext } from "./tenants-context";
 
 import type { Tenant, TenantDraft } from "./types";
+
+const getToday = (): string => new Date().toISOString().split("T")[0];
 
 /*
  * The tenant list is owned above the router so it survives the

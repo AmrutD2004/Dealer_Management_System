@@ -44,23 +44,20 @@ export default function PlatformDashboard() {
         <div className="mx-auto max-w-[1600px] space-y-6">
           <DashboardHeader />
 
-          <TenantsStats tenants={tenants} />
+
+          <TenantsStats  />
 
           <DashboardQuickActions
-            total={tenants.length}
-            trial={counts.trial}
-            inactive={counts.inactive}
+           
           />
+
+          
+        </div>
+
+        
 
           <RecentTenants tenants={tenants} onView={handleViewTenant} />
         </div>
-
-        <TenantViewDialog
-          open={isViewOpen}
-          onOpenChange={setIsViewOpen}
-          tenant={selectedTenant}
-        />
-      </div>
     </DashboardLayout>
   );
 }

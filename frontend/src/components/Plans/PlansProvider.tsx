@@ -1,12 +1,16 @@
 import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
-import { getToday } from "@/components/Tenants/helpers";
+
 
 import { initialPlans } from "./data";
 import { PlansContext } from "./plans-context";
 
 import type { Plan } from "./types";
+
+
+const getToday = (): string => new Date().toISOString().split("T")[0];
+
 
 /*
  * Client side only, mirroring TenantsProvider. Nothing here talks to

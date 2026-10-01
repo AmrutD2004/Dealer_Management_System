@@ -11,9 +11,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { asChoice } from "./helpers";
-
-
 export function TenantsFilters() {
   return (
     <Card className="border-slate-200 shadow-sm">

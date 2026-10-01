@@ -4,10 +4,10 @@ import bcrypt from 'bcrypt'
 
 export const createTenant = async (req: Request, res: Response) => {
     const { puId, puRole } = req.user;
-    if(puRole !== 'SUPER_ADMIN'){
+    if (puRole !== 'SUPER_ADMIN') {
         return res.status(401).json({
-            success : false,
-            message : 'Not authoried to perform operation'
+            success: false,
+            message: 'Not authoried to perform operation'
         })
     }
     const {
@@ -274,8 +274,37 @@ export const createTenant = async (req: Request, res: Response) => {
         });
     } catch (error) {
         return res.status(500).json({
-            success : false,
-            message : `Server error ${error}`
+            success: false,
+            message: `Server error ${error}`
+        })
+    }
+}
+
+export const getTenantList = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { skip, take } = req.query;
+    if (!puId || !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    try {
+        const totalTenantsCount = await prisma.tenant.count()
+        const tenantList = await prisma.tenant.findMany({
+            skip: Number(skip),
+            take: Number(take)
+        })
+        return res.status(200).json({
+            success: true,
+            data: tenantList,
+            count: totalTenantsCount
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error ${error}`
         })
     }
 }
