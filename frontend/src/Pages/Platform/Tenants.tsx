@@ -1,9 +1,6 @@
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 
 import {
-  TenantDeleteDialog,
-  TenantEditDialog,
-  TenantViewDialog,
   TenantsFilters,
   TenantsHeader,
   TenantsTable,
@@ -26,10 +23,6 @@ export default function Tenants() {
             
           />
         </div>
-
-        <TenantViewDialog />
-
-        {/* <TenantEditDialog /> */}
       </div>
     </DashboardLayout>
   );

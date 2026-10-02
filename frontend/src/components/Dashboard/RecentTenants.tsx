@@ -1,4 +1,6 @@
-import { ArrowRight, Building2, Eye } from "lucide-react";
+import dayjs from "dayjs";
+
+import { ArrowRight, Building2, Eye, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 
@@ -12,7 +14,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import type { SubscriptionPlan, SubscriptionStatus } from "@/components/Tenants/types";
+/*
+ * The API returns the raw Prisma enum, so values arrive as
+ * "Basic"/"Pro"/"Premium" and the status codes are nullable. Both
+ * helpers normalise defensively rather than assuming a seeded value.
+ */
 
 const getActiveStatusClass = (isActive: boolean): string =>
   isActive
@@ -22,8 +28,8 @@ const getActiveStatusClass = (isActive: boolean): string =>
 const getActiveStatusLabel = (isActive: boolean): string =>
   isActive ? "Active" : "Inactive";
 
-const getPlanLabel = (plan: SubscriptionPlan): string => {
-  switch (plan) {
+const getPlanLabel = (plan: string | null | undefined): string => {
+  switch (plan?.toUpperCase()) {
     case "BASIC":
       return "Basic";
     case "PRO":
@@ -31,11 +37,13 @@ const getPlanLabel = (plan: SubscriptionPlan): string => {
     case "PREMIUM":
       return "Premium";
     default:
-      return plan;
+      return plan || "No plan";
   }
 };
 
-const getSubscriptionStatusClass = (status: SubscriptionStatus): string => {
+const getSubscriptionStatusClass = (
+  status: string | null | undefined,
+): string => {
   switch (status) {
     case "TRIAL":
       return "border-blue-200 bg-blue-50 text-blue-700";
@@ -52,7 +60,9 @@ const getSubscriptionStatusClass = (status: SubscriptionStatus): string => {
   }
 };
 
-const getSubscriptionStatusLabel = (status: SubscriptionStatus): string => {
+const getSubscriptionStatusLabel = (
+  status: string | null | undefined,
+): string => {
   switch (status) {
     case "TRIAL":
       return "Trial";
@@ -65,20 +75,21 @@ const getSubscriptionStatusLabel = (status: SubscriptionStatus): string => {
     case "CANCELLED":
       return "Cancelled";
     default:
-      return status;
+      return status || "Unknown";
   }
 };
 
-import type { Tenant } from "@/components/Tenants/types";
+import type { tenantType } from "@/Types/tenantTypes";
 
 const MAX_ROWS = 5;
 
 interface RecentTenantsProps {
-  tenants: Tenant[];
-  onView: (tenant: Tenant) => void;
+  tenants: tenantType[];
+  isLoading?: boolean;
+  onView: (tenant: tenantType) => void;
 }
 
-export function RecentTenants({ tenants, onView }: RecentTenantsProps) {
+export function RecentTenants({ tenants, isLoading, onView }: RecentTenantsProps) {
   const recentTenants = [...tenants]
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     .slice(0, MAX_ROWS);
@@ -89,9 +100,6 @@ export function RecentTenants({ tenants, onView }: RecentTenantsProps) {
         <CardTitle className="text-base">Recently Added Tenants</CardTitle>
 
         <p className="text-sm text-slate-500">
-
-          The most recently registered organizations
-
           The {MAX_ROWS} most recently registered organizations
         </p>
 
@@ -111,7 +119,13 @@ export function RecentTenants({ tenants, onView }: RecentTenantsProps) {
       </CardHeader>
 
       <CardContent className="p-0">
-        {recentTenants.length === 0 ? (
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <Loader2 className="mb-2 h-8 w-8 animate-spin text-slate-300" />
+
+            <p className="text-sm text-slate-500">Loading tenants...</p>
+          </div>
+        ) : recentTenants.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12">
             <Building2 className="mb-2 h-8 w-8 text-slate-300" />
 
@@ -141,7 +155,7 @@ export function RecentTenants({ tenants, onView }: RecentTenantsProps) {
                 </div>
 
                 <span className="text-sm text-slate-600">
-                  {getPlanLabel(tenant.plan)}
+                  {getPlanLabel(tenant.subscriptionPlan)}
                 </span>
 
                 <Badge
@@ -160,7 +174,9 @@ export function RecentTenants({ tenants, onView }: RecentTenantsProps) {
                   {getActiveStatusLabel(tenant.isActive)}
                 </Badge>
 
-                <span className="text-sm text-slate-500">{tenant.createdAt}</span>
+                <span className="text-sm text-slate-500">
+                  {dayjs(tenant.createdAt).format("DD MMM YYYY")}
+                </span>
 
                 <Button
                   variant="ghost"

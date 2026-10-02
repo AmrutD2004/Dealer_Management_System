@@ -53,3 +53,49 @@ export interface tenantType {
     createdAt: string,
     updatedAt: string
 }
+
+/* Mirrors the Prisma enum, which is title cased and therefore has to be
+   sent verbatim or the update is rejected. Do not uppercase these. */
+
+export type tenantPlanType = "Basic" | "Pro" | "Premium";
+
+export type tenantSubscriptionStatusType =
+    "TRIAL"
+    | "ACTIVE"
+    | "SUSPENDED"
+    | "EXPIRED"
+    | "CANCELLED";
+
+/* PUT /api/tenant/update/:id rejects the request unless every one of these
+   is present, so a partial save is not possible. */
+
+export interface tenantUpdateType {
+    tenant_code: string,
+    tenant_name: string,
+    tenant_email: string,
+    tenant_phone: string,
+    tenant_gst_number: string,
+    tenant_address: string,
+    tenant_register_city: string,
+    tenant_register_state: string,
+    tenant_register_country: string,
+    tenant_register_pincode: string,
+    tenant_sub_plan: tenantPlanType,
+    tenant_sub_status: tenantSubscriptionStatusType,
+}
+
+/*
+ * GET /api/tenant/get/:id joins the creating admin. Only the fields the
+ * view dialog renders are declared here, so the joined passwordHash
+ * cannot reach the UI even by accident.
+ */
+
+export interface tenantCreatorType {
+    id: number,
+    email: string,
+    role: string,
+}
+
+export interface tenantDetailType extends tenantType {
+    createdByUser: tenantCreatorType | null,
+}

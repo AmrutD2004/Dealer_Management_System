@@ -282,7 +282,7 @@ export const createTenant = async (req: Request, res: Response) => {
 
 export const getTenantList = async (req: Request, res: Response) => {
     const { puId, puRole } = req.user;
-    const { skip, take } = req.query;
+    const { skip, take, sort } = req.query;
     if (!puId || !puRole) {
         return res.status(401).json({
             success: false,
@@ -291,14 +291,30 @@ export const getTenantList = async (req: Request, res: Response) => {
     }
     try {
         const totalTenantsCount = await prisma.tenant.count()
+
+        /* Feeds the platform dashboard KPI cards. Kept alongside the total so
+           the dashboard can render both numbers from a single request. */
+
+        const activeTenantsCount = await prisma.tenant.count({
+            where: { isActive: true }
+        })
+
         const tenantList = await prisma.tenant.findMany({
             skip: Number(skip),
-            take: Number(take)
+            take: Number(take),
+
+            /* Opt-in newest-first ordering for the dashboard summary. Callers
+               that omit `sort` keep the previous unsorted behaviour. */
+
+            ...(sort === 'recent'
+                ? { orderBy: [{ createdAt: 'desc' }, { id: 'desc' }] }
+                : {})
         })
         return res.status(200).json({
             success: true,
             data: tenantList,
-            count: totalTenantsCount
+            count: totalTenantsCount,
+            activeCount: activeTenantsCount
         })
 
     } catch (error) {

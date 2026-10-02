@@ -1,10 +1,10 @@
-import { useContext, type ReactNode } from "react";
+import { useContext, useState } from "react";
 
 import {
   Building2,
-  CheckCircle2,
   CirclePause,
   Eye,
+  Loader2,
   MoreHorizontal,
   Pencil,
   Trash2,
@@ -36,16 +36,77 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { toast } from "@/components/ui/toast";
+
+import {
+  getActiveStatusClass,
+  getActiveStatusLabel,
+  getPlanClass,
+  getPlanLabel,
+  getSubscriptionStatusClass,
+  getSubscriptionStatusLabel,
+} from "./helpers";
+import { TenantDeleteDialog } from "./TenantDeleteDialog";
+import { TenantEditDialog } from "./TenantEditDialog";
+import { TenantViewDialog } from "./TenantViewDialog";
 
 import { PlatformUserContext } from "@/contexts/PlatformUserContext";
+import { suspendTenant } from "@/api/endpoint";
+import { getApiErrorMessage } from "@/lib/utils";
+
 import type { tenantType } from "@/Types/tenantTypes";
 import { cn } from "cn";
 
-
+type RowAction = "view" | "edit" | "delete" | null;
 
 export function TenantsTable() {
-  const { tenantList, totalTenantCount, take, skip, setSkip } = useContext(PlatformUserContext);
+  const { tenantList, totalTenantCount, take, skip, setSkip, fetchTenantList } = useContext(PlatformUserContext);
   const noOfPages = Math.ceil(totalTenantCount / take)
+
+  const [selectedTenant, setSelectedTenant] = useState<tenantType | null>(null);
+  const [action, setAction] = useState<RowAction>(null);
+  const [suspendingId, setSuspendingId] = useState<number | null>(null);
+
+  const isOpen = (target: Exclude<RowAction, null>) => action === target;
+
+  const close = () => setAction(null);
+
+  const openFor = (target: Exclude<RowAction, null>, tenant: tenantType) => {
+    setSelectedTenant(tenant);
+    setAction(target);
+  }
+
+  /* Mutations refetch so the table always reflects the server. */
+
+  const refresh = () => fetchTenantList(skip, take);
+
+  /*
+   * Suspend only moves subscriptionStatus, so it needs no confirmation
+   * dialog the way deactivation does.
+   */
+
+  const handleSuspend = async (tenant: tenantType) => {
+    setSuspendingId(tenant.id);
+
+    try {
+      const data = await suspendTenant(tenant.id, "SUSPENDED");
+
+      if (data?.success) {
+        toast.add({ type: "success", description: data?.message });
+
+        refresh();
+      } else {
+        toast.add({ type: "error", description: data?.message });
+      }
+    } catch (err) {
+      toast.add({
+        type: "error",
+        description: getApiErrorMessage(err, "Failed to suspend tenant"),
+      });
+    } finally {
+      setSuspendingId(null);
+    }
+  }
 
   const handlePrevious = () => {
     setSkip((prev: number) =>
@@ -123,21 +184,20 @@ export function TenantsTable() {
 
                   {/* Plan */}
                   <TableCell>
-                    <Badge className={`${tenant.subscriptionPlan === 'Basic' ? 'bg-muted-foreground/20 border-muted-foreground text-accent-foreground': tenant.subscriptionPlan === 'Pro' ? 'bg-blue-200 border border-blue-300 text-blue-500' : 'bg-yellow-200 text-yellow-500 border border-yellow-300'}`} variant="outline">{tenant.subscriptionPlan}</Badge>
+                    <Badge variant="outline" className={getPlanClass(tenant.subscriptionPlan)}>{getPlanLabel(tenant.subscriptionPlan)}</Badge>
                   </TableCell>
 
                   {/* Subscription */}
                   <TableCell>
-                    <Badge
-                    >
-                      {tenant.subscriptionStatus}
+                    <Badge variant="outline" className={getSubscriptionStatusClass(tenant.subscriptionStatus)}>
+                      {getSubscriptionStatusLabel(tenant.subscriptionStatus)}
                     </Badge>
                   </TableCell>
 
                   {/* Active Status */}
                   <TableCell>
-                    <Badge className={`${tenant.isActive ? 'bg-green-100 border-green-300 text-green-500' : 'bg-red-100 border-red-300 text-red-500'}`}>
-                      {tenant.isActive ? 'Active' : 'Deactive'}
+                    <Badge variant="outline" className={getActiveStatusClass(tenant.isActive)}>
+                      {getActiveStatusLabel(tenant.isActive)}
                     </Badge>
                   </TableCell>
 
@@ -149,40 +209,49 @@ export function TenantsTable() {
                   {/* Actions */}
                   <TableCell className="text-right">
                     <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <Button variant="ghost" size="icon">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
+                      <DropdownMenuTrigger
+                        render={
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            aria-label={`Actions for ${tenant.tenantName}`}
+                          />
+                        }
+                      >
+                        <MoreHorizontal className="h-4 w-4" />
                       </DropdownMenuTrigger>
 
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => openFor("view", tenant)}>
                           <Eye className="mr-2 h-4 w-4" />
                           View
                         </DropdownMenuItem>
 
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => openFor("edit", tenant)}>
                           <Pencil className="mr-2 h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
 
-                        {tenant.isActive ? (
-                          <DropdownMenuItem>
+                        <DropdownMenuItem
+                          disabled={suspendingId === tenant.id}
+                          onClick={() => handleSuspend(tenant)}
+                        >
+                          {suspendingId === tenant.id ? (
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          ) : (
                             <CirclePause className="mr-2 h-4 w-4" />
-                            Suspend
-                          </DropdownMenuItem>
-                        ) : (
-                          <DropdownMenuItem>
-                            <CheckCircle2 className="mr-2 h-4 w-4" />
-                            Activate
-                          </DropdownMenuItem>
-                        )}
+                          )}
+                          Suspend
+                        </DropdownMenuItem>
 
                         <DropdownMenuSeparator />
 
-                        <DropdownMenuItem className="text-red-600 focus:text-red-600">
+                        <DropdownMenuItem
+                          className="text-red-600 focus:text-red-600"
+                          onClick={() => openFor("delete", tenant)}
+                        >
                           <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
+                          Deactivate
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -228,6 +297,26 @@ export function TenantsTable() {
           </Pagination>
         </div>
       </CardContent>
+
+      <TenantViewDialog
+        open={isOpen("view")}
+        onOpenChange={(open) => !open && close()}
+        tenantId={selectedTenant?.id ?? null}
+      />
+
+      <TenantEditDialog
+        open={isOpen("edit")}
+        onOpenChange={(open) => !open && close()}
+        tenant={selectedTenant}
+        onSaved={refresh}
+      />
+
+      <TenantDeleteDialog
+        open={isOpen("delete")}
+        onOpenChange={(open) => !open && close()}
+        tenant={selectedTenant}
+        onDeleted={refresh}
+      />
     </Card>
   );
 }
