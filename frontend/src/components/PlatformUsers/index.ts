@@ -1,5 +1,4 @@
 export { PlatformUsersHeader } from "./PlatformUsersHeader";
-export { PlatformUsersStats } from "./PlatformUsersStats";
 export { PlatformUsersFilters } from "./PlatformUsersFilters";
 export { PlatformUsersTable } from "./PlatformUsersTable";
 

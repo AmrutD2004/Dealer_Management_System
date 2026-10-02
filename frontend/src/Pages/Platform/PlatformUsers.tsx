@@ -6,7 +6,6 @@ import {
   PlatformUserCreateDialog,
   PlatformUsersFilters,
   PlatformUsersHeader,
-  PlatformUsersStats,
   PlatformUsersTable,
   getRoleLabel,
 } from "@/components/PlatformUsers";
@@ -15,8 +14,6 @@ import { usePlatformUsers } from "@/hooks/use-platform-users";
 
 export default function PlatformUsers() {
   const {
-    platformUsers,
-
     search,
     onSearchChange,
 
@@ -55,8 +52,6 @@ export default function PlatformUsers() {
       <div className="min-h-screen bg-slate-50 p-6">
         <div className="mx-auto max-w-[1600px] space-y-6">
           <PlatformUsersHeader onCreateUser={onCreateUser} />
-
-          <PlatformUsersStats platformUsers={platformUsers} />
 
           <PlatformUsersFilters
             search={search}

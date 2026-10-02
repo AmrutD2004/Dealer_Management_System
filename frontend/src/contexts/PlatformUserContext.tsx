@@ -39,7 +39,7 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
     const [take, setTake] = useState<number>(3)
 
     const [platformUserSkip, setPlatformUserSkip] = useState<number>(0)
-    const [platformUserTake, setPlatformUserTake] = useState<number>(3)
+    const [platformUserTake, setPlatformUserTake] = useState<number>(1)
     const fetchPlatformUsersList = async(platformUserSkip : number, platformUserTake : number) => {
         try {
             const data = await getPlatformUsersList(platformUserSkip, platformUserTake);

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import type { platformUserUpdateType } from "@/Types/platformUserType";
+import type { tenantSubscriptionStatusType, tenantUpdateType } from "@/Types/tenantTypes";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -29,10 +30,31 @@ export const tenantCreation = async (formData: {}) => {
     return await response.data;
 }
 
-export const getTenantList = async (skip : number, take : number) => {
-    const response = await api.get(`/api/tenant/get?skip=${skip}&take=${take}`)
+export const getTenantList = async (skip : number, take : number, sort? : string) => {
+    const sortQuery = sort ? `&sort=${sort}` : ""
+    const response = await api.get(`/api/tenant/get/all?skip=${skip}&take=${take}${sortQuery}`)
     return await response.data;
 
+}
+
+export const getTenantById = async (id : number) => {
+    const response = await api.get(`/api/tenant/get/${id}`)
+    return await response.data;
+}
+
+export const updateTenant = async (id : number, payload : tenantUpdateType) => {
+    const response = await api.put(`/api/tenant/update/${id}`, payload)
+    return await response.data;
+}
+
+export const suspendTenant = async (id : number, status : tenantSubscriptionStatusType) => {
+    const response = await api.patch(`/api/tenant/subscription/suspend/${id}`, { status })
+    return await response.data;
+}
+
+export const deactivateTenant = async (id : number) => {
+    const response = await api.patch(`/api/tenant/deactivate/${id}`)
+    return await response.data;
 }
 
 export const createNewPlatformUser = async(payload : {})=>{

@@ -151,10 +151,10 @@ export function TenantCreateForm({ onCancel }: props) {
           passwordHash: ''
         })
       }
-      if (!data?.message) {
+      if (!data?.success) {
         toast.add({
           type: 'error',
-          description: data?.message
+          description: data?.message ?? 'Failed to create tenant'
         })
       }
     } catch (error: any) {
@@ -172,46 +172,46 @@ export function TenantCreateForm({ onCancel }: props) {
       {/* Tenant Details */}
       <FormSection title="Tenant Details" withSeparator={false}>
         <Field label="Tenant Name *" >
-          <Input name="tenantName" placeholder="ABC Motors Pvt Ltd" onChange={handleTenantChange} />
+          <Input name="tenantName" value={tenantData.tenantName} placeholder="ABC Motors Pvt Ltd" onChange={handleTenantChange} />
         </Field>
 
         <Field label="Email *">
-          <Input name="email" type="email" placeholder="admin@company.com" onChange={handleTenantChange} />
+          <Input name="email" value={tenantData.email} type="email" placeholder="admin@company.com" onChange={handleTenantChange} />
         </Field>
 
         <Field label="Phone *">
-          <Input name="phone" placeholder="98765 43210" onChange={handleTenantChange} />
+          <Input name="phone" value={tenantData.phone} placeholder="98765 43210" onChange={handleTenantChange} />
         </Field>
 
         <Field label="GST Number *">
-          <Input name="gstNumber" placeholder="27AAECA1234A1Z5" onChange={handleTenantChange} />
+          <Input name="gstNumber" value={tenantData.gstNumber} placeholder="27AAECA1234A1Z5" onChange={handleTenantChange} />
         </Field>
 
         <Field label="Address *" className="sm:col-span-2">
-          <Textarea name="address" placeholder="Business address" onChange={handleTenantChange} />
+          <Textarea name="address" value={tenantData.address} placeholder="Business address" onChange={handleTenantChange} />
         </Field>
 
         <Field label="City *">
-          <Input name="city" placeholder="Pune" onChange={handleTenantChange} />
+          <Input name="city" value={tenantData.city} placeholder="Pune" onChange={handleTenantChange} />
         </Field>
 
         <Field label="State *">
-          <Input name="state" placeholder="Maharashtra" onChange={handleTenantChange} />
+          <Input name="state" value={tenantData.state} placeholder="Maharashtra" onChange={handleTenantChange} />
         </Field>
 
         <Field label="Country *">
-          <Input name="country" placeholder="India" onChange={handleTenantChange} />
+          <Input name="country" value={tenantData.country} placeholder="India" onChange={handleTenantChange} />
         </Field>
 
         <Field label="Pincode *">
-          <Input name="pincode" placeholder="411001" onChange={handleTenantChange} />
+          <Input name="pincode" value={tenantData.pincode} placeholder="411001" onChange={handleTenantChange} />
         </Field>
       </FormSection>
 
       {/* Subscription */}
       <FormSection title="Subscription">
         <Field label="Subscription Plan">
-          <Select onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionPlan: value }))}>
+          <Select name="subscriptionPlan" value={tenantData.subscriptionPlan || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionPlan: value }))}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select Plan" />
             </SelectTrigger>
@@ -225,7 +225,7 @@ export function TenantCreateForm({ onCancel }: props) {
         </Field>
 
         <Field label="Subscription Status">
-          <Select onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionStatus: value }))}>
+          <Select name="subscriptionStatus" value={tenantData.subscriptionStatus || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionStatus: value }))}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select Status" />
             </SelectTrigger>
@@ -244,42 +244,42 @@ export function TenantCreateForm({ onCancel }: props) {
       <FormSection title="Initial Branch">
 
         <Field label="Branch Name *">
-          <Input name="branchName" placeholder="Pune Main Branch" onChange={handleBranchChange} />
+          <Input name="branchName" value={initialBranchData.branchName} placeholder="Pune Main Branch" onChange={handleBranchChange} />
         </Field>
 
         <Field label="Email">
-          <Input name="email" type="email" placeholder="branch@company.com" onChange={handleBranchChange} />
+          <Input name="email" value={initialBranchData.email} type="email" placeholder="branch@company.com" onChange={handleBranchChange} />
         </Field>
 
         <Field label="Address 1" className="sm:col-span-2">
-          <Textarea name="address1" placeholder="Branch address" onChange={handleBranchChange} />
+          <Textarea name="address1" value={initialBranchData.address1} placeholder="Branch address" onChange={handleBranchChange} />
         </Field>
         <Field label="Address 2" className="sm:col-span-2">
-          <Textarea name="address2" placeholder="Branch address" onChange={handleBranchChange} />
+          <Textarea name="address2" value={initialBranchData.address2 ?? ''} placeholder="Branch address" onChange={handleBranchChange} />
         </Field>
 
         <Field label="Locality">
-          <Input name="locality" placeholder="Kothrud" onChange={handleBranchChange} />
+          <Input name="locality" value={initialBranchData.locality} placeholder="Kothrud" onChange={handleBranchChange} />
         </Field>
 
         <Field label="City">
-          <Input name="city" placeholder="Pune" onChange={handleBranchChange} />
+          <Input name="city" value={initialBranchData.city} placeholder="Pune" onChange={handleBranchChange} />
         </Field>
 
         <Field label="State">
-          <Input name="state" placeholder="Maharashtra" onChange={handleBranchChange} />
+          <Input name="state" value={initialBranchData.state} placeholder="Maharashtra" onChange={handleBranchChange} />
         </Field>
 
         <Field label="Country">
-          <Input name="country" placeholder="India" onChange={handleBranchChange} />
+          <Input name="country" value={initialBranchData.country} placeholder="India" onChange={handleBranchChange} />
         </Field>
 
         <Field label="Phone">
-          <Input name="phone" placeholder="98765 43210" onChange={handleBranchChange} />
+          <Input name="phone" value={initialBranchData.phone} placeholder="98765 43210" onChange={handleBranchChange} />
         </Field>
         
         <Field label="Pincode">
-          <Input name="pincode" placeholder="411038" onChange={handleBranchChange} />
+          <Input name="pincode" value={initialBranchData.pincode} placeholder="411038" onChange={handleBranchChange} />
         </Field>
       </FormSection>
 
@@ -287,32 +287,32 @@ export function TenantCreateForm({ onCancel }: props) {
       <FormSection title="Initial Tenant Admin" withSeparator={false}>
 
         <Field label="First Name">
-          <Input name="firstName" placeholder="Rajesh" onChange={handleUserChange} />
+          <Input name="firstName" value={initialUserData.firstName} placeholder="Rajesh" onChange={handleUserChange} />
         </Field>
 
         <Field label="Middle Name">
-          <Input name="middleName" placeholder="Kumar" onChange={handleUserChange} />
+          <Input name="middleName" value={initialUserData.middleName} placeholder="Kumar" onChange={handleUserChange} />
         </Field>
 
         <Field label="Last Name">
-          <Input name="lastName" placeholder="Sharma" onChange={handleUserChange} />
+          <Input name="lastName" value={initialUserData.lastName} placeholder="Sharma" onChange={handleUserChange} />
         </Field>
 
         <Field label="Email *">
-          <Input name="email" type="email" placeholder="admin@company.com" onChange={handleUserChange} />
+          <Input name="email" value={initialUserData.email} type="email" placeholder="admin@company.com" onChange={handleUserChange} />
         </Field>
 
         <Field label="Mobile No *">
-          <Input name="mobileNo" placeholder="98765 43210" onChange={handleUserChange} />
+          <Input name="mobileNo" value={initialUserData.mobileNo} placeholder="98765 43210" onChange={handleUserChange} />
         </Field>
 
         <Field label="Password *" >
-          <Input name="passwordHash" type="password" placeholder="••••••••••" onChange={handleUserChange} />
+          <Input name="passwordHash" value={initialUserData.passwordHash} type="password" placeholder="••••••••••" onChange={handleUserChange} />
         </Field>
       </FormSection>
 
       <div className="flex justify-end gap-3 border-t border-slate-200 pt-6">
-        <Button type="button" variant="outline">
+        <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
           Cancel
         </Button>
 

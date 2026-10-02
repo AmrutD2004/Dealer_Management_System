@@ -1,4 +1,16 @@
-import { Building2, Pencil } from "lucide-react";
+import { useEffect, useState } from "react";
+
+import dayjs from "dayjs";
+
+import { InfoItem } from "./InfoItem";
+import {
+  getActiveStatusClass,
+  getActiveStatusLabel,
+  getPlanClass,
+  getPlanLabel,
+  getSubscriptionStatusClass,
+  getSubscriptionStatusLabel,
+} from "./helpers";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,74 +22,197 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/toast";
 
-import { InfoItem } from "./InfoItem";
+import { getTenantById } from "@/api/endpoint";
+import { getApiErrorMessage } from "@/lib/utils";
 
-import type { Tenant, SubscriptionPlan, SubscriptionStatus } from "./types";
+import type { tenantDetailType } from "@/Types/tenantTypes";
 
-const getActiveStatusClass = (isActive: boolean): string =>
-  isActive
-    ? "border-green-200 bg-green-50 text-green-700"
-    : "border-red-200 bg-red-50 text-red-700";
+interface TenantViewDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  /* Only the id is trusted from the row; the body is refetched so the
+     dialog always shows the current server state. */
+  tenantId: number | null;
+}
 
-const getActiveStatusLabel = (isActive: boolean): string =>
-  isActive ? "Active" : "Inactive";
+export function TenantViewDialog({
+  open,
+  onOpenChange,
+  tenantId,
+}: TenantViewDialogProps) {
+  const [tenant, setTenant] = useState<tenantDetailType | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-const getPlanLabel = (plan: SubscriptionPlan): string => {
-  switch (plan) {
-    case "BASIC":
-      return "Basic";
-    case "PRO":
-      return "Pro";
-    case "PREMIUM":
-      return "Premium";
-    default:
-      return plan;
-  }
-};
+  useEffect(() => {
+    if (!open || tenantId === null) {
+      return;
+    }
 
-const getSubscriptionStatusClass = (status: SubscriptionStatus): string => {
-  switch (status) {
-    case "TRIAL":
-      return "border-blue-200 bg-blue-50 text-blue-700";
-    case "ACTIVE":
-      return "border-green-200 bg-green-50 text-green-700";
-    case "SUSPENDED":
-      return "border-yellow-200 bg-yellow-50 text-yellow-700";
-    case "EXPIRED":
-      return "border-orange-200 bg-orange-50 text-orange-700";
-    case "CANCELLED":
-      return "border-red-200 bg-red-50 text-red-700";
-    default:
-      return "border-slate-200 bg-slate-50 text-slate-700";
-  }
-};
+    let isMounted = true;
 
-const getSubscriptionStatusLabel = (status: SubscriptionStatus): string => {
-  switch (status) {
-    case "TRIAL":
-      return "Trial";
-    case "ACTIVE":
-      return "Active";
-    case "SUSPENDED":
-      return "Suspended";
-    case "EXPIRED":
-      return "Expired";
-    case "CANCELLED":
-      return "Cancelled";
-    default:
-      return status;
-  }
-};
+    const fetchTenant = async () => {
+      setIsLoading(true);
 
+      try {
+        const data = await getTenantById(tenantId);
 
+        if (!isMounted) {
+          return;
+        }
 
-export function TenantViewDialog() {
+        if (data?.success) {
+          setTenant(data?.data ?? null);
+        } else {
+          setTenant(null);
+
+          toast.add({
+            type: "error",
+            description: data?.message ?? "Failed to load tenant",
+          });
+        }
+      } catch (err) {
+        if (isMounted) {
+          setTenant(null);
+
+          toast.add({
+            type: "error",
+            description: getApiErrorMessage(err, "Failed to load tenant"),
+          });
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchTenant();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [open, tenantId]);
+
   return (
-    <Dialog >
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[700px]">
-        
+        <DialogHeader>
+          <DialogTitle>Tenant Details</DialogTitle>
+
+          <DialogDescription>
+            Read-only view of the tenant record held on the platform.
+          </DialogDescription>
+        </DialogHeader>
+
+        {isLoading ? (
+          <div className="grid gap-6 py-2 sm:grid-cols-2">
+            {[0, 1, 2, 3, 4, 5].map((placeholder) => (
+              <div key={placeholder} className="space-y-2">
+                <Skeleton className="h-3 w-20 bg-slate-200" />
+
+                <Skeleton className="h-4 w-32 bg-slate-200" />
+              </div>
+            ))}
+          </div>
+        ) : tenant ? (
+          <div className="grid gap-6 py-2 sm:grid-cols-2">
+            <InfoItem label="Tenant ID" value={String(tenant.id)} />
+
+            <InfoItem label="Tenant Code" value={tenant.tenantCode} />
+
+            <div className="sm:col-span-2">
+              <InfoItem label="Tenant Name" value={tenant.tenantName} />
+            </div>
+
+            <InfoItem label="Email" value={tenant.email} />
+
+            <InfoItem label="Phone" value={tenant.phone} />
+
+            <InfoItem label="GST Number" value={tenant.gstNumber} />
+
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                Subscription Plan
+              </p>
+
+              <Badge
+                variant="outline"
+                className={`mt-1 ${getPlanClass(tenant.subscriptionPlan)}`}
+              >
+                {getPlanLabel(tenant.subscriptionPlan)}
+              </Badge>
+            </div>
+
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                Subscription Status
+              </p>
+
+              <Badge
+                variant="outline"
+                className={`mt-1 ${getSubscriptionStatusClass(tenant.subscriptionStatus)}`}
+              >
+                {getSubscriptionStatusLabel(tenant.subscriptionStatus)}
+              </Badge>
+            </div>
+
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                Account Status
+              </p>
+
+              <Badge
+                variant="outline"
+                className={`mt-1 ${getActiveStatusClass(tenant.isActive)}`}
+              >
+                {getActiveStatusLabel(tenant.isActive)}
+              </Badge>
+            </div>
+
+            <div className="sm:col-span-2">
+              <InfoItem label="Address" value={tenant.address} />
+            </div>
+
+            <InfoItem label="City" value={tenant.city} />
+
+            <InfoItem label="State" value={tenant.state} />
+
+            <InfoItem label="Country" value={tenant.country} />
+
+            <InfoItem label="Pincode" value={tenant.pincode} />
+
+            <InfoItem
+              label="Created"
+              value={dayjs(tenant.createdAt).format("DD MMM YYYY")}
+            />
+
+            <InfoItem
+              label="Last Updated"
+              value={dayjs(tenant.updatedAt).format("DD MMM YYYY")}
+            />
+
+            {/* The endpoint joins the creating admin; only these fields are
+                declared on the type, so nothing else can be surfaced. */}
+
+            <InfoItem
+              label="Created By"
+              value={tenant.createdByUser?.email ?? "-"}
+            />
+          </div>
+        ) : (
+          <p className="py-6 text-center text-sm text-slate-500">
+            Tenant details are unavailable.
+          </p>
+        )}
+
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Close
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
