@@ -308,3 +308,191 @@ export const getTenantList = async (req: Request, res: Response) => {
         })
     }
 }
+
+export const getTenantById = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    if (!puId || !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized please login'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    try {
+        const tenantDetails = await prisma.tenant.findUnique({
+            where: { id: Number(id) },
+            include: {
+                createdByUser: true
+            }
+        })
+        return res.status(200).json({
+            success: true,
+            data: tenantDetails
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error ${error}`
+        })
+    }
+}
+
+export const editTenant = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    const { tenant_code, tenant_name, tenant_email, tenant_phone, tenant_gst_number, tenant_address, tenant_register_city, tenant_register_state, tenant_register_country, tenant_register_pincode, tenant_sub_plan, tenant_sub_status } = req.body;
+    if (!puId || !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized please login'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    const required = {
+        tenant_code,
+        tenant_name,
+        tenant_email,
+        tenant_phone,
+        tenant_gst_number,
+        tenant_address,
+        tenant_register_city,
+        tenant_register_state,
+        tenant_register_country,
+        tenant_register_pincode,
+        tenant_sub_plan,
+        tenant_sub_status,
+    };
+    const missing = Object.entries(required)
+        .filter(([, v]) => !v)
+        .map(([k]) => k);
+
+    if (missing.length) {
+        return res.status(400).json({
+            success: false,
+            message: `Missing required fields: ${missing.join(", ")}`,
+            missingFields: missing,
+        });
+    }
+    try {
+        const data = await prisma.tenant.update({
+            data: {
+                tenantCode: tenant_code,
+                tenantName: tenant_name,
+                email: tenant_email,
+                phone: tenant_phone,
+                gstNumber: tenant_gst_number.toUpperCase(),
+                address: tenant_address,
+                city: tenant_register_city,
+                state: tenant_register_state,
+                country: tenant_register_country,
+                pincode: tenant_register_pincode,
+                subscriptionPlan: tenant_sub_plan,
+                subscriptionStatus: tenant_sub_status,
+            },
+            where: { id: Number(id) }
+        })
+        return res.status(201).json({
+            success: true,
+            message: 'Tenant details updated'
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error ${error}`
+        })
+    }
+}
+
+export const suspendTenant = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    const { status } = req.body;
+    if (!puId || !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized please login'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    if (!status) {
+        return res.status(400).json({
+            success: false,
+            message: `Status field required`
+        })
+    }
+    try {
+        const data = await prisma.tenant.update({
+            data: {
+                subscriptionStatus: status
+            },
+            where: {
+                id: Number(id)
+            }
+        })
+        return res.status(201).json({
+            success: true,
+            message: `Tenant ${data.tenantName} got suspended`
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error ${error}`
+        })
+    }
+}
+
+export const deactivateTenant = async (req: Request, res: Response) => {
+    const { puId, puRole } = req.user;
+    const { id } = req.params;
+    if (!puId || !puRole) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized please login'
+        })
+    }
+    if (puRole !== 'SUPER_ADMIN') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Id required'
+        })
+    }
+    try {
+        const data = await prisma.tenant.update({
+            data: {
+                isActive: false
+            },
+            where: { id: Number(id) }
+        })
+        return res.status(201).json({
+            success : true,
+            message : `Tenant ${data.tenantName} is deleted`
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error ${error}`
+        })
+    }
+}

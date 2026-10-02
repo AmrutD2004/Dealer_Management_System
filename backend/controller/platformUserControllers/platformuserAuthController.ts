@@ -340,7 +340,9 @@ export const getListOfPlatformUsers = async (req: Request, res: Response) => {
         const platformUsersList = await prisma.platformUser.findMany({
             skip: Number(skip),
             take: Number(take),
-            select: platformUserPublicFields
+            orderBy : {
+                createdAt : 'desc'
+            }
         })
         return res.status(200).json({
             success: true,
@@ -373,7 +375,6 @@ export const getPlatformUserById = async (req: Request, res: Response) => {
     try{
         const getPlatformUserDetails = await prisma.platformUser.findUnique({
             where : {id : Number(id)},
-            select: platformUserPublicFields
         }) 
         return res.status(200).json({
             success : true,

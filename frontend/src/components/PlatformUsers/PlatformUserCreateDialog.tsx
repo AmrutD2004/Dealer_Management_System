@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { Loader2 } from "lucide-react";
 
@@ -30,6 +30,7 @@ import type { PlatformUserDraft, PlatformUserRole, PlatformUserStatus } from "./
 import type { platformNewuserCreateType } from "@/Types/platformUserType";
 import { createNewPlatformUser } from "@/api/endpoint";
 import { toast } from "../ui/toast";
+import { PlatformUserContext } from "@/contexts/PlatformUserContext";
 
 interface PlatformUserCreateDialogProps {
   open: boolean;
@@ -43,69 +44,76 @@ export function PlatformUserCreateDialog({
   onOpenChange,
   onCreate,
 }: PlatformUserCreateDialogProps) {
-const emptyForm: platformNewuserCreateType = {
-  email: "",
-  passwordHash: "",
-  role: "",
-};
+  const emptyForm: platformNewuserCreateType = {
+    email: "",
+    passwordHash: "",
+    role: "",
+  };
+  const {fetchPlatformUsersList, platformUserSkip, platformUserTake} = useContext(PlatformUserContext)
 
-const [loading, setLoading] = useState<boolean>(false);
-const [formData, setFormData] = useState<platformNewuserCreateType>({ ...emptyForm });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<platformNewuserCreateType>({ ...emptyForm });
 
-const [wasOpen, setWasOpen] = useState(open);
+  const [wasOpen, setWasOpen] = useState(open);
 
-if (open !== wasOpen) {
-  setWasOpen(open);
+  if (open !== wasOpen) {
+    setWasOpen(open);
 
-  if (open) {
-    setFormData({ ...emptyForm });
-    setLoading(false);
+    if (open) {
+      setFormData({ ...emptyForm });
+      setLoading(false);
+    }
   }
-}
 
-const handleChange = (e : React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
-  const {name, value} = e.target;
-  setFormData(prev=>({...prev, [name] : value}))
-}
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
 
-const handleSubmit = async(e : React.FormEvent)=>{
-  e.preventDefault();
-  setLoading(true)
-  try{
-    const payload = {
-      email : formData.email,
-      passwordHash : formData.passwordHash,
-      role : formData.role
-    }
-    const data = await createNewPlatformUser(payload)
-    if(data?.success){
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true)
+    try {
+      const payload = {
+        email: formData.email,
+        passwordHash: formData.passwordHash,
+        role: formData.role
+      }
+      const data = await createNewPlatformUser(payload)
+      if (data?.success) {
+        toast.add({
+          type: 'success',
+          description: data?.message
+        })
+        setFormData({
+          email: "",
+          passwordHash: "", 
+          role: "",
+        })
+        fetchPlatformUsersList(platformUserSkip, platformUserTake)
+        setTimeout(() => {
+          onOpenChange(false)
+        }, 2000)
+      }
+      if (!data?.success) {
+        toast.add({
+          type: 'error',
+          description: data?.message
+        })
+      }
+    } catch (err: any) {
       toast.add({
-        type : 'success',
-        description : data?.message
-      })
-      setTimeout(()=>{
-        !open
-      }, 2000)
-    }
-    if(!data?.success){
-      toast.add({
-        type : 'error',
-        description : data?.message
-      })
-    }
-  }catch (err : any){
-    toast.add({
-        type : 'error',
-        description : err?.response?.data?.message
+        type: 'error',
+        description: err?.response?.data?.message
       })
       setLoading(false)
-  }finally{
-    setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
-}
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[700px]">
+      <DialogContent className="max-w-4xl overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add Platform User</DialogTitle>
 
@@ -125,7 +133,7 @@ const handleSubmit = async(e : React.FormEvent)=>{
               </h3>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                
+
                 <Field label="Email *" className="sm:col-span-2">
                   <Input
                     name='email'
@@ -145,19 +153,20 @@ const handleSubmit = async(e : React.FormEvent)=>{
                 Role Assignment
               </h3>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className=" w-full">
                 <Field label="Platform Role" >
                   <Select name='role'
-                  
-                  value={formData.role}
-                  onValueChange={(value)=> setFormData((prev : any)=> ({...prev, role : value}))}
+
+                    value={formData.role}
+                    onValueChange={(value) => setFormData((prev: any) => ({ ...prev, role: value }))}
                   >
-                    <SelectTrigger>
-                      <SelectValue />
+                    <SelectTrigger className="w-full" >
+                      <SelectValue placeholder="Select Role" />
+
                     </SelectTrigger>
 
                     <SelectContent>
-                      <SelectItem value="Select Role">Select Role</SelectItem>
+
                       <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
 
                       <SelectItem value="SUPPORT_ADMIN">
@@ -192,7 +201,7 @@ const handleSubmit = async(e : React.FormEvent)=>{
 
           <DialogFooter>
             <Button
-            
+
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
