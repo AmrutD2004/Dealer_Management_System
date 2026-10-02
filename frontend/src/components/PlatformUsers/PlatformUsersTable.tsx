@@ -63,7 +63,7 @@ export function PlatformUsersTable() {
 
   /* Mutations refetch so the table always reflects the server. */
 
-  const refresh = () => fetchPlatformUsersList();
+  const refresh = () => fetchPlatformUsersList(platformUserSkip, platformUserTake);
 
   const noOfPages = Math.ceil(platformUserCount / platformUserTake)
   const handlePrevious = () => {
@@ -112,7 +112,7 @@ export function PlatformUsersTable() {
                 </TableCell>
               </TableRow>
             ) : (
-              platfornUserList.map((user: platformUserInfo) => (
+              platfornUserList.map((user: platformUserInfo, idx: number) => (
                 <TableRow key={user.id}>
                   {/* ID */}
 
@@ -128,7 +128,7 @@ export function PlatformUsersTable() {
                     <div className="flex items-center gap-3">
                       <Avatar className="h-9 w-9">
                         <AvatarFallback className="bg-slate-100 text-xs font-semibold text-slate-600">
-                          {user.email.split("@")[0].slice(0, 2).toUpperCase()}
+                          {user.email.split("@")[0].slice(0, 1).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
 

@@ -8,8 +8,8 @@ interface PlatformUsersHeaderProps {
 
 export function PlatformUsersHeader({ onCreateUser }: PlatformUsersHeaderProps) {
   return (
-    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <div className="mt-20">
+    <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
+      <div>
         <div className="flex items-center gap-2">
           <ShieldCheck className="h-6 w-6 text-slate-700" />
 
@@ -24,7 +24,7 @@ export function PlatformUsersHeader({ onCreateUser }: PlatformUsersHeaderProps) 
         </p>
       </div>
 
-      <Button onClick={onCreateUser} className="mt-20 gap-2">
+      <Button onClick={onCreateUser} className="gap-2">
         <UserPlus className="h-4 w-4" />
         Add Platform User
       </Button>
