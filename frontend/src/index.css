@@ -1,0 +1,129 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-active: var(--sidebar-active);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    color-scheme: light;
+    --background: #F8F8F8;
+    --foreground: #182830;
+    --card: #FFFFFF;
+    --card-foreground: #182830;
+    --popover: #FFFFFF;
+    --popover-foreground: #182830;
+    --primary: #187898;
+    --primary-foreground: #FFFFFF;
+    --secondary: #F4F1EE;
+    --secondary-foreground: #182830;
+    --muted: #F4F1EE;
+    --muted-foreground: #708898;
+    --accent: #F0B030;
+    --accent-foreground: #182830;
+    --destructive: #DC2626;
+    --success: #16A34A;
+    --success-foreground: #FFFFFF;
+    --border: #E0D8D0;
+    --input: #E0D8D0;
+    --ring: #187898;
+    --radius: 0.625rem;
+    --sidebar: #182838;
+    --sidebar-foreground: #F8F8F8;
+    --sidebar-primary: #187898;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-active: #284050;
+    --sidebar-accent: #284050;
+    --sidebar-accent-foreground: #FFFFFF;
+    --sidebar-border: rgb(255 255 255 / 10%);
+    --sidebar-ring: #F0B030;
+}
+
+.dark {
+    color-scheme: dark;
+    --background: #0E1922;
+    --foreground: #E8EEF2;
+    --card: #182838;
+    --card-foreground: #E8EEF2;
+    --popover: #182838;
+    --popover-foreground: #E8EEF2;
+    --primary: #35A6C9;
+    --primary-foreground: #0B141B;
+    --secondary: #24384A;
+    --secondary-foreground: #E8EEF2;
+    --muted: #24384A;
+    --muted-foreground: #93A9B8;
+    --accent: #F0B030;
+    --accent-foreground: #182830;
+    --destructive: #F26D6D;
+    --success: #22C55E;
+    --success-foreground: #0B141B;
+    --border: #2E4557;
+    --input: #2E4557;
+    --ring: #35A6C9;
+    --sidebar: #14232F;
+    --sidebar-foreground: #E8EEF2;
+    --sidebar-primary: #35A6C9;
+    --sidebar-primary-foreground: #0B141B;
+    --sidebar-active: #284050;
+    --sidebar-accent: #284050;
+    --sidebar-accent-foreground: #FFFFFF;
+    --sidebar-border: rgb(255 255 255 / 10%);
+    --sidebar-ring: #F0B030;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+    }
+  html {
+    @apply font-sans;
+    }
+}
