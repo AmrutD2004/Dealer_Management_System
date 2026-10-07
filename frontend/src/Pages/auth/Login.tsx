@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { AuthContext } from "@/Contexts/AuthContext";
 import type { LoginType } from "@/Types/platformUserType";
-
 import { cn } from "cn";
 import { Loader2, Moon, Sun } from "lucide-react";
 import { useContext, useState } from "react";
@@ -17,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 export function Login() {
     const navigate = useNavigate()
-    const { setIsLoggedIn } = useContext(AuthContext)
+    const { setIsLoggedIn, hashId } = useContext(AuthContext)
     const { theme, setTheme } = useTheme()
     const [loading, setLoading] = useState<boolean>(false)
     const [formData, setFormData] = useState<LoginType>({
@@ -43,15 +42,17 @@ export function Login() {
                     email: '',
                     passwordHash: ''
                 })
-                if(data?.userType === 'PLATFORM_USER'){
-                     setTimeout(() => {
-                    navigate('/dashboard')
-                }, 1000)
+                if (data?.userType === 'PLATFORM_USER') {
+                    setTimeout(() => {
+                        navigate('/dashboard')
+                    }, 1000)
                 }
-                if(data?.userType === 'TENANT_USER'){
-                     setTimeout(() => {
-                    navigate('/tenant/dashboard')
-                }, 1000)
+                if (data?.userType === 'TENANT_USER') {
+                    if(hashId){
+                        setTimeout(() => {
+                        navigate(`/tenant/${hashId}/dashboard`)
+                    }, 2000)
+                    }
                 }
 
             }
@@ -109,6 +110,7 @@ export function Login() {
                                     placeholder="abc@example.com"
                                     required
                                     onChange={handleChange}
+                                    value={formData?.email}
                                 />
                             </div>
                             <div className="grid gap-2">
@@ -122,6 +124,7 @@ export function Login() {
                                     required
                                     placeholder="••••••••••"
                                     onChange={handleChange}
+                                    value={formData?.passwordHash}
                                 />
                             </div>
                             <Button type="submit" disabled={loading} className={cn(`${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}w-full`)}>
