@@ -116,8 +116,8 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
     const statusOptions: tenantSubscriptionStatusType[] = ["TRIAL", "ACTIVE", "SUSPENDED", "EXPIRED", "CANCELLED"]
 
     return (
-    <Dialog open={open}>
-      <DialogContent className="max-w-sm lg:max-w-3xl md:max-w-xl overflow-y-auto max-h-[90vh]" showCloseButton={false}>
+    <Dialog open={open} >
+      <DialogContent className="max-w-sm lg:max-w-3xl md:max-w-xl overflow-y-auto max-h-[90vh] scrollbarHide " showCloseButton={false} >
         <DialogHeader>
           <div className="flex items-center gap-3">
             <Building2 className="h-8 w-8 text-primary" />
@@ -136,7 +136,7 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
               <h3 className="mb-4 text-sm font-semibold text-foreground">Tenant Identity</h3>
               <div className="grid gap-4 grid-cols-2">
                 <Field className="sm:col-span-2">
-                  <FieldLabel>Tenant Code *</FieldLabel>
+                  <FieldLabel>Tenant Code <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_code'
@@ -151,12 +151,13 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>Tenant Name *</FieldLabel>
+                  <FieldLabel>Tenant Name <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_name'
                       type='text'
                       placeholder="Acme Corporation"
+                      required
                       onChange={handleChange}
                       value={formData.tenant_name}
                     />
@@ -170,36 +171,39 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
               <h3 className="mb-4 text-sm font-semibold text-foreground">Contact Information</h3>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field className="sm:col-span-2">
-                  <FieldLabel>Email *</FieldLabel>
+                  <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_email'
                       type='email'
                       placeholder="contact@acme.com"
+                      required
                       onChange={handleChange}
                       value={formData.tenant_email}
                     />
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>Phone *</FieldLabel>
+                  <FieldLabel>Phone <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_phone'
                       type='tel'
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 98765 xxxxx"
+                      required
                       onChange={handleChange}
                       value={formData.tenant_phone}
                     />
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>GST Number *</FieldLabel>
+                  <FieldLabel>GST Number <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_gst_number'
                       type='text'
                       placeholder="29ABCDE1234F1Z5"
+                      required
                       onChange={handleChange}
                       value={formData.tenant_gst_number}
                     />
@@ -213,60 +217,65 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
               <h3 className="mb-4 text-sm font-semibold text-foreground">Registered Address</h3>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field className="sm:col-span-2">
-                  <FieldLabel>Address *</FieldLabel>
+                  <FieldLabel>Address <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_address'
                       type='text'
                       placeholder="123 Business Park, Sector 1"
                       onChange={handleChange}
+                      required
                       value={formData.tenant_address}
                     />
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>City *</FieldLabel>
+                  <FieldLabel>City <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_register_city'
                       type='text'
                       placeholder="Bangalore"
+                      required
                       onChange={handleChange}
                       value={formData.tenant_register_city}
                     />
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>State *</FieldLabel>
+                  <FieldLabel>State <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_register_state'
                       type='text'
                       placeholder="Karnataka"
+                      required
                       onChange={handleChange}
                       value={formData.tenant_register_state}
                     />
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>Country *</FieldLabel>
+                  <FieldLabel>Country <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_register_country'
                       type='text'
                       placeholder="India"
+                      required
                       onChange={handleChange}
                       value={formData.tenant_register_country}
                     />
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>Pincode *</FieldLabel>
+                  <FieldLabel>Pincode <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
                       name='tenant_register_pincode'
                       type='text'
                       placeholder="560001"
+                      required
                       onChange={handleChange}
                       value={formData.tenant_register_pincode}
                     />
@@ -280,11 +289,12 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
               <h3 className="mb-4 text-sm font-semibold text-foreground">Subscription</h3>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field>
-                  <FieldLabel>Plan *</FieldLabel>
+                  <FieldLabel>Plan <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Select
                       name='tenant_sub_plan'
                       value={formData.tenant_sub_plan}
+                      required
                       onValueChange={(value) => handleSelectChange('tenant_sub_plan', value)}
                     >
                       <SelectTrigger className="w-full">
@@ -299,11 +309,12 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>Status *</FieldLabel>
+                  <FieldLabel>Status <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Select
                       name='tenant_sub_status'
                       value={formData.tenant_sub_status}
+                      required
                       onValueChange={(value) => handleSelectChange('tenant_sub_status', value)}
                     >
                       <SelectTrigger className="w-full">

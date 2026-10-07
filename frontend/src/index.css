@@ -127,3 +127,7 @@
     @apply font-sans;
     }
 }
+
+.scrollbarHide::-webkit-scrollbar{
+    display: none ;
+}

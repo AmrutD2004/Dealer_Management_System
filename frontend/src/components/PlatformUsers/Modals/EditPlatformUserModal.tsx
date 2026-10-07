@@ -103,12 +103,13 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
                                 <div className="grid gap-4 sm:grid-cols-2">
 
                                     <Field className="sm:col-span-2">
-                                        <FieldLabel>Email</FieldLabel>
+                                        <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Input
                                                 name='email'
                                                 type='email'
                                                 placeholder="name@redogroup.com"
+                                                required
                                                 onChange={handleChange}
                                                 value={formData?.email}
                                             />
@@ -126,10 +127,10 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
 
                                 <div className=" w-full">
                                     <Field>
-                                        <FieldLabel>Platform Role</FieldLabel>
+                                        <FieldLabel>Platform Role <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Select name='role'
-
+                                                required
                                                 value={formData.role}
                                                 onValueChange={(value) => setFormData((prev: any) => ({ ...prev, role: value }))}
                                             >
@@ -161,12 +162,13 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
 
                                 <div className="grid gap-4 sm:grid-cols-2">
                                     <Field className="sm:col-span-2">
-                                        <FieldLabel>Password </FieldLabel>
+                                        <FieldLabel>Password <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Input
                                                 type="password"
                                                 name='passwordHash'
                                                 placeholder="Set a temporary password"
+                                                required
                                                 onChange={handleChange}
                                                 value={formData.passwordHash}
                                             />
