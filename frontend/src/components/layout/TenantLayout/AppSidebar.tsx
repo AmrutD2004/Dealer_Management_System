@@ -1,19 +1,15 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom"
 
-import {
-  ChevronDown,
-  LayoutDashboard,
-  Wrench,
-} from "lucide-react";
+import { ChevronDown, Layers, LayoutDashboard, Wrench } from "lucide-react"
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
 import {
   Sidebar,
   SidebarContent,
@@ -25,60 +21,72 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { useContext } from "react";
-import { AuthContext } from "@/Contexts/AuthContext";
-import { toast } from "@/components/ui/toast";
-import { logout } from "@/api/endpoints";
+} from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
+import { useContext, useState } from "react"
+import { AuthContext } from "@/Contexts/AuthContext"
+import { toast } from "@/components/ui/toast"
+import { logout } from "@/api/endpoints"
 
 const groupLabelClass =
-  "mb-3 px-3 text-[9px] font-semibold uppercase tracking-[2px] text-sidebar-foreground/35 group-data-[collapsible=icon]:hidden";
+  "mb-3 px-3 text-[9px] font-semibold uppercase tracking-[2px] text-sidebar-foreground/35 group-data-[collapsible=icon]:hidden"
 
 const menuButtonClass =
-  "h-10.25 rounded-lg px-3 text-[14px] font-medium text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-active:bg-sidebar-active data-active:text-sidebar-ring group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0";
+  "h-10.25 rounded-lg px-3 text-[14px] font-medium text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-active:bg-sidebar-active data-active:text-sidebar-ring group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
 
 export function AppSidebar() {
-  const { pathname } = useLocation();
+  const { id } = useParams()
+  const { pathname } = useLocation()
   const { userInfo } = useContext(AuthContext)
-  const { isMobile, setOpenMobile } = useSidebar();
+  const { isMobile, setOpenMobile } = useSidebar()
 
   const overviewActive =
-    pathname === "/tenant/dashboard" ||
-    pathname.startsWith("/tenant/dashboard/");
+    pathname === `/tenant/${id}/dashboard/` ||
+    pathname.startsWith(`/tenant/${id}/dashboard/`)
+
+  const branchActive =
+    pathname === `/tenant/${id}/masters/branch` ||
+    pathname.startsWith(`/tenant${id}/masters/branch/`)
+
+  const [mastersOpen, setMastersOpen] = useState<boolean | undefined>(undefined)
+  const showMasters = mastersOpen ?? branchActive
 
   /* Collapse the mobile sheet once a destination is picked. */
   const handleNavigate = () => {
     if (isMobile) {
-      setOpenMobile(false);
+      setOpenMobile(false)
     }
-  };
+  }
 
-  const handleLogout = async()=>{
-    try{
+  const handleLogout = async () => {
+    try {
       const data = await logout()
-      if(data?.success){
+      if (data?.success) {
         toast.add({
-          type : 'success',
-          description : data?.message
+          type: "success",
+          description: data?.message,
         })
-        setTimeout(()=>{
-          window.location.replace('/login')
+        setTimeout(() => {
+          window.location.replace("/login")
         }, 1500)
       }
-    }catch(err : any){
+    } catch (err: any) {
       toast.add({
-        type : 'error',
-        description : err?.response?.data?.message
+        type: "error",
+        description: err?.response?.data?.message,
       })
-    }finally{
+    } finally {
     }
   }
 
   return (
     <Sidebar
       collapsible="icon"
-      className="border-none z-50 bg-sidebar"
+      className="z-50 border-none bg-sidebar"
       style={
         {
           "--sidebar-width": "246px",
@@ -91,7 +99,11 @@ export function AppSidebar() {
       <SidebarHeader className="h-20 border-b border-sidebar-border bg-sidebar p-0">
         <div className="flex h-full items-center px-4.5 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sidebar-ring shadow-md">
-            <Wrench size={20} strokeWidth={2.5} className="text-sidebar-ring-foreground" />
+            <Wrench
+              size={20}
+              strokeWidth={2.5}
+              className="text-sidebar-ring-foreground"
+            />
           </div>
 
           <div className="ml-3 group-data-[collapsible=icon]:hidden">
@@ -99,7 +111,7 @@ export function AppSidebar() {
               redogroup
             </h1>
 
-            <p className="mt-px text-[9px] font-medium uppercase tracking-[2px] text-sidebar-foreground/45">
+            <p className="mt-px text-[9px] font-medium tracking-[2px] text-sidebar-foreground/45 uppercase">
               Dealer Cockpit
             </p>
           </div>
@@ -123,7 +135,7 @@ export function AppSidebar() {
                   onClick={handleNavigate}
                   render={
                     <Link
-                      to="/tenant/dashboard"
+                      to={`/tenant/${id}/dashboard/`}
                       aria-current={overviewActive ? "page" : undefined}
                     />
                   }
@@ -132,7 +144,11 @@ export function AppSidebar() {
                   <LayoutDashboard
                     size={18}
                     strokeWidth={1.8}
-                    className={overviewActive ? "text-sidebar-ring" : "text-sidebar-foreground/55"}
+                    className={
+                      overviewActive
+                        ? "text-sidebar-ring"
+                        : "text-sidebar-foreground/55"
+                    }
                   />
 
                   <span className="group-data-[collapsible=icon]:hidden">
@@ -143,6 +159,57 @@ export function AppSidebar() {
                     <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
                   )}
                 </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={branchActive}
+                  tooltip="Masters"
+                  aria-expanded={showMasters}
+                  onClick={() => setMastersOpen(!showMasters)}
+                  className={menuButtonClass}
+                >
+                  <Layers
+                    size={18}
+                    strokeWidth={1.8}
+                    className={
+                      branchActive
+                        ? "text-sidebar-ring"
+                        : "text-sidebar-foreground/55"
+                    }
+                  />
+
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Masters
+                  </span>
+
+                  <ChevronDown
+                    size={14}
+                    className={cn(
+                      "ml-auto text-sidebar-foreground/40 transition-transform duration-200 group-data-[collapsible=icon]:hidden",
+                      showMasters && "rotate-180"
+                    )}
+                  />
+                </SidebarMenuButton>
+
+                {showMasters && (
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={branchActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/branch`}
+                            aria-current={branchActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span>Branch</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                )}
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
@@ -157,13 +224,13 @@ export function AppSidebar() {
             render={
               <button
                 type="button"
-                className="flex w-full items-center rounded-lg px-3 py-2.5 text-left transition hover:bg-sidebar-accent group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
+                className="flex w-full items-center rounded-lg px-3 py-2.5 text-left transition group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 hover:bg-sidebar-accent"
               />
             }
           >
             <Avatar className="h-8 w-8 shrink-0">
-              <AvatarFallback className="bg-sidebar-ring text-xs font-bold text-sidebar-ring-foreground">
-                {userInfo?.email?.split('@')[0]?.slice(0, 2).toUpperCase()}
+              <AvatarFallback className="text-sidebar-ring-foreground bg-sidebar-ring text-xs font-bold">
+                {userInfo?.email?.split("@")[0]?.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
 
@@ -173,7 +240,9 @@ export function AppSidebar() {
               </p>
 
               <p className="truncate text-[10px] text-sidebar-foreground/40">
-                {userInfo?.role === 'SUPER_ADMIN' ? 'Administrator' : 'Support Administrator'}
+                {userInfo?.role === "SUPER_ADMIN"
+                  ? "Administrator"
+                  : "Support Administrator"}
               </p>
             </div>
 
@@ -190,10 +259,15 @@ export function AppSidebar() {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem onClick={handleLogout} className="text-destructive">Logout</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="text-destructive"
+            >
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }

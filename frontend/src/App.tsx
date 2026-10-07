@@ -9,6 +9,7 @@ import { PlatformUserContextProvider } from "./Contexts/PlatformUserContext.tsx/
 import Tenant from "./Pages/PlatformUserPages/PlatformUser/Tenant"
 import CreateTenant from "./Pages/PlatformUserPages/PlatformUser/CreateTenant"
 import Dashboard from "./Pages/TenantUserPages/Dashboard"
+import Branch from "./Pages/TenantUserPages/Masters/Branch"
 
 
 export function App() {
@@ -23,7 +24,8 @@ export function App() {
             <Route path='/platform-users' element={<PlatformUserContextProvider><AuthProtectedRoute><PlatformUser /></AuthProtectedRoute></PlatformUserContextProvider>} />
             <Route path='/platform/tenant' element={<PlatformUserContextProvider><AuthProtectedRoute><Tenant /></AuthProtectedRoute></PlatformUserContextProvider>} />
             <Route path='/platform/tenant/create' element={<AuthProtectedRoute><CreateTenant /></AuthProtectedRoute>} />
-            <Route path='/tenant/dashboard' element={<AuthProtectedRoute><Dashboard /></AuthProtectedRoute>} />
+            <Route path='/tenant/:id/dashboard' element={<AuthProtectedRoute><Dashboard /></AuthProtectedRoute>} />
+            <Route path='/tenant/:id/masters/branch' element={<AuthProtectedRoute><Branch /></AuthProtectedRoute>} />
           </Routes>
         </AuthContextProvider>
       </Router>

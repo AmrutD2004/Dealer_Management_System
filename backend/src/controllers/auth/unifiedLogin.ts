@@ -91,7 +91,8 @@ export const login = async (req: Request, res: Response) => {
                     success: true,
                     userType: 'TENANT_USER',
 
-                    message: 'Login Successful'
+                    message: 'Login Successful',
+                    tenantId : tenantUser?.tenantId
                 });
             }
         }
