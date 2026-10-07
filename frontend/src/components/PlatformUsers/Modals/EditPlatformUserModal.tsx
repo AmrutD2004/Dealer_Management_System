@@ -1,17 +1,14 @@
-import type { PlatformNewuserCreateType, PlatformUserEditType, PlatformUsersListType } from '@/Types/platformUserType'
+import type { PlatformNewuserCreateType, PlatformUserEditType } from '@/Types/platformUserType'
 import React, { useContext, useEffect, useState } from 'react'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldGroup, FieldLabel } from '@/components/ui/field'
-import { Label } from '@/components/ui/label'
+import { Field, FieldContent, FieldLabel } from '@/components/ui/field'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'

@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import {
   Pagination,
   PaginationContent,
@@ -12,10 +12,10 @@ import { useContext, useState } from 'react'
 import { PlatformUserContext } from '@/Contexts/PlatformUserContext.tsx/PlatformUserContext'
 import { Button } from '@/components/ui/button'
 import { cn } from 'cn'
-import { type PlatformNewuserCreateType, type PlatformUserEditType, type PlatformUsersListType } from '@/Types/platformUserType'
+import { type PlatformUserEditType, type PlatformUsersListType } from '@/Types/platformUserType'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Check, EllipsisVertical, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ViewPlatformUserDetailsModal } from '../Modals/ViewPlatformUserDetailsModal'
 import EditPlatformUserModal from '../Modals/EditPlatformUserModal'

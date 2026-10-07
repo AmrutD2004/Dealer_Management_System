@@ -2,22 +2,16 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Field, FieldGroup } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { PlatformUsersListType } from "@/Types/platformUserType"
-import { cn } from "cn"
 import dayjs from "dayjs"
-import { Eye } from "lucide-react"
-import { useState } from "react"
 
 type props = {
   user: PlatformUsersListType | null,

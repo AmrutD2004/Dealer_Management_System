@@ -1,7 +1,6 @@
 import DashboardLayout from '@/components/layout/PlatformLayout/DashboardLayout'
 import TenantListTable from '@/components/PlatformUsers/Tables/TenantListTable'
 import TenantHeader from '@/components/PlatformUsers/TenantHeader'
-import React from 'react'
 
 const Tenant = () => {
   return (
