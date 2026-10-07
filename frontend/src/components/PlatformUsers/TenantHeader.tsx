@@ -1,6 +1,6 @@
 import { AuthContext } from '@/Contexts/AuthContext'
 import {  Building2, Plus } from 'lucide-react'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Button } from '../ui/button'
 import { useNavigate } from 'react-router-dom'
 import { cn } from 'cn'

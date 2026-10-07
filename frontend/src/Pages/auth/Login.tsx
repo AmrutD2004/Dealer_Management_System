@@ -109,6 +109,7 @@ export function Login() {
                                     placeholder="abc@example.com"
                                     required
                                     onChange={handleChange}
+                                    value={formData.email}
                                 />
                             </div>
                             <div className="grid gap-2">
@@ -122,6 +123,7 @@ export function Login() {
                                     required
                                     placeholder="••••••••••"
                                     onChange={handleChange}
+                                    value={formData.passwordHash}
                                 />
                             </div>
                             <Button type="submit" disabled={loading} className={cn(`${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}w-full`)}>

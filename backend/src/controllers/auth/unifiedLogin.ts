@@ -17,18 +17,17 @@ export const login = async (req: Request, res: Response) => {
     try {
         // 1. Check Platform User
         const platformUser = await prisma.platformUser.findFirst({
-            where: {
-                email: email
-            }
-        });
-        if(!platformUser?.isActive){
+            where : {email : email}
+        })
+        
+
+        if (platformUser) {
+            if(!platformUser?.isActive){
             return res.status(401).json({
                 success : false,
                 message : 'You are not the active person'
             })
         }
-
-        if (platformUser) {
             const passwordMatch = await bcrypt.compare(
                 password,
                 platformUser.passwordHash
@@ -61,6 +60,12 @@ export const login = async (req: Request, res: Response) => {
         });
 
         if (tenantUser) {
+            if(!tenantUser?.isActive){
+            return res.status(401).json({
+                success : false,
+                message : 'You are not the active person'
+            })
+        }
             const passwordMatch = await bcrypt.compare(
                 password,
                 tenantUser.passwordHash

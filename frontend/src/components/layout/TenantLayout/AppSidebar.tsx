@@ -1,12 +1,9 @@
 import { useLocation, Link } from "react-router-dom";
 
 import {
-  Building2,
   ChevronDown,
   LayoutDashboard,
-  ShieldCheck,
   Wrench,
-  type LucideIcon,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -35,115 +32,21 @@ import { AuthContext } from "@/Contexts/AuthContext";
 import { toast } from "@/components/ui/toast";
 import { logout } from "@/api/endpoints";
 
-interface NavItem {
-  title: string;
-  url: string;
-  icon: LucideIcon;
-}
-
-const navGroups: Array<{ label: string; items: NavItem[] }> = [
-  // {
-  //   label: "Workspace",
-  //   items: [
-  //     { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
-  //     { title: "Job Cards", url: "/job-cards", icon: ClipboardList },
-  //     { title: "Customers", url: "/customers", icon: Users },
-  //     { title: "Vehicles", url: "/vehicles", icon: Car },
-  //     { title: "Setup", url: "/setup", icon: SlidersHorizontal },
-  //   ],
-  // },
-  // {
-  //   label: "Operations",
-  //   items: [
-  //     { title: "Workshop", url: "/workshop", icon: Wrench },
-  //     { title: "Inventory", url: "/inventory", icon: Package },
-  //     { title: "Reports", url: "/reports", icon: FileText },
-  //     { title: "Settings", url: "/settings", icon: Settings },
-  //   ],
-  // },
-  {
-    label: "Platform",
-    items: [
-      { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
-      { title: "Platform Users", url: "/platform-users", icon: ShieldCheck },
-      { title: "Tenant Management", url: "/platform/tenant", icon: Building2 },
-      // { title: "Subscription Plans", url: "/plans", icon: CreditCard },
-    ],
-  },
-];
-
 const groupLabelClass =
   "mb-3 px-3 text-[9px] font-semibold uppercase tracking-[2px] text-sidebar-foreground/35 group-data-[collapsible=icon]:hidden";
 
 const menuButtonClass =
   "h-10.25 rounded-lg px-3 text-[14px] font-medium text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-active:bg-sidebar-active data-active:text-sidebar-ring group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0";
 
-function NavGroup({
-  label,
-  items,
-  pathname,
-  onNavigate,
-}: {
-  label: string;
-  items: NavItem[];
-  pathname: string;
-  onNavigate: () => void;
-}) {
-  return (
-    <SidebarGroup className="p-0 first:mt-0">
-      <SidebarGroupLabel className={groupLabelClass}>
-        {label}
-      </SidebarGroupLabel>
-
-      <SidebarGroupContent>
-        <SidebarMenu className="gap-1">
-          {items.map((item) => {
-            const isActive =
-              pathname === item.url || pathname.startsWith(`${item.url}/`);
-
-            const Icon = item.icon;
-
-            return (
-              <SidebarMenuItem key={item.url}>
-                <SidebarMenuButton
-                  isActive={isActive}
-                  tooltip={item.title}
-                  onClick={onNavigate}
-                  render={
-                    <Link
-                      to={item.url}
-                      aria-current={isActive ? "page" : undefined}
-                    />
-                  }
-                  className={menuButtonClass}
-                >
-                  <Icon
-                    size={18}
-                    strokeWidth={1.8}
-                    className={isActive ? "text-sidebar-ring" : "text-sidebar-foreground/55"}
-                  />
-
-                  <span className="group-data-[collapsible=icon]:hidden">
-                    {item.title}
-                  </span>
-
-                  {isActive && (
-                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
-                  )}
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            );
-          })}
-        </SidebarMenu>
-      </SidebarGroupContent>
-    </SidebarGroup>
-  );
-}
-
 export function AppSidebar() {
   const { pathname } = useLocation();
   const { userInfo } = useContext(AuthContext)
   const { isMobile, setOpenMobile } = useSidebar();
+
+  const overviewActive =
+    pathname === "/tenant/dashboard" ||
+    pathname.startsWith("/tenant/dashboard/");
+
   /* Collapse the mobile sheet once a destination is picked. */
   const handleNavigate = () => {
     if (isMobile) {
@@ -206,18 +109,47 @@ export function AppSidebar() {
       {/* Nav */}
 
       <SidebarContent className="space-y-7 px-2.5 py-5">
-        {navGroups.map((group) => (
-          <NavGroup
-            key={group.label}
-            label={group.label}
-            items={group.items}
-            pathname={pathname}
-            onNavigate={handleNavigate}
-          />
-        ))}
+        <SidebarGroup className="p-0 first:mt-0">
+          <SidebarGroupLabel className={groupLabelClass}>
+            Tenant
+          </SidebarGroupLabel>
+
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-1">
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={overviewActive}
+                  tooltip="Overview"
+                  onClick={handleNavigate}
+                  render={
+                    <Link
+                      to="/tenant/dashboard"
+                      aria-current={overviewActive ? "page" : undefined}
+                    />
+                  }
+                  className={menuButtonClass}
+                >
+                  <LayoutDashboard
+                    size={18}
+                    strokeWidth={1.8}
+                    className={overviewActive ? "text-sidebar-ring" : "text-sidebar-foreground/55"}
+                  />
+
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Overview
+                  </span>
+
+                  {overviewActive && (
+                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
 
-{/* User footer */}
+      {/* User footer */}
 
       <SidebarFooter className="border-t border-sidebar-border p-3">
         <DropdownMenu>
