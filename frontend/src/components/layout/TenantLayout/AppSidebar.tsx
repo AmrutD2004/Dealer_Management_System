@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Building, ChevronDown, Layers, LayoutDashboard, Wrench } from "lucide-react"
+import { Briefcase, Building, ChevronDown, Layers, LayoutDashboard, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -52,8 +52,12 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/masters/branch` ||
     pathname.startsWith(`/tenant${id}/masters/branch/`)
 
+  const designationActive =
+    pathname === `/tenant/${id}/masters/designation` ||
+    pathname.startsWith(`/tenant/${id}/masters/designation/`)
+
   const [mastersOpen, setMastersOpen] = useState<boolean | undefined>(undefined)
-  const showMasters = mastersOpen ?? branchActive
+  const showMasters = mastersOpen ?? (branchActive || designationActive)
 
   /* Collapse the mobile sheet once a destination is picked. */
   const handleNavigate = () => {
@@ -163,7 +167,7 @@ export function AppSidebar() {
 
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  isActive={branchActive}
+                  isActive={branchActive || designationActive}
                   tooltip="Masters"
                   aria-expanded={showMasters}
                   onClick={() => setMastersOpen(!showMasters)}
@@ -173,7 +177,7 @@ export function AppSidebar() {
                     size={18}
                     strokeWidth={1.8}
                     className={
-                      branchActive
+                      branchActive || designationActive
                         ? "text-sidebar-ring"
                         : "text-sidebar-foreground/55"
                     }
@@ -206,6 +210,20 @@ export function AppSidebar() {
                         }
                       >
                         <span className="flex items-center gap-2 "><Building size={18}/>Branch</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={designationActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/designation`}
+                            aria-current={designationActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Briefcase size={18}/>Designation</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
