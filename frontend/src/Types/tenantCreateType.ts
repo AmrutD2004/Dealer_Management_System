@@ -119,3 +119,15 @@ export interface branchListType {
     createdAt : string,
     updatedAt : string
 }
+
+export interface designationListType {
+    id: number,
+    tenantId: number,
+    code: string,
+    name: string,
+    description: string | null,
+    isActive: boolean,
+    isMechanic: boolean,
+    createdAt: string,
+    updatedAt: string
+}

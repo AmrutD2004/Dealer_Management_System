@@ -1,0 +1,122 @@
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Field, FieldGroup } from "@/components/ui/field"
+import { Label } from "@/components/ui/label"
+import type { designationListType } from "@/Types/tenantCreateType"
+import dayjs from "dayjs"
+import { Briefcase, FileText } from "lucide-react"
+
+type props = {
+  designation: designationListType | null
+  open: boolean
+  onClose: () => void
+}
+
+export function ViewDesignationModal({ designation, open, onClose }: props) {
+  if (!designation) return null
+
+  return (
+    <Dialog open={open}>
+      <DialogContent
+        className="max-w-xl md:max-w-xl lg:max-w-2xl"
+        showCloseButton={false}
+      >
+        <DialogHeader>
+          <div className="flex items-center gap-3">
+            <Briefcase className="h-8 w-8 text-primary" />
+            <div>
+              <DialogTitle className="text-lg">Designation Details</DialogTitle>
+              <DialogDescription>
+                Read-only view of the designation record.
+              </DialogDescription>
+            </div>
+          </div>
+          <FieldGroup className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Field>
+              <Label className="text-sm font-medium text-muted-foreground">
+                Designation ID
+              </Label>
+              <span className="text-md font-mono font-semibold">
+                {designation.id}
+              </span>
+            </Field>
+            <Field>
+              <Label className="text-sm font-medium text-muted-foreground">
+                Designation Code
+              </Label>
+              <span className="text-md font-mono font-semibold">
+                {designation.code}
+              </span>
+            </Field>
+            <Field>
+              <Label className="text-sm font-medium text-muted-foreground">
+                Status
+              </Label>
+              <span>
+                <Badge variant={designation.isActive ? "success" : "destructive"}>
+                  {designation.isActive ? "Active" : "Inactive"}
+                </Badge>
+              </span>
+            </Field>
+            <Field className="sm:col-span-2 lg:col-span-3">
+              <Label className="text-sm font-medium text-muted-foreground">
+                Designation Name
+              </Label>
+              <span className="text-md font-semibold">{designation.name}</span>
+            </Field>
+            <Field className="sm:col-span-2 lg:col-span-3">
+              <Label className="text-sm font-medium text-muted-foreground">
+                Description
+              </Label>
+              <div className="flex items-start gap-2">
+                <FileText className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
+                <span className="text-md font-medium">
+                  {designation.description || "—"}
+                </span>
+              </div>
+            </Field>
+            <Field>
+              <Label className="text-sm font-medium text-muted-foreground">
+                Mechanic Designation
+              </Label>
+              <span>
+                <Badge variant={designation.isMechanic ? "default" : "outline"}>
+                  {designation.isMechanic ? "Yes" : "No"}
+                </Badge>
+              </span>
+            </Field>
+            <Field>
+              <Label className="text-sm font-medium text-muted-foreground">
+                Created At
+              </Label>
+              <span className="text-md font-medium">
+                {dayjs(designation.createdAt).format("DD MMM YYYY")}
+              </span>
+            </Field>
+            <Field>
+              <Label className="text-sm font-medium text-muted-foreground">
+                Updated At
+              </Label>
+              <span className="text-md font-medium">
+                {dayjs(designation.updatedAt).format("DD MMM YYYY")}
+              </span>
+            </Field>
+          </FieldGroup>
+        </DialogHeader>
+        <DialogFooter>
+          <Button onClick={onClose} variant="outline">
+            Close
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}

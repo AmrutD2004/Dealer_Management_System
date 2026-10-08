@@ -118,3 +118,35 @@ export const activateTenantBranch = async (branchId: number) => {
     const response = await api.patch(`/api/tenant/branch/${branchId}/activate`)
     return await response.data
 }
+
+
+//Employee Designation
+export const createDesignation = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/designation/create`, payload)
+    return await response.data;
+}
+
+export const getDesignationList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/designation/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getDesignationById = async (designationId: number) => {
+    const response = await api.get(`/api/tenant/designation/get/${designationId}`)
+    return await response.data;
+}
+
+export const editDesignation = async (payload: {}, designationId: number) => {
+    const response = await api.put(`/api/tenant/designation/${designationId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateDesignation = async (designationId: number) => {
+    const response = await api.patch(`/api/tenant/designation/${designationId}/deactivate`)
+    return await response.data
+}
+
+export const activateDesignation = async (designationId: number) => {
+    const response = await api.patch(`/api/tenant/designation/${designationId}/activate`)
+    return await response.data
+}
