@@ -168,69 +168,70 @@ export function TenantCreateForm({ onCancel }: props) {
     }
   }
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
+    <form className="space-y-4 py-5" onSubmit={handleSubmit} >
       {/* Tenant Details */}
-      <FormSection title="Tenant Details" withSeparator={false}>
+      <FormSection title="Tenant Details"  withSeparator={false}>
         <Field>
-          <FieldLabel>Tenant Name *</FieldLabel>
+          <FieldLabel>Tenant Name <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="tenantName" value={tenantData.tenantName} placeholder="ABC Motors Pvt Ltd" onChange={handleTenantChange} />
+            <Input name="tenantName" value={tenantData.tenantName} required placeholder="ABC Motors Pvt Ltd" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Email *</FieldLabel>
+          <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="email" value={tenantData.email} type="email" placeholder="admin@company.com" onChange={handleTenantChange} />
+            <Input name="email" value={tenantData.email} type="email" required placeholder="admin@company.com" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Phone *</FieldLabel>
+          <FieldLabel>Phone <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="phone" value={tenantData.phone} placeholder="98765 43210" onChange={handleTenantChange} />
+            <Input name="phone" value={tenantData.phone} required placeholder="98765 43210" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>GST Number *</FieldLabel>
+          <FieldLabel>GST Number <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input className="uppercase" name="gstNumber" value={tenantData.gstNumber} placeholder="27AAECA1234A1Z5" onChange={handleTenantChange} />
+            <Input className="uppercase" name="gstNumber" value={tenantData.gstNumber} 
+            required placeholder="27AAECA1234A1Z5" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
 
         <Field className="sm:col-span-2">
-          <FieldLabel>Address *</FieldLabel>
+          <FieldLabel>Address <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Textarea name="address" value={tenantData.address} placeholder="Business address" onChange={handleTenantChange} />
+            <Textarea name="address" value={tenantData.address} required placeholder="Business address" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>City *</FieldLabel>
+          <FieldLabel>City <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="city" value={tenantData.city} placeholder="Pune" onChange={handleTenantChange} />
+            <Input name="city" value={tenantData.city} required placeholder="Pune" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>State *</FieldLabel>
+          <FieldLabel>State <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="state" value={tenantData.state} placeholder="Maharashtra" onChange={handleTenantChange} />
+            <Input name="state" value={tenantData.state} required placeholder="Maharashtra" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Country *</FieldLabel>
+          <FieldLabel>Country <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="country" value={tenantData.country} placeholder="India" onChange={handleTenantChange} />
+            <Input name="country" value={tenantData.country} required placeholder="India" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Pincode *</FieldLabel>
+          <FieldLabel>Pincode <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="pincode" value={tenantData.pincode} placeholder="411001" onChange={handleTenantChange} />
+            <Input name="pincode" value={tenantData.pincode} required placeholder="411001" onChange={handleTenantChange} />
           </FieldContent>
         </Field>
       </FormSection>
@@ -238,9 +239,9 @@ export function TenantCreateForm({ onCancel }: props) {
       {/* Subscription */}
       <FormSection title="Subscription">
         <Field>
-          <FieldLabel>Subscription Plan</FieldLabel>
+          <FieldLabel>Subscription Plan <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Select name="subscriptionPlan" value={tenantData.subscriptionPlan || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionPlan: value }))}>
+            <Select name="subscriptionPlan" required value={tenantData.subscriptionPlan || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionPlan: value }))}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select Plan" />
               </SelectTrigger>
@@ -255,9 +256,9 @@ export function TenantCreateForm({ onCancel }: props) {
         </Field>
 
         <Field>
-          <FieldLabel>Subscription Status</FieldLabel>
+          <FieldLabel>Subscription Status <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Select name="subscriptionStatus" value={tenantData.subscriptionStatus || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionStatus: value }))}>
+            <Select name="subscriptionStatus" required value={tenantData.subscriptionStatus || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionStatus: value }))}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select Status" />
               </SelectTrigger>
@@ -277,23 +278,23 @@ export function TenantCreateForm({ onCancel }: props) {
       <FormSection title="Initial Branch">
 
         <Field>
-          <FieldLabel>Branch Name *</FieldLabel>
+          <FieldLabel>Branch Name <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="branchName" value={initialBranchData.branchName} placeholder="Pune Main Branch" onChange={handleBranchChange} />
+            <Input name="branchName" value={initialBranchData.branchName} required placeholder="Pune Main Branch" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Email</FieldLabel>
+          <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="email" value={initialBranchData.email} type="email" placeholder="branch@company.com" onChange={handleBranchChange} />
+            <Input name="email" value={initialBranchData.email} type="email" required placeholder="branch@company.com" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
 
         <Field className="sm:col-span-2">
-          <FieldLabel>Address 1</FieldLabel>
+          <FieldLabel>Address 1 <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Textarea name="address1" value={initialBranchData.address1} placeholder="Branch address" onChange={handleBranchChange} />
+            <Textarea name="address1" value={initialBranchData.address1} required placeholder="Branch address" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
         <Field className="sm:col-span-2">
@@ -304,44 +305,44 @@ export function TenantCreateForm({ onCancel }: props) {
         </Field>
 
         <Field>
-          <FieldLabel>Locality</FieldLabel>
+          <FieldLabel>Locality <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="locality" value={initialBranchData.locality} placeholder="Kothrud" onChange={handleBranchChange} />
+            <Input name="locality" value={initialBranchData.locality} required placeholder="Kothrud" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>City</FieldLabel>
+          <FieldLabel>City <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="city" value={initialBranchData.city} placeholder="Pune" onChange={handleBranchChange} />
+            <Input name="city" value={initialBranchData.city} required placeholder="Pune" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>State</FieldLabel>
+          <FieldLabel>State <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="state" value={initialBranchData.state} placeholder="Maharashtra" onChange={handleBranchChange} />
+            <Input name="state" value={initialBranchData.state} required placeholder="Maharashtra" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Country</FieldLabel>
+          <FieldLabel>Country <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="country" value={initialBranchData.country} placeholder="India" onChange={handleBranchChange} />
+            <Input name="country" value={initialBranchData.country} required placeholder="India" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Phone</FieldLabel>
+          <FieldLabel>Phone <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="phone" value={initialBranchData.phone} placeholder="98765 43210" onChange={handleBranchChange} />
+            <Input name="phone" value={initialBranchData.phone} required placeholder="98765 43210" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
         
         <Field>
-          <FieldLabel>Pincode</FieldLabel>
+          <FieldLabel>Pincode <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="pincode" value={initialBranchData.pincode} placeholder="411038" onChange={handleBranchChange} />
+            <Input name="pincode" value={initialBranchData.pincode} required placeholder="411038" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
       </FormSection>
@@ -350,44 +351,44 @@ export function TenantCreateForm({ onCancel }: props) {
       <FormSection title="Initial Tenant Admin" withSeparator={false}>
 
         <Field>
-          <FieldLabel>First Name</FieldLabel>
+          <FieldLabel>First Name <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="firstName" value={initialUserData.firstName} placeholder="Rajesh" onChange={handleUserChange} />
+            <Input name="firstName" value={initialUserData.firstName} required placeholder="Rajesh" onChange={handleUserChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Middle Name</FieldLabel>
+          <FieldLabel>Middle Name <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="middleName" value={initialUserData.middleName} placeholder="Kumar" onChange={handleUserChange} />
+            <Input name="middleName" value={initialUserData.middleName} required placeholder="Kumar" onChange={handleUserChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Last Name</FieldLabel>
+          <FieldLabel>Last Name <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="lastName" value={initialUserData.lastName} placeholder="Sharma" onChange={handleUserChange} />
+            <Input name="lastName" value={initialUserData.lastName} required placeholder="Sharma" onChange={handleUserChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Email *</FieldLabel>
+          <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="email" value={initialUserData.email} type="email" placeholder="admin@company.com" onChange={handleUserChange} />
+            <Input name="email" value={initialUserData.email} type="email" required placeholder="admin@company.com" onChange={handleUserChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Mobile No *</FieldLabel>
+          <FieldLabel>Mobile No <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="mobileNo" value={initialUserData.mobileNo} placeholder="98765 43210" onChange={handleUserChange} />
+            <Input name="mobileNo" value={initialUserData.mobileNo} required placeholder="98765 43210" onChange={handleUserChange} />
           </FieldContent>
         </Field>
 
         <Field>
-          <FieldLabel>Password *</FieldLabel>
+          <FieldLabel>Password <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
-            <Input name="passwordHash" value={initialUserData.passwordHash} type="password" placeholder="••••••••••" onChange={handleUserChange} />
+            <Input name="passwordHash" value={initialUserData.passwordHash} type="password" required placeholder="••••••••••" onChange={handleUserChange} />
           </FieldContent>
         </Field>
       </FormSection>

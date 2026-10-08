@@ -19,10 +19,6 @@ const iconButtonClass =
 export default function Navbar() {
   const {setTheme, theme} = useTheme()
 
-  // const trail = getCrumbTrail(pathname);
-
-  // const pageTitle = trail[trail.length - 1].label;
-
   return (
     <header className="fixed flex h-20 w-full items-center border-b border-border bg-background">
       <div className="flex w-full items-center justify-between px-6 lg:px-9">
@@ -35,7 +31,7 @@ export default function Navbar() {
 
           <div>
             <h1 className="mt-1 text-[18px] font-semibold text-foreground">
-              
+
             </h1>
           </div>
         </div>

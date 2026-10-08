@@ -99,3 +99,23 @@ export interface tenantCreatorType {
 export interface tenantDetailType extends tenantType {
     createdByUser: tenantCreatorType | null,
 }
+
+
+export interface branchListType {
+    id:number,
+    tenantId : number,
+    branchCode : number,
+    branchName: string,
+    email: string,
+    phone: string,
+    address1: string,
+    address2: string | null,
+    locality: string,
+    city: string,
+    state: string,
+    country: string,
+    pincode: string,
+    isActive : boolean,
+    createdAt : string,
+    updatedAt : string
+}

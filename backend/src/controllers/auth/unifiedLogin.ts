@@ -22,20 +22,17 @@ export const login = async (req: Request, res: Response) => {
         // ==========================================
 
         const platformUser = await prisma.platformUser.findFirst({
-            where: {
-                email: email
-            }
-        });
+            where : {email : email}
+        })
+        
 
         if (platformUser) {
-
-            if (!platformUser.isActive) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Your account is inactive'
-                });
-            }
-
+            if(!platformUser?.isActive){
+            return res.status(401).json({
+                success : false,
+                message : 'You are not the active person'
+            })
+        }
             const passwordMatch = await bcrypt.compare(
                 password,
                 platformUser.passwordHash
@@ -76,13 +73,12 @@ export const login = async (req: Request, res: Response) => {
 
         if (tenantUser) {
 
-            if (!tenantUser.isActive) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Your account is inactive'
-                });
-            }
-
+            if(!tenantUser?.isActive){
+            return res.status(401).json({
+                success : false,
+                message : 'You are not the active person'
+            })
+        }
             const passwordMatch = await bcrypt.compare(
                 password,
                 tenantUser.passwordHash
@@ -113,7 +109,9 @@ export const login = async (req: Request, res: Response) => {
                 return res.status(200).json({
                     success: true,
                     userType: 'TENANT_USER',
-                    message: 'Login Successful'
+
+                    message: 'Login Successful',
+                    tenantId : tenantUser?.tenantId
                 });
             }
         }

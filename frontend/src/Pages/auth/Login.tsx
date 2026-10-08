@@ -13,7 +13,7 @@ import { cn } from "cn";
 import { Loader2, Moon, Sun } from "lucide-react";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Hashids from "hashids";
 export function Login() {
     const navigate = useNavigate()
     const { setIsLoggedIn, hashId } = useContext(AuthContext)
@@ -47,12 +47,16 @@ export function Login() {
                         navigate('/dashboard')
                     }, 1000)
                 }
-                if (data?.userType === 'TENANT_USER') {
-                    if(hashId){
+
+                if(data?.userType === 'TENANT_USER'){
+                    const id = new Hashids(import.meta.env.VITE_HASH_SECRET, 10)
+                    const hashTenantId = id.encode(data?.tenantId)
+                     if(hashTenantId){
                         setTimeout(() => {
-                        navigate(`/tenant/${hashId}/dashboard`)
-                    }, 2000)
-                    }
+                    navigate(`/tenant/${hashTenantId}/dashboard`)
+                }, 2000)
+                     }
+
                 }
 
             }
@@ -110,7 +114,7 @@ export function Login() {
                                     placeholder="abc@example.com"
                                     required
                                     onChange={handleChange}
-                                    value={formData?.email}
+                                    value={formData.email}
                                 />
                             </div>
                             <div className="grid gap-2">
@@ -124,7 +128,7 @@ export function Login() {
                                     required
                                     placeholder="••••••••••"
                                     onChange={handleChange}
-                                    value={formData?.passwordHash}
+                                    value={formData.passwordHash}
                                 />
                             </div>
                             <Button type="submit" disabled={loading} className={cn(`${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}w-full`)}>

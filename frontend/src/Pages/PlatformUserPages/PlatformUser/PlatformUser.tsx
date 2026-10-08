@@ -1,7 +1,6 @@
 import DashboardLayout from '@/components/layout/PlatformLayout/DashboardLayout'
 import PlatformUserHeader from '@/components/PlatformUsers/PlatformUserHeader'
 import PlatformUsersListTable from '@/components/PlatformUsers/Tables/PlatformUsersListTable'
-import React from 'react'
 
 const PlatformUser = () => {
     return (

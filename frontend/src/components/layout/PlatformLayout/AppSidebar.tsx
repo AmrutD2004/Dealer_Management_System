@@ -30,7 +30,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "@/Contexts/AuthContext";
 import { toast } from "@/components/ui/toast";
 import { logout } from "@/api/endpoints";
@@ -144,7 +144,6 @@ export function AppSidebar() {
   const { pathname } = useLocation();
   const { userInfo } = useContext(AuthContext)
   const { isMobile, setOpenMobile } = useSidebar();
-  const [loading, setLoading] = useState<boolean>(false)
   /* Collapse the mobile sheet once a destination is picked. */
   const handleNavigate = () => {
     if (isMobile) {
@@ -153,7 +152,6 @@ export function AppSidebar() {
   };
 
   const handleLogout = async()=>{
-    setLoading(true)
     try{
       const data = await logout()
       if(data?.success){
@@ -170,9 +168,7 @@ export function AppSidebar() {
         type : 'error',
         description : err?.response?.data?.message
       })
-      setLoading(false)
     }finally{
-      setLoading(false)
     }
   }
 

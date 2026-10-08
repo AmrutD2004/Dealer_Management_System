@@ -2,13 +2,11 @@ import { createNewPlatformUser } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
@@ -22,7 +20,7 @@ import { useContext, useState } from "react"
 
 export function AddPlatformUserModal() {
     const [open, setOpen] = useState<boolean>(false)
-    const [loading, setLoading] = useState<boolean>(true)
+    const [loading, setLoading] = useState<boolean>(false)
     const { fetchPlatformUsersList, platformUserSkip, platformUserTake } = useContext(PlatformUserContext)
     const [formData, setFormData] = useState<PlatformNewuserCreateType>({
         email: "",
@@ -104,12 +102,13 @@ export function AddPlatformUserModal() {
                                 <div className="grid gap-4 sm:grid-cols-2">
 
                                     <Field className="sm:col-span-2">
-                                        <FieldLabel>Email *</FieldLabel>
+                                        <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Input
                                                 name='email'
                                                 type='email'
                                                 placeholder="name@redogroup.com"
+                                                required
                                                 onChange={handleChange}
                                                 value={formData.email}
                                             />
@@ -127,10 +126,10 @@ export function AddPlatformUserModal() {
 
                                 <div className=" w-full">
                                     <Field>
-                                        <FieldLabel>Platform Role</FieldLabel>
+                                        <FieldLabel>Platform Role <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Select name='role'
-
+                                                required
                                                 value={formData.role}
                                                 onValueChange={(value) => setFormData((prev: any) => ({ ...prev, role: value }))}
                                             >
@@ -162,10 +161,11 @@ export function AddPlatformUserModal() {
 
                                 <div className="grid gap-4 sm:grid-cols-2">
                                     <Field className="sm:col-span-2">
-                                        <FieldLabel>Initial Password *</FieldLabel>
+                                        <FieldLabel>Initial Password <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Input
                                                 type="password"
+                                                required
                                                 name='passwordHash'
                                                 placeholder="Set a temporary password"
                                                 onChange={handleChange}
@@ -180,9 +180,9 @@ export function AddPlatformUserModal() {
                     <DialogFooter>
                         <Button onClick={() => setOpen(false)} variant="outline">Cancel</Button>
                         <Button form="platform-user-form" type="submit" >
-                            {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> 'Creating....'</span>}
+                            {loading ? <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating....</span> : ' Create Platform User' }
 
-                            Create Platform User
+                           
                         </Button>
                     </DialogFooter>
                 </DialogContent>

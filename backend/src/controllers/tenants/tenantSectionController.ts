@@ -87,9 +87,9 @@ export const createBranch = async (req: Request, res: Response) => {
 }
 
 
-export const updatedBranch = async(req : Request, res : Response)=>{
+export const updatedBranch = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const {branchId} = req.params;
+    const { branchId } = req.params;
     const { tenant_branchName,
         tenant_branchEmail,
         tenant_branchPhone,
@@ -112,10 +112,10 @@ export const updatedBranch = async(req : Request, res : Response)=>{
                 id: Number(tenantId)
             }
         })
-        if(!tenant){
+        if (!tenant) {
             return res.status(404).json({
-                success : false,
-                message : `Tenant with id ${tenantId} not exist`
+                success: false,
+                message: `Tenant with id ${tenantId} not exist`
             })
         }
 
@@ -133,8 +133,8 @@ export const updatedBranch = async(req : Request, res : Response)=>{
                 state: tenant_branchState,
                 country: tenant_branchCountry
             },
-            where : {
-                id : Number(branchId)
+            where: {
+                id: Number(branchId)
             }
         })
         return res.status(201).json({
@@ -150,8 +150,46 @@ export const updatedBranch = async(req : Request, res : Response)=>{
     }
 }
 
-export const deactivateTenantBranch = async(req : Request ,res : Response)=>{
+export const deactivateTenantBranch = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const {branchId} = req.params;
-    
+    const { branchId } = req.params;
+
+}
+
+export const getTenantBranchList = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!;
+    const {skip, take} = req.query
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+    try {
+        const totalBranches = await prisma.branch.count({
+            where : {
+                tenantId : Number(tenantId)
+            }
+        })
+        const branchList = await prisma.branch.findMany({
+            skip : Number(skip),
+            take : Number(take),
+            where : {
+                tenantId : Number(tenantId)
+            },
+            orderBy :{
+                createdAt : 'desc',
+            }
+        })
+        return res.status(200).json({
+            success : true,
+            data : branchList,
+            count : totalBranches
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${err}`
+        })
+    }
 }

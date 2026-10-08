@@ -1,17 +1,14 @@
-import type { PlatformNewuserCreateType, PlatformUserEditType, PlatformUsersListType } from '@/Types/platformUserType'
+import type { PlatformNewuserCreateType, PlatformUserEditType } from '@/Types/platformUserType'
 import React, { useContext, useEffect, useState } from 'react'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldGroup, FieldLabel } from '@/components/ui/field'
-import { Label } from '@/components/ui/label'
+import { Field, FieldContent, FieldLabel } from '@/components/ui/field'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -106,12 +103,13 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
                                 <div className="grid gap-4 sm:grid-cols-2">
 
                                     <Field className="sm:col-span-2">
-                                        <FieldLabel>Email</FieldLabel>
+                                        <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Input
                                                 name='email'
                                                 type='email'
                                                 placeholder="name@redogroup.com"
+                                                required
                                                 onChange={handleChange}
                                                 value={formData?.email}
                                             />
@@ -129,10 +127,10 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
 
                                 <div className=" w-full">
                                     <Field>
-                                        <FieldLabel>Platform Role</FieldLabel>
+                                        <FieldLabel>Platform Role <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Select name='role'
-
+                                                required
                                                 value={formData.role}
                                                 onValueChange={(value) => setFormData((prev: any) => ({ ...prev, role: value }))}
                                             >
@@ -164,12 +162,13 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
 
                                 <div className="grid gap-4 sm:grid-cols-2">
                                     <Field className="sm:col-span-2">
-                                        <FieldLabel>Password </FieldLabel>
+                                        <FieldLabel>Password <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Input
                                                 type="password"
                                                 name='passwordHash'
                                                 placeholder="Set a temporary password"
+                                                required
                                                 onChange={handleChange}
                                                 value={formData.passwordHash}
                                             />
