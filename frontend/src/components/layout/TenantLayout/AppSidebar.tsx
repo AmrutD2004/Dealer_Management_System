@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { ChevronDown, Layers, LayoutDashboard, Wrench } from "lucide-react"
+import { Building, ChevronDown, Layers, LayoutDashboard, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -193,7 +193,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
 
                 {showMasters && (
-                  <SidebarMenuSub>
+                  <SidebarMenuSub className="mt-1 ">
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton
                         isActive={branchActive}
@@ -205,7 +205,7 @@ export function AppSidebar() {
                           />
                         }
                       >
-                        <span>Branch</span>
+                        <span className="flex items-center gap-2 "><Building size={18}/>Branch</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>

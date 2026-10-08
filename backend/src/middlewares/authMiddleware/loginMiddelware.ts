@@ -64,10 +64,12 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
                 tenantId: decoded.tenantId!,
                 branchId: decoded.branchId!,
                 roleId: decoded.roleId!,
-                roleCode: decoded.roleCode!
+                roleCode: decoded.role!
             }),
             puId: decoded.id,
-            puRole: decoded.role || decoded.roleCode!
+            puRole: decoded.role || decoded.roleCode!,
+            role : decoded.role
+
         }
 
         next()

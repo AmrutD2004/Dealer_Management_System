@@ -9,16 +9,14 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { AuthContext } from "@/Contexts/AuthContext";
 import type { LoginType } from "@/Types/platformUserType";
-import Hashids from 'hashids'
-
 import { cn } from "cn";
 import { Loader2, Moon, Sun } from "lucide-react";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Hashids from "hashids";
 export function Login() {
     const navigate = useNavigate()
-    const { setIsLoggedIn } = useContext(AuthContext)
+    const { setIsLoggedIn, hashId } = useContext(AuthContext)
     const { theme, setTheme } = useTheme()
     const [loading, setLoading] = useState<boolean>(false)
     const [formData, setFormData] = useState<LoginType>({
@@ -44,11 +42,12 @@ export function Login() {
                     email: '',
                     passwordHash: ''
                 })
-                if(data?.userType === 'PLATFORM_USER'){
-                     setTimeout(() => {
-                    navigate('/dashboard')
-                }, 1000)
+                if (data?.userType === 'PLATFORM_USER') {
+                    setTimeout(() => {
+                        navigate('/dashboard')
+                    }, 1000)
                 }
+
                 if(data?.userType === 'TENANT_USER'){
                     const id = new Hashids(import.meta.env.VITE_HASH_SECRET, 10)
                     const hashTenantId = id.encode(data?.tenantId)
@@ -57,6 +56,7 @@ export function Login() {
                     navigate(`/tenant/${hashTenantId}/dashboard`)
                 }, 2000)
                      }
+
                 }
 
             }
