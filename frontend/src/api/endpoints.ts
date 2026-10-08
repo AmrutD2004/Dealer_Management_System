@@ -98,3 +98,23 @@ export const getTenantBranchList = async (skip: number, take: number) => {
     const response = await api.get(`/api/tenant/branch/get/all?skip=${skip}&take=${take}`)
     return await response.data;
 }
+
+export const getTenantBranchById = async (branchId: number) => {
+    const response = await api.get(`/api/tenant/branch/get/${branchId}`)
+    return await response.data;
+}
+
+export const editTenantBranch = async (payload: {}, branchId: number) => {
+    const response = await api.put(`/api/tenant/branch/${branchId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateTenantBranch = async (branchId: number) => {
+    const response = await api.patch(`/api/tenant/branch/${branchId}/deactivate`)
+    return await response.data
+}
+
+export const activateTenantBranch = async (branchId: number) => {
+    const response = await api.patch(`/api/tenant/branch/${branchId}/activate`)
+    return await response.data
+}

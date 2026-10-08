@@ -1,4 +1,4 @@
-import { getTenantBranchList } from '@/api/endpoints'
+import { activateTenantBranch, getTenantBranchList, deactivateTenantBranch } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { toast } from '@/components/ui/toast'
 import { AuthContext } from '@/Contexts/AuthContext'
@@ -18,10 +18,46 @@ import { Badge } from '@/components/ui/badge'
 import { Check, EllipsisVertical, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { TenantContext } from '@/Contexts/Tenant/TenantContext'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { ViewBranchModal } from '../Modals/ViewBranchModal'
+import { EditBranchModal } from '../Modals/EditBranchModal'
 
 const BranchListTable = () => {
-    const { branchList, skip, take, setSkip, totalBranches } = useContext(TenantContext)
+    const { branchList, skip, take, setSkip, totalBranches, selectedBranch, viewBranchModalOpen, editBranchModalOpen, openViewBranch, openEditBranch, closeAllModals, fetchTenantBranchList } = useContext(TenantContext)
     const noOfPages = Math.ceil(totalBranches / take)
+    const handleDeactive = async (id: number) => {
+        try {
+            const data = await deactivateTenantBranch(Number(id))
+            if (data?.success) {
+                toast.add({
+                    type: 'success',
+                    description: data?.message
+                })
+                fetchTenantBranchList(skip, take)
+            }
+        } catch (err: any) {
+            toast.add({
+                type: 'error',
+                description: err?.response?.data?.message
+            })
+        }
+    }
+    const handleActive = async (id: number) => {
+        try {
+            const data = await activateTenantBranch(Number(id))
+            if (data?.success) {
+                toast.add({
+                    type: 'success',
+                    description: data?.message
+                })
+                fetchTenantBranchList(skip, take)
+            }
+        } catch (err: any) {
+            toast.add({
+                type: 'error',
+                description: err?.response?.data?.message
+            })
+        }
+    }
     const handlePrevious = () => {
         skip((prev: number) =>
             Math.max(prev - take, 0)
@@ -79,14 +115,14 @@ const BranchListTable = () => {
 
                                         <DropdownMenuContent align="end">
                                             <DropdownMenuItem
-                                                
+                                                onClick={() => openViewBranch(branch.id)}
                                             >
                                                 <Eye className="mr-2 h-4 w-4" />
                                                 View
                                             </DropdownMenuItem>
 
                                             <DropdownMenuItem
-                                               
+                                                onClick={() => openEditBranch(branch.id)}
                                             >
                                                 <Pencil className="mr-2 h-4 w-4" />
                                                 Edit
@@ -95,7 +131,7 @@ const BranchListTable = () => {
                                             <DropdownMenuSeparator />
 
                                             <DropdownMenuItem
-                                                
+                                                onClick={!branch?.isActive ? () => handleActive(branch.id) : () => handleDeactive(branch.id)}
                                                 className={`${!branch?.isActive ? 'text-green-600 focus:text-green-600' : 'text-destructive focus:text-destructive'}`}
 
                                             >
@@ -145,6 +181,8 @@ const BranchListTable = () => {
                     </PaginationContent>
                 </Pagination>
             </div>
+            <ViewBranchModal branch={selectedBranch} open={viewBranchModalOpen} onClose={closeAllModals} />
+            <EditBranchModal branch={selectedBranch} open={editBranchModalOpen} onClose={closeAllModals} />
         </div>
     )
 }
