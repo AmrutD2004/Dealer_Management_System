@@ -153,12 +153,108 @@ export const updatedBranch = async (req: Request, res: Response) => {
 export const deactivateTenantBranch = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
     const { branchId } = req.params;
+    if (!branchId) {
+        return res.status(404).json({
+            success: false,
+            message: 'branch id required'
+        })
+    }
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+    try {
+        const isBranchExits = await prisma.branch.findUnique({
+            where: {
+                id: Number(branchId),
+            },
+            include: {
+                tenant: true
+            }
+        })
+        if (!isBranchExits) {
+            return res.status(404).json({
+                success: false,
+                message: 'Branch not exits'
+            })
+        }
+        const data = await prisma.branch.update({
+            data: {
+                isActive: false
+            },
+            where: { id: Number(branchId) }
+        })
+        return res.status(200).json({
+            success: true,
+            message: `${data.branchName} of tenant ${isBranchExits.tenant.tenantName} deactivated`
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${error}`
+        })
+    }
+
+}
+
+export const activateTenantBranch = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!
+    const { branchId } = req.params;
+    if (!branchId) {
+        return res.status(404).json({
+            success: false,
+            message: 'branch id required'
+        })
+    }
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+    try {
+        const isBranchExits = await prisma.branch.findUnique({
+            where: {
+                id: Number(branchId),
+                tenantId: Number(tenantId)
+            },
+            include: {
+                tenant: true
+            }
+        })
+        if (!isBranchExits) {
+            return res.status(404).json({
+                success: false,
+                message: 'Branch not exits'
+            })
+        }
+        const data = await prisma.branch.update({
+            data: {
+                isActive: true
+            },
+            where: {
+                id: Number(branchId),
+                tenantId: Number(tenantId)
+            }
+        })
+        return res.status(200).json({
+            success: true,
+            message: `${data.branchName} of tenant ${isBranchExits.tenant.tenantName} activated`
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${error}`
+        })
+    }
 
 }
 
 export const getTenantBranchList = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!;
-    const {skip, take} = req.query
+    const { skip, take } = req.query
     if (!id || !tenantId) {
         return res.status(401).json({
             success: false,
@@ -167,29 +263,79 @@ export const getTenantBranchList = async (req: Request, res: Response) => {
     }
     try {
         const totalBranches = await prisma.branch.count({
-            where : {
-                tenantId : Number(tenantId)
+            where: {
+                tenantId: Number(tenantId)
             }
         })
         const branchList = await prisma.branch.findMany({
-            skip : Number(skip),
-            take : Number(take),
-            where : {
-                tenantId : Number(tenantId)
+            skip: Number(skip),
+            take: Number(take),
+            where: {
+                tenantId: Number(tenantId)
             },
-            orderBy :{
-                createdAt : 'desc',
+            orderBy: {
+                createdAt: 'desc',
             }
         })
         return res.status(200).json({
-            success : true,
-            data : branchList,
-            count : totalBranches
+            success: true,
+            data: branchList,
+            count: totalBranches
         })
     } catch (err) {
         return res.status(500).json({
             success: false,
             message: `Server error : ${err}`
+        })
+    }
+}
+
+export const getTenantBranchById = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!;
+    const { branchId } = req.params;
+    if (!branchId) {
+        return res.status(404).json({
+            success: false,
+            message: 'branch id required'
+        })
+    }
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+
+    try {
+        const isBranchExits = await prisma.branch.findUnique({
+            where: {
+                id: Number(branchId),
+                tenantId: Number(tenantId)
+            },
+            include: {
+                tenant: true
+            }
+        })
+        if (!isBranchExits) {
+            return res.status(404).json({
+                success: false,
+                message: 'Branch not exits'
+            })
+        }
+        const branchDetails = await prisma.branch.findUnique({
+            where: {
+                id: Number(branchId),
+                tenantId: Number(tenantId)
+            }
+        })
+        return res.status(200).json({
+            success: true,
+            data: branchDetails
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${error}`
         })
     }
 }
