@@ -14,6 +14,7 @@ import Branch from "./Pages/TenantUserPages/Masters/Branch"
 import Designation from "./Pages/TenantUserPages/Masters/Designation"
 import Role from "./Pages/TenantUserPages/Masters/Role"
 import { TenantContextProvider } from "./Contexts/Tenant/TenantContext"
+import AssignPermission from "./Pages/TenantUserPages/Masters/AssignPermission"
 
 
 export function App() {
@@ -33,6 +34,7 @@ export function App() {
             <Route path='/tenant/:id/masters/branch' element={<TenantContextProvider><AuthProtectedRoute><Branch /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/designation' element={<TenantContextProvider><AuthProtectedRoute><Designation /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/role' element={<TenantContextProvider><AuthProtectedRoute><Role /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/permission' element={<TenantContextProvider><AuthProtectedRoute><AssignPermission /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>

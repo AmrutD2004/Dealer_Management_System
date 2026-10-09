@@ -163,6 +163,11 @@ export const getRoleList = async (skip: number, take: number) => {
     return await response.data;
 }
 
+export const getRoleListWithoutPagination = async () => {
+    const response = await api.get(`/api/tenant/role/get/all`)
+    return await response.data;
+}
+
 export const getRoleById = async (roleId: number) => {
     const response = await api.get(`/api/tenant/role/get/${roleId}`)
     return await response.data;
@@ -195,6 +200,11 @@ export const getPermissionList = async (skip: number, take: number) => {
     return await response.data
 }
 
+export const getPermissionListWithoutpagination = async () => {
+    const response = await api.get(`/api/platform/permission/get/all`)
+    return await response.data
+}
+
 export const getPermissionById = async (permissionId: number) => {
     const response = await api.get(`/api/platform/permission/get/${permissionId}`)
     return await response.data
@@ -212,5 +222,12 @@ export const deactivatePermission = async (permissionId: number) => {
 
 export const activatePermission = async (permissionId: number) => {
     const response = await api.patch(`/api/platform/permission/${permissionId}/activate`)
+    return await response.data
+}
+
+
+//Assign Permission to roles
+export const assignPermission = async(payload : {})=>{
+    const response = await api.post(`/api/tenant/role/permission/assign`, payload)
     return await response.data
 }

@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Briefcase, Building, ChevronDown, Layers, LayoutDashboard, ShieldCheck, Wrench } from "lucide-react"
+import { Briefcase, Building, ChevronDown, Key, Layers, LayoutDashboard, ShieldCheck, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -59,6 +59,10 @@ export function AppSidebar() {
   const roleActive =
     pathname === `/tenant/${id}/masters/role` ||
     pathname.startsWith(`/tenant/${id}/masters/role/`)
+  
+    const assignPermission =
+    pathname === `/tenant/${id}/masters/permission` ||
+    pathname.startsWith(`/tenant/${id}/masters/permission`)
 
   const [mastersOpen, setMastersOpen] = useState<boolean | undefined>(undefined)
   const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive)
@@ -242,6 +246,20 @@ export function AppSidebar() {
                         }
                       >
                         <span className="flex items-center gap-2 "><ShieldCheck size={18}/>Role</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={assignPermission}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/permission`}
+                            aria-current={assignPermission ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Key size={18}/>Assign Permission</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>

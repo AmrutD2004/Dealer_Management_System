@@ -25,10 +25,10 @@ export const createRole = async (req: Request, res: Response) => {
                 roleName: roleName
             }
         })
-        if(isRoleExists){
+        if (isRoleExists) {
             return res.status(302).json({
-                success : false,
-                message : `Role ${isRoleExists.roleCode} is already exists`
+                success: false,
+                message: `Role ${isRoleExists.roleCode} is already exists`
             })
         }
         const data = await prisma.role.create({
@@ -68,13 +68,24 @@ export const getAllTenantRole = async (req: Request, res: Response) => {
                 tenantId: Number(tenantId)
             }
         })
-        const tenantRoles = await prisma.role.findMany({
-            skip: Number(skip),
-            take: Number(take),
-            where: {
-                tenantId: Number(tenantId)
-            }
-        })
+        let tenantRoles
+        if (skip || take) {
+            tenantRoles = await prisma.role.findMany({
+                skip: Number(skip) || 0,
+                take: Number(take) || 0,
+                where: {
+                    tenantId: Number(tenantId)
+                }
+            })
+        }
+        else{
+            tenantRoles = await prisma.role.findMany({
+                where: {
+                    tenantId: Number(tenantId)
+                }
+            })
+        }
+
 
         return res.status(200).json({
             success: true,
@@ -290,9 +301,9 @@ export const activateTenantRole = async (req: Request, res: Response) => {
 
 
 
-export const assigningRoleToPermission = async(req : Request, res : Response)=>{
+export const assigningPermissionToRole = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const { roleId, permissionId } = req.params;
+    const { roleId, permissionId } = req.body;
     if (!roleId || !permissionId) {
         return res.status(404).json({
             success: false,
@@ -305,27 +316,204 @@ export const assigningRoleToPermission = async(req : Request, res : Response)=>{
             message: 'Not authorized login again'
         })
     }
-    try{
+    try {
         const data = await prisma.rolePermissionMapping.create({
-            data : {
-                roleId : Number(roleId),
-                permissionId : Number(roleId)
+            data: {
+                roleId: Number(roleId),
+                permissionId: Number(permissionId)
             },
-            include : {
-                role : true,
-                permission : true
+            include: {
+                role: true,
+                permission: true
             }
         })
         return res.status(201).json({
-            success : true,
-            message : `${data.permission.permissionName} is assign to role ${data.role.roleName}`
+            success: true,
+            message: `${data.permission.permissionName} permission is assign to role ${data.role.roleName}`,
+            data
         })
-    }catch (error) {
+    } catch (error) {
         return res.status(500).json({
             success: false,
             message: `Server error : ${error}`
         })
     }
 }
+
+
+export const updatePermissionToRole = async (
+    req: Request,
+    res: Response
+) => {
+    const { id, tenantId } = req.user!;
+    const { rolePermissionId } = req.params;
+    const { roleId, permissionId } = req.body;
+
+    if (!roleId || !permissionId) {
+        return res.status(400).json({
+            success: false,
+            message: "Role and permission ID are required",
+        });
+    }
+
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: "Not authorized. Login again",
+        });
+    }
+
+    try {
+        // Verify that the role belongs to the logged-in tenant
+        const role = await prisma.role.findFirst({
+            where: {
+                id: Number(roleId),
+                tenantId: Number(tenantId),
+            },
+        });
+
+        if (!role) {
+            return res.status(404).json({
+                success: false,
+                message: "Role not found for this tenant",
+            });
+        }
+
+        // Update the mapping and retrieve tenant details
+        const data = await prisma.rolePermissionMapping.update({
+            data: {
+                roleId: Number(roleId),
+                permissionId: Number(permissionId)
+            },
+            where: {
+                id: Number(rolePermissionId)
+            },
+            include: {
+                role: {
+                    include: {
+                        tenant: true
+                    }
+                },
+                permission: true
+            }
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: `${data.permission.permissionName} permission assigned to role ${data.role.roleName}`,
+            data
+        });
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+};
+
+export const getListOfPermissionToRole = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!;
+    const { skip, take } = req.query;
+
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: "Not authorized. Login again",
+        });
+    }
+    try {
+        const totalPermissions = await prisma.rolePermissionMapping.count({
+            where: {
+                role: {
+                    tenantId: Number(tenantId)
+                }
+            }
+        })
+        const listOfPermissionToRole = await prisma.rolePermissionMapping.findMany({
+            skip: Number(skip) || 0,
+            take: Number(take) || 5,
+            where: {
+                role: {
+                    tenantId: Number(tenantId)
+                }
+            },
+            include: {
+                role: true,
+                permission: true
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+        return res.status(200).json({
+            success: true,
+            data: listOfPermissionToRole,
+            count: totalPermissions
+        })
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+
+}
+
+
+
+export const getDetailsPermissionToRole = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!;
+    const { rolePermissionId } = req.params;
+
+
+
+    if (!rolePermissionId) {
+        return res.status(400).json({
+            success: false,
+            message: "ID are required",
+        });
+    }
+
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: "Not authorized. Login again",
+        });
+    }
+    try {
+
+        const permissionToRoleDetails = await prisma.rolePermissionMapping.findUnique({
+            where: {
+                id: Number(rolePermissionId)
+            },
+            include: {
+                role: {
+                    include: {
+                        tenant: true
+                    }
+                },
+                permission: true
+            }
+        })
+        return res.status(200).json({
+            success: true,
+            data: permissionToRoleDetails
+        })
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+
+}
+
+
+
+
+
 
 

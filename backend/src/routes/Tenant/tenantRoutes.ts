@@ -2,7 +2,7 @@ import { Router } from "express";
 import { authenticate, requireTenantUser } from "../../middlewares/authMiddleware/loginMiddelware";
 import { activateTenantBranch, createBranch, deactivateTenantBranch, getTenantBranchById, getTenantBranchList, updatedBranch } from "../../controllers/tenants/tenantSectionController";
 import { activateTenantDesignation, createEmployeeDesignation, deactivateTenantDesignation, getAllEmployeeDesignation, getEmployeeDesignationDetails, mechanicAssign, mechanicUnassign, updateDesignation } from "../../controllers/tenants/employeeDesignationController";
-import { activateTenantRole, createRole, deactivateTenantRole, getAllTenantRole, getRoleDetails, updateRole } from "../../controllers/tenants/roleAndPermissionController";
+import { activateTenantRole, assigningPermissionToRole, createRole, deactivateTenantRole, getAllTenantRole, getRoleDetails, updateRole, updatePermissionToRole, getListOfPermissionToRole, getDetailsPermissionToRole } from "../../controllers/tenants/roleAndPermissionController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -31,4 +31,10 @@ tenantRoute.put('/tenant/role/:roleId/update', authenticate, requireTenantUser, 
 tenantRoute.patch('/tenant/role/:roleId/deactivate', authenticate, requireTenantUser, deactivateTenantRole)
 tenantRoute.patch('/tenant/role/:roleId/activate', authenticate, requireTenantUser, activateTenantRole)
 
+
+//Role permission mapping route
+tenantRoute.post('/tenant/role/permission/assign', authenticate, requireTenantUser, assigningPermissionToRole)
+tenantRoute.put('/tenant/role/permission/:rolePermissionId/update', authenticate, requireTenantUser, updatePermissionToRole)
+tenantRoute.get('/tenant/role/permission/get/all', authenticate, requireTenantUser, getListOfPermissionToRole)
+tenantRoute.get('/tenant/role/permission/get/:rolePermissionId', authenticate, requireTenantUser, getDetailsPermissionToRole)
 export default tenantRoute;

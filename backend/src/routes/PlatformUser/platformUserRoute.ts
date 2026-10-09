@@ -28,7 +28,7 @@ platformUserRoute.post('/platform/permission/create', authenticate, requirePlatf
 platformUserRoute.put('/platform/permission/:permissionId/update', authenticate, requirePlatformUser, updatePermission)
 platformUserRoute.patch('/platform/permission/:permissionId/deactivate', authenticate, requirePlatformUser, deactivatePermission)
 platformUserRoute.patch('/platform/permission/:permissionId/activate', authenticate, requirePlatformUser, activatePermission)
-platformUserRoute.get('/platform/permission/get/all', authenticate, requirePlatformUser, getListOfPermissions)
+platformUserRoute.get('/platform/permission/get/all', authenticate, getListOfPermissions)
 platformUserRoute.get('/platform/permission/get/:permissionId', authenticate, requirePlatformUser, getPermissonDetails)
 
 export default platformUserRoute;
