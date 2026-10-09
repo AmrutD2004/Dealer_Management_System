@@ -65,7 +65,7 @@ export const editPlatformUser = async (req: Request, res: Response) => {
             message: 'Not Authorized'
         })
     }
-    if (!id) {
+    if (!userId) {
         return res.status(400).json({
             success: false,
             message: 'Id required'
@@ -116,7 +116,7 @@ export const deactivatePlatformUser = async (req: Request, res: Response) => {
             message: 'Not Authorized'
         })
     }
-    if (!id) {
+    if (!userId) {
         return res.status(400).json({
             success: false,
             message: 'Id required'
@@ -172,7 +172,7 @@ export const activatePlatformUser = async (req: Request, res: Response) => {
             message: 'Not Authorized'
         })
     }
-    if (!id) {
+    if (!userId) {
         return res.status(400).json({
             success: false,
             message: 'Id required'
@@ -268,7 +268,7 @@ export const getPlatformUserById = async (req: Request, res: Response) => {
             message: 'Not Authorized'
         })
     }
-    if (!id) {
+    if (!userId) {
         return res.status(400).json({
             success: false,
             message: 'Id required'
@@ -290,3 +290,300 @@ export const getPlatformUserById = async (req: Request, res: Response) => {
         })
     }
 }
+
+
+//Permission Management
+export const createPermission = async (req: Request, res: Response) => {
+    const { id, role, userType } = req.user!;
+    if (!id && !role && !userType) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (userType !== 'PLATFORM_USER') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    const { permissionCode, permissionName, permissionDescription } = req.body
+    if (!permissionCode || !permissionName ) {
+        return res.status(400).json({
+            success: false,
+            message: 'All fields are required'
+        })
+    }
+    try {
+        const isPermissionExists = await prisma.permission.findFirst({
+            where: {
+                permissionCode: permissionCode,
+                permissionName: permissionName
+            }
+        })
+        if(isPermissionExists){
+            return res.status(302).json({
+                success : false,
+                message : `Role ${isPermissionExists.permissionCode} is already exists`
+            })
+        }
+        const data = await prisma.permission.create({
+            data: {
+                
+                permissionCode: permissionCode,
+                permissionName: permissionName,
+                description: permissionDescription,
+                isActive: true
+            }
+        })
+        return res.status(201).json({
+            success: true,
+            message: `${data.permissionName} is created with code ${data.permissionCode}`
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${err}`
+        })
+    }
+}
+
+export const updatePermission = async (req: Request, res: Response) => {
+    const { id, role, userType } = req.user!;
+    const {permissionId} = req.params;
+    if (!id && !role && !userType) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if(!permissionId){
+        return res.status(404).json({
+            success : false,
+            message : 'Permission id required'
+        })
+    }
+    if (userType !== 'PLATFORM_USER') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    const { permissionCode, permissionName, permissionDescription } = req.body
+    if (!permissionCode || !permissionName ) {
+        return res.status(400).json({
+            success: false,
+            message: 'All fields are required'
+        })
+    }
+    try {
+        const isPermissionExists = await prisma.permission.findFirst({
+            where: {
+                id : Number(permissionId)
+            }
+        })
+        if(!isPermissionExists){
+            return res.status(404).json({
+                success : false,
+                message : `permission not exist`
+            })
+        }
+        const data = await prisma.permission.update({
+            data: {
+                permissionCode: permissionCode,
+                permissionName: permissionName,
+                description: permissionDescription,
+            },
+            where : {
+                id : Number(permissionId)
+            }
+        })
+        return res.status(201).json({
+            success: true,
+            message: `${data.permissionName} is updated`
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${err}`
+        })
+    }
+}
+
+export const getListOfPermissions = async (req: Request, res: Response) => {
+    const { id, role, userType } = req.user!;
+    const { skip, take } = req.query;
+    if (!id && !role && !userType) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    try {
+        const totalPermissionCount = await prisma.permission.count()
+        const permissionsList = await prisma.permission.findMany({
+            skip: Number(skip),
+            take: Number(take),
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+        return res.status(200).json({
+            success: true,
+            data: permissionsList,
+            totalCount: totalPermissionCount,
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+
+export const getPermissonDetails = async (req: Request, res: Response) => {
+    const { id, role, userType } = req.user!;
+    const { permissionId } = req.params;
+    if (!id && !role && !userType) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!permissionId) {
+        return res.status(400).json({
+            success: false,
+            message: 'permission id required'
+        })
+    }
+    try {
+        const permissionDetails = await prisma.permission.findUnique({
+            where: { id: Number(permissionId) },
+        })
+        return res.status(200).json({
+            success: true,
+            data: permissionDetails
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+
+
+export const deactivatePermission = async (req: Request, res: Response) => {
+    const { id, role, userType } = req.user!;
+    const { permissionId } = req.params;
+    if (!id && !role && !userType) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!permissionId) {
+        return res.status(400).json({
+            success: false,
+            message: 'permission id required'
+        })
+    }
+    if (userType !== 'PLATFORM_USER') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    if (Number(permissionId) === id) {
+        return res.status(400).json({
+            success: false,
+            message: 'You cannot deactivate your own account'
+        })
+    }
+    try {
+        const isPermissionExists = await prisma.permission.findUnique({
+            where: { id: Number(permissionId) },
+        })
+        if (!isPermissionExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'permission not found'
+            })
+        }
+        await prisma.permission.update({
+            data: {
+                isActive: false
+            },
+            where: { id: Number(permissionId) }
+        })
+        return res.status(200).json({
+            success: true,
+            message: 'permission deactivated'
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+
+export const activatePermission = async (req: Request, res: Response) => {
+    const { id, role, userType } = req.user!;
+    const { permissionId } = req.params;
+    if (!id && !role && !userType) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not Authorized'
+        })
+    }
+    if (!permissionId) {
+        return res.status(400).json({
+            success: false,
+            message: 'permission id required'
+        })
+    }
+    if (userType !== 'PLATFORM_USER') {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized to perform operation'
+        })
+    }
+    if (Number(permissionId) === id) {
+        return res.status(400).json({
+            success: false,
+            message: 'You cannot activate your own account need another admins permission'
+        })
+    }
+    try {
+        const isPermissionExists = await prisma.permission.findUnique({
+            where: { id: Number(permissionId) },
+        })
+        if (!isPermissionExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Permission not found'
+            })
+        }
+        await prisma.permission.update({
+            data: {
+                isActive: true
+            },
+            where: { id: Number(permissionId) }
+        })
+        return res.status(200).json({
+            success: true,
+            message: 'Permission Activated'
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+}
+

@@ -166,7 +166,34 @@ model Role {
   // Relations
   tenant         Tenant  @relation(fields: [tenantId], references: [id])
   users          Users[]
-
+  permissionMappings RolePermissionMapping[]
   @@unique([tenantId, roleCode])
   @@index([tenantId])
+}
+
+model Permission {
+  id             Int                    @id @default(autoincrement())
+  permissionCode String                 @unique
+  permissionName String
+  description    String?
+  isActive       Boolean                @default(true)
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  roleMappings   RolePermissionMapping[]
+}
+
+model RolePermissionMapping {
+  id           Int        @id @default(autoincrement())
+  roleId       Int
+  permissionId Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
 }

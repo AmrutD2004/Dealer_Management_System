@@ -2,6 +2,7 @@ import { Router } from "express";
 import { authenticate, requireTenantUser } from "../../middlewares/authMiddleware/loginMiddelware";
 import { activateTenantBranch, createBranch, deactivateTenantBranch, getTenantBranchById, getTenantBranchList, updatedBranch } from "../../controllers/tenants/tenantSectionController";
 import { activateTenantDesignation, createEmployeeDesignation, deactivateTenantDesignation, getAllEmployeeDesignation, getEmployeeDesignationDetails, mechanicAssign, mechanicUnassign, updateDesignation } from "../../controllers/tenants/employeeDesignationController";
+import { activateTenantRole, createRole, deactivateTenantRole, getAllTenantRole, getRoleDetails, updateRole } from "../../controllers/tenants/roleAndPermissionController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -21,5 +22,13 @@ tenantRoute.patch('/tenant/designation/:designationId/mechanic/assign', authenti
 tenantRoute.patch('/tenant/designation/:designationId/mechanic/unassign', authenticate, requireTenantUser, mechanicUnassign)
 tenantRoute.patch('/tenant/designation/:designationId/activate', authenticate, requireTenantUser, activateTenantDesignation)
 tenantRoute.patch('/tenant/designation/:designationId/deactivate', authenticate, requireTenantUser, deactivateTenantDesignation)
+
+//Role Routes
+tenantRoute.post('/tenant/role/create', authenticate, requireTenantUser, createRole)
+tenantRoute.get('/tenant/role/get/all', authenticate, requireTenantUser, getAllTenantRole)
+tenantRoute.get('/tenant/role/get/:roleId', authenticate, requireTenantUser, getRoleDetails)
+tenantRoute.put('/tenant/role/:roleId/update', authenticate, requireTenantUser, updateRole)
+tenantRoute.patch('/tenant/role/:roleId/deactivate', authenticate, requireTenantUser, deactivateTenantRole)
+tenantRoute.patch('/tenant/role/:roleId/activate', authenticate, requireTenantUser, activateTenantRole)
 
 export default tenantRoute;
