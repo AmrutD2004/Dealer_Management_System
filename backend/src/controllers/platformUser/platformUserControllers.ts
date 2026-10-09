@@ -496,12 +496,6 @@ export const deactivatePermission = async (req: Request, res: Response) => {
             message: 'Not authorized to perform operation'
         })
     }
-    if (Number(permissionId) === id) {
-        return res.status(400).json({
-            success: false,
-            message: 'You cannot deactivate your own account'
-        })
-    }
     try {
         const isPermissionExists = await prisma.permission.findUnique({
             where: { id: Number(permissionId) },
@@ -550,12 +544,6 @@ export const activatePermission = async (req: Request, res: Response) => {
         return res.status(401).json({
             success: false,
             message: 'Not authorized to perform operation'
-        })
-    }
-    if (Number(permissionId) === id) {
-        return res.status(400).json({
-            success: false,
-            message: 'You cannot activate your own account need another admins permission'
         })
     }
     try {
