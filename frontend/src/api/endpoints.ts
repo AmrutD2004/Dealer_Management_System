@@ -131,6 +131,11 @@ export const getDesignationList = async (skip: number, take: number) => {
     return await response.data;
 }
 
+export const getDesignationListWithoutPagination = async () => {
+    const response = await api.get(`/api/tenant/designation/get/all`)
+    return await response.data;
+}
+
 export const getDesignationById = async (designationId: number) => {
     const response = await api.get(`/api/tenant/designation/get/${designationId}`)
     return await response.data;

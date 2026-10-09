@@ -317,6 +317,18 @@ export const assigningPermissionToRole = async (req: Request, res: Response) => 
         })
     }
     try {
+        const isMappingExists = await prisma.rolePermissionMapping.findFirst({
+            where : {
+                roleId : Number(roleId),
+                permissionId : Number(permissionId)
+            }
+        })
+        if(isMappingExists){
+            return res.status(302).json({
+                success : false,
+                message : 'Permission already exists'
+            })
+        }
         const data = await prisma.rolePermissionMapping.create({
             data: {
                 roleId: Number(roleId),
