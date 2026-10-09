@@ -56,7 +56,9 @@ export const ModelName = {
   Branch: 'Branch',
   Users: 'Users',
   EmployeeDesignation: 'EmployeeDesignation',
-  Role: 'Role'
+  Role: 'Role',
+  Permission: 'Permission',
+  RolePermissionMapping: 'RolePermissionMapping'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -183,6 +185,30 @@ export const RoleScalarFieldEnum = {
 } as const
 
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const PermissionScalarFieldEnum = {
+  id: 'id',
+  permissionCode: 'permissionCode',
+  permissionName: 'permissionName',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+export const RolePermissionMappingScalarFieldEnum = {
+  id: 'id',
+  roleId: 'roleId',
+  permissionId: 'permissionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RolePermissionMappingScalarFieldEnum = (typeof RolePermissionMappingScalarFieldEnum)[keyof typeof RolePermissionMappingScalarFieldEnum]
 
 
 export const SortOrder = {

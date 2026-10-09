@@ -69,3 +69,13 @@ export type EmployeeDesignation = Prisma.EmployeeDesignationModel
  * 
  */
 export type Role = Prisma.RoleModel
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model RolePermissionMapping
+ * 
+ */
+export type RolePermissionMapping = Prisma.RolePermissionMappingModel
