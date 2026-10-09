@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Briefcase, Building, ChevronDown, Key, Layers, LayoutDashboard, ShieldCheck, Wrench } from "lucide-react"
+import { Briefcase, Building, ChevronDown, Key, Layers, LayoutDashboard, ShieldCheck, Users, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -64,8 +64,12 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/masters/permission` ||
     pathname.startsWith(`/tenant/${id}/masters/permission`)
 
+  const employeeActive =
+    pathname === `/tenant/${id}/masters/employee` ||
+    pathname.startsWith(`/tenant/${id}/masters/employee/`)
+
   const [mastersOpen, setMastersOpen] = useState<boolean | undefined>(undefined)
-  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive)
+  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive)
 
   /* Collapse the mobile sheet once a destination is picked. */
   const handleNavigate = () => {
@@ -175,7 +179,7 @@ export function AppSidebar() {
 
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  isActive={branchActive || designationActive || roleActive}
+                  isActive={branchActive || designationActive || roleActive || assignPermission || employeeActive}
                   tooltip="Masters"
                   aria-expanded={showMasters}
                   onClick={() => setMastersOpen(!showMasters)}
@@ -185,7 +189,7 @@ export function AppSidebar() {
                     size={18}
                     strokeWidth={1.8}
                     className={
-                      branchActive || designationActive || roleActive
+                      branchActive || designationActive || roleActive || assignPermission || employeeActive
                         ? "text-sidebar-ring"
                         : "text-sidebar-foreground/55"
                     }
@@ -260,6 +264,20 @@ export function AppSidebar() {
                         }
                       >
                         <span className="flex items-center gap-2 "><Key size={18}/>Assign Permission</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={employeeActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/employee`}
+                            aria-current={employeeActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Users size={18}/>Employee</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>

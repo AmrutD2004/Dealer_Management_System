@@ -1,6 +1,6 @@
 import DashboardLayout from '@/components/layout/TenantLayout/DashboardLayout'
 import AssignPermissionHeader from '@/components/TenantUsers/Masters/AssignPermission/AssignPermissionHeader'
-import React from 'react'
+import AssignPermissionListTable from '@/components/TenantUsers/Masters/AssignPermission/AssignPermissionListTable'
 
 const AssignPermission = () => {
   return (
@@ -10,7 +10,7 @@ const AssignPermission = () => {
                 <AssignPermissionHeader />
             </section>
             <section>
-
+                <AssignPermissionListTable />
             </section>
         </div>
     </DashboardLayout>

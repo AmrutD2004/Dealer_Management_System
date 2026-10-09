@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
-import type { branchListType, designationListType, roleListType } from "@/Types/tenantCreateType";
-import { getDesignationById, getDesignationList, getRoleById, getRoleList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
+import type { branchListType, designationListType, employeeListType, roleListType, rolePermissionMappingType } from "@/Types/tenantCreateType";
+import { getAssignedPermissionById, getAssignedPermissionList, getDesignationById, getDesignationList, getEmployeeById, getEmployeeList, getRoleById, getRoleList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
 import { toast } from "@/components/ui/toast";
 
 export const TenantContext = createContext<any | null>(null)
@@ -35,6 +35,24 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
     const [selectedRole, setSelectedRole] = useState<roleListType | null>(null)
     const [viewRoleModalOpen, setViewRoleModalOpen] = useState<boolean>(false)
     const [editRoleModalOpen, setEditRoleModalOpen] = useState<boolean>(false)
+
+    const [permissionMappingList, setPermissionMappingList] = useState<rolePermissionMappingType[]>([])
+    const [permissionMappingSkip, setPermissionMappingSkip] = useState<number>(0)
+    const [permissionMappingTake, setPermissionMappingTake] = useState<number>(3)
+    const [totalPermissionMappings, setTotalPermissionMappings] = useState<number>(0)
+
+    const [selectedPermissionMapping, setSelectedPermissionMapping] = useState<rolePermissionMappingType | null>(null)
+    const [viewPermissionMappingModalOpen, setViewPermissionMappingModalOpen] = useState<boolean>(false)
+    const [editPermissionMappingModalOpen, setEditPermissionMappingModalOpen] = useState<boolean>(false)
+
+    const [employeeList, setEmployeeList] = useState<employeeListType[]>([])
+    const [employeeSkip, setEmployeeSkip] = useState<number>(0)
+    const [employeeTake, setEmployeeTake] = useState<number>(5)
+    const [totalEmployees, setTotalEmployees] = useState<number>(0)
+
+    const [selectedEmployee, setSelectedEmployee] = useState<employeeListType | null>(null)
+    const [viewEmployeeModalOpen, setViewEmployeeModalOpen] = useState<boolean>(false)
+    const [editEmployeeModalOpen, setEditEmployeeModalOpen] = useState<boolean>(false)
 
         const fetchTenantBranchList = async (skip: number, take: number) => {
         try {
@@ -183,6 +201,96 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
         setSelectedRole(null)
     }
 
+    const fetchPermissionMappingList = useCallback(async (skip: number, take: number) => {
+        try {
+            const data = await getAssignedPermissionList(skip, take)
+            if (data?.success) {
+                setPermissionMappingList(data?.data)
+                setTotalPermissionMappings(data?.count)
+            }
+        } catch (err: any) {
+            toast.add({
+                type: 'error',
+                description: err?.response?.data?.message
+            })
+        }
+    }, [])
+
+    const fetchPermissionMappingById = async (rolePermissionId: number) => {
+        try {
+            const data = await getAssignedPermissionById(rolePermissionId)
+            if (data?.success) {
+                setSelectedPermissionMapping(data?.data)
+            }
+        } catch (err: any) {
+            toast.add({
+                type: 'error',
+                description: err?.response?.data?.message
+            })
+        }
+    }
+
+    const openViewPermissionMapping = async (rolePermissionId: number) => {
+        await fetchPermissionMappingById(rolePermissionId)
+        setViewPermissionMappingModalOpen(true)
+    }
+
+    const openEditPermissionMapping = async (rolePermissionId: number) => {
+        await fetchPermissionMappingById(rolePermissionId)
+        setEditPermissionMappingModalOpen(true)
+    }
+
+    const closeAllPermissionMappingModals = () => {
+        setViewPermissionMappingModalOpen(false)
+        setEditPermissionMappingModalOpen(false)
+        setSelectedPermissionMapping(null)
+    }
+
+    const fetchEmployeeList = async (skip: number, take: number) => {
+        try {
+            const data = await getEmployeeList(skip, take)
+            if (data?.success) {
+                setEmployeeList(data?.data)
+                setTotalEmployees(data?.count)
+            }
+        } catch (err: any) {
+            toast.add({
+                type: 'error',
+                description: err?.response?.data?.message
+            })
+        }
+    }
+
+    const fetchEmployeeById = async (employeeId: number) => {
+        try {
+            const data = await getEmployeeById(employeeId)
+            if (data?.success) {
+                setSelectedEmployee(data?.data)
+            }
+        } catch (err: any) {
+            toast.add({
+                type: 'error',
+                description: err?.response?.data?.message
+            })
+        }
+    }
+
+    const openViewEmployee = async (employeeId: number) => {
+        await fetchEmployeeById(employeeId)
+        setViewEmployeeModalOpen(true)
+    }
+
+    const openEditEmployee = async (employeeId: number) => {
+        await fetchEmployeeById(employeeId)
+        setEditEmployeeModalOpen(true)
+    }
+
+    const closeAllEmployeeModals = () => {
+        setViewEmployeeModalOpen(false)
+        setEditEmployeeModalOpen(false)
+        setSelectedEmployee(null)
+    }
+
     useEffect(() => {
         fetchTenantBranchList(skip, take)
     }, [isLoggedIn, skip, take])
@@ -202,7 +310,17 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
             selectedRole, setSelectedRole,
             viewRoleModalOpen, setViewRoleModalOpen,
             editRoleModalOpen, setEditRoleModalOpen,
-            fetchRoleById, openViewRole, openEditRole, closeAllRoleModals
+            fetchRoleById, openViewRole, openEditRole, closeAllRoleModals,
+            permissionMappingList, permissionMappingSkip, setPermissionMappingSkip, permissionMappingTake, setPermissionMappingTake, totalPermissionMappings, fetchPermissionMappingList,
+            selectedPermissionMapping, setSelectedPermissionMapping,
+            viewPermissionMappingModalOpen, setViewPermissionMappingModalOpen,
+            editPermissionMappingModalOpen, setEditPermissionMappingModalOpen,
+            fetchPermissionMappingById, openViewPermissionMapping, openEditPermissionMapping, closeAllPermissionMappingModals,
+            employeeList, employeeSkip, setEmployeeSkip, employeeTake, setEmployeeTake, totalEmployees, fetchEmployeeList,
+            selectedEmployee, setSelectedEmployee,
+            viewEmployeeModalOpen, setViewEmployeeModalOpen,
+            editEmployeeModalOpen, setEditEmployeeModalOpen,
+            fetchEmployeeById, openViewEmployee, openEditEmployee, closeAllEmployeeModals
         }}>
             {children}
         </TenantContext.Provider>

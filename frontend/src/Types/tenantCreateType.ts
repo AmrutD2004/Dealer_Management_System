@@ -1,3 +1,5 @@
+import type { PermissionListType } from "./permissionType"
+
 export interface tenantCreateType {
     tenantName: string,
     email: string,
@@ -151,4 +153,66 @@ export interface roleCreateType {
     roleCode: string,
     roleName: string,
     roleDescription: string
+}
+
+/* Mirrors the rolePermissionMapping record returned by
+   GET /api/tenant/role/permission/get/all with its joined role and
+   permission. */
+
+export interface rolePermissionMappingType {
+    id: number,
+    roleId: number,
+    permissionId: number,
+    createdAt: string,
+    updatedAt: string,
+    role: roleListType,
+    permission: PermissionListType
+}
+
+/* Backend update expects `roleId` and `permissionId` in the body. */
+
+export interface rolePermissionMappingUpdateType {
+    roleId: number,
+    permissionId: number
+}
+
+/* Record returned by GET /api/tenant/employee/get/all with the joined
+   tenant, branch, role and designation. */
+
+export interface employeeListType {
+    id: number,
+    tenantId: number,
+    branchId: number,
+    roleId: number,
+    designationId: number,
+    employeeCode: string,
+    firstName: string,
+    middleName: string | null,
+    lastName: string,
+    email: string,
+    mobileNo: string,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    tenant: { tenantName: string } | null,
+    branch: { branchName: string } | null,
+    role: { roleName: string } | null,
+    designation: { name: string } | null
+}
+
+/* Backend create requires every field including `passwordHash`; the
+   update endpoint accepts an optional `passwordHash` (blank keeps the
+   existing password). Dropdown ids are kept as strings to match the
+   Select component value type. */
+
+export interface employeeCreateType {
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    email: string,
+    mobileNo: string,
+    passwordHash: string,
+    branchId: string,
+    roleId: string,
+    designationId: string
 }
