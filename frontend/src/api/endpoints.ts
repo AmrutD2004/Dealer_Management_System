@@ -131,6 +131,11 @@ export const getDesignationList = async (skip: number, take: number) => {
     return await response.data;
 }
 
+export const getDesignationListWithoutPagination = async () => {
+    const response = await api.get(`/api/tenant/designation/get/all`)
+    return await response.data;
+}
+
 export const getDesignationById = async (designationId: number) => {
     const response = await api.get(`/api/tenant/designation/get/${designationId}`)
     return await response.data;
@@ -244,5 +249,37 @@ export const getAssignedPermissionById = async (rolePermissionId: number) => {
 
 export const updateAssignedPermission = async (payload: {}, rolePermissionId: number) => {
     const response = await api.put(`/api/tenant/role/permission/${rolePermissionId}/update`, payload)
+    return await response.data
+}
+
+
+//Employee management
+export const createEmployee = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/employee/new/create`, payload)
+    return await response.data;
+}
+
+export const getEmployeeList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/employee/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getEmployeeById = async (employeeId: number) => {
+    const response = await api.get(`/api/tenant/employee/get/${employeeId}`)
+    return await response.data;
+}
+
+export const editEmployee = async (payload: {}, employeeId: number) => {
+    const response = await api.put(`/api/tenant/employee/${employeeId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateEmployee = async (employeeId: number) => {
+    const response = await api.patch(`/api/tenant/employee/${employeeId}/deactivate`)
+    return await response.data
+}
+
+export const activateEmployee = async (employeeId: number) => {
+    const response = await api.patch(`/api/tenant/employee/${employeeId}/activate`)
     return await response.data
 }

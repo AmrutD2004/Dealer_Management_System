@@ -69,13 +69,22 @@ export const getAllEmployeeDesignation = async (req: Request, res: Response) => 
                 tenantId: Number(tenantId)
             }
         })
-        const tenantDesignations = await prisma.employeeDesignation.findMany({
-            skip: Number(skip),
-            take: Number(take),
-            where: {
-                tenantId: Number(tenantId)
-            }
-        })
+        let tenantDesignations
+        if (skip || take) {
+            tenantDesignations = await prisma.employeeDesignation.findMany({
+                skip: Number(skip),
+                take: Number(take),
+                where: {
+                    tenantId: Number(tenantId)
+                }
+            })
+        } else {
+            tenantDesignations = await prisma.employeeDesignation.findMany({
+                where: {
+                    tenantId: Number(tenantId)
+                }
+            })
+        }
 
         return res.status(200).json({
             success: true,
@@ -152,7 +161,7 @@ export const updateDesignation = async (req: Request, res: Response) => {
             message: 'All fields are required'
         })
     }
-    try{
+    try {
         const isDesignationExists = await prisma.employeeDesignation.findUnique({
             where: {
                 id: Number(designationId),
@@ -166,23 +175,23 @@ export const updateDesignation = async (req: Request, res: Response) => {
             })
         }
         const data = await prisma.employeeDesignation.update({
-            data : {
-                code : code,
-                name : name,
-                description : description,
-                isMechanic : isMechanic
+            data: {
+                code: code,
+                name: name,
+                description: description,
+                isMechanic: isMechanic
             },
-            where : {
-                id : Number(designationId),
-                tenantId : Number(tenantId)
+            where: {
+                id: Number(designationId),
+                tenantId: Number(tenantId)
             }
         })
 
         return res.status(200).json({
-            success : true,
-            message : `${data.name} details are updated`
+            success: true,
+            message: `${data.name} details are updated`
         })
-    }catch (err) {
+    } catch (err) {
         return res.status(500).json({
             success: false,
             message: `Server error : ${err}`
@@ -212,8 +221,8 @@ export const deactivateTenantDesignation = async (req: Request, res: Response) =
                 id: Number(designationId),
                 tenantId: Number(tenantId)
             },
-            include :{
-                tenant : true
+            include: {
+                tenant: true
             }
         })
         if (!isDesignationExists) {
@@ -226,7 +235,7 @@ export const deactivateTenantDesignation = async (req: Request, res: Response) =
             data: {
                 isActive: false
             },
-            where: { id: Number(designationId), tenantId : Number(tenantId) }
+            where: { id: Number(designationId), tenantId: Number(tenantId) }
         })
         return res.status(200).json({
             success: true,
@@ -262,8 +271,8 @@ export const activateTenantDesignation = async (req: Request, res: Response) => 
                 id: Number(designationId),
                 tenantId: Number(tenantId)
             },
-            include :{
-                tenant : true
+            include: {
+                tenant: true
             }
         })
         if (!isDesignationExists) {
@@ -276,7 +285,7 @@ export const activateTenantDesignation = async (req: Request, res: Response) => 
             data: {
                 isActive: true
             },
-            where: { id: Number(designationId), tenantId : Number(tenantId) }
+            where: { id: Number(designationId), tenantId: Number(tenantId) }
         })
         return res.status(200).json({
             success: true,
@@ -312,8 +321,8 @@ export const mechanicAssign = async (req: Request, res: Response) => {
                 id: Number(designationId),
                 tenantId: Number(tenantId)
             },
-            include :{
-                tenant : true
+            include: {
+                tenant: true
             }
         })
         if (!isDesignationExists) {
@@ -326,7 +335,7 @@ export const mechanicAssign = async (req: Request, res: Response) => {
             data: {
                 isMechanic: true
             },
-            where: { id: Number(designationId), tenantId : Number(tenantId) }
+            where: { id: Number(designationId), tenantId: Number(tenantId) }
         })
         return res.status(200).json({
             success: true,
@@ -362,8 +371,8 @@ export const mechanicUnassign = async (req: Request, res: Response) => {
                 id: Number(designationId),
                 tenantId: Number(tenantId)
             },
-            include :{
-                tenant : true
+            include: {
+                tenant: true
             }
         })
         if (!isDesignationExists) {
@@ -376,7 +385,7 @@ export const mechanicUnassign = async (req: Request, res: Response) => {
             data: {
                 isMechanic: false
             },
-            where: { id: Number(designationId), tenantId : Number(tenantId) }
+            where: { id: Number(designationId), tenantId: Number(tenantId) }
         })
         return res.status(200).json({
             success: true,
