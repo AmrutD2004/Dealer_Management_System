@@ -3,6 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import {
   Building2,
   ChevronDown,
+  KeyRound,
   LayoutDashboard,
   ShieldCheck,
   Wrench,
@@ -67,6 +68,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
       { title: "Platform Users", url: "/platform-users", icon: ShieldCheck },
       { title: "Tenant Management", url: "/platform/tenant", icon: Building2 },
+      { title: "Permission Management", url: "/platform/permission", icon: KeyRound },
       // { title: "Subscription Plans", url: "/plans", icon: CreditCard },
     ],
   },

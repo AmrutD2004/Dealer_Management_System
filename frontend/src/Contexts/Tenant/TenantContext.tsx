@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
-import type { branchListType, designationListType } from "@/Types/tenantCreateType";
-import { getDesignationById, getDesignationList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
+import type { branchListType, designationListType, roleListType } from "@/Types/tenantCreateType";
+import { getDesignationById, getDesignationList, getRoleById, getRoleList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
 import { toast } from "@/components/ui/toast";
 
 export const TenantContext = createContext<any | null>(null)
@@ -26,6 +26,15 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
     const [selectedDesignation, setSelectedDesignation] = useState<designationListType | null>(null)
     const [viewDesignationModalOpen, setViewDesignationModalOpen] = useState<boolean>(false)
     const [editDesignationModalOpen, setEditDesignationModalOpen] = useState<boolean>(false)
+
+    const [roleList, setRoleList] = useState<roleListType[]>([])
+    const [roleSkip, setRoleSkip] = useState<number>(0)
+    const [roleTake, setRoleTake] = useState<number>(3)
+    const [totalRoles, setTotalRoles] = useState<number>(0)
+
+    const [selectedRole, setSelectedRole] = useState<roleListType | null>(null)
+    const [viewRoleModalOpen, setViewRoleModalOpen] = useState<boolean>(false)
+    const [editRoleModalOpen, setEditRoleModalOpen] = useState<boolean>(false)
 
         const fetchTenantBranchList = async (skip: number, take: number) => {
         try {
@@ -123,6 +132,57 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
         setSelectedDesignation(null)
     }
 
+    const fetchRoleList = async (skip: number, take: number) => {
+        try {
+            const data = await getRoleList(skip, take)
+            if (data?.success) {
+                setRoleList(data?.data)
+                setTotalRoles(data?.count)
+            }
+        } catch (err: any) {
+            toast.add({
+                type: 'error',
+                description: err?.response?.data?.message
+            })
+        }
+    }
+
+    const fetchRoleById = async (roleId: number) => {
+        try {
+            const data = await getRoleById(roleId)
+            if (data?.success) {
+                setSelectedRole(data?.data)
+            }
+        } catch (err: any) {
+            //role details endpoint responds with 302, payload still carries the record
+            const payload = err?.response?.data
+            if (payload?.success && payload?.data) {
+                setSelectedRole(payload?.data)
+            } else {
+                toast.add({
+                    type: 'error',
+                    description: payload?.message
+                })
+            }
+        }
+    }
+
+    const openViewRole = async (roleId: number) => {
+        await fetchRoleById(roleId)
+        setViewRoleModalOpen(true)
+    }
+
+    const openEditRole = async (roleId: number) => {
+        await fetchRoleById(roleId)
+        setEditRoleModalOpen(true)
+    }
+
+    const closeAllRoleModals = () => {
+        setViewRoleModalOpen(false)
+        setEditRoleModalOpen(false)
+        setSelectedRole(null)
+    }
+
     useEffect(() => {
         fetchTenantBranchList(skip, take)
     }, [isLoggedIn, skip, take])
@@ -137,7 +197,12 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
             selectedDesignation, setSelectedDesignation,
             viewDesignationModalOpen, setViewDesignationModalOpen,
             editDesignationModalOpen, setEditDesignationModalOpen,
-            fetchDesignationById, openViewDesignation, openEditDesignation, closeAllDesignationModals
+            fetchDesignationById, openViewDesignation, openEditDesignation, closeAllDesignationModals,
+            roleList, roleSkip, setRoleSkip, roleTake, setRoleTake, totalRoles, fetchRoleList,
+            selectedRole, setSelectedRole,
+            viewRoleModalOpen, setViewRoleModalOpen,
+            editRoleModalOpen, setEditRoleModalOpen,
+            fetchRoleById, openViewRole, openEditRole, closeAllRoleModals
         }}>
             {children}
         </TenantContext.Provider>
