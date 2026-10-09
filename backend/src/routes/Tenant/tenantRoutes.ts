@@ -3,6 +3,7 @@ import { authenticate, requireTenantUser } from "../../middlewares/authMiddlewar
 import { activateTenantBranch, createBranch, deactivateTenantBranch, getTenantBranchById, getTenantBranchList, updatedBranch } from "../../controllers/tenants/tenantSectionController";
 import { activateTenantDesignation, createEmployeeDesignation, deactivateTenantDesignation, getAllEmployeeDesignation, getEmployeeDesignationDetails, mechanicAssign, mechanicUnassign, updateDesignation } from "../../controllers/tenants/employeeDesignationController";
 import { activateTenantRole, assigningPermissionToRole, createRole, deactivateTenantRole, getAllTenantRole, getRoleDetails, updateRole, updatePermissionToRole, getListOfPermissionToRole, getDetailsPermissionToRole } from "../../controllers/tenants/roleAndPermissionController";
+import { activateEmployee, createEmployee, deactivateEmployee, getListOfTenantEmployee, getTenantEmployeeDetails, updateEmployeeDetails } from "../../controllers/tenants/employeeManagementController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -37,4 +38,12 @@ tenantRoute.post('/tenant/role/permission/assign', authenticate, requireTenantUs
 tenantRoute.put('/tenant/role/permission/:rolePermissionId/update', authenticate, requireTenantUser, updatePermissionToRole)
 tenantRoute.get('/tenant/role/permission/get/all', authenticate, requireTenantUser, getListOfPermissionToRole)
 tenantRoute.get('/tenant/role/permission/get/:rolePermissionId', authenticate, requireTenantUser, getDetailsPermissionToRole)
+
+//Employee Management
+tenantRoute.post('/tenant/employee/new/create', authenticate, requireTenantUser, createEmployee)
+tenantRoute.put('/tenant/employee/:employeeId/update', authenticate, requireTenantUser, updateEmployeeDetails)
+tenantRoute.get('/tenant/employee/get/all', authenticate, requireTenantUser, getListOfTenantEmployee)
+tenantRoute.get('/tenant/employee/get/:employeeId', authenticate, requireTenantUser, getTenantEmployeeDetails)
+tenantRoute.patch('/tenant/employee/:employeeId/deactivate', authenticate, requireTenantUser, deactivateEmployee)
+tenantRoute.patch('/tenant/employee/:employeeId/activate', authenticate, requireTenantUser, activateEmployee)
 export default tenantRoute;
