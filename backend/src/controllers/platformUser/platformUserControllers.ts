@@ -421,13 +421,19 @@ export const getListOfPermissions = async (req: Request, res: Response) => {
     }
     try {
         const totalPermissionCount = await prisma.permission.count()
-        const permissionsList = await prisma.permission.findMany({
+        let permissionsList
+        if(skip || take){
+            permissionsList = await prisma.permission.findMany({
             skip: Number(skip),
             take: Number(take),
             orderBy: {
                 createdAt: 'desc'
             }
         })
+        }
+        else{
+            permissionsList = await prisma.permission.findMany()
+        }
         return res.status(200).json({
             success: true,
             data: permissionsList,
@@ -546,6 +552,7 @@ export const activatePermission = async (req: Request, res: Response) => {
             message: 'Not authorized to perform operation'
         })
     }
+
     try {
         const isPermissionExists = await prisma.permission.findUnique({
             where: { id: Number(permissionId) },

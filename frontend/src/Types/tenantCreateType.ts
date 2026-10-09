@@ -131,3 +131,24 @@ export interface designationListType {
     createdAt: string,
     updatedAt: string
 }
+
+export interface roleListType {
+    id: number,
+    tenantId: number,
+    roleCode: string,
+    roleName: string,
+    roleDescription: string | null,
+    isSystemRole: boolean,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string
+}
+
+/* Backend role create/update require all three fields, matching the
+   `roleCode`, `roleName`, `roleDescription` body keys. */
+
+export interface roleCreateType {
+    roleCode: string,
+    roleName: string,
+    roleDescription: string
+}

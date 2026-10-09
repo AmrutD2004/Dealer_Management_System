@@ -150,3 +150,84 @@ export const activateDesignation = async (designationId: number) => {
     const response = await api.patch(`/api/tenant/designation/${designationId}/activate`)
     return await response.data
 }
+
+
+//Role management
+export const createRole = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/role/create`, payload)
+    return await response.data;
+}
+
+export const getRoleList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/role/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getRoleListWithoutPagination = async () => {
+    const response = await api.get(`/api/tenant/role/get/all`)
+    return await response.data;
+}
+
+export const getRoleById = async (roleId: number) => {
+    const response = await api.get(`/api/tenant/role/get/${roleId}`)
+    return await response.data;
+}
+
+export const editRole = async (payload: {}, roleId: number) => {
+    const response = await api.put(`/api/tenant/role/${roleId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateRole = async (roleId: number) => {
+    const response = await api.patch(`/api/tenant/role/${roleId}/deactivate`)
+    return await response.data
+}
+
+export const activateRole = async (roleId: number) => {
+    const response = await api.patch(`/api/tenant/role/${roleId}/activate`)
+    return await response.data
+}
+
+
+//Permission management
+export const createPermission = async (payload: {}) => {
+    const response = await api.post(`/api/platform/permission/create`, payload)
+    return await response.data;
+}
+
+export const getPermissionList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/platform/permission/get/all?skip=${skip}&take=${take}`)
+    return await response.data
+}
+
+export const getPermissionListWithoutpagination = async () => {
+    const response = await api.get(`/api/platform/permission/get/all`)
+    return await response.data
+}
+
+export const getPermissionById = async (permissionId: number) => {
+    const response = await api.get(`/api/platform/permission/get/${permissionId}`)
+    return await response.data
+}
+
+export const editPermission = async (payload: {}, permissionId: number) => {
+    const response = await api.put(`/api/platform/permission/${permissionId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivatePermission = async (permissionId: number) => {
+    const response = await api.patch(`/api/platform/permission/${permissionId}/deactivate`)
+    return await response.data
+}
+
+export const activatePermission = async (permissionId: number) => {
+    const response = await api.patch(`/api/platform/permission/${permissionId}/activate`)
+    return await response.data
+}
+
+
+//Assign Permission to roles
+export const assignPermission = async(payload : {})=>{
+    const response = await api.post(`/api/tenant/role/permission/assign`, payload)
+    return await response.data
+}

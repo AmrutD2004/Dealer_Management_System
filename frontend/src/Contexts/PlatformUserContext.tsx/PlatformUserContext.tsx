@@ -2,8 +2,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import type { PlatformUsersListType } from "@/Types/platformUserType";
 import { toast } from "@/components/ui/toast";
-import { getPlatformUserList, getTenantById, getTenantList } from "@/api/endpoints";
+import { getPermissionById, getPermissionList, getPlatformUserList, getTenantById, getTenantList } from "@/api/endpoints";
 import { type tenantType, type tenantDetailType } from "@/Types/tenantCreateType";
+import type { PermissionConfirmActionType, PermissionListType } from "@/Types/permissionType";
 
 export const PlatformUserContext = createContext<any | null>(null)
 
@@ -105,6 +106,73 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
         setSelectedTenant(null)
     }
 
+
+    const [permissionsList, setPermissionsList] = useState<PermissionListType[]>([])
+    const [permissionSkip, setPermissionSkip] = useState<number>(0)
+    const [permissionTake, setPermissionTake] = useState<number>(5)
+    const [totalPermissionCount, setTotalPermissionCount] = useState(0)
+
+    const [selectedPermission, setSelectedPermission] = useState<PermissionListType | null>(null)
+    const [viewPermissionModalOpen, setViewPermissionModalOpen] = useState(false)
+    const [editPermissionModalOpen, setEditPermissionModalOpen] = useState(false)
+    const [permissionConfirmActionModalOpen, setPermissionConfirmActionModalOpen] = useState(false)
+    const [permissionConfirmAction, setPermissionConfirmAction] = useState<PermissionConfirmActionType | null>(null)
+
+    const fetchPermissionsList = async (skip: number, take: number) => {
+        try {
+            const data = await getPermissionList(skip, take)
+            if (data?.success) {
+                setPermissionsList(data?.data)
+                setTotalPermissionCount(data?.totalCount)
+            }
+        } catch (error: any) {
+            toast.add({
+                type: 'error',
+                description: error?.response?.data?.message
+            })
+        }
+    }
+    useEffect(() => {
+        fetchPermissionsList(permissionSkip, permissionTake)
+    }, [isLoggedIn, permissionSkip, permissionTake])
+
+    const fetchPermissionById = async (permissionId: number) => {
+        try {
+            const data = await getPermissionById(permissionId)
+            if (data?.success) {
+                setSelectedPermission(data?.data)
+            }
+        } catch (error: any) {
+            toast.add({
+                type: 'error',
+                description: error?.response?.data?.message
+            })
+        }
+    }
+
+    const openViewPermission = async (permissionId: number) => {
+        await fetchPermissionById(permissionId)
+        setViewPermissionModalOpen(true)
+    }
+
+    const openEditPermission = async (permissionId: number) => {
+        await fetchPermissionById(permissionId)
+        setEditPermissionModalOpen(true)
+    }
+
+    const openPermissionConfirmAction = (type: string, permissionId: number, permissionName: string) => {
+        setPermissionConfirmAction({ type, permissionId, permissionName } as PermissionConfirmActionType)
+        setPermissionConfirmActionModalOpen(true)
+    }
+
+    const closeAllPermissionModals = () => {
+        setViewPermissionModalOpen(false)
+        setEditPermissionModalOpen(false)
+        setPermissionConfirmActionModalOpen(false)
+        setPermissionConfirmAction(null)
+        setSelectedPermission(null)
+    }
+
     return (
         <PlatformUserContext.Provider value={{
             platformUserCount, platformUserSkip, platformUserTake, setPlatformUserSkip, platformUsersList, setPlatformUserTake, fetchPlatformUsersList, activePlatformUserCount,
@@ -115,7 +183,15 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
             editTenantModalOpen, setEditTenantModalOpen,
             confirmActionModalOpen, setConfirmActionModalOpen,
             confirmAction, setConfirmAction,
-            openViewTenant, openEditTenant, openConfirmAction, closeAllModals
+            openViewTenant, openEditTenant, openConfirmAction, closeAllModals,
+
+            permissionSkip, permissionTake, permissionsList, totalPermissionCount, setPermissionSkip, setPermissionTake, fetchPermissionsList,
+            selectedPermission, setSelectedPermission,
+            viewPermissionModalOpen, setViewPermissionModalOpen,
+            editPermissionModalOpen, setEditPermissionModalOpen,
+            permissionConfirmActionModalOpen, setPermissionConfirmActionModalOpen,
+            permissionConfirmAction, setPermissionConfirmAction,
+            openViewPermission, openEditPermission, openPermissionConfirmAction, closeAllPermissionModals
         }}>
             {children}
         </PlatformUserContext.Provider>

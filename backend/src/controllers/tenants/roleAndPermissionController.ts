@@ -68,13 +68,24 @@ export const getAllTenantRole = async (req: Request, res: Response) => {
                 tenantId: Number(tenantId)
             }
         })
-        const tenantRoles = await prisma.role.findMany({
-            skip: Number(skip),
-            take: Number(take),
-            where: {
-                tenantId: Number(tenantId)
-            }
-        })
+        let tenantRoles
+        if (skip || take) {
+            tenantRoles = await prisma.role.findMany({
+                skip: Number(skip) || 0,
+                take: Number(take) || 0,
+                where: {
+                    tenantId: Number(tenantId)
+                }
+            })
+        }
+        else{
+            tenantRoles = await prisma.role.findMany({
+                where: {
+                    tenantId: Number(tenantId)
+                }
+            })
+        }
+
 
         return res.status(200).json({
             success: true,
@@ -309,7 +320,7 @@ export const assigningPermissionToRole = async (req: Request, res: Response) => 
         const data = await prisma.rolePermissionMapping.create({
             data: {
                 roleId: Number(roleId),
-                permissionId: Number(roleId)
+                permissionId: Number(permissionId)
             },
             include: {
                 role: true,
@@ -403,7 +414,7 @@ export const updatePermissionToRole = async (
 
 export const getListOfPermissionToRole = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!;
-    const {skip, take} = req.query;
+    const { skip, take } = req.query;
 
     if (!id || !tenantId) {
         return res.status(401).json({
@@ -413,32 +424,32 @@ export const getListOfPermissionToRole = async (req: Request, res: Response) => 
     }
     try {
         const totalPermissions = await prisma.rolePermissionMapping.count({
-            where  : {
-                role : {
-                    tenantId  :Number(tenantId)
+            where: {
+                role: {
+                    tenantId: Number(tenantId)
                 }
             }
         })
         const listOfPermissionToRole = await prisma.rolePermissionMapping.findMany({
-            skip : Number(skip) || 0,
-            take : Number(take) || 5,
-            where : {
-                role :{
-                    tenantId  : Number(tenantId)
+            skip: Number(skip) || 0,
+            take: Number(take) || 5,
+            where: {
+                role: {
+                    tenantId: Number(tenantId)
                 }
             },
-            include : {
-                role : true,
-                permission : true
+            include: {
+                role: true,
+                permission: true
             },
-            orderBy : {
-                createdAt : 'desc'
+            orderBy: {
+                createdAt: 'desc'
             }
         })
         return res.status(200).json({
-            success : true,
-            data : listOfPermissionToRole,
-            count : totalPermissions
+            success: true,
+            data: listOfPermissionToRole,
+            count: totalPermissions
         })
     } catch (error) {
 
@@ -454,7 +465,7 @@ export const getListOfPermissionToRole = async (req: Request, res: Response) => 
 
 export const getDetailsPermissionToRole = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!;
-    const {rolePermissionId} = req.params;
+    const { rolePermissionId } = req.params;
 
 
 
@@ -474,21 +485,21 @@ export const getDetailsPermissionToRole = async (req: Request, res: Response) =>
     try {
 
         const permissionToRoleDetails = await prisma.rolePermissionMapping.findUnique({
-            where : {
-                id : Number(rolePermissionId)
+            where: {
+                id: Number(rolePermissionId)
             },
-            include : {
-                role : {
-                    include :{
-                        tenant : true
+            include: {
+                role: {
+                    include: {
+                        tenant: true
                     }
                 },
-                permission : true
+                permission: true
             }
         })
         return res.status(200).json({
-            success : true,
-            data : permissionToRoleDetails
+            success: true,
+            data: permissionToRoleDetails
         })
     } catch (error) {
 
