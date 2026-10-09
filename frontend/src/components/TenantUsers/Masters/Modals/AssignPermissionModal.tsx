@@ -15,11 +15,10 @@ import {
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { TenantContext } from '@/Contexts/Tenant/TenantContext'
-import { PlatformUserContext } from '@/Contexts/PlatformUserContext.tsx/PlatformUserContext'
 import { Button } from '@/components/ui/button'
 import type { PermissionListType } from '@/Types/permissionType'
 import { toast } from '@/components/ui/toast'
-import { assignPermission, getPermissionList, getPermissionListWithoutpagination, getRoleListWithoutPagination } from '@/api/endpoints'
+import { assignPermission, getPermissionListWithoutpagination, getRoleListWithoutPagination } from '@/api/endpoints'
 import type { roleListType } from '@/Types/tenantCreateType'
 import { Loader2 } from 'lucide-react'
 
@@ -28,6 +27,7 @@ type props = {
     onClose: (open: boolean) => void
 }
 const AssignPermissionModal = ({ onClose, open }: props) => {
+    const { fetchPermissionMappingList, permissionMappingTake, setPermissionMappingSkip } = useContext(TenantContext)
     const [roleList, setRoleList] = useState<roleListType[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [permissionsList, setPermissionsList] = useState<PermissionListType[]>([])
@@ -67,6 +67,14 @@ const AssignPermissionModal = ({ onClose, open }: props) => {
         fetchPermissionsList()
     }, [])
 
+    const roleItems = roleList.map((role: roleListType) => ({
+        value: String(role.id),
+        label: role.roleName
+    }))
+    const permissionItems = permissionsList.map((permission: PermissionListType) => ({
+        value: String(permission.id),
+        label: permission.permissionCode
+    }))
 
     const handleSubmit = async (e: React.FormEvent) => {
         setLoading(true)
@@ -82,8 +90,12 @@ const AssignPermissionModal = ({ onClose, open }: props) => {
                     type: 'success',
                     description: data?.message
                 })
+                setRoleId('')
+                setPermissionId('')
+                setPermissionMappingSkip(0)
+                fetchPermissionMappingList(0, permissionMappingTake)
                 setTimeout(() => {
-                    onClose(!open);
+                    onClose(false);
                 }, 2000)
             }
         } catch (error: any) {
@@ -108,7 +120,7 @@ const AssignPermissionModal = ({ onClose, open }: props) => {
                     {/* Role Select */}
                     <div className="space-y-2">
                         <Label htmlFor="role">Role</Label>
-                        <Select value={roleId} onValueChange={(value) => setRoleId(value ?? "")}>
+                        <Select items={roleItems} value={roleId} onValueChange={(value) => setRoleId(value ?? "")}>
                             <SelectTrigger id="role" className="w-full">
                                 <SelectValue placeholder="Select a role" />
                             </SelectTrigger>
@@ -129,7 +141,7 @@ const AssignPermissionModal = ({ onClose, open }: props) => {
                     {/* Permission Select */}
                     <div className="space-y-2">
                         <Label htmlFor="permission">Permission</Label>
-                        <Select value={permissionId} onValueChange={(value) => setPermissionId(value ?? "")}>
+                        <Select items={permissionItems} value={permissionId} onValueChange={(value) => setPermissionId(value ?? "")}>
                             <SelectTrigger id="permission" className="w-full">
                                 <SelectValue placeholder="Select a permission" />
                             </SelectTrigger>

@@ -1,3 +1,5 @@
+import type { PermissionListType } from "./permissionType"
+
 export interface tenantCreateType {
     tenantName: string,
     email: string,
@@ -151,4 +153,25 @@ export interface roleCreateType {
     roleCode: string,
     roleName: string,
     roleDescription: string
+}
+
+/* Mirrors the rolePermissionMapping record returned by
+   GET /api/tenant/role/permission/get/all with its joined role and
+   permission. */
+
+export interface rolePermissionMappingType {
+    id: number,
+    roleId: number,
+    permissionId: number,
+    createdAt: string,
+    updatedAt: string,
+    role: roleListType,
+    permission: PermissionListType
+}
+
+/* Backend update expects `roleId` and `permissionId` in the body. */
+
+export interface rolePermissionMappingUpdateType {
+    roleId: number,
+    permissionId: number
 }

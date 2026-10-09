@@ -231,3 +231,18 @@ export const assignPermission = async(payload : {})=>{
     const response = await api.post(`/api/tenant/role/permission/assign`, payload)
     return await response.data
 }
+
+export const getAssignedPermissionList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/role/permission/get/all?skip=${skip}&take=${take}`)
+    return await response.data
+}
+
+export const getAssignedPermissionById = async (rolePermissionId: number) => {
+    const response = await api.get(`/api/tenant/role/permission/get/${rolePermissionId}`)
+    return await response.data
+}
+
+export const updateAssignedPermission = async (payload: {}, rolePermissionId: number) => {
+    const response = await api.put(`/api/tenant/role/permission/${rolePermissionId}/update`, payload)
+    return await response.data
+}

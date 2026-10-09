@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { cn } from 'cn'
 import { Key, Plus } from 'lucide-react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AssignPermissionModal from '../Modals/AssignPermissionModal'
 
 const AssignPermissionHeader = () => {
