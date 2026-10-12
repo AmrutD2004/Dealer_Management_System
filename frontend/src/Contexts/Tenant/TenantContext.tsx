@@ -47,7 +47,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
 
     const [employeeList, setEmployeeList] = useState<employeeListType[]>([])
     const [employeeSkip, setEmployeeSkip] = useState<number>(0)
-    const [employeeTake, setEmployeeTake] = useState<number>(5)
+    const [employeeTake, setEmployeeTake] = useState<number>(3)
     const [totalEmployees, setTotalEmployees] = useState<number>(0)
 
     const [selectedEmployee, setSelectedEmployee] = useState<employeeListType | null>(null)

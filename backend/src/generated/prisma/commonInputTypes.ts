@@ -226,6 +226,23 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumServiceCategoryMasterCodeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ServiceCategoryMasterCode | Prisma.EnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  in?: $Enums.ServiceCategoryMasterCode[] | Prisma.ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ServiceCategoryMasterCode[] | Prisma.ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumServiceCategoryMasterCodeFilter<$PrismaModel> | $Enums.ServiceCategoryMasterCode
+}
+
+export type EnumServiceCategoryMasterCodeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ServiceCategoryMasterCode | Prisma.EnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  in?: $Enums.ServiceCategoryMasterCode[] | Prisma.ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ServiceCategoryMasterCode[] | Prisma.ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumServiceCategoryMasterCodeWithAggregatesFilter<$PrismaModel> | $Enums.ServiceCategoryMasterCode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumServiceCategoryMasterCodeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumServiceCategoryMasterCodeFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -449,6 +466,23 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumServiceCategoryMasterCodeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ServiceCategoryMasterCode | Prisma.EnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  in?: $Enums.ServiceCategoryMasterCode[] | Prisma.ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ServiceCategoryMasterCode[] | Prisma.ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumServiceCategoryMasterCodeFilter<$PrismaModel> | $Enums.ServiceCategoryMasterCode
+}
+
+export type NestedEnumServiceCategoryMasterCodeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ServiceCategoryMasterCode | Prisma.EnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  in?: $Enums.ServiceCategoryMasterCode[] | Prisma.ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ServiceCategoryMasterCode[] | Prisma.ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumServiceCategoryMasterCodeWithAggregatesFilter<$PrismaModel> | $Enums.ServiceCategoryMasterCode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumServiceCategoryMasterCodeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumServiceCategoryMasterCodeFilter<$PrismaModel>
 }
 
 

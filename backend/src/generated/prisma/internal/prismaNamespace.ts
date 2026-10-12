@@ -404,7 +404,9 @@ export const ModelName = {
   EmployeeDesignation: 'EmployeeDesignation',
   Role: 'Role',
   Permission: 'Permission',
-  RolePermissionMapping: 'RolePermissionMapping'
+  RolePermissionMapping: 'RolePermissionMapping',
+  ServiceCategoryMaster: 'ServiceCategoryMaster',
+  ServiceTypeMaster: 'ServiceTypeMaster'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -420,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping"
+    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1016,6 +1018,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ServiceCategoryMaster: {
+      payload: Prisma.$ServiceCategoryMasterPayload<ExtArgs>
+      fields: Prisma.ServiceCategoryMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceCategoryMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceCategoryMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceCategoryMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceCategoryMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceCategoryMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceCategoryMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceCategoryMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceCategoryMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceCategoryMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>
+        }
+        update: {
+          args: Prisma.ServiceCategoryMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceCategoryMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceCategoryMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceCategoryMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceCategoryMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCategoryMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceCategoryMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceCategoryMaster>
+        }
+        groupBy: {
+          args: Prisma.ServiceCategoryMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceCategoryMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceCategoryMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceCategoryMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceTypeMaster: {
+      payload: Prisma.$ServiceTypeMasterPayload<ExtArgs>
+      fields: Prisma.ServiceTypeMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceTypeMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceTypeMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceTypeMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceTypeMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceTypeMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceTypeMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceTypeMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceTypeMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceTypeMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>
+        }
+        update: {
+          args: Prisma.ServiceTypeMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceTypeMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceTypeMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceTypeMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceTypeMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceTypeMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceTypeMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceTypeMaster>
+        }
+        groupBy: {
+          args: Prisma.ServiceTypeMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceTypeMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceTypeMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceTypeMasterCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1189,6 +1339,35 @@ export const RolePermissionMappingScalarFieldEnum = {
 export type RolePermissionMappingScalarFieldEnum = (typeof RolePermissionMappingScalarFieldEnum)[keyof typeof RolePermissionMappingScalarFieldEnum]
 
 
+export const ServiceCategoryMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceCategoryMasterScalarFieldEnum = (typeof ServiceCategoryMasterScalarFieldEnum)[keyof typeof ServiceCategoryMasterScalarFieldEnum]
+
+
+export const ServiceTypeMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceCategoryMasterId: 'serviceCategoryMasterId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceTypeMasterScalarFieldEnum = (typeof ServiceTypeMasterScalarFieldEnum)[keyof typeof ServiceTypeMasterScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1307,6 +1486,20 @@ export type EnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'SubscriptionStatus[]'
  */
 export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ServiceCategoryMasterCode'
+ */
+export type EnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceCategoryMasterCode'>
+    
+
+
+/**
+ * Reference to a field of type 'ServiceCategoryMasterCode[]'
+ */
+export type ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceCategoryMasterCode[]'>
     
 
 
@@ -1482,6 +1675,8 @@ export type GlobalOmitConfig = {
   role?: Prisma.RoleOmit
   permission?: Prisma.PermissionOmit
   rolePermissionMapping?: Prisma.RolePermissionMappingOmit
+  serviceCategoryMaster?: Prisma.ServiceCategoryMasterOmit
+  serviceTypeMaster?: Prisma.ServiceTypeMasterOmit
 }
 
 /* Types for Logging */

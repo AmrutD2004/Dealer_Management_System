@@ -4,6 +4,7 @@ import { activateTenantBranch, createBranch, deactivateTenantBranch, getTenantBr
 import { activateTenantDesignation, createEmployeeDesignation, deactivateTenantDesignation, getAllEmployeeDesignation, getEmployeeDesignationDetails, mechanicAssign, mechanicUnassign, updateDesignation } from "../../controllers/tenants/employeeDesignationController";
 import { activateTenantRole, assigningPermissionToRole, createRole, deactivateTenantRole, getAllTenantRole, getRoleDetails, updateRole, updatePermissionToRole, getListOfPermissionToRole, getDetailsPermissionToRole } from "../../controllers/tenants/roleAndPermissionController";
 import { activateEmployee, createEmployee, deactivateEmployee, getListOfTenantEmployee, getTenantEmployeeDetails, updateEmployeeDetails } from "../../controllers/tenants/employeeManagementController";
+import { activateServiceCategory, activateServiceType, createServiceCategory, createServiceType, deactivateServiceCategory, deactivateServiceType, getListOfServiceCategory, getListOfServiceType, getServiceCategoryDetails, getServiceTypeDetails, updateServiceCategory, updateServiceType } from "../../controllers/tenants/Services/serviceController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -46,4 +47,22 @@ tenantRoute.get('/tenant/employee/get/all', authenticate, requireTenantUser, get
 tenantRoute.get('/tenant/employee/get/:employeeId', authenticate, requireTenantUser, getTenantEmployeeDetails)
 tenantRoute.patch('/tenant/employee/:employeeId/deactivate', authenticate, requireTenantUser, deactivateEmployee)
 tenantRoute.patch('/tenant/employee/:employeeId/activate', authenticate, requireTenantUser, activateEmployee)
+
+
+//Service Category
+tenantRoute.post('/tenant/service/category/create', authenticate, requireTenantUser, createServiceCategory)
+tenantRoute.put('/tenant/service/category/:serviceCategoryId/update', authenticate, requireTenantUser, updateServiceCategory)
+tenantRoute.patch('/tenant/service/category/:serviceCategoryId/deactivate', authenticate, requireTenantUser, deactivateServiceCategory)
+tenantRoute.patch('/tenant/service/category/:serviceCategoryId/activate', authenticate, requireTenantUser, activateServiceCategory)
+tenantRoute.get('/tenant/service/category/get/all', authenticate, requireTenantUser, getListOfServiceCategory)
+tenantRoute.get('/tenant/service/category/get/:serviceCategoryId', authenticate, requireTenantUser, getServiceCategoryDetails)
+
+
+//Service Type
+tenantRoute.post('/tenant/service/type/create', authenticate, requireTenantUser, createServiceType)
+tenantRoute.put('/tenant/service/type/:serviceTypeId/create', authenticate, requireTenantUser, updateServiceType)
+tenantRoute.get('/tenant/service/type/get/all', authenticate, requireTenantUser, getListOfServiceType)
+tenantRoute.get('/tenant/service/type/get/:serviceTypeId', authenticate, requireTenantUser, getServiceTypeDetails)
+tenantRoute.patch('/tenant/service/type/:serviceTypeId/deactivate', authenticate, requireTenantUser, deactivateServiceType)
+tenantRoute.patch('/tenant/service/type/:serviceTypeId/activate', authenticate, requireTenantUser, activateServiceType)
 export default tenantRoute;

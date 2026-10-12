@@ -57,3 +57,13 @@ export type Permission = Prisma.PermissionModel
  * 
  */
 export type RolePermissionMapping = Prisma.RolePermissionMappingModel
+/**
+ * Model ServiceCategoryMaster
+ * 
+ */
+export type ServiceCategoryMaster = Prisma.ServiceCategoryMasterModel
+/**
+ * Model ServiceTypeMaster
+ * 
+ */
+export type ServiceTypeMaster = Prisma.ServiceTypeMasterModel
