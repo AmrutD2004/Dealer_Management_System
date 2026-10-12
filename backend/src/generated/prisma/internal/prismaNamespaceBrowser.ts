@@ -60,7 +60,8 @@ export const ModelName = {
   Permission: 'Permission',
   RolePermissionMapping: 'RolePermissionMapping',
   ServiceCategoryMaster: 'ServiceCategoryMaster',
-  ServiceTypeMaster: 'ServiceTypeMaster'
+  ServiceTypeMaster: 'ServiceTypeMaster',
+  RepairOrderTypeMaster: 'RepairOrderTypeMaster'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -240,6 +241,20 @@ export const ServiceTypeMasterScalarFieldEnum = {
 } as const
 
 export type ServiceTypeMasterScalarFieldEnum = (typeof ServiceTypeMasterScalarFieldEnum)[keyof typeof ServiceTypeMasterScalarFieldEnum]
+
+
+export const RepairOrderTypeMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairOrderTypeMasterScalarFieldEnum = (typeof RepairOrderTypeMasterScalarFieldEnum)[keyof typeof RepairOrderTypeMasterScalarFieldEnum]
 
 
 export const SortOrder = {

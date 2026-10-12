@@ -5,6 +5,7 @@ import { activateTenantDesignation, createEmployeeDesignation, deactivateTenantD
 import { activateTenantRole, assigningPermissionToRole, createRole, deactivateTenantRole, getAllTenantRole, getRoleDetails, updateRole, updatePermissionToRole, getListOfPermissionToRole, getDetailsPermissionToRole } from "../../controllers/tenants/roleAndPermissionController";
 import { activateEmployee, createEmployee, deactivateEmployee, getListOfTenantEmployee, getTenantEmployeeDetails, updateEmployeeDetails } from "../../controllers/tenants/employeeManagementController";
 import { activateServiceCategory, activateServiceType, createServiceCategory, createServiceType, deactivateServiceCategory, deactivateServiceType, getListOfServiceCategory, getListOfServiceType, getServiceCategoryDetails, getServiceTypeDetails, updateServiceCategory, updateServiceType } from "../../controllers/tenants/Services/serviceController";
+import { activateRepairOrder, createRepairOrder, deactivateRepairOrder, getListOfRepairOrder, getRepairOrderDetails, updateRepairOrder } from "../../controllers/tenants/repairOrderController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -60,9 +61,17 @@ tenantRoute.get('/tenant/service/category/get/:serviceCategoryId', authenticate,
 
 //Service Type
 tenantRoute.post('/tenant/service/type/create', authenticate, requireTenantUser, createServiceType)
-tenantRoute.put('/tenant/service/type/:serviceTypeId/create', authenticate, requireTenantUser, updateServiceType)
+tenantRoute.put('/tenant/service/type/:serviceTypeId/update', authenticate, requireTenantUser, updateServiceType)
 tenantRoute.get('/tenant/service/type/get/all', authenticate, requireTenantUser, getListOfServiceType)
 tenantRoute.get('/tenant/service/type/get/:serviceTypeId', authenticate, requireTenantUser, getServiceTypeDetails)
 tenantRoute.patch('/tenant/service/type/:serviceTypeId/deactivate', authenticate, requireTenantUser, deactivateServiceType)
 tenantRoute.patch('/tenant/service/type/:serviceTypeId/activate', authenticate, requireTenantUser, activateServiceType)
+
+//Repair Order
+tenantRoute.post('/tenant/repairorder/create', authenticate, requireTenantUser, createRepairOrder)
+tenantRoute.put('/tenant/repairorder/:repairOrderId/update', authenticate, requireTenantUser, updateRepairOrder)
+tenantRoute.get('/tenant/repairorder/get/all', authenticate, requireTenantUser, getListOfRepairOrder)
+tenantRoute.get('/tenant/repairorder/get/:repairOrderId', authenticate, requireTenantUser, getRepairOrderDetails)
+tenantRoute.patch('/tenant/repairorder/:repairOrderId/deactivate', authenticate, requireTenantUser, deactivateRepairOrder)
+tenantRoute.patch('/tenant/repairorder/:repairOrderId/activate', authenticate, requireTenantUser, activateRepairOrder)
 export default tenantRoute;

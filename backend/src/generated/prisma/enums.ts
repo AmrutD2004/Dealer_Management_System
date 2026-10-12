@@ -47,3 +47,15 @@ export const ServiceCategoryMasterCode = {
 } as const
 
 export type ServiceCategoryMasterCode = (typeof ServiceCategoryMasterCode)[keyof typeof ServiceCategoryMasterCode]
+
+
+export const RepairType = {
+  QUICK_REPAIR: 'QUICK_REPAIR',
+  MINOR_MECHANICAL: 'MINOR_MECHANICAL',
+  MAJOR_MECHANICAL: 'MAJOR_MECHANICAL',
+  MINOR_ACCIDENTAL: 'MINOR_ACCIDENTAL',
+  MAJOR_ACCIDENTAL: 'MAJOR_ACCIDENTAL',
+  SCHEDULE_MAINTENANCE: 'SCHEDULE_MAINTENANCE'
+} as const
+
+export type RepairType = (typeof RepairType)[keyof typeof RepairType]
