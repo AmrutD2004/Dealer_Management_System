@@ -6,6 +6,7 @@ import { activateTenantRole, assigningPermissionToRole, createRole, deactivateTe
 import { activateEmployee, createEmployee, deactivateEmployee, getListOfTenantEmployee, getTenantEmployeeDetails, updateEmployeeDetails } from "../../controllers/tenants/employeeManagementController";
 import { activateServiceCategory, activateServiceType, createServiceCategory, createServiceType, deactivateServiceCategory, deactivateServiceType, getListOfServiceCategory, getListOfServiceType, getServiceCategoryDetails, getServiceTypeDetails, updateServiceCategory, updateServiceType } from "../../controllers/tenants/Services/serviceController";
 import { activateRepairOrder, createRepairOrder, deactivateRepairOrder, getListOfRepairOrder, getRepairOrderDetails, updateRepairOrder } from "../../controllers/tenants/repairOrderController";
+import { activateCustomer, createCustomer, deactivateCustomer, getCustomerDetails, updateCustomer } from "../../controllers/tenants/customerManagementController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -74,4 +75,13 @@ tenantRoute.get('/tenant/repairorder/get/all', authenticate, requireTenantUser, 
 tenantRoute.get('/tenant/repairorder/get/:repairOrderId', authenticate, requireTenantUser, getRepairOrderDetails)
 tenantRoute.patch('/tenant/repairorder/:repairOrderId/deactivate', authenticate, requireTenantUser, deactivateRepairOrder)
 tenantRoute.patch('/tenant/repairorder/:repairOrderId/activate', authenticate, requireTenantUser, activateRepairOrder)
+
+
+//Cutomer Management
+tenantRoute.post('/tenant/customer/create', authenticate, requireTenantUser, createCustomer)
+tenantRoute.put('/tenant/customer/:custId/update', authenticate, requireTenantUser, updateCustomer)
+tenantRoute.get('/tenant/customer/get/all', authenticate, requireTenantUser, getCustomerDetails)
+tenantRoute.get('/tenant/customer/get/:custId', authenticate, requireTenantUser, getCustomerDetails)
+tenantRoute.patch('/tenant/customer/:custId/deactivate', authenticate, requireTenantUser, deactivateCustomer)
+tenantRoute.patch('/tenant/customer/:custId/activate', authenticate, requireTenantUser, activateCustomer)
 export default tenantRoute;

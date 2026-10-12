@@ -94,3 +94,8 @@ export type ServiceTypeMaster = Prisma.ServiceTypeMasterModel
  * 
  */
 export type RepairOrderTypeMaster = Prisma.RepairOrderTypeMasterModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
