@@ -70,6 +70,8 @@ model Tenant {
   roles              Role[]
   employeeDesignations EmployeeDesignation[]
   branches           Branch[]
+  serviceCategoryMasters  ServiceCategoryMaster[]
+  serviceTypes ServiceTypeMaster[]
 
   @@index([createdBy])
 }
@@ -97,6 +99,7 @@ model Branch {
   // Relations
   tenant    Tenant  @relation(fields: [tenantId], references: [id])
   users     Users[]
+  
 
   @@unique([tenantId, branchCode])
   @@index([tenantId])
@@ -196,4 +199,50 @@ model RolePermissionMapping {
   @@unique([roleId, permissionId])
   @@index([roleId])
   @@index([permissionId])
+}
+
+enum ServiceCategoryMasterCode {
+  PDI
+  WARRANTY
+  EXTENDED_WARRANTY
+  POST_WARRANTY
+  ACCIDENT
+  IN_TRANSIT
+}
+
+model ServiceCategoryMaster {
+  id          Int                        @id @default(autoincrement())
+  tenantId    Int
+  code        ServiceCategoryMasterCode  @unique
+  name        String
+  description String?
+  isActive    Boolean                    @default(true)
+  createdAt   DateTime                   @default(now())
+  updatedAt   DateTime                   @updatedAt
+
+  tenant      Tenant                     @relation(fields: [tenantId], references: [id])
+  serviceTypes ServiceTypeMaster[]
+  @@map("ServiceCategoryMaster")
+}
+
+model ServiceTypeMaster {
+  id                      Int      @id @default(autoincrement())
+
+  tenantId                Int
+  serviceCategoryMasterId Int
+
+  code                    String
+  name                    String
+  description             String?
+
+  isActive                Boolean  @default(true)
+
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  tenant                  Tenant                  @relation(fields: [tenantId], references: [id])
+  serviceCategoryMaster   ServiceCategoryMaster   @relation(fields: [serviceCategoryMasterId], references: [id])
+
+  @@unique([tenantId, code])
+  @@map("ServiceTypeMaster")
 }

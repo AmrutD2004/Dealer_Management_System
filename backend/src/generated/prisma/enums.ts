@@ -35,3 +35,15 @@ export const SubscriptionStatus = {
 } as const
 
 export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
+
+
+export const ServiceCategoryMasterCode = {
+  PDI: 'PDI',
+  WARRANTY: 'WARRANTY',
+  EXTENDED_WARRANTY: 'EXTENDED_WARRANTY',
+  POST_WARRANTY: 'POST_WARRANTY',
+  ACCIDENT: 'ACCIDENT',
+  IN_TRANSIT: 'IN_TRANSIT'
+} as const
+
+export type ServiceCategoryMasterCode = (typeof ServiceCategoryMasterCode)[keyof typeof ServiceCategoryMasterCode]

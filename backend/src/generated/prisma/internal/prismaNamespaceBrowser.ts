@@ -58,7 +58,9 @@ export const ModelName = {
   EmployeeDesignation: 'EmployeeDesignation',
   Role: 'Role',
   Permission: 'Permission',
-  RolePermissionMapping: 'RolePermissionMapping'
+  RolePermissionMapping: 'RolePermissionMapping',
+  ServiceCategoryMaster: 'ServiceCategoryMaster',
+  ServiceTypeMaster: 'ServiceTypeMaster'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -209,6 +211,35 @@ export const RolePermissionMappingScalarFieldEnum = {
 } as const
 
 export type RolePermissionMappingScalarFieldEnum = (typeof RolePermissionMappingScalarFieldEnum)[keyof typeof RolePermissionMappingScalarFieldEnum]
+
+
+export const ServiceCategoryMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceCategoryMasterScalarFieldEnum = (typeof ServiceCategoryMasterScalarFieldEnum)[keyof typeof ServiceCategoryMasterScalarFieldEnum]
+
+
+export const ServiceTypeMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceCategoryMasterId: 'serviceCategoryMasterId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceTypeMasterScalarFieldEnum = (typeof ServiceTypeMasterScalarFieldEnum)[keyof typeof ServiceTypeMasterScalarFieldEnum]
 
 
 export const SortOrder = {
