@@ -406,7 +406,8 @@ export const ModelName = {
   Permission: 'Permission',
   RolePermissionMapping: 'RolePermissionMapping',
   ServiceCategoryMaster: 'ServiceCategoryMaster',
-  ServiceTypeMaster: 'ServiceTypeMaster'
+  ServiceTypeMaster: 'ServiceTypeMaster',
+  RepairOrderTypeMaster: 'RepairOrderTypeMaster'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster"
+    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1166,6 +1167,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RepairOrderTypeMaster: {
+      payload: Prisma.$RepairOrderTypeMasterPayload<ExtArgs>
+      fields: Prisma.RepairOrderTypeMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RepairOrderTypeMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RepairOrderTypeMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.RepairOrderTypeMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RepairOrderTypeMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        findMany: {
+          args: Prisma.RepairOrderTypeMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>[]
+        }
+        create: {
+          args: Prisma.RepairOrderTypeMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        createMany: {
+          args: Prisma.RepairOrderTypeMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RepairOrderTypeMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.RepairOrderTypeMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        update: {
+          args: Prisma.RepairOrderTypeMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.RepairOrderTypeMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RepairOrderTypeMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RepairOrderTypeMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.RepairOrderTypeMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.RepairOrderTypeMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRepairOrderTypeMaster>
+        }
+        groupBy: {
+          args: Prisma.RepairOrderTypeMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairOrderTypeMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RepairOrderTypeMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairOrderTypeMasterCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1368,6 +1443,20 @@ export const ServiceTypeMasterScalarFieldEnum = {
 export type ServiceTypeMasterScalarFieldEnum = (typeof ServiceTypeMasterScalarFieldEnum)[keyof typeof ServiceTypeMasterScalarFieldEnum]
 
 
+export const RepairOrderTypeMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairOrderTypeMasterScalarFieldEnum = (typeof RepairOrderTypeMasterScalarFieldEnum)[keyof typeof RepairOrderTypeMasterScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1500,6 +1589,20 @@ export type EnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel> = FieldRefI
  * Reference to a field of type 'ServiceCategoryMasterCode[]'
  */
 export type ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceCategoryMasterCode[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RepairType'
+ */
+export type EnumRepairTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairType'>
+    
+
+
+/**
+ * Reference to a field of type 'RepairType[]'
+ */
+export type ListEnumRepairTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairType[]'>
     
 
 
@@ -1677,6 +1780,7 @@ export type GlobalOmitConfig = {
   rolePermissionMapping?: Prisma.RolePermissionMappingOmit
   serviceCategoryMaster?: Prisma.ServiceCategoryMasterOmit
   serviceTypeMaster?: Prisma.ServiceTypeMasterOmit
+  repairOrderTypeMaster?: Prisma.RepairOrderTypeMasterOmit
 }
 
 /* Types for Logging */

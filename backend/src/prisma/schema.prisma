@@ -72,6 +72,7 @@ model Tenant {
   branches           Branch[]
   serviceCategoryMasters  ServiceCategoryMaster[]
   serviceTypes ServiceTypeMaster[]
+  repairOrderType RepairOrderTypeMaster[]
 
   @@index([createdBy])
 }
@@ -245,4 +246,33 @@ model ServiceTypeMaster {
 
   @@unique([tenantId, code])
   @@map("ServiceTypeMaster")
+}
+
+enum RepairType {
+  QUICK_REPAIR
+  MINOR_MECHANICAL
+  MAJOR_MECHANICAL
+  MINOR_ACCIDENTAL
+  MAJOR_ACCIDENTAL
+  SCHEDULE_MAINTENANCE
+}
+
+model RepairOrderTypeMaster {
+  id          Int        @id @default(autoincrement())
+
+  tenantId    Int
+
+  code        RepairType
+  name        String
+  description String?
+
+  isActive    Boolean    @default(true)
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  tenant      Tenant     @relation(fields: [tenantId], references: [id])
+
+  @@unique([tenantId, code])
+  @@map("RepairOrderTypeMaster")
 }
