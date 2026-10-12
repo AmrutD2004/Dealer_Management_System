@@ -324,6 +324,7 @@ export type TenantWhereInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterListRelationFilter
   serviceTypes?: Prisma.ServiceTypeMasterListRelationFilter
   repairOrderType?: Prisma.RepairOrderTypeMasterListRelationFilter
+  customers?: Prisma.CustomerListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -352,6 +353,7 @@ export type TenantOrderByWithRelationInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterOrderByRelationAggregateInput
   serviceTypes?: Prisma.ServiceTypeMasterOrderByRelationAggregateInput
   repairOrderType?: Prisma.RepairOrderTypeMasterOrderByRelationAggregateInput
+  customers?: Prisma.CustomerOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -383,6 +385,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterListRelationFilter
   serviceTypes?: Prisma.ServiceTypeMasterListRelationFilter
   repairOrderType?: Prisma.RepairOrderTypeMasterListRelationFilter
+  customers?: Prisma.CustomerListRelationFilter
 }, "id" | "tenantCode" | "email">
 
 export type TenantOrderByWithAggregationInput = {
@@ -457,6 +460,7 @@ export type TenantCreateInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
@@ -484,6 +488,7 @@ export type TenantUncheckedCreateInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -510,6 +515,7 @@ export type TenantUpdateInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -537,6 +543,7 @@ export type TenantUncheckedUpdateInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
@@ -834,6 +841,20 @@ export type TenantUpdateOneRequiredWithoutRepairOrderTypeNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutRepairOrderTypeInput, Prisma.TenantUpdateWithoutRepairOrderTypeInput>, Prisma.TenantUncheckedUpdateWithoutRepairOrderTypeInput>
 }
 
+export type TenantCreateNestedOneWithoutCustomersInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutCustomersInput, Prisma.TenantUncheckedCreateWithoutCustomersInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutCustomersInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutCustomersNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutCustomersInput, Prisma.TenantUncheckedCreateWithoutCustomersInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutCustomersInput
+  upsert?: Prisma.TenantUpsertWithoutCustomersInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutCustomersInput, Prisma.TenantUpdateWithoutCustomersInput>, Prisma.TenantUncheckedUpdateWithoutCustomersInput>
+}
+
 export type TenantCreateWithoutCreatedByUserInput = {
   tenantCode: string
   tenantName: string
@@ -857,6 +878,7 @@ export type TenantCreateWithoutCreatedByUserInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCreatedByUserInput = {
@@ -883,6 +905,7 @@ export type TenantUncheckedCreateWithoutCreatedByUserInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCreatedByUserInput = {
@@ -957,6 +980,7 @@ export type TenantCreateWithoutBranchesInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutBranchesInput = {
@@ -983,6 +1007,7 @@ export type TenantUncheckedCreateWithoutBranchesInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutBranchesInput = {
@@ -1024,6 +1049,7 @@ export type TenantUpdateWithoutBranchesInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutBranchesInput = {
@@ -1050,6 +1076,7 @@ export type TenantUncheckedUpdateWithoutBranchesInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutUsersInput = {
@@ -1075,6 +1102,7 @@ export type TenantCreateWithoutUsersInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsersInput = {
@@ -1101,6 +1129,7 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsersInput = {
@@ -1142,6 +1171,7 @@ export type TenantUpdateWithoutUsersInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -1168,6 +1198,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutEmployeeDesignationsInput = {
@@ -1193,6 +1224,7 @@ export type TenantCreateWithoutEmployeeDesignationsInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutEmployeeDesignationsInput = {
@@ -1219,6 +1251,7 @@ export type TenantUncheckedCreateWithoutEmployeeDesignationsInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutEmployeeDesignationsInput = {
@@ -1260,6 +1293,7 @@ export type TenantUpdateWithoutEmployeeDesignationsInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutEmployeeDesignationsInput = {
@@ -1286,6 +1320,7 @@ export type TenantUncheckedUpdateWithoutEmployeeDesignationsInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutRolesInput = {
@@ -1311,6 +1346,7 @@ export type TenantCreateWithoutRolesInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRolesInput = {
@@ -1337,6 +1373,7 @@ export type TenantUncheckedCreateWithoutRolesInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRolesInput = {
@@ -1378,6 +1415,7 @@ export type TenantUpdateWithoutRolesInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRolesInput = {
@@ -1404,6 +1442,7 @@ export type TenantUncheckedUpdateWithoutRolesInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceCategoryMastersInput = {
@@ -1429,6 +1468,7 @@ export type TenantCreateWithoutServiceCategoryMastersInput = {
   branches?: Prisma.BranchCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceCategoryMastersInput = {
@@ -1455,6 +1495,7 @@ export type TenantUncheckedCreateWithoutServiceCategoryMastersInput = {
   branches?: Prisma.BranchUncheckedCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceCategoryMastersInput = {
@@ -1496,6 +1537,7 @@ export type TenantUpdateWithoutServiceCategoryMastersInput = {
   branches?: Prisma.BranchUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceCategoryMastersInput = {
@@ -1522,6 +1564,7 @@ export type TenantUncheckedUpdateWithoutServiceCategoryMastersInput = {
   branches?: Prisma.BranchUncheckedUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceTypesInput = {
@@ -1547,6 +1590,7 @@ export type TenantCreateWithoutServiceTypesInput = {
   branches?: Prisma.BranchCreateNestedManyWithoutTenantInput
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceTypesInput = {
@@ -1573,6 +1617,7 @@ export type TenantUncheckedCreateWithoutServiceTypesInput = {
   branches?: Prisma.BranchUncheckedCreateNestedManyWithoutTenantInput
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceTypesInput = {
@@ -1614,6 +1659,7 @@ export type TenantUpdateWithoutServiceTypesInput = {
   branches?: Prisma.BranchUpdateManyWithoutTenantNestedInput
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceTypesInput = {
@@ -1640,6 +1686,7 @@ export type TenantUncheckedUpdateWithoutServiceTypesInput = {
   branches?: Prisma.BranchUncheckedUpdateManyWithoutTenantNestedInput
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutRepairOrderTypeInput = {
@@ -1665,6 +1712,7 @@ export type TenantCreateWithoutRepairOrderTypeInput = {
   branches?: Prisma.BranchCreateNestedManyWithoutTenantInput
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRepairOrderTypeInput = {
@@ -1691,6 +1739,7 @@ export type TenantUncheckedCreateWithoutRepairOrderTypeInput = {
   branches?: Prisma.BranchUncheckedCreateNestedManyWithoutTenantInput
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRepairOrderTypeInput = {
@@ -1732,6 +1781,7 @@ export type TenantUpdateWithoutRepairOrderTypeInput = {
   branches?: Prisma.BranchUpdateManyWithoutTenantNestedInput
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRepairOrderTypeInput = {
@@ -1758,6 +1808,129 @@ export type TenantUncheckedUpdateWithoutRepairOrderTypeInput = {
   branches?: Prisma.BranchUncheckedUpdateManyWithoutTenantNestedInput
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutCustomersInput = {
+  tenantCode: string
+  tenantName: string
+  email: string
+  phone?: string | null
+  gstNumber?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  subscriptionPlan?: $Enums.SubscriptionPlan | null
+  subscriptionStatus?: $Enums.SubscriptionStatus | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdByUser: Prisma.PlatformUserCreateNestedOneWithoutCreatedTenantsInput
+  users?: Prisma.UsersCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  employeeDesignations?: Prisma.EmployeeDesignationCreateNestedManyWithoutTenantInput
+  branches?: Prisma.BranchCreateNestedManyWithoutTenantInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
+  serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutCustomersInput = {
+  id?: number
+  tenantCode: string
+  tenantName: string
+  email: string
+  phone?: string | null
+  gstNumber?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  subscriptionPlan?: $Enums.SubscriptionPlan | null
+  subscriptionStatus?: $Enums.SubscriptionStatus | null
+  isActive?: boolean
+  createdBy: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UsersUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  employeeDesignations?: Prisma.EmployeeDesignationUncheckedCreateNestedManyWithoutTenantInput
+  branches?: Prisma.BranchUncheckedCreateNestedManyWithoutTenantInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutCustomersInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutCustomersInput, Prisma.TenantUncheckedCreateWithoutCustomersInput>
+}
+
+export type TenantUpsertWithoutCustomersInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutCustomersInput, Prisma.TenantUncheckedUpdateWithoutCustomersInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutCustomersInput, Prisma.TenantUncheckedCreateWithoutCustomersInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutCustomersInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutCustomersInput, Prisma.TenantUncheckedUpdateWithoutCustomersInput>
+}
+
+export type TenantUpdateWithoutCustomersInput = {
+  tenantCode?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionPlan?: Prisma.NullableEnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan | null
+  subscriptionStatus?: Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdByUser?: Prisma.PlatformUserUpdateOneRequiredWithoutCreatedTenantsNestedInput
+  users?: Prisma.UsersUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  employeeDesignations?: Prisma.EmployeeDesignationUpdateManyWithoutTenantNestedInput
+  branches?: Prisma.BranchUpdateManyWithoutTenantNestedInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutCustomersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantCode?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionPlan?: Prisma.NullableEnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan | null
+  subscriptionStatus?: Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UsersUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  employeeDesignations?: Prisma.EmployeeDesignationUncheckedUpdateManyWithoutTenantNestedInput
+  branches?: Prisma.BranchUncheckedUpdateManyWithoutTenantNestedInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyCreatedByUserInput = {
@@ -1802,6 +1975,7 @@ export type TenantUpdateWithoutCreatedByUserInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCreatedByUserInput = {
@@ -1828,6 +2002,7 @@ export type TenantUncheckedUpdateWithoutCreatedByUserInput = {
   serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -1862,6 +2037,7 @@ export type TenantCountOutputType = {
   serviceCategoryMasters: number
   serviceTypes: number
   repairOrderType: number
+  customers: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1872,6 +2048,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   serviceCategoryMasters?: boolean | TenantCountOutputTypeCountServiceCategoryMastersArgs
   serviceTypes?: boolean | TenantCountOutputTypeCountServiceTypesArgs
   repairOrderType?: boolean | TenantCountOutputTypeCountRepairOrderTypeArgs
+  customers?: boolean | TenantCountOutputTypeCountCustomersArgs
 }
 
 /**
@@ -1933,6 +2110,13 @@ export type TenantCountOutputTypeCountRepairOrderTypeArgs<ExtArgs extends runtim
   where?: Prisma.RepairOrderTypeMasterWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountCustomersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CustomerWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1960,6 +2144,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   serviceCategoryMasters?: boolean | Prisma.Tenant$serviceCategoryMastersArgs<ExtArgs>
   serviceTypes?: boolean | Prisma.Tenant$serviceTypesArgs<ExtArgs>
   repairOrderType?: boolean | Prisma.Tenant$repairOrderTypeArgs<ExtArgs>
+  customers?: boolean | Prisma.Tenant$customersArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -2035,6 +2220,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   serviceCategoryMasters?: boolean | Prisma.Tenant$serviceCategoryMastersArgs<ExtArgs>
   serviceTypes?: boolean | Prisma.Tenant$serviceTypesArgs<ExtArgs>
   repairOrderType?: boolean | Prisma.Tenant$repairOrderTypeArgs<ExtArgs>
+  customers?: boolean | Prisma.Tenant$customersArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2055,6 +2241,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     serviceCategoryMasters: Prisma.$ServiceCategoryMasterPayload<ExtArgs>[]
     serviceTypes: Prisma.$ServiceTypeMasterPayload<ExtArgs>[]
     repairOrderType: Prisma.$RepairOrderTypeMasterPayload<ExtArgs>[]
+    customers: Prisma.$CustomerPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2476,6 +2663,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   serviceCategoryMasters<T extends Prisma.Tenant$serviceCategoryMastersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$serviceCategoryMastersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceCategoryMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceTypes<T extends Prisma.Tenant$serviceTypesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$serviceTypesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceTypeMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   repairOrderType<T extends Prisma.Tenant$repairOrderTypeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$repairOrderTypeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RepairOrderTypeMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  customers<T extends Prisma.Tenant$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$customersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3088,6 +3276,30 @@ export type Tenant$repairOrderTypeArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.RepairOrderTypeMasterScalarFieldEnum | Prisma.RepairOrderTypeMasterScalarFieldEnum[]
+}
+
+/**
+ * Tenant.customers
+ */
+export type Tenant$customersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Customer
+   */
+  select?: Prisma.CustomerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Customer
+   */
+  omit?: Prisma.CustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
+  where?: Prisma.CustomerWhereInput
+  orderBy?: Prisma.CustomerOrderByWithRelationInput | Prisma.CustomerOrderByWithRelationInput[]
+  cursor?: Prisma.CustomerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CustomerScalarFieldEnum | Prisma.CustomerScalarFieldEnum[]
 }
 
 /**
