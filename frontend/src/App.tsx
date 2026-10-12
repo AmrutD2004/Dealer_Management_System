@@ -16,6 +16,8 @@ import Role from "./Pages/TenantUserPages/Masters/Role"
 import Employee from "./Pages/TenantUserPages/Masters/Employee"
 import { TenantContextProvider } from "./Contexts/Tenant/TenantContext"
 import AssignPermission from "./Pages/TenantUserPages/Masters/AssignPermission"
+import ServiceCategory from "./Pages/TenantUserPages/Masters/ServiceCategory"
+import ServiceType from "./Pages/TenantUserPages/Masters/ServiceType"
 
 
 export function App() {
@@ -37,6 +39,8 @@ export function App() {
             <Route path='/tenant/:id/masters/role' element={<TenantContextProvider><AuthProtectedRoute><Role /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/permission' element={<TenantContextProvider><AuthProtectedRoute><AssignPermission /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/employee' element={<TenantContextProvider><AuthProtectedRoute><Employee /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/service-category' element={<TenantContextProvider><AuthProtectedRoute><ServiceCategory /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/service-type' element={<TenantContextProvider><AuthProtectedRoute><ServiceType /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>

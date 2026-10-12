@@ -216,3 +216,35 @@ export interface employeeCreateType {
     roleId: string,
     designationId: string
 }
+
+/* Record returned by GET /api/tenant/service/category/get/all with the
+   joined tenant name. Code is the Prisma ServiceCategoryMasterCode enum. */
+
+export interface serviceCategoryListType {
+    id: number,
+    tenantId: number,
+    code: string,
+    name: string,
+    description: string | null,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    tenant: { tenantName: string } | null
+}
+
+/* Record returned by GET /api/tenant/service/type/get/all?skip&take with
+   the joined service category and tenant. */
+
+export interface serviceTypeListType {
+    id: number,
+    tenantId: number,
+    serviceCategoryMasterId: number,
+    code: string,
+    name: string,
+    description: string | null,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    tenant: { tenantName: string } | null,
+    serviceCategoryMaster: { id: number; code: string; name: string } | null
+}

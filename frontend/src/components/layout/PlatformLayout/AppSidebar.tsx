@@ -118,7 +118,7 @@ function NavGroup({
                     />
                   }
                   className={menuButtonClass}
-                >
+                > 
                   <Icon
                     size={18}
                     strokeWidth={1.8}
