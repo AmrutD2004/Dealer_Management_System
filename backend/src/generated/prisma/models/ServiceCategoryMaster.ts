@@ -246,6 +246,7 @@ export type ServiceCategoryMasterWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ServiceCategoryMaster"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   serviceTypes?: Prisma.ServiceTypeMasterListRelationFilter
+  jobCards?: Prisma.JobCardListRelationFilter
 }
 
 export type ServiceCategoryMasterOrderByWithRelationInput = {
@@ -259,6 +260,7 @@ export type ServiceCategoryMasterOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   serviceTypes?: Prisma.ServiceTypeMasterOrderByRelationAggregateInput
+  jobCards?: Prisma.JobCardOrderByRelationAggregateInput
 }
 
 export type ServiceCategoryMasterWhereUniqueInput = Prisma.AtLeast<{
@@ -275,6 +277,7 @@ export type ServiceCategoryMasterWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"ServiceCategoryMaster"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   serviceTypes?: Prisma.ServiceTypeMasterListRelationFilter
+  jobCards?: Prisma.JobCardListRelationFilter
 }, "id" | "code">
 
 export type ServiceCategoryMasterOrderByWithAggregationInput = {
@@ -316,6 +319,7 @@ export type ServiceCategoryMasterCreateInput = {
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutServiceCategoryMastersInput
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutServiceCategoryMasterInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutServiceCategoryInput
 }
 
 export type ServiceCategoryMasterUncheckedCreateInput = {
@@ -328,6 +332,7 @@ export type ServiceCategoryMasterUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutServiceCategoryMasterInput
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceCategoryInput
 }
 
 export type ServiceCategoryMasterUpdateInput = {
@@ -339,6 +344,7 @@ export type ServiceCategoryMasterUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutServiceCategoryMastersNestedInput
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutServiceCategoryMasterNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutServiceCategoryNestedInput
 }
 
 export type ServiceCategoryMasterUncheckedUpdateInput = {
@@ -351,6 +357,7 @@ export type ServiceCategoryMasterUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutServiceCategoryMasterNestedInput
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceCategoryNestedInput
 }
 
 export type ServiceCategoryMasterCreateManyInput = {
@@ -502,6 +509,20 @@ export type ServiceCategoryMasterUpdateOneRequiredWithoutServiceTypesNestedInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceCategoryMasterUpdateToOneWithWhereWithoutServiceTypesInput, Prisma.ServiceCategoryMasterUpdateWithoutServiceTypesInput>, Prisma.ServiceCategoryMasterUncheckedUpdateWithoutServiceTypesInput>
 }
 
+export type ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput = {
+  create?: Prisma.XOR<Prisma.ServiceCategoryMasterCreateWithoutJobCardsInput, Prisma.ServiceCategoryMasterUncheckedCreateWithoutJobCardsInput>
+  connectOrCreate?: Prisma.ServiceCategoryMasterCreateOrConnectWithoutJobCardsInput
+  connect?: Prisma.ServiceCategoryMasterWhereUniqueInput
+}
+
+export type ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCategoryMasterCreateWithoutJobCardsInput, Prisma.ServiceCategoryMasterUncheckedCreateWithoutJobCardsInput>
+  connectOrCreate?: Prisma.ServiceCategoryMasterCreateOrConnectWithoutJobCardsInput
+  upsert?: Prisma.ServiceCategoryMasterUpsertWithoutJobCardsInput
+  connect?: Prisma.ServiceCategoryMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceCategoryMasterUpdateToOneWithWhereWithoutJobCardsInput, Prisma.ServiceCategoryMasterUpdateWithoutJobCardsInput>, Prisma.ServiceCategoryMasterUncheckedUpdateWithoutJobCardsInput>
+}
+
 export type ServiceCategoryMasterCreateWithoutTenantInput = {
   code: $Enums.ServiceCategoryMasterCode
   name: string
@@ -510,6 +531,7 @@ export type ServiceCategoryMasterCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutServiceCategoryMasterInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutServiceCategoryInput
 }
 
 export type ServiceCategoryMasterUncheckedCreateWithoutTenantInput = {
@@ -521,6 +543,7 @@ export type ServiceCategoryMasterUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutServiceCategoryMasterInput
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceCategoryInput
 }
 
 export type ServiceCategoryMasterCreateOrConnectWithoutTenantInput = {
@@ -571,6 +594,7 @@ export type ServiceCategoryMasterCreateWithoutServiceTypesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutServiceCategoryMastersInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutServiceCategoryInput
 }
 
 export type ServiceCategoryMasterUncheckedCreateWithoutServiceTypesInput = {
@@ -582,6 +606,7 @@ export type ServiceCategoryMasterUncheckedCreateWithoutServiceTypesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceCategoryInput
 }
 
 export type ServiceCategoryMasterCreateOrConnectWithoutServiceTypesInput = {
@@ -608,6 +633,7 @@ export type ServiceCategoryMasterUpdateWithoutServiceTypesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutServiceCategoryMastersNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutServiceCategoryNestedInput
 }
 
 export type ServiceCategoryMasterUncheckedUpdateWithoutServiceTypesInput = {
@@ -619,6 +645,69 @@ export type ServiceCategoryMasterUncheckedUpdateWithoutServiceTypesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceCategoryNestedInput
+}
+
+export type ServiceCategoryMasterCreateWithoutJobCardsInput = {
+  code: $Enums.ServiceCategoryMasterCode
+  name: string
+  description?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutServiceCategoryMastersInput
+  serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutServiceCategoryMasterInput
+}
+
+export type ServiceCategoryMasterUncheckedCreateWithoutJobCardsInput = {
+  id?: number
+  tenantId: number
+  code: $Enums.ServiceCategoryMasterCode
+  name: string
+  description?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutServiceCategoryMasterInput
+}
+
+export type ServiceCategoryMasterCreateOrConnectWithoutJobCardsInput = {
+  where: Prisma.ServiceCategoryMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCategoryMasterCreateWithoutJobCardsInput, Prisma.ServiceCategoryMasterUncheckedCreateWithoutJobCardsInput>
+}
+
+export type ServiceCategoryMasterUpsertWithoutJobCardsInput = {
+  update: Prisma.XOR<Prisma.ServiceCategoryMasterUpdateWithoutJobCardsInput, Prisma.ServiceCategoryMasterUncheckedUpdateWithoutJobCardsInput>
+  create: Prisma.XOR<Prisma.ServiceCategoryMasterCreateWithoutJobCardsInput, Prisma.ServiceCategoryMasterUncheckedCreateWithoutJobCardsInput>
+  where?: Prisma.ServiceCategoryMasterWhereInput
+}
+
+export type ServiceCategoryMasterUpdateToOneWithWhereWithoutJobCardsInput = {
+  where?: Prisma.ServiceCategoryMasterWhereInput
+  data: Prisma.XOR<Prisma.ServiceCategoryMasterUpdateWithoutJobCardsInput, Prisma.ServiceCategoryMasterUncheckedUpdateWithoutJobCardsInput>
+}
+
+export type ServiceCategoryMasterUpdateWithoutJobCardsInput = {
+  code?: Prisma.EnumServiceCategoryMasterCodeFieldUpdateOperationsInput | $Enums.ServiceCategoryMasterCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutServiceCategoryMastersNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutServiceCategoryMasterNestedInput
+}
+
+export type ServiceCategoryMasterUncheckedUpdateWithoutJobCardsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.EnumServiceCategoryMasterCodeFieldUpdateOperationsInput | $Enums.ServiceCategoryMasterCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutServiceCategoryMasterNestedInput
 }
 
 export type ServiceCategoryMasterCreateManyTenantInput = {
@@ -639,6 +728,7 @@ export type ServiceCategoryMasterUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutServiceCategoryMasterNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutServiceCategoryNestedInput
 }
 
 export type ServiceCategoryMasterUncheckedUpdateWithoutTenantInput = {
@@ -650,6 +740,7 @@ export type ServiceCategoryMasterUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutServiceCategoryMasterNestedInput
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceCategoryNestedInput
 }
 
 export type ServiceCategoryMasterUncheckedUpdateManyWithoutTenantInput = {
@@ -669,10 +760,12 @@ export type ServiceCategoryMasterUncheckedUpdateManyWithoutTenantInput = {
 
 export type ServiceCategoryMasterCountOutputType = {
   serviceTypes: number
+  jobCards: number
 }
 
 export type ServiceCategoryMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   serviceTypes?: boolean | ServiceCategoryMasterCountOutputTypeCountServiceTypesArgs
+  jobCards?: boolean | ServiceCategoryMasterCountOutputTypeCountJobCardsArgs
 }
 
 /**
@@ -692,6 +785,13 @@ export type ServiceCategoryMasterCountOutputTypeCountServiceTypesArgs<ExtArgs ex
   where?: Prisma.ServiceTypeMasterWhereInput
 }
 
+/**
+ * ServiceCategoryMasterCountOutputType without action
+ */
+export type ServiceCategoryMasterCountOutputTypeCountJobCardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobCardWhereInput
+}
+
 
 export type ServiceCategoryMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -704,6 +804,7 @@ export type ServiceCategoryMasterSelect<ExtArgs extends runtime.Types.Extensions
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   serviceTypes?: boolean | Prisma.ServiceCategoryMaster$serviceTypesArgs<ExtArgs>
+  jobCards?: boolean | Prisma.ServiceCategoryMaster$jobCardsArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCategoryMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["serviceCategoryMaster"]>
 
@@ -746,6 +847,7 @@ export type ServiceCategoryMasterOmit<ExtArgs extends runtime.Types.Extensions.I
 export type ServiceCategoryMasterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   serviceTypes?: boolean | Prisma.ServiceCategoryMaster$serviceTypesArgs<ExtArgs>
+  jobCards?: boolean | Prisma.ServiceCategoryMaster$jobCardsArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCategoryMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceCategoryMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -760,6 +862,7 @@ export type $ServiceCategoryMasterPayload<ExtArgs extends runtime.Types.Extensio
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
     serviceTypes: Prisma.$ServiceTypeMasterPayload<ExtArgs>[]
+    jobCards: Prisma.$JobCardPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1166,6 +1269,7 @@ export interface Prisma__ServiceCategoryMasterClient<T, Null = never, ExtArgs ex
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   serviceTypes<T extends Prisma.ServiceCategoryMaster$serviceTypesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCategoryMaster$serviceTypesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceTypeMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  jobCards<T extends Prisma.ServiceCategoryMaster$jobCardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCategoryMaster$jobCardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1625,6 +1729,30 @@ export type ServiceCategoryMaster$serviceTypesArgs<ExtArgs extends runtime.Types
   take?: number
   skip?: number
   distinct?: Prisma.ServiceTypeMasterScalarFieldEnum | Prisma.ServiceTypeMasterScalarFieldEnum[]
+}
+
+/**
+ * ServiceCategoryMaster.jobCards
+ */
+export type ServiceCategoryMaster$jobCardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JobCard
+   */
+  select?: Prisma.JobCardSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JobCard
+   */
+  omit?: Prisma.JobCardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobCardInclude<ExtArgs> | null
+  where?: Prisma.JobCardWhereInput
+  orderBy?: Prisma.JobCardOrderByWithRelationInput | Prisma.JobCardOrderByWithRelationInput[]
+  cursor?: Prisma.JobCardWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobCardScalarFieldEnum | Prisma.JobCardScalarFieldEnum[]
 }
 
 /**

@@ -63,7 +63,8 @@ export const ModelName = {
   ServiceTypeMaster: 'ServiceTypeMaster',
   RepairOrderTypeMaster: 'RepairOrderTypeMaster',
   Customer: 'Customer',
-  Vehicle: 'Vehicle'
+  Vehicle: 'Vehicle',
+  JobCard: 'JobCard'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -311,6 +312,43 @@ export const VehicleScalarFieldEnum = {
 } as const
 
 export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeof VehicleScalarFieldEnum]
+
+
+export const JobCardScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  jobCardNo: 'jobCardNo',
+  vehicleId: 'vehicleId',
+  customerId: 'customerId',
+  currentKmReading: 'currentKmReading',
+  previousKmReading: 'previousKmReading',
+  vehicleStatus: 'vehicleStatus',
+  supervisorId: 'supervisorId',
+  technicianId: 'technicianId',
+  serviceCategoryId: 'serviceCategoryId',
+  serviceTypeId: 'serviceTypeId',
+  repairOrderTypeId: 'repairOrderTypeId',
+  isRevisit: 'isRevisit',
+  estimateCloseAt: 'estimateCloseAt',
+  revisedEstimateCloseAt: 'revisedEstimateCloseAt',
+  closedAt: 'closedAt',
+  status: 'status',
+  driverName: 'driverName',
+  driverMobileNo: 'driverMobileNo',
+  isBreakdown: 'isBreakdown',
+  breakdownPersonAttended: 'breakdownPersonAttended',
+  breakdownDateTime: 'breakdownDateTime',
+  breakdownStartDateTime: 'breakdownStartDateTime',
+  breakdownEndDateTime: 'breakdownEndDateTime',
+  dealerVanStartKm: 'dealerVanStartKm',
+  dealerVanEndKm: 'dealerVanEndKm',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobCardScalarFieldEnum = (typeof JobCardScalarFieldEnum)[keyof typeof JobCardScalarFieldEnum]
 
 
 export const SortOrder = {

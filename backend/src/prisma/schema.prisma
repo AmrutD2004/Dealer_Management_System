@@ -16,16 +16,17 @@ enum PlatformUserRole {
   SUPER_ADMIN
   SUPPORT_ADMIN
 }
+
 model PlatformUser {
-  id            Int              @id @default(autoincrement())
-  email         String           @unique
-  passwordHash  String
-  role          PlatformUserRole @default(SUPER_ADMIN)
-  isActive      Boolean          @default(true)
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  passwordHash   String
+  role           PlatformUserRole @default(SUPER_ADMIN)
+  isActive       Boolean          @default(true)
   createdTenants Tenant[]
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
-  
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
   @@map("platform_users")
 }
 
@@ -44,10 +45,10 @@ enum SubscriptionStatus {
 }
 
 model Tenant {
-  id                 Int                @id @default(autoincrement())
-  tenantCode         String             @unique
+  id                 Int                 @id @default(autoincrement())
+  tenantCode         String              @unique
   tenantName         String
-  email              String             @unique
+  email              String              @unique
   phone              String?
   gstNumber          String?
   address            String?
@@ -57,81 +58,88 @@ model Tenant {
   pincode            String?
   subscriptionPlan   SubscriptionPlan?
   subscriptionStatus SubscriptionStatus?
-  isActive           Boolean            @default(true)
+  isActive           Boolean             @default(true)
 
-  createdBy          Int
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
+  createdBy Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  createdByUser      PlatformUser       @relation(fields: [createdBy], references: [id])
+  createdByUser PlatformUser @relation(fields: [createdBy], references: [id])
 
-  users              Users[]
-  roles              Role[]
-  employeeDesignations EmployeeDesignation[]
-  branches           Branch[]
-  serviceCategoryMasters  ServiceCategoryMaster[]
-  serviceTypes ServiceTypeMaster[]
-  repairOrderType RepairOrderTypeMaster[]
+  users                  Users[]
+  roles                  Role[]
+  employeeDesignations   EmployeeDesignation[]
+  branches               Branch[]
+  serviceCategoryMasters ServiceCategoryMaster[]
+  serviceTypes           ServiceTypeMaster[]
+  repairOrderType        RepairOrderTypeMaster[]
   customers              Customer[]
   vehicles               Vehicle[]
+  jobCards               JobCard[]
 
   @@index([createdBy])
 }
+
 model Branch {
-  id        Int     @id @default(autoincrement())
-  tenantId  Int
+  id         Int    @id @default(autoincrement())
+  tenantId   Int
   branchCode String
   branchName String
 
-  email     String?
-  phone     String?
+  email String?
+  phone String?
 
-  address1  String?
-  address2  String?
-  locality  String?
-  city      String?
-  state     String?
-  country   String?
-  pincode   String?
+  address1 String?
+  address2 String?
+  locality String?
+  city     String?
+  state    String?
+  country  String?
+  pincode  String?
 
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
-  tenant    Tenant  @relation(fields: [tenantId], references: [id])
-  users     Users[]
-  
+  tenant   Tenant    @relation(fields: [tenantId], references: [id])
+  users    Users[]
+  jobCards JobCard[]
 
   @@unique([tenantId, branchCode])
   @@index([tenantId])
 }
+
 model Users {
-  id              Int       @id @default(autoincrement())
-  tenantId        Int
-  branchId        Int
-  employeeCode    String
-  roleId          Int
-  designationId   Int
-  firstName       String
-  middleName      String?
-  lastName        String?
-  email           String
-  mobileNo        String
-  passwordHash    String
-  isActive        Boolean   @default(true)
-  lastLoginAt     DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  tenantId      Int
+  branchId      Int
+  employeeCode  String
+  roleId        Int
+  designationId Int
+  firstName     String
+  middleName    String?
+  lastName      String?
+  email         String
+  mobileNo      String
+  passwordHash  String
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   // Relations
-  tenant          Tenant              @relation(fields: [tenantId], references: [id])
-  branch          Branch              @relation(fields: [branchId], references: [id])
-  role            Role                @relation(fields: [roleId], references: [id])
-  designation     EmployeeDesignation @relation(fields: [designationId], references: [id])
+  tenant      Tenant              @relation(fields: [tenantId], references: [id])
+  branch      Branch              @relation(fields: [branchId], references: [id])
+  role        Role                @relation(fields: [roleId], references: [id])
+  designation EmployeeDesignation @relation(fields: [designationId], references: [id])
 
-  authorizedCustomers   Customer[]
+  authorizedCustomers Customer[]
+
+  supervisedJobCards JobCard[] @relation("JobCardSupervisor")
+  technicianJobCards JobCard[] @relation("JobCardTechnician")
+  createdJobCards    JobCard[] @relation("JobCardCreatedBy")
 
   @@unique([tenantId, employeeCode])
   @@unique([tenantId, email])
@@ -153,53 +161,54 @@ model EmployeeDesignation {
   updatedAt   DateTime @updatedAt
 
   // Relations
-  tenant      Tenant  @relation(fields: [tenantId], references: [id])
-  users       Users[]
+  tenant Tenant  @relation(fields: [tenantId], references: [id])
+  users  Users[]
 
   @@unique([tenantId, code])
   @@index([tenantId])
 }
 
 model Role {
-  id             Int      @id @default(autoincrement())
-  tenantId       Int
-  roleCode       String
-  roleName       String
+  id              Int      @id @default(autoincrement())
+  tenantId        Int
+  roleCode        String
+  roleName        String
   roleDescription String?
-  isSystemRole   Boolean  @default(false)
-  isActive       Boolean  @default(true)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  isSystemRole    Boolean  @default(false)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   // Relations
-  tenant         Tenant  @relation(fields: [tenantId], references: [id])
-  users          Users[]
+  tenant             Tenant                  @relation(fields: [tenantId], references: [id])
+  users              Users[]
   permissionMappings RolePermissionMapping[]
+
   @@unique([tenantId, roleCode])
   @@index([tenantId])
 }
 
 model Permission {
-  id             Int                    @id @default(autoincrement())
-  permissionCode String                 @unique
+  id             Int      @id @default(autoincrement())
+  permissionCode String   @unique
   permissionName String
   description    String?
-  isActive       Boolean                @default(true)
-  createdAt      DateTime               @default(now())
-  updatedAt      DateTime               @updatedAt
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  roleMappings   RolePermissionMapping[]
+  roleMappings RolePermissionMapping[]
 }
 
 model RolePermissionMapping {
-  id           Int        @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   roleId       Int
   permissionId Int
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  role         Role       @relation(fields: [roleId], references: [id])
-  permission   Permission @relation(fields: [permissionId], references: [id])
+  role       Role       @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
 
   @@unique([roleId, permissionId])
   @@index([roleId])
@@ -216,37 +225,40 @@ enum ServiceCategoryMasterCode {
 }
 
 model ServiceCategoryMaster {
-  id          Int                        @id @default(autoincrement())
+  id          Int                       @id @default(autoincrement())
   tenantId    Int
-  code        ServiceCategoryMasterCode  @unique
+  code        ServiceCategoryMasterCode @unique
   name        String
   description String?
-  isActive    Boolean                    @default(true)
-  createdAt   DateTime                   @default(now())
-  updatedAt   DateTime                   @updatedAt
+  isActive    Boolean                   @default(true)
+  createdAt   DateTime                  @default(now())
+  updatedAt   DateTime                  @updatedAt
 
-  tenant      Tenant                     @relation(fields: [tenantId], references: [id])
+  tenant       Tenant              @relation(fields: [tenantId], references: [id])
   serviceTypes ServiceTypeMaster[]
+  jobCards     JobCard[]
+
   @@map("ServiceCategoryMaster")
 }
 
 model ServiceTypeMaster {
-  id                      Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   tenantId                Int
   serviceCategoryMasterId Int
 
-  code                    String
-  name                    String
-  description             String?
+  code        String
+  name        String
+  description String?
 
-  isActive                Boolean  @default(true)
+  isActive Boolean @default(true)
 
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tenant                  Tenant                  @relation(fields: [tenantId], references: [id])
-  serviceCategoryMaster   ServiceCategoryMaster   @relation(fields: [serviceCategoryMasterId], references: [id])
+  tenant                Tenant                @relation(fields: [tenantId], references: [id])
+  serviceCategoryMaster ServiceCategoryMaster @relation(fields: [serviceCategoryMasterId], references: [id])
+  jobCards              JobCard[]
 
   @@unique([tenantId, code])
   @@map("ServiceTypeMaster")
@@ -262,104 +274,182 @@ enum RepairType {
 }
 
 model RepairOrderTypeMaster {
-  id          Int        @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  tenantId    Int
+  tenantId Int
 
   code        RepairType
   name        String
   description String?
 
-  isActive    Boolean    @default(true)
+  isActive Boolean @default(true)
 
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tenant      Tenant     @relation(fields: [tenantId], references: [id])
+  tenant   Tenant    @relation(fields: [tenantId], references: [id])
+  jobCards JobCard[]
 
   @@unique([tenantId, code])
   @@map("RepairOrderTypeMaster")
 }
 
 model Customer {
-  id                    Int       @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  tenantId              Int
+  tenantId Int
 
-  customerCode          String
+  customerCode String
 
-  title                 String?
-  firstName             String
-  middleName            String?
-  lastName              String
+  title      String?
+  firstName  String
+  middleName String?
+  lastName   String
 
-  email                 String?
-  mobileNo              String
-  alternateMobileNo     String?
+  email             String?
+  mobileNo          String
+  alternateMobileNo String?
 
-  dateOfBirth           DateTime? @db.Date
+  dateOfBirth DateTime? @db.Date
 
-  address1              String?
-  address2              String?
+  address1 String?
+  address2 String?
 
-  city                  String?
-  state                 String?
-  country               String?
-  pincode               String?
+  city    String?
+  state   String?
+  country String?
+  pincode String?
 
-  laborDiscountPercent  Decimal  @db.Decimal(5, 2)
-  partDiscountPercent   Decimal  @db.Decimal(5, 2)
+  laborDiscountPercent Decimal @db.Decimal(5, 2)
+  partDiscountPercent  Decimal @db.Decimal(5, 2)
 
-  authorizedBy          Int
+  authorizedBy Int
 
-  isActive              Boolean   @default(true)
+  isActive Boolean @default(true)
 
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tenant                Tenant    @relation(fields: [tenantId], references: [id])
-  authorizedByUser      Users     @relation(fields: [authorizedBy], references: [id])
-  vehicles              Vehicle[]
+  tenant           Tenant    @relation(fields: [tenantId], references: [id])
+  authorizedByUser Users     @relation(fields: [authorizedBy], references: [id])
+  vehicles         Vehicle[]
+  jobCards         JobCard[]
+
   @@unique([tenantId, customerCode])
   @@map("Customer")
 }
 
-
 model Vehicle {
-  id                     Int       @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  tenantId               Int
-  customerId             Int
+  tenantId   Int
+  customerId Int
 
-  vehicleNumber          String?
-  chassisNumber          String
-  engineNumber           String
+  vehicleNumber String?
+  chassisNumber String
+  engineNumber  String
 
-  manufacturer           String
-  model                  String
-  variant                String?
+  manufacturer String
+  model        String
+  variant      String?
 
-  color                  String?
-  manufacturingYear      DateTime?
+  color             String?
+  manufacturingYear DateTime?
 
-  registrationDate       DateTime? @db.Date
-  purchaseDate           DateTime? @db.Date
+  registrationDate DateTime? @db.Date
+  purchaseDate     DateTime? @db.Date
 
-  fuelType               String?
-  transmissionType       String?
+  fuelType         String?
+  transmissionType String?
 
-  currentOdometerReading Int  
+  currentOdometerReading Int
 
-  isActive               Boolean   @default(true)
+  isActive Boolean @default(true)
 
-  createdAt              DateTime  @default(now())
-  updatedAt              DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tenant                 Tenant    @relation(fields: [tenantId], references: [id])
-  customer               Customer  @relation(fields: [customerId], references: [id])
+  tenant   Tenant    @relation(fields: [tenantId], references: [id])
+  customer Customer  @relation(fields: [customerId], references: [id])
+  jobCards JobCard[]
 
   @@unique([tenantId, chassisNumber])
   @@unique([tenantId, engineNumber])
   @@index([tenantId, vehicleNumber])
   @@map("Vehicle")
+}
+
+enum JobCardStatus {
+  OPEN
+  CLOSED
+}
+
+enum JobCardVehicleStatus {
+  MOBILIZE
+  IMMOBILIZE
+}
+
+model JobCard {
+  id Int @id @default(autoincrement())
+
+  tenantId Int
+  branchId Int
+
+  jobCardNo String
+
+  vehicleId  Int
+  customerId Int
+
+  currentKmReading  Int
+  previousKmReading Int?
+
+  vehicleStatus JobCardVehicleStatus
+
+  supervisorId Int?
+  technicianId Int?
+
+  serviceCategoryId Int
+  serviceTypeId     Int
+  repairOrderTypeId Int
+
+  isRevisit Boolean @default(false)
+
+  estimateCloseAt        DateTime
+  revisedEstimateCloseAt DateTime?
+  closedAt               DateTime?
+
+  status JobCardStatus @default(OPEN)
+
+  driverName     String?
+  driverMobileNo String?
+
+  isBreakdown             Boolean   @default(false)
+  breakdownPersonAttended String?
+  breakdownDateTime       DateTime?
+  breakdownStartDateTime  DateTime?
+  breakdownEndDateTime    DateTime?
+  dealerVanStartKm        Int?
+  dealerVanEndKm          Int?
+
+  createdBy Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant   Tenant   @relation(fields: [tenantId], references: [id])
+  branch   Branch   @relation(fields: [branchId], references: [id])
+  vehicle  Vehicle  @relation(fields: [vehicleId], references: [id])
+  customer Customer @relation(fields: [customerId], references: [id])
+
+  supervisor    Users? @relation("JobCardSupervisor", fields: [supervisorId], references: [id])
+  technician    Users? @relation("JobCardTechnician", fields: [technicianId], references: [id])
+  createdByUser Users  @relation("JobCardCreatedBy", fields: [createdBy], references: [id])
+
+  serviceCategory ServiceCategoryMaster @relation(fields: [serviceCategoryId], references: [id])
+  serviceType     ServiceTypeMaster     @relation(fields: [serviceTypeId], references: [id])
+  repairOrderType RepairOrderTypeMaster @relation(fields: [repairOrderTypeId], references: [id])
+
+  @@unique([tenantId, jobCardNo])
+  @@index([tenantId, status])
+  @@index([tenantId, branchId, status])
+  @@map("JobCard")
 }

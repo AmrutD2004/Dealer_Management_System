@@ -28,26 +28,26 @@ export const createServiceCategory = async (req: Request, res: Response) => {
     }
     try {
         const checkCodeExists = await prisma.serviceCategoryMaster.findUnique({
-            where : {code : code , tenantId : Number(tenantId)}
+            where: { code: code, tenantId: Number(tenantId) }
         })
-        if (checkCodeExists){
+        if (checkCodeExists) {
             return res.status(403).json({
-                success : false,
-                message : `Category already exists with code ${code}`
+                success: false,
+                message: `Category already exists with code ${code}`
             })
         }
         const data = await prisma.serviceCategoryMaster.create({
-            data : {
-                code : code,
-                name : name,
-                description : description || null,
-                tenantId  : Number(tenantId),
-                isActive : true
+            data: {
+                code: code,
+                name: name,
+                description: description || null,
+                tenantId: Number(tenantId),
+                isActive: true
             }
         })
         return res.status(201).json({
-            success : true,
-            message : `${data.name} service category added`
+            success: true,
+            message: `${data.name} service category added`
         })
     } catch (error) {
         return res.status(500).json({
@@ -60,11 +60,11 @@ export const createServiceCategory = async (req: Request, res: Response) => {
 
 export const updateServiceCategory = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const {serviceCategoryId} = req.params;
-    if(!serviceCategoryId){
+    const { serviceCategoryId } = req.params;
+    if (!serviceCategoryId) {
         return res.status(404).json({
-            success : false,
-            message : 'service category required'
+            success: false,
+            message: 'service category required'
         })
     }
     const {
@@ -89,28 +89,28 @@ export const updateServiceCategory = async (req: Request, res: Response) => {
     }
     try {
         const checkCodeExists = await prisma.serviceCategoryMaster.findUnique({
-            where : {id : Number(serviceCategoryId) , tenantId : Number(tenantId)}
+            where: { id: Number(serviceCategoryId), tenantId: Number(tenantId) }
         })
-        if (!checkCodeExists){
+        if (!checkCodeExists) {
             return res.status(403).json({
-                success : false,
-                message : `Category not exists with code ${code}`
+                success: false,
+                message: `Category not exists with code ${code}`
             })
         }
         const data = await prisma.serviceCategoryMaster.update({
-            data : {
-                code : code,
-                name : name,
-                description : description || null,
+            data: {
+                code: code,
+                name: name,
+                description: description || null,
             },
-            where : {
-                id : Number(serviceCategoryId),
-                tenantId : Number(tenantId)
+            where: {
+                id: Number(serviceCategoryId),
+                tenantId: Number(tenantId)
             }
         })
         return res.status(201).json({
-            success : true,
-            message : `${data.name} service category updated`
+            success: true,
+            message: `${data.name} service category updated`
         })
     } catch (error) {
         return res.status(500).json({
@@ -130,27 +130,27 @@ export const getListOfServiceCategory = async (req: Request, res: Response) => {
         });
     }
     try {
-         const serviceCategoryCount = await prisma.serviceCategoryMaster.count({
-            where : {
-                tenantId : Number(tenantId)
+        const serviceCategoryCount = await prisma.serviceCategoryMaster.count({
+            where: {
+                tenantId: Number(tenantId)
             }
         })
         const serviceCategoryList = await prisma.serviceCategoryMaster.findMany({
-            where : {
-                tenantId : Number(tenantId)
+            where: {
+                tenantId: Number(tenantId)
             },
-            include :{
-                tenant : {
-                    select : {
-                        tenantName : true
+            include: {
+                tenant: {
+                    select: {
+                        tenantName: true
                     }
                 }
             }
         })
         return res.status(201).json({
-            success : true,
-            data : serviceCategoryList,
-            count : serviceCategoryCount
+            success: true,
+            data: serviceCategoryList,
+            count: serviceCategoryCount
         })
     } catch (error) {
         return res.status(500).json({
@@ -163,11 +163,11 @@ export const getListOfServiceCategory = async (req: Request, res: Response) => {
 
 export const getServiceCategoryDetails = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const {serviceCategoryId} = req.params;
-    if(!serviceCategoryId){
+    const { serviceCategoryId } = req.params;
+    if (!serviceCategoryId) {
         return res.status(404).json({
-            success : false,
-            message : 'service category required'
+            success: false,
+            message: 'service category required'
         })
     }
     if (!id || !tenantId) {
@@ -178,24 +178,24 @@ export const getServiceCategoryDetails = async (req: Request, res: Response) => 
     }
     try {
         const checkCodeExists = await prisma.serviceCategoryMaster.findUnique({
-            where : {id : Number(serviceCategoryId) , tenantId : Number(tenantId)},
-            include : {
-                tenant : {
-                    select : {
-                        tenantName : true
+            where: { id: Number(serviceCategoryId), tenantId: Number(tenantId) },
+            include: {
+                tenant: {
+                    select: {
+                        tenantName: true
                     }
                 }
             }
         })
-        if (!checkCodeExists){
+        if (!checkCodeExists) {
             return res.status(403).json({
-                success : false,
-                message : `Category not exists with code`
+                success: false,
+                message: `Category not exists with code`
             })
         }
         return res.status(201).json({
-            success : true,
-            data : checkCodeExists
+            success: true,
+            data: checkCodeExists
         })
     } catch (error) {
         return res.status(500).json({
@@ -206,71 +206,71 @@ export const getServiceCategoryDetails = async (req: Request, res: Response) => 
 }
 
 export const deactivateServiceCategory = async (req: Request, res: Response) => {
-  const { id, tenantId } = req.user!;
-  const { serviceCategoryId } = req.params;
-  if (!id || !tenantId) {
-    return res.status(404).json({
-      success: false,
-      message: "Not Authorized login again",
-    });
-  }
-  if (!serviceCategoryId) {
-    return res.status(404).json({
-      success: false,
-      message: "service category id required",
-    });
-  }
-  try {
-    const data = await prisma.serviceCategoryMaster.update({
-      where: { id: Number(serviceCategoryId), tenantId: Number(tenantId) },
-      data: {
-        isActive: false,
-      },
-    });
-    return res.status(200).json({
-      success: true,
-      message: `${data.name} service category is deactivated`,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message  : `server error : ${err}`
-    });
-  }
+    const { id, tenantId } = req.user!;
+    const { serviceCategoryId } = req.params;
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: "Not Authorized login again",
+        });
+    }
+    if (!serviceCategoryId) {
+        return res.status(404).json({
+            success: false,
+            message: "service category id required",
+        });
+    }
+    try {
+        const data = await prisma.serviceCategoryMaster.update({
+            where: { id: Number(serviceCategoryId), tenantId: Number(tenantId) },
+            data: {
+                isActive: false,
+            },
+        });
+        return res.status(200).json({
+            success: true,
+            message: `${data.name} service category is deactivated`,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `server error : ${err}`
+        });
+    }
 };
 
 export const activateServiceCategory = async (req: Request, res: Response) => {
-  const { id, tenantId } = req.user!;
-  const { serviceCategoryId } = req.params;
-  if (!id || !tenantId) {
-    return res.status(404).json({
-      success: false,
-      message: "Not Authorized login again",
-    });
-  }
-  if (!serviceCategoryId) {
-    return res.status(404).json({
-      success: false,
-      message: "service category id required",
-    });
-  }
-  try {
-    const data = await prisma.serviceCategoryMaster.update({
-      where: { id: Number(serviceCategoryId), tenantId: Number(tenantId) },
-      data: {
-        isActive: true,
-      },
-    });
-    return res.status(200).json({
-      success: true,
-      message: `${data.name} service category is activated`,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message : `Server error : ${err}`
-    });
-  }
+    const { id, tenantId } = req.user!;
+    const { serviceCategoryId } = req.params;
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: "Not Authorized login again",
+        });
+    }
+    if (!serviceCategoryId) {
+        return res.status(404).json({
+            success: false,
+            message: "service category id required",
+        });
+    }
+    try {
+        const data = await prisma.serviceCategoryMaster.update({
+            where: { id: Number(serviceCategoryId), tenantId: Number(tenantId) },
+            data: {
+                isActive: true,
+            },
+        });
+        return res.status(200).json({
+            success: true,
+            message: `${data.name} service category is activated`,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${err}`
+        });
+    }
 };
 
 
@@ -301,34 +301,34 @@ export const createServiceType = async (req: Request, res: Response) => {
     }
     try {
         const checkServiceTypeExists = await prisma.serviceTypeMaster.findFirst({
-            where : {code : code , tenantId : Number(tenantId)}
+            where: { code: code, tenantId: Number(tenantId) }
         })
-        if (checkServiceTypeExists){
+        if (checkServiceTypeExists) {
             return res.status(403).json({
-                success : false,
-                message : `Service type already exists with code ${code}`
+                success: false,
+                message: `Service type already exists with code ${code}`
             })
         }
         const data = await prisma.serviceTypeMaster.create({
-            data : {
-                code : code,
-                name : name,
-                description : description || null,
-                tenantId  : Number(tenantId),
-                serviceCategoryMasterId : Number(serviceCategoryId),
-                isActive : true
+            data: {
+                code: code,
+                name: name,
+                description: description || null,
+                tenantId: Number(tenantId),
+                serviceCategoryMasterId: Number(serviceCategoryId),
+                isActive: true
             },
-            include : {
-                serviceCategoryMaster : {
-                    select : {
-                        name : true
+            include: {
+                serviceCategoryMaster: {
+                    select: {
+                        name: true
                     }
                 }
             }
         })
         return res.status(201).json({
-            success : true,
-            message : `${data.name} service type is added in ${data.serviceCategoryMaster.name} category`
+            success: true,
+            message: `${data.name} service type is added in ${data.serviceCategoryMaster.name} category`
         })
     } catch (error) {
         return res.status(500).json({
@@ -341,11 +341,11 @@ export const createServiceType = async (req: Request, res: Response) => {
 
 export const updateServiceType = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const {serviceTypeId} = req.params;
-    if(!serviceTypeId){
+    const { serviceTypeId } = req.params;
+    if (!serviceTypeId) {
         return res.status(404).json({
-            success : false,
-            message : 'service type id required'
+            success: false,
+            message: 'service type id required'
         })
     }
     const {
@@ -371,29 +371,29 @@ export const updateServiceType = async (req: Request, res: Response) => {
     }
     try {
         const checkServiceTypeExists = await prisma.serviceTypeMaster.findUnique({
-            where : {id : Number(serviceTypeId) , tenantId : Number(tenantId)}
+            where: { id: Number(serviceTypeId), tenantId: Number(tenantId) }
         })
-        if (!checkServiceTypeExists){
+        if (!checkServiceTypeExists) {
             return res.status(403).json({
-                success : false,
-                message : `service type not exists with code ${code}`
+                success: false,
+                message: `service type not exists with code ${code}`
             })
         }
         const data = await prisma.serviceTypeMaster.update({
-            data : {
-                code : code,
-                name : name,
-                description : description || null,
-                serviceCategoryMasterId : Number(serviceCategoryId)
+            data: {
+                code: code,
+                name: name,
+                description: description || null,
+                serviceCategoryMasterId: Number(serviceCategoryId)
             },
-            where : {
-                id : Number(serviceTypeId),
-                tenantId : Number(tenantId)
+            where: {
+                id: Number(serviceTypeId),
+                tenantId: Number(tenantId)
             }
         })
         return res.status(201).json({
-            success : true,
-            message : `${data.name} service type updated`
+            success: true,
+            message: `${data.name} service type updated`
         })
     } catch (error) {
         return res.status(500).json({
@@ -406,7 +406,7 @@ export const updateServiceType = async (req: Request, res: Response) => {
 
 export const getListOfServiceType = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const {skip, take} = req.query
+    const { skip, take } = req.query
     if (!id || !tenantId) {
         return res.status(404).json({
             success: false,
@@ -414,39 +414,39 @@ export const getListOfServiceType = async (req: Request, res: Response) => {
         });
     }
     try {
-         const serviceTypeCount = await prisma.serviceTypeMaster.count({
-            where : {
-                tenantId : Number(tenantId)
+        const serviceTypeCount = await prisma.serviceTypeMaster.count({
+            where: {
+                tenantId: Number(tenantId)
             }
         })
         let serviceTypeList
-        if(skip || take){
-             serviceTypeList = await prisma.serviceTypeMaster.findMany({
-            skip : Number(skip),
-            take : Number(take),
-            where : {
-                tenantId : Number(tenantId)
-            },
-            include : {
-                serviceCategoryMaster : true,
-                tenant : {
-                    select : {
-                        tenantName : true
+        if (skip || take) {
+            serviceTypeList = await prisma.serviceTypeMaster.findMany({
+                skip: Number(skip),
+                take: Number(take),
+                where: {
+                    tenantId: Number(tenantId)
+                },
+                include: {
+                    serviceCategoryMaster: true,
+                    tenant: {
+                        select: {
+                            tenantName: true
+                        }
                     }
                 }
-            }
-        })
-        }else{
+            })
+        } else {
             serviceTypeList = await prisma.serviceTypeMaster.findMany({
-            where : {
-                tenantId : Number(tenantId)
-            }
-        })
+                where: {
+                    tenantId: Number(tenantId)
+                }
+            })
         }
         return res.status(201).json({
-            success : true,
-            data : serviceTypeList,
-            count : serviceTypeCount
+            success: true,
+            data: serviceTypeList,
+            count: serviceTypeCount
         })
     } catch (error) {
         return res.status(500).json({
@@ -459,11 +459,11 @@ export const getListOfServiceType = async (req: Request, res: Response) => {
 
 export const getServiceTypeDetails = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const {serviceTypeId} = req.params;
-    if(!serviceTypeId){
+    const { serviceTypeId } = req.params;
+    if (!serviceTypeId) {
         return res.status(404).json({
-            success : false,
-            message : 'service type id required'
+            success: false,
+            message: 'service type id required'
         })
     }
     if (!id || !tenantId) {
@@ -474,29 +474,29 @@ export const getServiceTypeDetails = async (req: Request, res: Response) => {
     }
     try {
         const checkServiceTypeExists = await prisma.serviceTypeMaster.findUnique({
-            where : {id : Number(serviceTypeId) , tenantId : Number(tenantId)},
-            include : {
-                serviceCategoryMaster : {
-                    select : {
-                        name : true
+            where: { id: Number(serviceTypeId), tenantId: Number(tenantId) },
+            include: {
+                serviceCategoryMaster: {
+                    select: {
+                        name: true
                     }
                 },
-                tenant : {
-                    select : {
-                        tenantName : true
+                tenant: {
+                    select: {
+                        tenantName: true
                     }
                 }
             }
         })
-        if (!checkServiceTypeExists){
+        if (!checkServiceTypeExists) {
             return res.status(403).json({
-                success : false,
-                message : `Service type not exists with code`
+                success: false,
+                message: `Service type not exists with code`
             })
         }
         return res.status(201).json({
-            success : true,
-            data : checkServiceTypeExists
+            success: true,
+            data: checkServiceTypeExists
         })
     } catch (error) {
         return res.status(500).json({
@@ -507,112 +507,143 @@ export const getServiceTypeDetails = async (req: Request, res: Response) => {
 }
 
 export const deactivateServiceType = async (req: Request, res: Response) => {
-  const { id, tenantId } = req.user!;
-  const { serviceTypeId } = req.params;
-  if (!id || !tenantId) {
-    return res.status(404).json({
-      success: false,
-      message: "Not Authorized login again",
-    });
-  }
-  if (!serviceTypeId) {
-    return res.status(404).json({
-      success: false,
-      message: "service type id required",
-    });
-  }
-  try {
-    const checkServiceTypeExists = await prisma.serviceTypeMaster.findUnique({
-            where : {id : Number(serviceTypeId) , tenantId : Number(tenantId)},
-            include : {
-                serviceCategoryMaster : {
-                    select : {
-                        name : true
+    const { id, tenantId } = req.user!;
+    const { serviceTypeId } = req.params;
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: "Not Authorized login again",
+        });
+    }
+    if (!serviceTypeId) {
+        return res.status(404).json({
+            success: false,
+            message: "service type id required",
+        });
+    }
+    try {
+        const checkServiceTypeExists = await prisma.serviceTypeMaster.findUnique({
+            where: { id: Number(serviceTypeId), tenantId: Number(tenantId) },
+            include: {
+                serviceCategoryMaster: {
+                    select: {
+                        name: true
                     }
                 },
-                tenant : {
-                    select : {
-                        tenantName : true
+                tenant: {
+                    select: {
+                        tenantName: true
                     }
                 }
             }
         })
-        if (!checkServiceTypeExists){
+        if (!checkServiceTypeExists) {
             return res.status(403).json({
-                success : false,
-                message : `Service type not exists with code`
+                success: false,
+                message: `Service type not exists with code`
             })
         }
-    const data = await prisma.serviceTypeMaster.update({
-      where: { id: Number(serviceTypeId), tenantId: Number(tenantId) },
-      data: {
-        isActive: false,
-      },
-    });
-    return res.status(200).json({
-      success: true,
-      message: `${data.name} service type is deactivated`,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message  : `server error : ${err}`
-    });
-  }
+        const data = await prisma.serviceTypeMaster.update({
+            where: { id: Number(serviceTypeId), tenantId: Number(tenantId) },
+            data: {
+                isActive: false,
+            },
+        });
+        return res.status(200).json({
+            success: true,
+            message: `${data.name} service type is deactivated`,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `server error : ${err}`
+        });
+    }
 };
 
 export const activateServiceType = async (req: Request, res: Response) => {
-  const { id, tenantId } = req.user!;
-  const { serviceTypeId } = req.params;
-  if (!id || !tenantId) {
-    return res.status(404).json({
-      success: false,
-      message: "Not Authorized login again",
-    });
-  }
-  if (!serviceTypeId) {
-    return res.status(404).json({
-      success: false,
-      message: "service type id required",
-    });
-  }
-  try {
-    const checkServiceTypeExists = await prisma.serviceTypeMaster.findUnique({
-            where : {id : Number(serviceTypeId) , tenantId : Number(tenantId)},
-            include : {
-                serviceCategoryMaster : {
-                    select : {
-                        name : true
+    const { id, tenantId } = req.user!;
+    const { serviceTypeId } = req.params;
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: "Not Authorized login again",
+        });
+    }
+    if (!serviceTypeId) {
+        return res.status(404).json({
+            success: false,
+            message: "service type id required",
+        });
+    }
+    try {
+        const checkServiceTypeExists = await prisma.serviceTypeMaster.findUnique({
+            where: { id: Number(serviceTypeId), tenantId: Number(tenantId) },
+            include: {
+                serviceCategoryMaster: {
+                    select: {
+                        name: true
                     }
                 },
-                tenant : {
-                    select : {
-                        tenantName : true
+                tenant: {
+                    select: {
+                        tenantName: true
                     }
                 }
             }
         })
-        if (!checkServiceTypeExists){
+        if (!checkServiceTypeExists) {
             return res.status(403).json({
-                success : false,
-                message : `Service type not exists with code`
+                success: false,
+                message: `Service type not exists with code`
             })
         }
-    const data = await prisma.serviceTypeMaster.update({
-      where: { id: Number(serviceTypeId), tenantId: Number(tenantId) },
-      data: {
-        isActive: true,
-      },
-    });
-    return res.status(200).json({
-      success: true,
-      message: `${data.name} service type is activated`,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message : `Server error : ${err}`
-    });
-  }
+        const data = await prisma.serviceTypeMaster.update({
+            where: { id: Number(serviceTypeId), tenantId: Number(tenantId) },
+            data: {
+                isActive: true,
+            },
+        });
+        return res.status(200).json({
+            success: true,
+            message: `${data.name} service type is activated`,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${err}`
+        });
+    }
 };
 
+
+
+export const getListOfServiceTypeAccordingServiceCategory = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!
+    const { categoryId } = req.params
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: "Not Authorized login again",
+        });
+    }
+    try {
+        let serviceTypeList
+
+        serviceTypeList = await prisma.serviceTypeMaster.findMany({
+            where: {
+                tenantId: Number(tenantId),
+                serviceCategoryMasterId: Number(categoryId)
+            }
+        })
+        return res.status(201).json({
+            success: true,
+            data: serviceTypeList
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${error}`
+        })
+    }
+}
