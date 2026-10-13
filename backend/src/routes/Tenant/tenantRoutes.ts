@@ -4,11 +4,12 @@ import { activateTenantBranch, createBranch, deactivateTenantBranch, getTenantBr
 import { activateTenantDesignation, createEmployeeDesignation, deactivateTenantDesignation, getAllEmployeeDesignation, getEmployeeDesignationDetails, mechanicAssign, mechanicUnassign, updateDesignation } from "../../controllers/tenants/employeeDesignationController";
 import { activateTenantRole, assigningPermissionToRole, createRole, deactivateTenantRole, getAllTenantRole, getRoleDetails, updateRole, updatePermissionToRole, getListOfPermissionToRole, getDetailsPermissionToRole } from "../../controllers/tenants/roleAndPermissionController";
 import { activateEmployee, createEmployee, deactivateEmployee, getListOfTenantEmployee, getTenantEmployeeDetails, updateEmployeeDetails } from "../../controllers/tenants/employeeManagementController";
-import { activateServiceCategory, activateServiceType, createServiceCategory, createServiceType, deactivateServiceCategory, deactivateServiceType, getListOfServiceCategory, getListOfServiceType, getServiceCategoryDetails, getServiceTypeDetails, updateServiceCategory, updateServiceType } from "../../controllers/tenants/Services/serviceController";
+import { activateServiceCategory, activateServiceType, createServiceCategory, createServiceType, deactivateServiceCategory, deactivateServiceType, getListOfServiceCategory, getListOfServiceType, getListOfServiceTypeAccordingServiceCategory, getServiceCategoryDetails, getServiceTypeDetails, updateServiceCategory, updateServiceType } from "../../controllers/tenants/Services/serviceController";
 import { activateRepairOrder, createRepairOrder, deactivateRepairOrder, getListOfRepairOrder, getRepairOrderDetails, updateRepairOrder } from "../../controllers/tenants/repairOrderController";
 
 import { activateCustomer, createCustomer, deactivateCustomer, getCustomerDetails, getCustomerList, updateCustomer } from "../../controllers/tenants/customerManagementController";
 import { activateVehicle, createVehicle, deactivateVehicle, getListOfVehicle, getVehicleDetails, updateVehicle } from "../../controllers/tenants/vehicalManagementController";
+import { closeJobCard, createJobCard, getJobcardDetails, getListOfJobCard, updateJobCard } from "../../controllers/tenants/jobCardManagement";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -69,6 +70,7 @@ tenantRoute.get('/tenant/service/type/get/all', authenticate, requireTenantUser,
 tenantRoute.get('/tenant/service/type/get/:serviceTypeId', authenticate, requireTenantUser, getServiceTypeDetails)
 tenantRoute.patch('/tenant/service/type/:serviceTypeId/deactivate', authenticate, requireTenantUser, deactivateServiceType)
 tenantRoute.patch('/tenant/service/type/:serviceTypeId/activate', authenticate, requireTenantUser, activateServiceType)
+tenantRoute.get('/tenant/service/category/type/get/:categoryId', authenticate, requireTenantUser, getListOfServiceTypeAccordingServiceCategory)
 
 //Repair Order
 tenantRoute.post('/tenant/repairorder/create', authenticate, requireTenantUser, createRepairOrder)
@@ -95,4 +97,12 @@ tenantRoute.get('/tenant/vehicle/get/all', authenticate, requireTenantUser, getL
 tenantRoute.get('/tenant/vehicle/get/:vehicleId', authenticate, requireTenantUser, getVehicleDetails)
 tenantRoute.patch('/tenant/vehicle/:vehicleId/deactivate', authenticate, requireTenantUser, deactivateVehicle)
 tenantRoute.patch('/tenant/vehicle/:vehicleId/activate', authenticate, requireTenantUser, activateVehicle)
+
+
+//Jobcard Management
+tenantRoute.post('/tenant/jobcard/create', authenticate, requireTenantUser, createJobCard)
+tenantRoute.put('/tenant/jobcard/:jobCardId/update', authenticate, requireTenantUser, updateJobCard)
+tenantRoute.get('/tenant/jobcard/get/all', authenticate, requireTenantUser, getListOfJobCard)
+tenantRoute.get('/tenant/jobcard/get/:jobCardId', authenticate, requireTenantUser, getJobcardDetails)
+tenantRoute.patch('/tenant/jobcard/:jobCardId/close', authenticate, requireTenantUser, closeJobCard)
 export default tenantRoute;

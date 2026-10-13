@@ -287,6 +287,67 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
 }
 
+export type IntNullableFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
+}
+
+export type EnumJobCardVehicleStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.JobCardVehicleStatus | Prisma.EnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JobCardVehicleStatus[] | Prisma.ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JobCardVehicleStatus[] | Prisma.ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJobCardVehicleStatusFilter<$PrismaModel> | $Enums.JobCardVehicleStatus
+}
+
+export type EnumJobCardStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.JobCardStatus | Prisma.EnumJobCardStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JobCardStatus[] | Prisma.ListEnumJobCardStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JobCardStatus[] | Prisma.ListEnumJobCardStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJobCardStatusFilter<$PrismaModel> | $Enums.JobCardStatus
+}
+
+export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type EnumJobCardVehicleStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JobCardVehicleStatus | Prisma.EnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JobCardVehicleStatus[] | Prisma.ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JobCardVehicleStatus[] | Prisma.ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJobCardVehicleStatusWithAggregatesFilter<$PrismaModel> | $Enums.JobCardVehicleStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJobCardVehicleStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJobCardVehicleStatusFilter<$PrismaModel>
+}
+
+export type EnumJobCardStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JobCardStatus | Prisma.EnumJobCardStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JobCardStatus[] | Prisma.ListEnumJobCardStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JobCardStatus[] | Prisma.ListEnumJobCardStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJobCardStatusWithAggregatesFilter<$PrismaModel> | $Enums.JobCardStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJobCardStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJobCardStatusFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -571,6 +632,67 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type NestedEnumJobCardVehicleStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.JobCardVehicleStatus | Prisma.EnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JobCardVehicleStatus[] | Prisma.ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JobCardVehicleStatus[] | Prisma.ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJobCardVehicleStatusFilter<$PrismaModel> | $Enums.JobCardVehicleStatus
+}
+
+export type NestedEnumJobCardStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.JobCardStatus | Prisma.EnumJobCardStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JobCardStatus[] | Prisma.ListEnumJobCardStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JobCardStatus[] | Prisma.ListEnumJobCardStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJobCardStatusFilter<$PrismaModel> | $Enums.JobCardStatus
+}
+
+export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type NestedFloatNullableFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
+}
+
+export type NestedEnumJobCardVehicleStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JobCardVehicleStatus | Prisma.EnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JobCardVehicleStatus[] | Prisma.ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JobCardVehicleStatus[] | Prisma.ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJobCardVehicleStatusWithAggregatesFilter<$PrismaModel> | $Enums.JobCardVehicleStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJobCardVehicleStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJobCardVehicleStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumJobCardStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JobCardStatus | Prisma.EnumJobCardStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.JobCardStatus[] | Prisma.ListEnumJobCardStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JobCardStatus[] | Prisma.ListEnumJobCardStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJobCardStatusWithAggregatesFilter<$PrismaModel> | $Enums.JobCardStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJobCardStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJobCardStatusFilter<$PrismaModel>
 }
 
 

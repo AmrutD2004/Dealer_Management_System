@@ -104,3 +104,8 @@ export type Customer = Prisma.CustomerModel
  * 
  */
 export type Vehicle = Prisma.VehicleModel
+/**
+ * Model JobCard
+ * 
+ */
+export type JobCard = Prisma.JobCardModel
