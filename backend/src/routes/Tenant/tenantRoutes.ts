@@ -6,6 +6,7 @@ import { activateTenantRole, assigningPermissionToRole, createRole, deactivateTe
 import { activateEmployee, createEmployee, deactivateEmployee, getListOfTenantEmployee, getTenantEmployeeDetails, updateEmployeeDetails } from "../../controllers/tenants/employeeManagementController";
 import { activateServiceCategory, activateServiceType, createServiceCategory, createServiceType, deactivateServiceCategory, deactivateServiceType, getListOfServiceCategory, getListOfServiceType, getServiceCategoryDetails, getServiceTypeDetails, updateServiceCategory, updateServiceType } from "../../controllers/tenants/Services/serviceController";
 import { activateRepairOrder, createRepairOrder, deactivateRepairOrder, getListOfRepairOrder, getRepairOrderDetails, updateRepairOrder } from "../../controllers/tenants/repairOrderController";
+
 import { activateCustomer, createCustomer, deactivateCustomer, getCustomerDetails, getCustomerList, updateCustomer } from "../../controllers/tenants/customerManagementController";
 
 const tenantRoute = Router();
@@ -80,7 +81,10 @@ tenantRoute.patch('/tenant/repairorder/:repairOrderId/activate', authenticate, r
 //Cutomer Management
 tenantRoute.post('/tenant/customer/create', authenticate, requireTenantUser, createCustomer)
 tenantRoute.put('/tenant/customer/:custId/update', authenticate, requireTenantUser, updateCustomer)
+
 tenantRoute.get('/tenant/customer/get/all', authenticate, requireTenantUser, getCustomerList)
+
+
 tenantRoute.get('/tenant/customer/get/:custId', authenticate, requireTenantUser, getCustomerDetails)
 tenantRoute.patch('/tenant/customer/:custId/deactivate', authenticate, requireTenantUser, deactivateCustomer)
 tenantRoute.patch('/tenant/customer/:custId/activate', authenticate, requireTenantUser, activateCustomer)
