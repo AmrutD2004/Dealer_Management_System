@@ -8,6 +8,7 @@ import { activateServiceCategory, activateServiceType, createServiceCategory, cr
 import { activateRepairOrder, createRepairOrder, deactivateRepairOrder, getListOfRepairOrder, getRepairOrderDetails, updateRepairOrder } from "../../controllers/tenants/repairOrderController";
 
 import { activateCustomer, createCustomer, deactivateCustomer, getCustomerDetails, getCustomerList, updateCustomer } from "../../controllers/tenants/customerManagementController";
+import { activateVehicle, createVehicle, deactivateVehicle, getListOfVehicle, getVehicleDetails, updateVehicle } from "../../controllers/tenants/vehicalManagementController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -81,11 +82,17 @@ tenantRoute.patch('/tenant/repairorder/:repairOrderId/activate', authenticate, r
 //Cutomer Management
 tenantRoute.post('/tenant/customer/create', authenticate, requireTenantUser, createCustomer)
 tenantRoute.put('/tenant/customer/:custId/update', authenticate, requireTenantUser, updateCustomer)
-
 tenantRoute.get('/tenant/customer/get/all', authenticate, requireTenantUser, getCustomerList)
-
-
 tenantRoute.get('/tenant/customer/get/:custId', authenticate, requireTenantUser, getCustomerDetails)
 tenantRoute.patch('/tenant/customer/:custId/deactivate', authenticate, requireTenantUser, deactivateCustomer)
 tenantRoute.patch('/tenant/customer/:custId/activate', authenticate, requireTenantUser, activateCustomer)
+
+
+//Vehicle Management
+tenantRoute.post('/tenant/vehicle/create', authenticate, requireTenantUser, createVehicle)
+tenantRoute.put('/tenant/vehicle/:vehicleId/update', authenticate, requireTenantUser, updateVehicle)
+tenantRoute.get('/tenant/vehicle/get/all', authenticate, requireTenantUser, getListOfVehicle)
+tenantRoute.get('/tenant/vehicle/get/:vehicleId', authenticate, requireTenantUser, getVehicleDetails)
+tenantRoute.patch('/tenant/vehicle/:vehicleId/deactivate', authenticate, requireTenantUser, deactivateVehicle)
+tenantRoute.patch('/tenant/vehicle/:vehicleId/activate', authenticate, requireTenantUser, activateVehicle)
 export default tenantRoute;

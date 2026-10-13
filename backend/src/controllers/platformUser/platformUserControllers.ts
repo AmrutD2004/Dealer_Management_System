@@ -24,6 +24,17 @@ export const addPlatformUsers = async (req: Request, res: Response) => {
         })
     }
     try {
+        const hashedPassword = await bcrypt.hash(passwordHash, 10)
+        const count = await prisma.platformUser.count()
+        if(count === 0){
+            const data = await prisma.platformUser.create({
+            data: {
+                email: email,
+                passwordHash: hashedPassword,
+                role: 'SUPER_ADMIN'
+            }
+        })
+        }
         const isUserExist = await prisma.platformUser.findFirst({
             where: { email: email }
         })
@@ -33,7 +44,7 @@ export const addPlatformUsers = async (req: Request, res: Response) => {
                 message: 'User already exists'
             })
         }
-        const hashedPassword = await bcrypt.hash(passwordHash, 10)
+        
         const data = await prisma.platformUser.create({
             data: {
                 email: email,
