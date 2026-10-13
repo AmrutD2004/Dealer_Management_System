@@ -406,7 +406,9 @@ export const ModelName = {
   Permission: 'Permission',
   RolePermissionMapping: 'RolePermissionMapping',
   ServiceCategoryMaster: 'ServiceCategoryMaster',
-  ServiceTypeMaster: 'ServiceTypeMaster'
+  ServiceTypeMaster: 'ServiceTypeMaster',
+  RepairOrderTypeMaster: 'RepairOrderTypeMaster',
+  Customer: 'Customer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster"
+    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1166,6 +1168,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RepairOrderTypeMaster: {
+      payload: Prisma.$RepairOrderTypeMasterPayload<ExtArgs>
+      fields: Prisma.RepairOrderTypeMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RepairOrderTypeMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RepairOrderTypeMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.RepairOrderTypeMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RepairOrderTypeMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        findMany: {
+          args: Prisma.RepairOrderTypeMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>[]
+        }
+        create: {
+          args: Prisma.RepairOrderTypeMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        createMany: {
+          args: Prisma.RepairOrderTypeMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RepairOrderTypeMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.RepairOrderTypeMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        update: {
+          args: Prisma.RepairOrderTypeMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.RepairOrderTypeMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RepairOrderTypeMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RepairOrderTypeMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.RepairOrderTypeMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepairOrderTypeMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.RepairOrderTypeMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRepairOrderTypeMaster>
+        }
+        groupBy: {
+          args: Prisma.RepairOrderTypeMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairOrderTypeMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RepairOrderTypeMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepairOrderTypeMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    Customer: {
+      payload: Prisma.$CustomerPayload<ExtArgs>
+      fields: Prisma.CustomerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>
+        }
+        findFirst: {
+          args: Prisma.CustomerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>
+        }
+        findMany: {
+          args: Prisma.CustomerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>[]
+        }
+        create: {
+          args: Prisma.CustomerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>
+        }
+        createMany: {
+          args: Prisma.CustomerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>[]
+        }
+        delete: {
+          args: Prisma.CustomerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>
+        }
+        update: {
+          args: Prisma.CustomerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerPayload>
+        }
+        aggregate: {
+          args: Prisma.CustomerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomer>
+        }
+        groupBy: {
+          args: Prisma.CustomerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomerCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1368,6 +1518,49 @@ export const ServiceTypeMasterScalarFieldEnum = {
 export type ServiceTypeMasterScalarFieldEnum = (typeof ServiceTypeMasterScalarFieldEnum)[keyof typeof ServiceTypeMasterScalarFieldEnum]
 
 
+export const RepairOrderTypeMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RepairOrderTypeMasterScalarFieldEnum = (typeof RepairOrderTypeMasterScalarFieldEnum)[keyof typeof RepairOrderTypeMasterScalarFieldEnum]
+
+
+export const CustomerScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  customerCode: 'customerCode',
+  title: 'title',
+  firstName: 'firstName',
+  middleName: 'middleName',
+  lastName: 'lastName',
+  email: 'email',
+  mobileNo: 'mobileNo',
+  alternateMobileNo: 'alternateMobileNo',
+  dateOfBirth: 'dateOfBirth',
+  address1: 'address1',
+  address2: 'address2',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  pincode: 'pincode',
+  laborDiscountPercent: 'laborDiscountPercent',
+  partDiscountPercent: 'partDiscountPercent',
+  authorizedBy: 'authorizedBy',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1500,6 +1693,34 @@ export type EnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel> = FieldRefI
  * Reference to a field of type 'ServiceCategoryMasterCode[]'
  */
 export type ListEnumServiceCategoryMasterCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceCategoryMasterCode[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RepairType'
+ */
+export type EnumRepairTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairType'>
+    
+
+
+/**
+ * Reference to a field of type 'RepairType[]'
+ */
+export type ListEnumRepairTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -1677,6 +1898,8 @@ export type GlobalOmitConfig = {
   rolePermissionMapping?: Prisma.RolePermissionMappingOmit
   serviceCategoryMaster?: Prisma.ServiceCategoryMasterOmit
   serviceTypeMaster?: Prisma.ServiceTypeMasterOmit
+  repairOrderTypeMaster?: Prisma.RepairOrderTypeMasterOmit
+  customer?: Prisma.CustomerOmit
 }
 
 /* Types for Logging */
