@@ -381,3 +381,24 @@ export const activateVehicle = async (vehicleId: number) => {
     const response = await api.patch(`/api/tenant/vehicle/${vehicleId}/activate`)
     return await response.data
 }
+
+//Job Card management
+export const createJobCard = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/jobcard/create`, payload)
+    return await response.data;
+}
+
+export const getJobCardList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/jobcard/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getJobCardById = async (jobCardId: number) => {
+    const response = await api.get(`/api/tenant/jobcard/get/${jobCardId}`)
+    return await response.data;
+}
+
+export const updateJobCard = async (payload: {}, jobCardId: number) => {
+    const response = await api.put(`/api/tenant/jobcard/${jobCardId}/update`, payload)
+    return await response.data;
+}

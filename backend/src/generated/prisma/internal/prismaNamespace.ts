@@ -409,7 +409,8 @@ export const ModelName = {
   ServiceTypeMaster: 'ServiceTypeMaster',
   RepairOrderTypeMaster: 'RepairOrderTypeMaster',
   Customer: 'Customer',
-  Vehicle: 'Vehicle'
+  Vehicle: 'Vehicle',
+  JobCard: 'JobCard'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -425,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle"
+    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1391,6 +1392,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    JobCard: {
+      payload: Prisma.$JobCardPayload<ExtArgs>
+      fields: Prisma.JobCardFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JobCardFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JobCardFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>
+        }
+        findFirst: {
+          args: Prisma.JobCardFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JobCardFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>
+        }
+        findMany: {
+          args: Prisma.JobCardFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>[]
+        }
+        create: {
+          args: Prisma.JobCardCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>
+        }
+        createMany: {
+          args: Prisma.JobCardCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JobCardCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>[]
+        }
+        delete: {
+          args: Prisma.JobCardDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>
+        }
+        update: {
+          args: Prisma.JobCardUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>
+        }
+        deleteMany: {
+          args: Prisma.JobCardDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JobCardUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JobCardUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>[]
+        }
+        upsert: {
+          args: Prisma.JobCardUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardPayload>
+        }
+        aggregate: {
+          args: Prisma.JobCardAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJobCard>
+        }
+        groupBy: {
+          args: Prisma.JobCardGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobCardGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JobCardCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobCardCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1661,6 +1736,43 @@ export const VehicleScalarFieldEnum = {
 export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeof VehicleScalarFieldEnum]
 
 
+export const JobCardScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  jobCardNo: 'jobCardNo',
+  vehicleId: 'vehicleId',
+  customerId: 'customerId',
+  currentKmReading: 'currentKmReading',
+  previousKmReading: 'previousKmReading',
+  vehicleStatus: 'vehicleStatus',
+  supervisorId: 'supervisorId',
+  technicianId: 'technicianId',
+  serviceCategoryId: 'serviceCategoryId',
+  serviceTypeId: 'serviceTypeId',
+  repairOrderTypeId: 'repairOrderTypeId',
+  isRevisit: 'isRevisit',
+  estimateCloseAt: 'estimateCloseAt',
+  revisedEstimateCloseAt: 'revisedEstimateCloseAt',
+  closedAt: 'closedAt',
+  status: 'status',
+  driverName: 'driverName',
+  driverMobileNo: 'driverMobileNo',
+  isBreakdown: 'isBreakdown',
+  breakdownPersonAttended: 'breakdownPersonAttended',
+  breakdownDateTime: 'breakdownDateTime',
+  breakdownStartDateTime: 'breakdownStartDateTime',
+  breakdownEndDateTime: 'breakdownEndDateTime',
+  dealerVanStartKm: 'dealerVanStartKm',
+  dealerVanEndKm: 'dealerVanEndKm',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobCardScalarFieldEnum = (typeof JobCardScalarFieldEnum)[keyof typeof JobCardScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1821,6 +1933,34 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'JobCardVehicleStatus'
+ */
+export type EnumJobCardVehicleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobCardVehicleStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'JobCardVehicleStatus[]'
+ */
+export type ListEnumJobCardVehicleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobCardVehicleStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'JobCardStatus'
+ */
+export type EnumJobCardStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobCardStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'JobCardStatus[]'
+ */
+export type ListEnumJobCardStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobCardStatus[]'>
     
 
 
@@ -2001,6 +2141,7 @@ export type GlobalOmitConfig = {
   repairOrderTypeMaster?: Prisma.RepairOrderTypeMasterOmit
   customer?: Prisma.CustomerOmit
   vehicle?: Prisma.VehicleOmit
+  jobCard?: Prisma.JobCardOmit
 }
 
 /* Types for Logging */

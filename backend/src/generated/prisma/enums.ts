@@ -59,3 +59,19 @@ export const RepairType = {
 } as const
 
 export type RepairType = (typeof RepairType)[keyof typeof RepairType]
+
+
+export const JobCardStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED'
+} as const
+
+export type JobCardStatus = (typeof JobCardStatus)[keyof typeof JobCardStatus]
+
+
+export const JobCardVehicleStatus = {
+  MOBILIZE: 'MOBILIZE',
+  IMMOBILIZE: 'IMMOBILIZE'
+} as const
+
+export type JobCardVehicleStatus = (typeof JobCardVehicleStatus)[keyof typeof JobCardVehicleStatus]

@@ -323,3 +323,47 @@ export interface customerCreateType {
     labourDiscountPercent: string,
     partDiscountPercent: string
 }
+
+/* Record returned by GET /api/tenant/jobcard/get/all with the joined
+   customer, vehicle, service/repair masters, staff and branch. */
+
+export interface jobCardListType {
+    id: number,
+    tenantId: number,
+    branchId: number,
+    jobCardNo: string,
+    vehicleId: number,
+    customerId: number,
+    currentKmReading: number,
+    previousKmReading: number | null,
+    vehicleStatus: "MOBILIZE" | "IMMOBILIZE",
+    supervisorId: number | null,
+    technicianId: number | null,
+    serviceCategoryId: number,
+    serviceTypeId: number,
+    repairOrderTypeId: number,
+    isRevisit: boolean,
+    estimateCloseAt: string,
+    revisedEstimateCloseAt: string | null,
+    closedAt: string | null,
+    status: "OPEN" | "CLOSED",
+    driverName: string | null,
+    driverMobileNo: string | null,
+    isBreakdown: boolean,
+    breakdownPersonAttended: string | null,
+    breakdownDateTime: string | null,
+    breakdownStartDateTime: string | null,
+    breakdownEndDateTime: string | null,
+    dealerVanStartKm: number | null,
+    dealerVanEndKm: number | null,
+    createdAt: string,
+    updatedAt: string,
+    customer: { id: number, firstName: string, lastName: string, mobileNo: string } | null,
+    vehicle: { id: number, vehicleNumber: string | null, chassisNumber: string, manufacturer: string, model: string } | null,
+    serviceType: { id: number, name: string } | null,
+    serviceCategory: { id: number, name: string } | null,
+    repairOrderType: { id: number, name: string } | null,
+    supervisor: { id: number, firstName: string, lastName: string } | null,
+    technician: { id: number, firstName: string, lastName: string } | null,
+    branch: { id: number, branchName: string } | null
+}
