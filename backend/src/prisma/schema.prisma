@@ -74,6 +74,7 @@ model Tenant {
   serviceTypes ServiceTypeMaster[]
   repairOrderType RepairOrderTypeMaster[]
   customers              Customer[]
+  vehicles               Vehicle[]
 
   @@index([createdBy])
 }
@@ -318,7 +319,47 @@ model Customer {
 
   tenant                Tenant    @relation(fields: [tenantId], references: [id])
   authorizedByUser      Users     @relation(fields: [authorizedBy], references: [id])
-
+  vehicles              Vehicle[]
   @@unique([tenantId, customerCode])
   @@map("Customer")
+}
+
+
+model Vehicle {
+  id                     Int       @id @default(autoincrement())
+
+  tenantId               Int
+  customerId             Int
+
+  vehicleNumber          String?
+  chassisNumber          String
+  engineNumber           String
+
+  manufacturer           String
+  model                  String
+  variant                String?
+
+  color                  String?
+  manufacturingYear      DateTime?
+
+  registrationDate       DateTime? @db.Date
+  purchaseDate           DateTime? @db.Date
+
+  fuelType               String?
+  transmissionType       String?
+
+  currentOdometerReading Int  
+
+  isActive               Boolean   @default(true)
+
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  tenant                 Tenant    @relation(fields: [tenantId], references: [id])
+  customer               Customer  @relation(fields: [customerId], references: [id])
+
+  @@unique([tenantId, chassisNumber])
+  @@unique([tenantId, engineNumber])
+  @@index([tenantId, vehicleNumber])
+  @@map("Vehicle")
 }

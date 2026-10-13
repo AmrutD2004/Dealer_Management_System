@@ -351,3 +351,33 @@ export const activateCustomer = async (custId: number) => {
     const response = await api.patch(`/api/tenant/customer/${custId}/activate`)
     return await response.data
 }
+//Vehicle management
+export const createVehicle = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/vehicle/create`, payload)
+    return await response.data;
+}
+
+export const getVehicleList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/vehicle/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getVehicleById = async (vehicleId: number) => {
+    const response = await api.get(`/api/tenant/vehicle/get/${vehicleId}`)
+    return await response.data;
+}
+
+export const editVehicle = async (payload: {}, vehicleId: number) => {
+    const response = await api.put(`/api/tenant/vehicle/${vehicleId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateVehicle = async (vehicleId: number) => {
+    const response = await api.patch(`/api/tenant/vehicle/${vehicleId}/deactivate`)
+    return await response.data
+}
+
+export const activateVehicle = async (vehicleId: number) => {
+    const response = await api.patch(`/api/tenant/vehicle/${vehicleId}/activate`)
+    return await response.data
+}

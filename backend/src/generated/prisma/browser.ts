@@ -77,3 +77,8 @@ export type RepairOrderTypeMaster = Prisma.RepairOrderTypeMasterModel
  * 
  */
 export type Customer = Prisma.CustomerModel
+/**
+ * Model Vehicle
+ * 
+ */
+export type Vehicle = Prisma.VehicleModel
