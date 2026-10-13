@@ -283,3 +283,71 @@ export const activateEmployee = async (employeeId: number) => {
     const response = await api.patch(`/api/tenant/employee/${employeeId}/activate`)
     return await response.data
 }
+
+
+//Service Category management
+export const createServiceCategory = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/service/category/create`, payload)
+    return await response.data;
+}
+
+export const getServiceCategoryList = async () => {
+    const response = await api.get(`/api/tenant/service/category/get/all`)
+    return await response.data;
+}
+
+
+//Service Type management
+export const createServiceType = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/service/type/create`, payload)
+    return await response.data;
+}
+
+export const getServiceTypeList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/service/type/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+
+//Repair Order management
+export const createRepairOrder = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/repairorder/create`, payload)
+    return await response.data;
+}
+
+export const getRepairOrderList = async () => {
+    const response = await api.get(`/api/tenant/repairorder/get/all`)
+    return await response.data;
+}
+
+
+//Customer management
+export const createCustomer = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/customer/create`, payload)
+    return await response.data;
+}
+
+export const getCustomerList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/customer/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getCustomerById = async (custId: number) => {
+    const response = await api.get(`/api/tenant/customer/get/${custId}`)
+    return await response.data;
+}
+
+export const editCustomer = async (payload: {}, custId: number) => {
+    const response = await api.put(`/api/tenant/customer/${custId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateCustomer = async (custId: number) => {
+    const response = await api.patch(`/api/tenant/customer/${custId}/deactivate`)
+    return await response.data
+}
+
+export const activateCustomer = async (custId: number) => {
+    const response = await api.patch(`/api/tenant/customer/${custId}/activate`)
+    return await response.data
+}

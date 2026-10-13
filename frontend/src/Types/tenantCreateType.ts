@@ -216,3 +216,110 @@ export interface employeeCreateType {
     roleId: string,
     designationId: string
 }
+
+/* Record returned by GET /api/tenant/service/category/get/all with the
+   joined tenant name. Code is the Prisma ServiceCategoryMasterCode enum. */
+
+export interface serviceCategoryListType {
+    id: number,
+    tenantId: number,
+    code: string,
+    name: string,
+    description: string | null,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    tenant: { tenantName: string } | null
+}
+
+/* Record returned by GET /api/tenant/service/type/get/all?skip&take with
+   the joined service category and tenant. */
+
+export interface serviceTypeListType {
+    id: number,
+    tenantId: number,
+    serviceCategoryMasterId: number,
+    code: string,
+    name: string,
+    description: string | null,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    tenant: { tenantName: string } | null,
+    serviceCategoryMaster: { id: number; code: string; name: string } | null
+}
+
+/* Record returned by GET /api/tenant/repair/order/get/all with the
+   joined tenant name. Code is the Prisma RepairType enum. */
+
+export interface repairOrderListType {
+    id: number,
+    tenantId: number,
+    code: string,
+    name: string,
+    description: string | null,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    tenant: { tenantName: string } | null
+}
+
+/* Record returned by GET /api/tenant/customer/get/all with the joined
+   authorizedBy user and designation. Discount fields are Prisma Decimals
+   and therefore arrive as strings over JSON. */
+
+export interface customerAuthorizedByType {
+    firstName: string,
+    lastName: string,
+    mobileNo: string,
+    designation: { name: string } | null
+}
+
+export interface customerListType {
+    id: number,
+    tenantId: number,
+    customerCode: string,
+    title: string | null,
+    firstName: string,
+    middleName: string | null,
+    lastName: string,
+    email: string | null,
+    mobileNo: string,
+    alternateMobileNo: string | null,
+    dateOfBirth: string | null,
+    address1: string | null,
+    address2: string | null,
+    city: string | null,
+    state: string | null,
+    country: string | null,
+    pincode: string | null,
+    laborDiscountPercent: string | number,
+    partDiscountPercent: string | number,
+    authorizedBy: number,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    authorizedByUser?: customerAuthorizedByType | null
+}
+
+/* Backend create/update expect the British `labourDiscountPercent` key,
+   unlike the `laborDiscountPercent` column stored in the database. */
+
+export interface customerCreateType {
+    title: string,
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    email: string,
+    mobileNo: string,
+    alternateMobileNo: string,
+    dateOfBirth: string,
+    address1: string,
+    address2: string,
+    city: string,
+    state: string,
+    country: string,
+    pincode: string,
+    labourDiscountPercent: string,
+    partDiscountPercent: string
+}

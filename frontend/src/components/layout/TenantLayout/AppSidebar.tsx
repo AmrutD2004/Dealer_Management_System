@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Briefcase, Building, ChevronDown, Key, Layers, LayoutDashboard, ShieldCheck, Users, Wrench } from "lucide-react"
+import { Boxes, Briefcase, Building, ChevronDown, ClipboardList, Key, Layers, LayoutDashboard, ShieldCheck, Tags, Users, UserRound, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -48,6 +48,10 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/dashboard/` ||
     pathname.startsWith(`/tenant/${id}/dashboard/`)
 
+  const customerActive =
+    pathname === `/tenant/${id}/customer` ||
+    pathname.startsWith(`/tenant/${id}/customer/`)
+
   const branchActive =
     pathname === `/tenant/${id}/masters/branch` ||
     pathname.startsWith(`/tenant${id}/masters/branch/`)
@@ -68,8 +72,25 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/masters/employee` ||
     pathname.startsWith(`/tenant/${id}/masters/employee/`)
 
+  const serviceCategoryActive =
+    pathname === `/tenant/${id}/masters/service-category` ||
+    pathname.startsWith(`/tenant/${id}/masters/service-category/`)
+
+  const serviceTypeActive =
+    pathname === `/tenant/${id}/masters/service-type` ||
+    pathname.startsWith(`/tenant/${id}/masters/service-type/`)
+
+  const repairOrderActive =
+    pathname === `/tenant/${id}/masters/repair-order` ||
+    pathname.startsWith(`/tenant/${id}/masters/repair-order/`)
+
+  const servicesActive = serviceCategoryActive || serviceTypeActive
+
   const [mastersOpen, setMastersOpen] = useState<boolean | undefined>(undefined)
-  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive)
+  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive)
+
+  const [servicesOpen, setServicesOpen] = useState<boolean | undefined>(undefined)
+  const showServices = servicesOpen ?? servicesActive
 
   /* Collapse the mobile sheet once a destination is picked. */
   const handleNavigate = () => {
@@ -179,7 +200,40 @@ export function AppSidebar() {
 
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  isActive={branchActive || designationActive || roleActive || assignPermission || employeeActive}
+                  isActive={customerActive}
+                  tooltip="Customer"
+                  onClick={handleNavigate}
+                  render={
+                    <Link
+                      to={`/tenant/${id}/customer`}
+                      aria-current={customerActive ? "page" : undefined}
+                    />
+                  }
+                  className={menuButtonClass}
+                >
+                  <UserRound
+                    size={18}
+                    strokeWidth={1.8}
+                    className={
+                      customerActive
+                        ? "text-sidebar-ring"
+                        : "text-sidebar-foreground/55"
+                    }
+                  />
+
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Customer
+                  </span>
+
+                  {customerActive && (
+                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive}
                   tooltip="Masters"
                   aria-expanded={showMasters}
                   onClick={() => setMastersOpen(!showMasters)}
@@ -189,7 +243,7 @@ export function AppSidebar() {
                     size={18}
                     strokeWidth={1.8}
                     className={
-                      branchActive || designationActive || roleActive || assignPermission || employeeActive
+                      branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive
                         ? "text-sidebar-ring"
                         : "text-sidebar-foreground/55"
                     }
@@ -278,6 +332,70 @@ export function AppSidebar() {
                         }
                       >
                         <span className="flex items-center gap-2 "><Users size={18}/>Employee</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={servicesActive}
+                        aria-expanded={showServices}
+                        onClick={() => setServicesOpen(!showServices)}
+                        render={<button type="button" />}
+                      >
+                        <span className="flex items-center gap-2 "><Wrench size={18}/>Services</span>
+                        <ChevronDown
+                          size={14}
+                          className={cn(
+                            "ml-auto text-sidebar-foreground/40 transition-transform duration-200",
+                            showServices && "rotate-180"
+                          )}
+                        />
+                      </SidebarMenuSubButton>
+
+                      {showServices && (
+                        <SidebarMenuSub className="mt-1">
+                          <SidebarMenuSubItem>
+                            <SidebarMenuSubButton
+                              isActive={serviceCategoryActive}
+                              onClick={handleNavigate}
+                              render={
+                                <Link
+                                  to={`/tenant/${id}/masters/service-category`}
+                                  aria-current={serviceCategoryActive ? "page" : undefined}
+                                />
+                              }
+                            >
+                              <span className="flex items-center gap-2 "><Tags size={18}/>Service Category</span>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                          <SidebarMenuSubItem>
+                            <SidebarMenuSubButton
+                              isActive={serviceTypeActive}
+                              onClick={handleNavigate}
+                              render={
+                                <Link
+                                  to={`/tenant/${id}/masters/service-type`}
+                                  aria-current={serviceTypeActive ? "page" : undefined}
+                                />
+                              }
+                            >
+                              <span className="flex items-center gap-2 "><Boxes size={18}/>Service Type</span>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        </SidebarMenuSub>
+                      )}
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={repairOrderActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/repair-order`}
+                            aria-current={repairOrderActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><ClipboardList size={18}/>Repair Order</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
