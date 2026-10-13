@@ -20,6 +20,8 @@ import ServiceCategory from "./Pages/TenantUserPages/Masters/ServiceCategory"
 import ServiceType from "./Pages/TenantUserPages/Masters/ServiceType"
 import RepairOrder from "./Pages/TenantUserPages/Masters/RepairOrder"
 import Customer from "./Pages/TenantUserPages/Customer"
+import Vehicle from "./Pages/TenantUserPages/Vehicle"
+import JobCard from "./Pages/TenantUserPages/JobCard"
 
 
 export function App() {
@@ -45,6 +47,8 @@ export function App() {
             <Route path='/tenant/:id/masters/service-type' element={<TenantContextProvider><AuthProtectedRoute><ServiceType /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/repair-order' element={<TenantContextProvider><AuthProtectedRoute><RepairOrder /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/customer' element={<TenantContextProvider><AuthProtectedRoute><Customer /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/vehicle' element={<TenantContextProvider><AuthProtectedRoute><Vehicle /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/job-card' element={<TenantContextProvider><AuthProtectedRoute><JobCard /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>

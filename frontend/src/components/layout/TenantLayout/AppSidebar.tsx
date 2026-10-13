@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Boxes, Briefcase, Building, ChevronDown, ClipboardList, Key, Layers, LayoutDashboard, ShieldCheck, Tags, Users, UserRound, Wrench } from "lucide-react"
+import { Boxes, Briefcase, Building, Car, ChevronDown, ClipboardList, Key, Layers, LayoutDashboard, ShieldCheck, Tags, Users, UserRound, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -51,6 +51,14 @@ export function AppSidebar() {
   const customerActive =
     pathname === `/tenant/${id}/customer` ||
     pathname.startsWith(`/tenant/${id}/customer/`)
+
+  const vehicleActive =
+    pathname === `/tenant/${id}/vehicle` ||
+    pathname.startsWith(`/tenant/${id}/vehicle/`)
+
+  const jobCardActive =
+    pathname === `/tenant/${id}/job-card` ||
+    pathname.startsWith(`/tenant/${id}/job-card/`)
 
   const branchActive =
     pathname === `/tenant/${id}/masters/branch` ||
@@ -226,6 +234,72 @@ export function AppSidebar() {
                   </span>
 
                   {customerActive && (
+                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={vehicleActive}
+                  tooltip="Vehicle"
+                  onClick={handleNavigate}
+                  render={
+                    <Link
+                      to={`/tenant/${id}/vehicle`}
+                      aria-current={vehicleActive ? "page" : undefined}
+                    />
+                  }
+                  className={menuButtonClass}
+                >
+                  <Car
+                    size={18}
+                    strokeWidth={1.8}
+                    className={
+                      vehicleActive
+                        ? "text-sidebar-ring"
+                        : "text-sidebar-foreground/55"
+                    }
+                  />
+
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Vehicle
+                  </span>
+
+                  {vehicleActive && (
+                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={jobCardActive}
+                  tooltip="Job Card"
+                  onClick={handleNavigate}
+                  render={
+                    <Link
+                      to={`/tenant/${id}/job-card`}
+                      aria-current={jobCardActive ? "page" : undefined}
+                    />
+                  }
+                  className={menuButtonClass}
+                >
+                  <ClipboardList
+                    size={18}
+                    strokeWidth={1.8}
+                    className={
+                      jobCardActive
+                        ? "text-sidebar-ring"
+                        : "text-sidebar-foreground/55"
+                    }
+                  />
+
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Job Card
+                  </span>
+
+                  {jobCardActive && (
                     <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
                   )}
                 </SidebarMenuButton>
