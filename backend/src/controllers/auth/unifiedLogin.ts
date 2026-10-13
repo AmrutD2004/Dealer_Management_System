@@ -101,6 +101,7 @@ export const login = async (req: Request, res: Response) => {
                     tenantId: tenantUser.tenantId,
                     branchId: tenantUser.branchId,
                     roleCode: tenantUser.role?.roleCode,
+                    roleName : tenantUser.role?.roleName,
                     userType: 'TENANT_USER'
                 });
 

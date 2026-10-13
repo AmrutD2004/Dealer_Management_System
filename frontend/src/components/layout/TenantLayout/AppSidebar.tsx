@@ -430,9 +430,7 @@ export function AppSidebar() {
               </p>
 
               <p className="truncate text-[10px] text-sidebar-foreground/40">
-                {userInfo?.role === "SUPER_ADMIN"
-                  ? "Administrator"
-                  : "Support Administrator"}
+                {userInfo?.role?.roleName}
               </p>
             </div>
 
