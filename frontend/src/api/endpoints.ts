@@ -321,6 +321,38 @@ export const getRepairOrderList = async () => {
 }
 
 
+//Labour management
+export const createLabour = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/labour/create`, payload)
+    return await response.data;
+}
+
+export const getLabourList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/labour/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getLabourById = async (labourId: number) => {
+    const response = await api.get(`/api/tenant/labour/get/${labourId}`)
+    return await response.data;
+}
+
+export const editLabour = async (payload: {}, labourId: number) => {
+    const response = await api.put(`/api/tenant/labour/${labourId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateLabour = async (labourId: number) => {
+    const response = await api.patch(`/api/tenant/labour/${labourId}/deactivate`)
+    return await response.data
+}
+
+export const activateLabour = async (labourId: number) => {
+    const response = await api.patch(`/api/tenant/labour/${labourId}/activate`)
+    return await response.data
+}
+
+
 //Customer management
 export const createCustomer = async (payload: {}) => {
     const response = await api.post(`/api/tenant/customer/create`, payload)

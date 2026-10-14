@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Boxes, Briefcase, Building, Car, ChevronDown, ClipboardList, Key, Layers, LayoutDashboard, ShieldCheck, Tags, Users, UserRound, Wrench } from "lucide-react"
+import { Boxes, Briefcase, Building, Car, ChevronDown, ClipboardList, HardHat, Key, Layers, LayoutDashboard, ShieldCheck, Tags, Users, UserRound, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -92,10 +92,14 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/masters/repair-order` ||
     pathname.startsWith(`/tenant/${id}/masters/repair-order/`)
 
+  const labourActive =
+    pathname === `/tenant/${id}/masters/labour` ||
+    pathname.startsWith(`/tenant/${id}/masters/labour/`)
+
   const servicesActive = serviceCategoryActive || serviceTypeActive
 
   const [mastersOpen, setMastersOpen] = useState<boolean | undefined>(undefined)
-  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive)
+  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive)
 
   const [servicesOpen, setServicesOpen] = useState<boolean | undefined>(undefined)
   const showServices = servicesOpen ?? servicesActive
@@ -307,7 +311,7 @@ export function AppSidebar() {
 
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  isActive={branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive}
+                  isActive={branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive}
                   tooltip="Masters"
                   aria-expanded={showMasters}
                   onClick={() => setMastersOpen(!showMasters)}
@@ -317,7 +321,7 @@ export function AppSidebar() {
                     size={18}
                     strokeWidth={1.8}
                     className={
-                      branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive
+                      branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive
                         ? "text-sidebar-ring"
                         : "text-sidebar-foreground/55"
                     }
@@ -470,6 +474,20 @@ export function AppSidebar() {
                         }
                       >
                         <span className="flex items-center gap-2 "><ClipboardList size={18}/>Repair Order</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={labourActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/labour`}
+                            aria-current={labourActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><HardHat size={18}/>Labour</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>

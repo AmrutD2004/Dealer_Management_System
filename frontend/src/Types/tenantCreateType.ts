@@ -264,6 +264,35 @@ export interface repairOrderListType {
     tenant: { tenantName: string } | null
 }
 
+/* Record returned by GET /api/tenant/labour/get/all with the joined tenant.
+   `rate` and `standardHours` are Prisma Decimals and therefore arrive as
+   strings over JSON. */
+
+export interface labourListType {
+    id: number,
+    tenantId: number,
+    labourCode: string,
+    labourName: string,
+    labourDescription: string | null,
+    standardHours: string | number,
+    rate: string | number,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    tenant: { tenantName: string } | null
+}
+
+/* Backend create/update expect all of these keys; `labourDescription` is
+   optional. `rate` and `standardHours` are parsed with parseFloat. */
+
+export interface labourCreateType {
+    labourCode: string,
+    labourName: string,
+    labourDescription: string,
+    rate: string,
+    standardHours: string
+}
+
 /* Record returned by GET /api/tenant/customer/get/all with the joined
    authorizedBy user and designation. Discount fields are Prisma Decimals
    and therefore arrive as strings over JSON. */
@@ -324,6 +353,18 @@ export interface customerCreateType {
     partDiscountPercent: string
 }
 
+/* Customer voice entry linked to a job card, as returned by the jobcard
+   get endpoints. `actionToBeTaken` stores the linked labour master id. */
+
+export interface jobCardCustomerVoiceType {
+    id: number,
+    jobCardId: number,
+    customerVoiceDescription: string,
+    observation: string,
+    actionToBeTaken: number,
+    labour: { id: number, labourName: string } | null
+}
+
 /* Record returned by GET /api/tenant/jobcard/get/all with the joined
    customer, vehicle, service/repair masters, staff and branch. */
 
@@ -365,5 +406,6 @@ export interface jobCardListType {
     repairOrderType: { id: number, name: string } | null,
     supervisor: { id: number, firstName: string, lastName: string } | null,
     technician: { id: number, firstName: string, lastName: string } | null,
-    branch: { id: number, branchName: string } | null
+    branch: { id: number, branchName: string } | null,
+    jobCardCustomerVoices?: jobCardCustomerVoiceType[] | null
 }
