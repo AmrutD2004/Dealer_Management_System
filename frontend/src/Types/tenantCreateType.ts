@@ -353,6 +353,18 @@ export interface customerCreateType {
     partDiscountPercent: string
 }
 
+/* Customer voice entry linked to a job card, as returned by the jobcard
+   get endpoints. `actionToBeTaken` stores the linked labour master id. */
+
+export interface jobCardCustomerVoiceType {
+    id: number,
+    jobCardId: number,
+    customerVoiceDescription: string,
+    observation: string,
+    actionToBeTaken: number,
+    labour: { id: number, labourName: string } | null
+}
+
 /* Record returned by GET /api/tenant/jobcard/get/all with the joined
    customer, vehicle, service/repair masters, staff and branch. */
 
@@ -394,5 +406,6 @@ export interface jobCardListType {
     repairOrderType: { id: number, name: string } | null,
     supervisor: { id: number, firstName: string, lastName: string } | null,
     technician: { id: number, firstName: string, lastName: string } | null,
-    branch: { id: number, branchName: string } | null
+    branch: { id: number, branchName: string } | null,
+    jobCardCustomerVoices?: jobCardCustomerVoiceType[] | null
 }

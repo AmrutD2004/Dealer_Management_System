@@ -2,6 +2,7 @@ import {
     createJobCard,
     getCustomerList,
     getEmployeeList,
+    getLabourList,
     getRepairOrderList,
     getServiceCategoryList,
     getServiceTypeList,
@@ -19,12 +20,27 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
+import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/toast"
+import type { labourListType } from "@/Types/tenantCreateType"
 import dayjs from "dayjs"
-import { Loader2 } from "lucide-react"
+import { Loader2, Plus, Trash2 } from "lucide-react"
 import { useEffect, useState } from "react"
 
 const toISO = (value: string) => (value ? dayjs(value).toISOString() : null)
+
+interface CustomerVoiceForm {
+    id?: number
+    labourId: string
+    customerVoiceDescription: string
+    observation: string
+}
+
+const emptyCustomerVoice: CustomerVoiceForm = {
+    labourId: "",
+    customerVoiceDescription: "",
+    observation: "",
+}
 
 interface JobCardCreateFormProps {
     onCancel: () => void
@@ -71,11 +87,13 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
     const [serviceTypes, setServiceTypes] = useState<any[]>([])
     const [repairOrders, setRepairOrders] = useState<any[]>([])
     const [employees, setEmployees] = useState<any[]>([])
+    const [labours, setLabours] = useState<labourListType[]>([])
+    const [customerVoices, setCustomerVoices] = useState<CustomerVoiceForm[]>([{ ...emptyCustomerVoice }])
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [branchRes, customerRes, vehicleRes, categoryRes, typeRes, repairRes, employeeRes] = await Promise.all([
+                const [branchRes, customerRes, vehicleRes, categoryRes, typeRes, repairRes, employeeRes, labourRes] = await Promise.all([
                     getTenantBranchList(0, 100),
                     getCustomerList(0, 100),
                     getVehicleList(0, 100),
@@ -83,6 +101,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                     getServiceTypeList(0, 100),
                     getRepairOrderList(),
                     getEmployeeList(0, 100),
+                    getLabourList(0, 100),
                 ])
                 if (branchRes?.success) setBranches(branchRes?.data || [])
                 if (customerRes?.success) setCustomers(customerRes?.data || [])
@@ -91,12 +110,31 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                 if (typeRes?.success) setServiceTypes(typeRes?.data || [])
                 if (repairRes?.success) setRepairOrders(repairRes?.data || [])
                 if (employeeRes?.success) setEmployees(employeeRes?.data || [])
+                if (labourRes?.success) setLabours(labourRes?.data || [])
             } catch {
                 // ignore
             }
         }
         fetchData()
     }, [])
+
+    const handleCustomerVoiceChange = (
+        index: number,
+        field: keyof CustomerVoiceForm,
+        value: string
+    ) => {
+        setCustomerVoices((prev) =>
+            prev.map((voice, i) => (i === index ? { ...voice, [field]: value } : voice))
+        )
+    }
+
+    const addCustomerVoice = () => {
+        setCustomerVoices((prev) => [...prev, { ...emptyCustomerVoice }])
+    }
+
+    const removeCustomerVoice = (index: number) => {
+        setCustomerVoices((prev) => prev.filter((_, i) => i !== index))
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -109,6 +147,19 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
             toast.add({
                 type: 'error',
                 description: 'Please fill all the required fields'
+            })
+            return
+        }
+        const filledVoices = customerVoices.filter(
+            (voice) => voice.labourId || voice.customerVoiceDescription || voice.observation
+        )
+        const invalidVoice = filledVoices.some(
+            (voice) => !voice.labourId || !voice.customerVoiceDescription
+        )
+        if (invalidVoice) {
+            toast.add({
+                type: 'error',
+                description: 'Please select an action to be taken and enter the customer voice description'
             })
             return
         }
@@ -137,6 +188,11 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                 breakdownEndDateTime: toISO(formData.breakdownEndDateTime),
                 dealerVanStartKm: formData.dealerVanStartKm ? Number(formData.dealerVanStartKm) : null,
                 dealerVanEndKm: formData.dealerVanEndKm ? Number(formData.dealerVanEndKm) : null,
+                customerVoices: filledVoices.map((voice) => ({
+                    labourId: Number(voice.labourId),
+                    customerVoiceDescription: voice.customerVoiceDescription,
+                    observation: voice.observation || "",
+                })),
             }
             const data = await createJobCard(payload)
             if (data?.success) {
@@ -145,6 +201,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                     description: data?.message
                 })
                 setFormData(initialFormData)
+                setCustomerVoices([{ ...emptyCustomerVoice }])
                 setTimeout(() => {
                     onCreated?.()
                 }, 1500)
@@ -470,6 +527,82 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                             </Field>
                         </div>
                     )}
+                </div>
+                <div>
+                    <div className="mb-4 flex items-center justify-between">
+                        <div>
+                            <h3 className="text-sm font-semibold text-foreground">Customer Voice</h3>
+                            <p className="text-sm text-muted-foreground">Record what the customer reported along with the observation and action to be taken.</p>
+                        </div>
+                        <Button type="button" variant="outline" size="sm" className="gap-2" onClick={addCustomerVoice}>
+                            <Plus className="h-4 w-4" />
+                            Add Voice
+                        </Button>
+                    </div>
+                    <div className="space-y-4">
+                        {customerVoices.map((voice, index) => (
+                            <div key={index} className="rounded-lg border p-4">
+                                <div className="mb-3 flex items-center justify-between">
+                                    <span className="text-sm font-medium text-muted-foreground">Voice #{index + 1}</span>
+                                    {customerVoices.length > 1 && (
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8 text-destructive"
+                                            aria-label={`Remove voice ${index + 1}`}
+                                            onClick={() => removeCustomerVoice(index)}
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    )}
+                                </div>
+                                <div className="grid gap-4 sm:grid-cols-2">
+                                    <Field className="sm:col-span-2">
+                                        <FieldLabel>Action To Be Taken <span className="text-red-500">*</span></FieldLabel>
+                                        <FieldContent>
+                                            <Select
+                                                items={labours.map((l) => ({ value: String(l.id), label: l.labourName }))}
+                                                value={voice.labourId || null}
+                                                onValueChange={(value) => handleCustomerVoiceChange(index, "labourId", value ?? "")}
+                                            >
+                                                <SelectTrigger className="w-full">
+                                                    <SelectValue placeholder="Select labour" />
+                                                </SelectTrigger>
+                                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                                    {labours.map((l) => (
+                                                        <SelectItem key={l.id} value={String(l.id)}>
+                                                            {l.labourName}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </FieldContent>
+                                    </Field>
+                                    <Field>
+                                        <FieldLabel>Customer Voice Description <span className="text-red-500">*</span></FieldLabel>
+                                        <FieldContent>
+                                            <Textarea
+                                                placeholder="Describe what the customer reported"
+                                                value={voice.customerVoiceDescription}
+                                                onChange={(e) => handleCustomerVoiceChange(index, "customerVoiceDescription", e.target.value)}
+                                            />
+                                        </FieldContent>
+                                    </Field>
+                                    <Field>
+                                        <FieldLabel>Observation</FieldLabel>
+                                        <FieldContent>
+                                            <Textarea
+                                                placeholder="Observation noted"
+                                                value={voice.observation}
+                                                onChange={(e) => handleCustomerVoiceChange(index, "observation", e.target.value)}
+                                            />
+                                        </FieldContent>
+                                    </Field>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             <div className="flex justify-end gap-3 border-t border-slate-200 pt-6 m-5">

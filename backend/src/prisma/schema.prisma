@@ -481,7 +481,7 @@ model LabourMaster {
 
   labourCode        String
   labourName        String
-  labourDescription String
+  labourDescription String?
   standardHours     Decimal @db.Decimal(6, 2)
   rate              Decimal @db.Decimal(10, 2)
 
