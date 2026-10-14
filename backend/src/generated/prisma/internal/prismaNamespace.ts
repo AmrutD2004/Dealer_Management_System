@@ -410,7 +410,9 @@ export const ModelName = {
   RepairOrderTypeMaster: 'RepairOrderTypeMaster',
   Customer: 'Customer',
   Vehicle: 'Vehicle',
-  JobCard: 'JobCard'
+  JobCard: 'JobCard',
+  JobCardCustomerVoice: 'JobCardCustomerVoice',
+  LabourMaster: 'LabourMaster'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -426,7 +428,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard"
+    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1466,6 +1468,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    JobCardCustomerVoice: {
+      payload: Prisma.$JobCardCustomerVoicePayload<ExtArgs>
+      fields: Prisma.JobCardCustomerVoiceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JobCardCustomerVoiceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JobCardCustomerVoiceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>
+        }
+        findFirst: {
+          args: Prisma.JobCardCustomerVoiceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JobCardCustomerVoiceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>
+        }
+        findMany: {
+          args: Prisma.JobCardCustomerVoiceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>[]
+        }
+        create: {
+          args: Prisma.JobCardCustomerVoiceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>
+        }
+        createMany: {
+          args: Prisma.JobCardCustomerVoiceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JobCardCustomerVoiceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>[]
+        }
+        delete: {
+          args: Prisma.JobCardCustomerVoiceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>
+        }
+        update: {
+          args: Prisma.JobCardCustomerVoiceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>
+        }
+        deleteMany: {
+          args: Prisma.JobCardCustomerVoiceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JobCardCustomerVoiceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JobCardCustomerVoiceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>[]
+        }
+        upsert: {
+          args: Prisma.JobCardCustomerVoiceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardCustomerVoicePayload>
+        }
+        aggregate: {
+          args: Prisma.JobCardCustomerVoiceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJobCardCustomerVoice>
+        }
+        groupBy: {
+          args: Prisma.JobCardCustomerVoiceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobCardCustomerVoiceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JobCardCustomerVoiceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobCardCustomerVoiceCountAggregateOutputType> | number
+        }
+      }
+    }
+    LabourMaster: {
+      payload: Prisma.$LabourMasterPayload<ExtArgs>
+      fields: Prisma.LabourMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LabourMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LabourMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.LabourMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LabourMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>
+        }
+        findMany: {
+          args: Prisma.LabourMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>[]
+        }
+        create: {
+          args: Prisma.LabourMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>
+        }
+        createMany: {
+          args: Prisma.LabourMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LabourMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.LabourMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>
+        }
+        update: {
+          args: Prisma.LabourMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.LabourMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LabourMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LabourMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.LabourMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LabourMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.LabourMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLabourMaster>
+        }
+        groupBy: {
+          args: Prisma.LabourMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LabourMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LabourMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LabourMasterCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1771,6 +1921,35 @@ export const JobCardScalarFieldEnum = {
 } as const
 
 export type JobCardScalarFieldEnum = (typeof JobCardScalarFieldEnum)[keyof typeof JobCardScalarFieldEnum]
+
+
+export const JobCardCustomerVoiceScalarFieldEnum = {
+  id: 'id',
+  jobCardId: 'jobCardId',
+  customerVoiceDescription: 'customerVoiceDescription',
+  observation: 'observation',
+  actionToBeTaken: 'actionToBeTaken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobCardCustomerVoiceScalarFieldEnum = (typeof JobCardCustomerVoiceScalarFieldEnum)[keyof typeof JobCardCustomerVoiceScalarFieldEnum]
+
+
+export const LabourMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  labourCode: 'labourCode',
+  labourName: 'labourName',
+  labourDescription: 'labourDescription',
+  standardHours: 'standardHours',
+  rate: 'rate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LabourMasterScalarFieldEnum = (typeof LabourMasterScalarFieldEnum)[keyof typeof LabourMasterScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2142,6 +2321,8 @@ export type GlobalOmitConfig = {
   customer?: Prisma.CustomerOmit
   vehicle?: Prisma.VehicleOmit
   jobCard?: Prisma.JobCardOmit
+  jobCardCustomerVoice?: Prisma.JobCardCustomerVoiceOmit
+  labourMaster?: Prisma.LabourMasterOmit
 }
 
 /* Types for Logging */

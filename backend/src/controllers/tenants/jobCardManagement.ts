@@ -2,6 +2,12 @@ import { Request, Response } from "express";
 import { prisma } from "../../prisma/lib/prisma";
 import GetFiscalYear from "get-fiscal-year";
 import dayjs from 'dayjs'
+interface custVoices {
+    id?: number,
+    labourId: number,
+    customerVoiceDescription: string,
+    observation: string
+}
 export const createJobCard = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
     if (!id || !tenantId) {
@@ -10,9 +16,9 @@ export const createJobCard = async (req: Request, res: Response) => {
             message: 'Not Authorized'
         })
     }
-    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus } = req.body
+    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, customerVoices } = req.body
 
-    if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus) {
+    if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus || customerVoices == null) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -63,42 +69,57 @@ export const createJobCard = async (req: Request, res: Response) => {
                 message: "An open job card already exists for this vehicle.",
             })
         }
-        const data = await prisma.jobCard.create({
-            data: {
-                branchId: Number(branchId),
-                breakdownDateTime: breakdownDateTime || null,
-                breakdownEndDateTime: breakdownEndDateTime || null,
-                breakdownPersonAttended: breakdownPersonAttended || null,
-                breakdownStartDateTime: breakdownStartDateTime || null,
-                closedAt: closedAt || null,
-                createdBy: Number(id),
-                currentKmReading: currentKmReading,
-                customerId: Number(customerId),
-                dealerVanEndKm: dealerVanEndKm || null,
-                dealerVanStartKm: dealerVanStartKm || null,
-                driverName: driverName || null,
-                driverMobileNo: driverMobileNo || null,
-                estimateCloseAt: estimateCloseJobcardAt,
-                isBreakdown: isBreakDown,
-                isRevisit: isRevisit,
-                jobCardNo: jobCardNo,
-                previousKmReading: previousKmReading,
-                repairOrderTypeId: Number(repairOrderTypeId),
-                revisedEstimateCloseAt: null,
-                serviceCategoryId: Number(serviceCategoryId),
-                serviceTypeId: Number(serviceTypeId),
-                status: 'OPEN',
-                supervisorId: Number(supervisorId) || null,
-                technicianId: Number(technicianId) || null,
-                tenantId: Number(tenantId),
-                vehicleId: Number(vehicleId),
-                vehicleStatus: vehicleStatus
+        const result = await prisma.$transaction(async (tx) => {
+            //Creating Job card
+            const jobcard = await tx.jobCard.create({
+                data: {
+                    branchId: Number(branchId),
+                    breakdownDateTime: breakdownDateTime || null,
+                    breakdownEndDateTime: breakdownEndDateTime || null,
+                    breakdownPersonAttended: breakdownPersonAttended || null,
+                    breakdownStartDateTime: breakdownStartDateTime || null,
+                    closedAt: closedAt || null,
+                    createdBy: Number(id),
+                    currentKmReading: currentKmReading,
+                    customerId: Number(customerId),
+                    dealerVanEndKm: dealerVanEndKm || null,
+                    dealerVanStartKm: dealerVanStartKm || null,
+                    driverName: driverName || null,
+                    driverMobileNo: driverMobileNo || null,
+                    estimateCloseAt: estimateCloseJobcardAt,
+                    isBreakdown: isBreakDown,
+                    isRevisit: isRevisit,
+                    jobCardNo: jobCardNo,
+                    previousKmReading: previousKmReading,
+                    repairOrderTypeId: Number(repairOrderTypeId),
+                    revisedEstimateCloseAt: null,
+                    serviceCategoryId: Number(serviceCategoryId),
+                    serviceTypeId: Number(serviceTypeId),
+                    status: 'OPEN',
+                    supervisorId: Number(supervisorId) || null,
+                    technicianId: Number(technicianId) || null,
+                    tenantId: Number(tenantId),
+                    vehicleId: Number(vehicleId),
+                    vehicleStatus: vehicleStatus
 
+                }
+            })
+            const jobcardcustvoice = await tx.jobCardCustomerVoice.createMany({
+                data: customerVoices.map((voices: custVoices) => ({
+                    actionToBeTaken: Number(voices.labourId),
+                    customerVoiceDescription: voices.customerVoiceDescription,
+                    observation: voices.observation,
+                    jobCardId: Number(jobcard.id)
+                }))
+            })
+            return {
+                jobcard,
+                jobcardcustvoice
             }
         })
         return res.status(201).json({
             success: true,
-            message: `Job card created with number ${data.jobCardNo}`
+            message: `Job card created with number ${result.jobcard.jobCardNo}`
         })
     } catch (err) {
         return res.status(500).json({
@@ -124,9 +145,9 @@ export const updateJobCard = async (req: Request, res: Response) => {
             message: 'job card is required'
         })
     }
-    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, revisedEstimateCloseAt } = req.body
+    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, revisedEstimateCloseAt, customerVoices } = req.body
 
-    if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus) {
+    if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus || customerVoices == null) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -146,45 +167,64 @@ export const updateJobCard = async (req: Request, res: Response) => {
                 message: "job card not exists.",
             })
         }
-        const data = await prisma.jobCard.update({
-            data: {
-                branchId: Number(branchId),
-                breakdownDateTime: breakdownDateTime || null,
-                breakdownEndDateTime: breakdownEndDateTime || null,
-                breakdownPersonAttended: breakdownPersonAttended || null,
-                breakdownStartDateTime: breakdownStartDateTime || null,
-                closedAt: closedAt || null,
-                createdBy: Number(id),
-                currentKmReading: currentKmReading,
-                customerId: Number(customerId),
-                dealerVanEndKm: dealerVanEndKm || null,
-                dealerVanStartKm: dealerVanStartKm || null,
-                driverName: driverName || null,
-                driverMobileNo: driverMobileNo || null,
-                estimateCloseAt: estimateCloseJobcardAt,
-                isBreakdown: isBreakDown,
-                isRevisit: isRevisit,
-                previousKmReading: previousKmReading,
-                repairOrderTypeId: Number(repairOrderTypeId),
-                revisedEstimateCloseAt: revisedEstimateCloseAt,
-                serviceCategoryId: Number(serviceCategoryId),
-                serviceTypeId: Number(serviceTypeId),
-                status: 'OPEN',
-                supervisorId: Number(supervisorId) || null,
-                technicianId: Number(technicianId) || null,
-                tenantId: Number(tenantId),
-                vehicleId: Number(vehicleId),
-                vehicleStatus: vehicleStatus,
+        const result = await prisma.$transaction(async (tx) => {
+            const jobcard = await prisma.jobCard.update({
+                data: {
+                    branchId: Number(branchId),
+                    breakdownDateTime: breakdownDateTime || null,
+                    breakdownEndDateTime: breakdownEndDateTime || null,
+                    breakdownPersonAttended: breakdownPersonAttended || null,
+                    breakdownStartDateTime: breakdownStartDateTime || null,
+                    closedAt: closedAt || null,
+                    createdBy: Number(id),
+                    currentKmReading: currentKmReading,
+                    customerId: Number(customerId),
+                    dealerVanEndKm: dealerVanEndKm || null,
+                    dealerVanStartKm: dealerVanStartKm || null,
+                    driverName: driverName || null,
+                    driverMobileNo: driverMobileNo || null,
+                    estimateCloseAt: estimateCloseJobcardAt,
+                    isBreakdown: isBreakDown,
+                    isRevisit: isRevisit,
+                    previousKmReading: previousKmReading,
+                    repairOrderTypeId: Number(repairOrderTypeId),
+                    revisedEstimateCloseAt: revisedEstimateCloseAt,
+                    serviceCategoryId: Number(serviceCategoryId),
+                    serviceTypeId: Number(serviceTypeId),
+                    status: 'OPEN',
+                    supervisorId: Number(supervisorId) || null,
+                    technicianId: Number(technicianId) || null,
+                    tenantId: Number(tenantId),
+                    vehicleId: Number(vehicleId),
+                    vehicleStatus: vehicleStatus,
 
-            },
-            where: {
-                id: Number(jobCardId),
-                tenantId: Number(tenantId)
+                },
+                where: {
+                    id: Number(jobCardId),
+                    tenantId: Number(tenantId)
+                }
+            })
+            await Promise.all(
+                customerVoices.map((voice: custVoices) => (
+                    tx.jobCardCustomerVoice.update({
+                        where: {
+                            id: Number(voice.id)
+                        },
+                        data: {
+                            actionToBeTaken: Number(voice.labourId),
+                            customerVoiceDescription: voice.customerVoiceDescription,
+                            observation: voice.observation
+                        }
+                    })
+                ))
+            )
+            return {
+                jobcard
             }
         })
         return res.status(201).json({
             success: true,
-            message: `Job card updated with number ${data.jobCardNo}`
+            message: `Job card updated with number ${result.jobcard.jobCardNo}`
         })
     } catch (err) {
         return res.status(500).json({
@@ -232,7 +272,14 @@ export const getJobcardDetails = async (req: Request, res: Response) => {
                 supervisor: true,
                 technician: true,
                 createdByUser: true,
-                branch: true
+                branch: true,
+                jobCardCustomerVoices: {
+                    select: {
+                        labour: true,
+                        customerVoiceDescription: true,
+                        observation: true
+                    }
+                }
             }
         })
         if (!isJobCardExists) {
@@ -293,7 +340,14 @@ export const getListOfJobCard = async (req: Request, res: Response) => {
                     supervisor: true,
                     technician: true,
                     createdByUser: true,
-                    branch: true
+                    branch: true,
+                    jobCardCustomerVoices: {
+                        select: {
+                            labour: true,
+                            customerVoiceDescription: true,
+                            observation: true
+                        }
+                    }
                 }
             })
         } else {
@@ -315,7 +369,14 @@ export const getListOfJobCard = async (req: Request, res: Response) => {
                     supervisor: true,
                     technician: true,
                     createdByUser: true,
-                    branch: true
+                    branch: true,
+                    jobCardCustomerVoices: {
+                        select: {
+                            labour: true,
+                            customerVoiceDescription: true,
+                            observation: true
+                        }
+                    }
                 }
             })
         }

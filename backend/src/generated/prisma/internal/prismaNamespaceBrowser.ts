@@ -64,7 +64,9 @@ export const ModelName = {
   RepairOrderTypeMaster: 'RepairOrderTypeMaster',
   Customer: 'Customer',
   Vehicle: 'Vehicle',
-  JobCard: 'JobCard'
+  JobCard: 'JobCard',
+  JobCardCustomerVoice: 'JobCardCustomerVoice',
+  LabourMaster: 'LabourMaster'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -349,6 +351,35 @@ export const JobCardScalarFieldEnum = {
 } as const
 
 export type JobCardScalarFieldEnum = (typeof JobCardScalarFieldEnum)[keyof typeof JobCardScalarFieldEnum]
+
+
+export const JobCardCustomerVoiceScalarFieldEnum = {
+  id: 'id',
+  jobCardId: 'jobCardId',
+  customerVoiceDescription: 'customerVoiceDescription',
+  observation: 'observation',
+  actionToBeTaken: 'actionToBeTaken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobCardCustomerVoiceScalarFieldEnum = (typeof JobCardCustomerVoiceScalarFieldEnum)[keyof typeof JobCardCustomerVoiceScalarFieldEnum]
+
+
+export const LabourMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  labourCode: 'labourCode',
+  labourName: 'labourName',
+  labourDescription: 'labourDescription',
+  standardHours: 'standardHours',
+  rate: 'rate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LabourMasterScalarFieldEnum = (typeof LabourMasterScalarFieldEnum)[keyof typeof LabourMasterScalarFieldEnum]
 
 
 export const SortOrder = {
