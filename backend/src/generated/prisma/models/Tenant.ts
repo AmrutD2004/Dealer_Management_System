@@ -328,6 +328,7 @@ export type TenantWhereInput = {
   vehicles?: Prisma.VehicleListRelationFilter
   jobCards?: Prisma.JobCardListRelationFilter
   labour?: Prisma.LabourMasterListRelationFilter
+  dealerBayMasters?: Prisma.DealerBayMasterListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -360,6 +361,7 @@ export type TenantOrderByWithRelationInput = {
   vehicles?: Prisma.VehicleOrderByRelationAggregateInput
   jobCards?: Prisma.JobCardOrderByRelationAggregateInput
   labour?: Prisma.LabourMasterOrderByRelationAggregateInput
+  dealerBayMasters?: Prisma.DealerBayMasterOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -395,6 +397,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   vehicles?: Prisma.VehicleListRelationFilter
   jobCards?: Prisma.JobCardListRelationFilter
   labour?: Prisma.LabourMasterListRelationFilter
+  dealerBayMasters?: Prisma.DealerBayMasterListRelationFilter
 }, "id" | "tenantCode" | "email">
 
 export type TenantOrderByWithAggregationInput = {
@@ -473,6 +476,7 @@ export type TenantCreateInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
@@ -504,6 +508,7 @@ export type TenantUncheckedCreateInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -534,6 +539,7 @@ export type TenantUpdateInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -565,6 +571,7 @@ export type TenantUncheckedUpdateInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
@@ -918,6 +925,20 @@ export type TenantUpdateOneRequiredWithoutLabourNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutLabourInput, Prisma.TenantUpdateWithoutLabourInput>, Prisma.TenantUncheckedUpdateWithoutLabourInput>
 }
 
+export type TenantCreateNestedOneWithoutDealerBayMastersInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutDealerBayMastersInput, Prisma.TenantUncheckedCreateWithoutDealerBayMastersInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutDealerBayMastersInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutDealerBayMastersNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutDealerBayMastersInput, Prisma.TenantUncheckedCreateWithoutDealerBayMastersInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutDealerBayMastersInput
+  upsert?: Prisma.TenantUpsertWithoutDealerBayMastersInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutDealerBayMastersInput, Prisma.TenantUpdateWithoutDealerBayMastersInput>, Prisma.TenantUncheckedUpdateWithoutDealerBayMastersInput>
+}
+
 export type TenantCreateWithoutCreatedByUserInput = {
   tenantCode: string
   tenantName: string
@@ -945,6 +966,7 @@ export type TenantCreateWithoutCreatedByUserInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCreatedByUserInput = {
@@ -975,6 +997,7 @@ export type TenantUncheckedCreateWithoutCreatedByUserInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCreatedByUserInput = {
@@ -1053,6 +1076,7 @@ export type TenantCreateWithoutBranchesInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutBranchesInput = {
@@ -1083,6 +1107,7 @@ export type TenantUncheckedCreateWithoutBranchesInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutBranchesInput = {
@@ -1128,6 +1153,7 @@ export type TenantUpdateWithoutBranchesInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutBranchesInput = {
@@ -1158,6 +1184,7 @@ export type TenantUncheckedUpdateWithoutBranchesInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutUsersInput = {
@@ -1187,6 +1214,7 @@ export type TenantCreateWithoutUsersInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsersInput = {
@@ -1217,6 +1245,7 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsersInput = {
@@ -1262,6 +1291,7 @@ export type TenantUpdateWithoutUsersInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -1292,6 +1322,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutEmployeeDesignationsInput = {
@@ -1321,6 +1352,7 @@ export type TenantCreateWithoutEmployeeDesignationsInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutEmployeeDesignationsInput = {
@@ -1351,6 +1383,7 @@ export type TenantUncheckedCreateWithoutEmployeeDesignationsInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutEmployeeDesignationsInput = {
@@ -1396,6 +1429,7 @@ export type TenantUpdateWithoutEmployeeDesignationsInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutEmployeeDesignationsInput = {
@@ -1426,6 +1460,7 @@ export type TenantUncheckedUpdateWithoutEmployeeDesignationsInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutRolesInput = {
@@ -1455,6 +1490,7 @@ export type TenantCreateWithoutRolesInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRolesInput = {
@@ -1485,6 +1521,7 @@ export type TenantUncheckedCreateWithoutRolesInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRolesInput = {
@@ -1530,6 +1567,7 @@ export type TenantUpdateWithoutRolesInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRolesInput = {
@@ -1560,6 +1598,7 @@ export type TenantUncheckedUpdateWithoutRolesInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceCategoryMastersInput = {
@@ -1589,6 +1628,7 @@ export type TenantCreateWithoutServiceCategoryMastersInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceCategoryMastersInput = {
@@ -1619,6 +1659,7 @@ export type TenantUncheckedCreateWithoutServiceCategoryMastersInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceCategoryMastersInput = {
@@ -1664,6 +1705,7 @@ export type TenantUpdateWithoutServiceCategoryMastersInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceCategoryMastersInput = {
@@ -1694,6 +1736,7 @@ export type TenantUncheckedUpdateWithoutServiceCategoryMastersInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceTypesInput = {
@@ -1723,6 +1766,7 @@ export type TenantCreateWithoutServiceTypesInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceTypesInput = {
@@ -1753,6 +1797,7 @@ export type TenantUncheckedCreateWithoutServiceTypesInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceTypesInput = {
@@ -1798,6 +1843,7 @@ export type TenantUpdateWithoutServiceTypesInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceTypesInput = {
@@ -1828,6 +1874,7 @@ export type TenantUncheckedUpdateWithoutServiceTypesInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutRepairOrderTypeInput = {
@@ -1857,6 +1904,7 @@ export type TenantCreateWithoutRepairOrderTypeInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRepairOrderTypeInput = {
@@ -1887,6 +1935,7 @@ export type TenantUncheckedCreateWithoutRepairOrderTypeInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRepairOrderTypeInput = {
@@ -1932,6 +1981,7 @@ export type TenantUpdateWithoutRepairOrderTypeInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRepairOrderTypeInput = {
@@ -1962,6 +2012,7 @@ export type TenantUncheckedUpdateWithoutRepairOrderTypeInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutCustomersInput = {
@@ -1991,6 +2042,7 @@ export type TenantCreateWithoutCustomersInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCustomersInput = {
@@ -2021,6 +2073,7 @@ export type TenantUncheckedCreateWithoutCustomersInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCustomersInput = {
@@ -2066,6 +2119,7 @@ export type TenantUpdateWithoutCustomersInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCustomersInput = {
@@ -2096,6 +2150,7 @@ export type TenantUncheckedUpdateWithoutCustomersInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutVehiclesInput = {
@@ -2125,6 +2180,7 @@ export type TenantCreateWithoutVehiclesInput = {
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutVehiclesInput = {
@@ -2155,6 +2211,7 @@ export type TenantUncheckedCreateWithoutVehiclesInput = {
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutVehiclesInput = {
@@ -2200,6 +2257,7 @@ export type TenantUpdateWithoutVehiclesInput = {
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutVehiclesInput = {
@@ -2230,6 +2288,7 @@ export type TenantUncheckedUpdateWithoutVehiclesInput = {
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutJobCardsInput = {
@@ -2259,6 +2318,7 @@ export type TenantCreateWithoutJobCardsInput = {
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutJobCardsInput = {
@@ -2289,6 +2349,7 @@ export type TenantUncheckedCreateWithoutJobCardsInput = {
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutJobCardsInput = {
@@ -2334,6 +2395,7 @@ export type TenantUpdateWithoutJobCardsInput = {
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutJobCardsInput = {
@@ -2364,6 +2426,7 @@ export type TenantUncheckedUpdateWithoutJobCardsInput = {
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutLabourInput = {
@@ -2393,6 +2456,7 @@ export type TenantCreateWithoutLabourInput = {
   customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutLabourInput = {
@@ -2423,6 +2487,7 @@ export type TenantUncheckedCreateWithoutLabourInput = {
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutLabourInput = {
@@ -2468,6 +2533,7 @@ export type TenantUpdateWithoutLabourInput = {
   customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutLabourInput = {
@@ -2498,6 +2564,145 @@ export type TenantUncheckedUpdateWithoutLabourInput = {
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutDealerBayMastersInput = {
+  tenantCode: string
+  tenantName: string
+  email: string
+  phone?: string | null
+  gstNumber?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  subscriptionPlan?: $Enums.SubscriptionPlan | null
+  subscriptionStatus?: $Enums.SubscriptionStatus | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdByUser: Prisma.PlatformUserCreateNestedOneWithoutCreatedTenantsInput
+  users?: Prisma.UsersCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  employeeDesignations?: Prisma.EmployeeDesignationCreateNestedManyWithoutTenantInput
+  branches?: Prisma.BranchCreateNestedManyWithoutTenantInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
+  serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
+  vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
+  labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutDealerBayMastersInput = {
+  id?: number
+  tenantCode: string
+  tenantName: string
+  email: string
+  phone?: string | null
+  gstNumber?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  subscriptionPlan?: $Enums.SubscriptionPlan | null
+  subscriptionStatus?: $Enums.SubscriptionStatus | null
+  isActive?: boolean
+  createdBy: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UsersUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  employeeDesignations?: Prisma.EmployeeDesignationUncheckedCreateNestedManyWithoutTenantInput
+  branches?: Prisma.BranchUncheckedCreateNestedManyWithoutTenantInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
+  vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
+  labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutDealerBayMastersInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutDealerBayMastersInput, Prisma.TenantUncheckedCreateWithoutDealerBayMastersInput>
+}
+
+export type TenantUpsertWithoutDealerBayMastersInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutDealerBayMastersInput, Prisma.TenantUncheckedUpdateWithoutDealerBayMastersInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutDealerBayMastersInput, Prisma.TenantUncheckedCreateWithoutDealerBayMastersInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutDealerBayMastersInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutDealerBayMastersInput, Prisma.TenantUncheckedUpdateWithoutDealerBayMastersInput>
+}
+
+export type TenantUpdateWithoutDealerBayMastersInput = {
+  tenantCode?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionPlan?: Prisma.NullableEnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan | null
+  subscriptionStatus?: Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdByUser?: Prisma.PlatformUserUpdateOneRequiredWithoutCreatedTenantsNestedInput
+  users?: Prisma.UsersUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  employeeDesignations?: Prisma.EmployeeDesignationUpdateManyWithoutTenantNestedInput
+  branches?: Prisma.BranchUpdateManyWithoutTenantNestedInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
+  vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
+  labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutDealerBayMastersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantCode?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionPlan?: Prisma.NullableEnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan | null
+  subscriptionStatus?: Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UsersUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  employeeDesignations?: Prisma.EmployeeDesignationUncheckedUpdateManyWithoutTenantNestedInput
+  branches?: Prisma.BranchUncheckedUpdateManyWithoutTenantNestedInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
+  vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
+  labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyCreatedByUserInput = {
@@ -2546,6 +2751,7 @@ export type TenantUpdateWithoutCreatedByUserInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCreatedByUserInput = {
@@ -2576,6 +2782,7 @@ export type TenantUncheckedUpdateWithoutCreatedByUserInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
   labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -2614,6 +2821,7 @@ export type TenantCountOutputType = {
   vehicles: number
   jobCards: number
   labour: number
+  dealerBayMasters: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2628,6 +2836,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   vehicles?: boolean | TenantCountOutputTypeCountVehiclesArgs
   jobCards?: boolean | TenantCountOutputTypeCountJobCardsArgs
   labour?: boolean | TenantCountOutputTypeCountLabourArgs
+  dealerBayMasters?: boolean | TenantCountOutputTypeCountDealerBayMastersArgs
 }
 
 /**
@@ -2717,6 +2926,13 @@ export type TenantCountOutputTypeCountLabourArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.LabourMasterWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountDealerBayMastersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DealerBayMasterWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2748,6 +2964,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   vehicles?: boolean | Prisma.Tenant$vehiclesArgs<ExtArgs>
   jobCards?: boolean | Prisma.Tenant$jobCardsArgs<ExtArgs>
   labour?: boolean | Prisma.Tenant$labourArgs<ExtArgs>
+  dealerBayMasters?: boolean | Prisma.Tenant$dealerBayMastersArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -2827,6 +3044,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   vehicles?: boolean | Prisma.Tenant$vehiclesArgs<ExtArgs>
   jobCards?: boolean | Prisma.Tenant$jobCardsArgs<ExtArgs>
   labour?: boolean | Prisma.Tenant$labourArgs<ExtArgs>
+  dealerBayMasters?: boolean | Prisma.Tenant$dealerBayMastersArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2851,6 +3069,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     vehicles: Prisma.$VehiclePayload<ExtArgs>[]
     jobCards: Prisma.$JobCardPayload<ExtArgs>[]
     labour: Prisma.$LabourMasterPayload<ExtArgs>[]
+    dealerBayMasters: Prisma.$DealerBayMasterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -3276,6 +3495,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   vehicles<T extends Prisma.Tenant$vehiclesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$vehiclesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   jobCards<T extends Prisma.Tenant$jobCardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$jobCardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   labour<T extends Prisma.Tenant$labourArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$labourArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LabourMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dealerBayMasters<T extends Prisma.Tenant$dealerBayMastersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$dealerBayMastersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DealerBayMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3984,6 +4204,30 @@ export type Tenant$labourArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.LabourMasterScalarFieldEnum | Prisma.LabourMasterScalarFieldEnum[]
+}
+
+/**
+ * Tenant.dealerBayMasters
+ */
+export type Tenant$dealerBayMastersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DealerBayMaster
+   */
+  select?: Prisma.DealerBayMasterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DealerBayMaster
+   */
+  omit?: Prisma.DealerBayMasterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DealerBayMasterInclude<ExtArgs> | null
+  where?: Prisma.DealerBayMasterWhereInput
+  orderBy?: Prisma.DealerBayMasterOrderByWithRelationInput | Prisma.DealerBayMasterOrderByWithRelationInput[]
+  cursor?: Prisma.DealerBayMasterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DealerBayMasterScalarFieldEnum | Prisma.DealerBayMasterScalarFieldEnum[]
 }
 
 /**

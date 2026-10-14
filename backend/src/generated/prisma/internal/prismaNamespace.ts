@@ -412,7 +412,9 @@ export const ModelName = {
   Vehicle: 'Vehicle',
   JobCard: 'JobCard',
   JobCardCustomerVoice: 'JobCardCustomerVoice',
-  LabourMaster: 'LabourMaster'
+  LabourMaster: 'LabourMaster',
+  DealerBayMaster: 'DealerBayMaster',
+  JobCardAllocation: 'JobCardAllocation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -428,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster"
+    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1616,6 +1618,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DealerBayMaster: {
+      payload: Prisma.$DealerBayMasterPayload<ExtArgs>
+      fields: Prisma.DealerBayMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DealerBayMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DealerBayMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.DealerBayMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DealerBayMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>
+        }
+        findMany: {
+          args: Prisma.DealerBayMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>[]
+        }
+        create: {
+          args: Prisma.DealerBayMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>
+        }
+        createMany: {
+          args: Prisma.DealerBayMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DealerBayMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.DealerBayMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>
+        }
+        update: {
+          args: Prisma.DealerBayMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.DealerBayMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DealerBayMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DealerBayMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.DealerBayMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DealerBayMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.DealerBayMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDealerBayMaster>
+        }
+        groupBy: {
+          args: Prisma.DealerBayMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DealerBayMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DealerBayMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DealerBayMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    JobCardAllocation: {
+      payload: Prisma.$JobCardAllocationPayload<ExtArgs>
+      fields: Prisma.JobCardAllocationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JobCardAllocationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JobCardAllocationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>
+        }
+        findFirst: {
+          args: Prisma.JobCardAllocationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JobCardAllocationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>
+        }
+        findMany: {
+          args: Prisma.JobCardAllocationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>[]
+        }
+        create: {
+          args: Prisma.JobCardAllocationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>
+        }
+        createMany: {
+          args: Prisma.JobCardAllocationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JobCardAllocationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>[]
+        }
+        delete: {
+          args: Prisma.JobCardAllocationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>
+        }
+        update: {
+          args: Prisma.JobCardAllocationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>
+        }
+        deleteMany: {
+          args: Prisma.JobCardAllocationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JobCardAllocationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JobCardAllocationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>[]
+        }
+        upsert: {
+          args: Prisma.JobCardAllocationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobCardAllocationPayload>
+        }
+        aggregate: {
+          args: Prisma.JobCardAllocationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJobCardAllocation>
+        }
+        groupBy: {
+          args: Prisma.JobCardAllocationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobCardAllocationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JobCardAllocationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobCardAllocationCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1950,6 +2100,35 @@ export const LabourMasterScalarFieldEnum = {
 } as const
 
 export type LabourMasterScalarFieldEnum = (typeof LabourMasterScalarFieldEnum)[keyof typeof LabourMasterScalarFieldEnum]
+
+
+export const DealerBayMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  bayCode: 'bayCode',
+  bayName: 'bayName',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DealerBayMasterScalarFieldEnum = (typeof DealerBayMasterScalarFieldEnum)[keyof typeof DealerBayMasterScalarFieldEnum]
+
+
+export const JobCardAllocationScalarFieldEnum = {
+  id: 'id',
+  jobCardId: 'jobCardId',
+  mechanicId: 'mechanicId',
+  bayId: 'bayId',
+  bayInDateTime: 'bayInDateTime',
+  bayOutTime: 'bayOutTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobCardAllocationScalarFieldEnum = (typeof JobCardAllocationScalarFieldEnum)[keyof typeof JobCardAllocationScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2323,6 +2502,8 @@ export type GlobalOmitConfig = {
   jobCard?: Prisma.JobCardOmit
   jobCardCustomerVoice?: Prisma.JobCardCustomerVoiceOmit
   labourMaster?: Prisma.LabourMasterOmit
+  dealerBayMaster?: Prisma.DealerBayMasterOmit
+  jobCardAllocation?: Prisma.JobCardAllocationOmit
 }
 
 /* Types for Logging */

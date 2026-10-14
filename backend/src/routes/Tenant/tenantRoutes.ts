@@ -11,6 +11,8 @@ import { activateCustomer, createCustomer, deactivateCustomer, getCustomerDetail
 import { activateVehicle, createVehicle, deactivateVehicle, getListOfVehicle, getVehicleDetails, updateVehicle } from "../../controllers/tenants/vehicalManagementController";
 import { closeJobCard, createJobCard, getJobcardDetails, getListOfJobCard, updateJobCard } from "../../controllers/tenants/jobCardManagement";
 import { activateLabours, createLabours, deactivateLabours, getLaboursDetails, getListOfLabours, updateLabours } from "../../controllers/tenants/labourMasterManagement";
+import { activateBay, createBay, deactivateBay, getBayDetails, getListOfBay, updateBay } from "../../controllers/tenants/bayMasterManagementController";
+import { allocateJobCard, getAllocatedJobCardDetails, getListOfAllocatedJobCards, updateAllocatedJobCard } from "../../controllers/tenants/jobCardAllocationController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -115,4 +117,19 @@ tenantRoute.put('/tenant/jobcard/:jobCardId/update', authenticate, requireTenant
 tenantRoute.get('/tenant/jobcard/get/all', authenticate, requireTenantUser, getListOfJobCard)
 tenantRoute.get('/tenant/jobcard/get/:jobCardId', authenticate, requireTenantUser, getJobcardDetails)
 tenantRoute.patch('/tenant/jobcard/:jobCardId/close', authenticate, requireTenantUser, closeJobCard)
+
+
+//Dealer Bay Management
+tenantRoute.post('/tenant/bay/create', authenticate, requireTenantUser, createBay)
+tenantRoute.put('/tenant/bay/:bayId/update', authenticate, requireTenantUser, updateBay)
+tenantRoute.get('/tenant/bay/get/all', authenticate, requireTenantUser, getListOfBay)
+tenantRoute.get('/tenant/bay/get/:bayId', authenticate, requireTenantUser, getBayDetails)
+tenantRoute.patch('/tenant/bay/:bayId/deactivate', authenticate, requireTenantUser, deactivateBay)
+tenantRoute.patch('/tenant/bay/:bayId/activate', authenticate, requireTenantUser, activateBay)
+
+//Job card allocation
+tenantRoute.post('/tenant/jobcard/allocate', authenticate, requireTenantUser, allocateJobCard)
+tenantRoute.put('/tenant/jobcard/allocate/:allocatedId/update', authenticate, requireTenantUser, updateAllocatedJobCard)
+tenantRoute.get('/tenant/jobcard/allocate/get/all', authenticate, requireTenantUser, getListOfAllocatedJobCards)
+tenantRoute.get('/tenant/jobcard/allocate/get/:allocatedId', authenticate, requireTenantUser, getAllocatedJobCardDetails)
 export default tenantRoute;

@@ -204,19 +204,20 @@ export const updateJobCard = async (req: Request, res: Response) => {
                     tenantId: Number(tenantId)
                 }
             })
-            await tx.jobCardCustomerVoice.deleteMany({
-                where: {
-                    jobCardId: Number(jobCardId)
-                }
-            })
-            await tx.jobCardCustomerVoice.createMany({
-                data: customerVoices.map((voice: custVoices) => ({
-                    actionToBeTaken: Number(voice.labourId),
-                    customerVoiceDescription: voice.customerVoiceDescription,
-                    observation: voice.observation,
-                    jobCardId: Number(jobCardId)
-                }))
-            })
+            await Promise.all(
+                customerVoices.map((voice: custVoices) => (
+                    tx.jobCardCustomerVoice.update({
+                        where: {
+                            id: Number(voice.id)
+                        },
+                        data: {
+                            actionToBeTaken: Number(voice.labourId),
+                            customerVoiceDescription: voice.customerVoiceDescription,
+                            observation: voice.observation
+                        }
+                    })
+                ))
+            )
             return {
                 jobcard
             }
