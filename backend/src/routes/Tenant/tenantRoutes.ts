@@ -10,6 +10,7 @@ import { activateRepairOrder, createRepairOrder, deactivateRepairOrder, getListO
 import { activateCustomer, createCustomer, deactivateCustomer, getCustomerDetails, getCustomerList, updateCustomer } from "../../controllers/tenants/customerManagementController";
 import { activateVehicle, createVehicle, deactivateVehicle, getListOfVehicle, getVehicleDetails, updateVehicle } from "../../controllers/tenants/vehicalManagementController";
 import { closeJobCard, createJobCard, getJobcardDetails, getListOfJobCard, updateJobCard } from "../../controllers/tenants/jobCardManagement";
+import { activateLabours, createLabours, deactivateLabours, getLaboursDetails, getListOfLabours, updateLabours } from "../../controllers/tenants/labourMasterManagement";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -21,7 +22,7 @@ tenantRoute.patch('/tenant/branch/:branchId/activate', authenticate, requireTena
 tenantRoute.get('/tenant/branch/get/:branchId', authenticate, requireTenantUser, getTenantBranchById)
 
 //Employee Designation Routes
-tenantRoute.post('/tenant/designation/create', authenticate,requireTenantUser, createEmployeeDesignation)
+tenantRoute.post('/tenant/designation/create', authenticate, requireTenantUser, createEmployeeDesignation)
 tenantRoute.get('/tenant/designation/get/all', authenticate, requireTenantUser, getAllEmployeeDesignation)
 tenantRoute.get('/tenant/designation/get/:designationId', authenticate, requireTenantUser, getEmployeeDesignationDetails)
 tenantRoute.put('/tenant/designation/:designationId/update', authenticate, requireTenantUser, updateDesignation)
@@ -97,6 +98,15 @@ tenantRoute.get('/tenant/vehicle/get/all', authenticate, requireTenantUser, getL
 tenantRoute.get('/tenant/vehicle/get/:vehicleId', authenticate, requireTenantUser, getVehicleDetails)
 tenantRoute.patch('/tenant/vehicle/:vehicleId/deactivate', authenticate, requireTenantUser, deactivateVehicle)
 tenantRoute.patch('/tenant/vehicle/:vehicleId/activate', authenticate, requireTenantUser, activateVehicle)
+
+
+//Labour Master Management
+tenantRoute.post('/tenant/labour/create', authenticate, requireTenantUser, createLabours)
+tenantRoute.put('/tenant/labour/:labourId/update', authenticate, requireTenantUser, updateLabours)
+tenantRoute.get('/tenant/labour/get/all', authenticate, requireTenantUser, getListOfLabours)
+tenantRoute.get('/tenant/labour/get/:labourId', authenticate, requireTenantUser, getLaboursDetails)
+tenantRoute.patch('/tenant/labour/:labourId/deactivate', authenticate, requireTenantUser, deactivateLabours)
+tenantRoute.patch('/tenant/labour/:labourId/activate', authenticate, requireTenantUser, activateLabours)
 
 
 //Jobcard Management

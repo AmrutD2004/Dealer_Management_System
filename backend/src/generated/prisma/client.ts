@@ -109,3 +109,13 @@ export type Vehicle = Prisma.VehicleModel
  * 
  */
 export type JobCard = Prisma.JobCardModel
+/**
+ * Model JobCardCustomerVoice
+ * 
+ */
+export type JobCardCustomerVoice = Prisma.JobCardCustomerVoiceModel
+/**
+ * Model LabourMaster
+ * 
+ */
+export type LabourMaster = Prisma.LabourMasterModel

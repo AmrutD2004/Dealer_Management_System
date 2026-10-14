@@ -77,6 +77,7 @@ model Tenant {
   customers              Customer[]
   vehicles               Vehicle[]
   jobCards               JobCard[]
+  labour                 LabourMaster[]
 
   @@index([createdBy])
 }
@@ -444,12 +445,54 @@ model JobCard {
   technician    Users? @relation("JobCardTechnician", fields: [technicianId], references: [id])
   createdByUser Users  @relation("JobCardCreatedBy", fields: [createdBy], references: [id])
 
-  serviceCategory ServiceCategoryMaster @relation(fields: [serviceCategoryId], references: [id])
-  serviceType     ServiceTypeMaster     @relation(fields: [serviceTypeId], references: [id])
-  repairOrderType RepairOrderTypeMaster @relation(fields: [repairOrderTypeId], references: [id])
+  serviceCategory       ServiceCategoryMaster  @relation(fields: [serviceCategoryId], references: [id])
+  serviceType           ServiceTypeMaster      @relation(fields: [serviceTypeId], references: [id])
+  repairOrderType       RepairOrderTypeMaster  @relation(fields: [repairOrderTypeId], references: [id])
+  jobCardCustomerVoices JobCardCustomerVoice[]
 
   @@unique([tenantId, jobCardNo])
   @@index([tenantId, status])
   @@index([tenantId, branchId, status])
   @@map("JobCard")
+}
+
+model JobCardCustomerVoice {
+  id Int @id @default(autoincrement())
+
+  jobCardId                Int
+  customerVoiceDescription String
+
+  observation     String
+  actionToBeTaken Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobCard JobCard      @relation(fields: [jobCardId], references: [id])
+  labour  LabourMaster @relation(fields: [actionToBeTaken], references: [id])
+
+  @@map("JobCardCustomerVoice")
+}
+
+model LabourMaster {
+  id Int @id @default(autoincrement())
+
+  tenantId Int
+
+  labourCode        String
+  labourName        String
+  labourDescription String
+  standardHours     Decimal @db.Decimal(6, 2)
+  rate              Decimal @db.Decimal(10, 2)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant          Tenant                 @relation(fields: [tenantId], references: [id])
+  actionToBeTaken JobCardCustomerVoice[]
+
+  @@unique([tenantId, labourCode])
+  @@map("LabourMaster")
 }

@@ -27,3 +27,4 @@ backend/.env
 frontend/.env
 .env
 *.env
+backend/src/prisma/migration
