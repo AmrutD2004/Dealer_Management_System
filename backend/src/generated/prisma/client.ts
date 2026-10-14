@@ -119,3 +119,13 @@ export type JobCardCustomerVoice = Prisma.JobCardCustomerVoiceModel
  * 
  */
 export type LabourMaster = Prisma.LabourMasterModel
+/**
+ * Model DealerBayMaster
+ * 
+ */
+export type DealerBayMaster = Prisma.DealerBayMasterModel
+/**
+ * Model JobCardAllocation
+ * 
+ */
+export type JobCardAllocation = Prisma.JobCardAllocationModel
