@@ -20,8 +20,11 @@ import ServiceCategory from "./Pages/TenantUserPages/Masters/ServiceCategory"
 import ServiceType from "./Pages/TenantUserPages/Masters/ServiceType"
 import RepairOrder from "./Pages/TenantUserPages/Masters/RepairOrder"
 import Customer from "./Pages/TenantUserPages/Customer"
+import CustomerCreate from "./Pages/TenantUserPages/CustomerCreate"
 import Vehicle from "./Pages/TenantUserPages/Vehicle"
+import VehicleCreate from "./Pages/TenantUserPages/VehicleCreate"
 import JobCard from "./Pages/TenantUserPages/JobCard"
+import JobCardCreate from "./Pages/TenantUserPages/JobCardCreate"
 
 
 export function App() {
@@ -47,8 +50,11 @@ export function App() {
             <Route path='/tenant/:id/masters/service-type' element={<TenantContextProvider><AuthProtectedRoute><ServiceType /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/repair-order' element={<TenantContextProvider><AuthProtectedRoute><RepairOrder /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/customer' element={<TenantContextProvider><AuthProtectedRoute><Customer /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/customer/create' element={<TenantContextProvider><AuthProtectedRoute><CustomerCreate /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/vehicle' element={<TenantContextProvider><AuthProtectedRoute><Vehicle /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/vehicle/create' element={<TenantContextProvider><AuthProtectedRoute><VehicleCreate /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/job-card' element={<TenantContextProvider><AuthProtectedRoute><JobCard /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/job-card/create' element={<TenantContextProvider><AuthProtectedRoute><JobCardCreate /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>

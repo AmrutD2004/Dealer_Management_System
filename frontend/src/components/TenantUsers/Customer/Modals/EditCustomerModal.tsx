@@ -21,7 +21,7 @@ import { toast } from "@/components/ui/toast"
 import type { customerListType } from "@/Types/tenantCreateType"
 import { Loader2 } from "lucide-react"
 import { useState } from "react"
-import { titleOptions } from "./CreateCustomerModal"
+import { titleOptions } from "../CustomerCreateForm"
 
 interface EditCustomerModalProps {
     customer: customerListType | null
