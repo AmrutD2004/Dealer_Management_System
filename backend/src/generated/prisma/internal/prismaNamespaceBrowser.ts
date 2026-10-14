@@ -66,7 +66,9 @@ export const ModelName = {
   Vehicle: 'Vehicle',
   JobCard: 'JobCard',
   JobCardCustomerVoice: 'JobCardCustomerVoice',
-  LabourMaster: 'LabourMaster'
+  LabourMaster: 'LabourMaster',
+  DealerBayMaster: 'DealerBayMaster',
+  JobCardAllocation: 'JobCardAllocation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -380,6 +382,35 @@ export const LabourMasterScalarFieldEnum = {
 } as const
 
 export type LabourMasterScalarFieldEnum = (typeof LabourMasterScalarFieldEnum)[keyof typeof LabourMasterScalarFieldEnum]
+
+
+export const DealerBayMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  bayCode: 'bayCode',
+  bayName: 'bayName',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DealerBayMasterScalarFieldEnum = (typeof DealerBayMasterScalarFieldEnum)[keyof typeof DealerBayMasterScalarFieldEnum]
+
+
+export const JobCardAllocationScalarFieldEnum = {
+  id: 'id',
+  jobCardId: 'jobCardId',
+  mechanicId: 'mechanicId',
+  bayId: 'bayId',
+  bayInDateTime: 'bayInDateTime',
+  bayOutTime: 'bayOutTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobCardAllocationScalarFieldEnum = (typeof JobCardAllocationScalarFieldEnum)[keyof typeof JobCardAllocationScalarFieldEnum]
 
 
 export const SortOrder = {

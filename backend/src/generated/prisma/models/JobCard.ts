@@ -491,6 +491,7 @@ export type JobCardWhereInput = {
   serviceType?: Prisma.XOR<Prisma.ServiceTypeMasterScalarRelationFilter, Prisma.ServiceTypeMasterWhereInput>
   repairOrderType?: Prisma.XOR<Prisma.RepairOrderTypeMasterScalarRelationFilter, Prisma.RepairOrderTypeMasterWhereInput>
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceListRelationFilter
+  allocations?: Prisma.JobCardAllocationListRelationFilter
 }
 
 export type JobCardOrderByWithRelationInput = {
@@ -536,6 +537,7 @@ export type JobCardOrderByWithRelationInput = {
   serviceType?: Prisma.ServiceTypeMasterOrderByWithRelationInput
   repairOrderType?: Prisma.RepairOrderTypeMasterOrderByWithRelationInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceOrderByRelationAggregateInput
+  allocations?: Prisma.JobCardAllocationOrderByRelationAggregateInput
 }
 
 export type JobCardWhereUniqueInput = Prisma.AtLeast<{
@@ -585,6 +587,7 @@ export type JobCardWhereUniqueInput = Prisma.AtLeast<{
   serviceType?: Prisma.XOR<Prisma.ServiceTypeMasterScalarRelationFilter, Prisma.ServiceTypeMasterWhereInput>
   repairOrderType?: Prisma.XOR<Prisma.RepairOrderTypeMasterScalarRelationFilter, Prisma.RepairOrderTypeMasterWhereInput>
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceListRelationFilter
+  allocations?: Prisma.JobCardAllocationListRelationFilter
 }, "id" | "tenantId_jobCardNo">
 
 export type JobCardOrderByWithAggregationInput = {
@@ -695,6 +698,7 @@ export type JobCardCreateInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateInput = {
@@ -730,6 +734,7 @@ export type JobCardUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUpdateInput = {
@@ -764,6 +769,7 @@ export type JobCardUpdateInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateInput = {
@@ -799,6 +805,7 @@ export type JobCardUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardCreateManyInput = {
@@ -1500,6 +1507,20 @@ export type JobCardUpdateOneRequiredWithoutJobCardCustomerVoicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.JobCardUpdateToOneWithWhereWithoutJobCardCustomerVoicesInput, Prisma.JobCardUpdateWithoutJobCardCustomerVoicesInput>, Prisma.JobCardUncheckedUpdateWithoutJobCardCustomerVoicesInput>
 }
 
+export type JobCardCreateNestedOneWithoutAllocationsInput = {
+  create?: Prisma.XOR<Prisma.JobCardCreateWithoutAllocationsInput, Prisma.JobCardUncheckedCreateWithoutAllocationsInput>
+  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutAllocationsInput
+  connect?: Prisma.JobCardWhereUniqueInput
+}
+
+export type JobCardUpdateOneRequiredWithoutAllocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.JobCardCreateWithoutAllocationsInput, Prisma.JobCardUncheckedCreateWithoutAllocationsInput>
+  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutAllocationsInput
+  upsert?: Prisma.JobCardUpsertWithoutAllocationsInput
+  connect?: Prisma.JobCardWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.JobCardUpdateToOneWithWhereWithoutAllocationsInput, Prisma.JobCardUpdateWithoutAllocationsInput>, Prisma.JobCardUncheckedUpdateWithoutAllocationsInput>
+}
+
 export type JobCardCreateWithoutTenantInput = {
   jobCardNo: string
   currentKmReading: number
@@ -1531,6 +1552,7 @@ export type JobCardCreateWithoutTenantInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutTenantInput = {
@@ -1565,6 +1587,7 @@ export type JobCardUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutTenantInput = {
@@ -1661,6 +1684,7 @@ export type JobCardCreateWithoutBranchInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutBranchInput = {
@@ -1695,6 +1719,7 @@ export type JobCardUncheckedCreateWithoutBranchInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutBranchInput = {
@@ -1754,6 +1779,7 @@ export type JobCardCreateWithoutSupervisorInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutSupervisorInput = {
@@ -1788,6 +1814,7 @@ export type JobCardUncheckedCreateWithoutSupervisorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutSupervisorInput = {
@@ -1831,6 +1858,7 @@ export type JobCardCreateWithoutTechnicianInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutTechnicianInput = {
@@ -1865,6 +1893,7 @@ export type JobCardUncheckedCreateWithoutTechnicianInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutTechnicianInput = {
@@ -1908,6 +1937,7 @@ export type JobCardCreateWithoutCreatedByUserInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutCreatedByUserInput = {
@@ -1942,6 +1972,7 @@ export type JobCardUncheckedCreateWithoutCreatedByUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutCreatedByUserInput = {
@@ -2033,6 +2064,7 @@ export type JobCardCreateWithoutServiceCategoryInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutServiceCategoryInput = {
@@ -2067,6 +2099,7 @@ export type JobCardUncheckedCreateWithoutServiceCategoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutServiceCategoryInput = {
@@ -2126,6 +2159,7 @@ export type JobCardCreateWithoutServiceTypeInput = {
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutServiceTypeInput = {
@@ -2160,6 +2194,7 @@ export type JobCardUncheckedCreateWithoutServiceTypeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutServiceTypeInput = {
@@ -2219,6 +2254,7 @@ export type JobCardCreateWithoutRepairOrderTypeInput = {
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutRepairOrderTypeInput = {
@@ -2253,6 +2289,7 @@ export type JobCardUncheckedCreateWithoutRepairOrderTypeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutRepairOrderTypeInput = {
@@ -2312,6 +2349,7 @@ export type JobCardCreateWithoutCustomerInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutCustomerInput = {
@@ -2346,6 +2384,7 @@ export type JobCardUncheckedCreateWithoutCustomerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutCustomerInput = {
@@ -2405,6 +2444,7 @@ export type JobCardCreateWithoutVehicleInput = {
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutVehicleInput = {
@@ -2439,6 +2479,7 @@ export type JobCardUncheckedCreateWithoutVehicleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutVehicleInput = {
@@ -2498,6 +2539,7 @@ export type JobCardCreateWithoutJobCardCustomerVoicesInput = {
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
   repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
+  allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardUncheckedCreateWithoutJobCardCustomerVoicesInput = {
@@ -2532,6 +2574,7 @@ export type JobCardUncheckedCreateWithoutJobCardCustomerVoicesInput = {
   createdBy: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
 export type JobCardCreateOrConnectWithoutJobCardCustomerVoicesInput = {
@@ -2581,6 +2624,7 @@ export type JobCardUpdateWithoutJobCardCustomerVoicesInput = {
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutJobCardCustomerVoicesInput = {
@@ -2615,6 +2659,161 @@ export type JobCardUncheckedUpdateWithoutJobCardCustomerVoicesInput = {
   createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
+}
+
+export type JobCardCreateWithoutAllocationsInput = {
+  jobCardNo: string
+  currentKmReading: number
+  previousKmReading?: number | null
+  vehicleStatus: $Enums.JobCardVehicleStatus
+  isRevisit?: boolean
+  estimateCloseAt: Date | string
+  revisedEstimateCloseAt?: Date | string | null
+  closedAt?: Date | string | null
+  status?: $Enums.JobCardStatus
+  driverName?: string | null
+  driverMobileNo?: string | null
+  isBreakdown?: boolean
+  breakdownPersonAttended?: string | null
+  breakdownDateTime?: Date | string | null
+  breakdownStartDateTime?: Date | string | null
+  breakdownEndDateTime?: Date | string | null
+  dealerVanStartKm?: number | null
+  dealerVanEndKm?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutJobCardsInput
+  branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
+  vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
+  customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
+  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
+  createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
+  serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
+  serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
+  repairOrderType: Prisma.RepairOrderTypeMasterCreateNestedOneWithoutJobCardsInput
+  jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutJobCardInput
+}
+
+export type JobCardUncheckedCreateWithoutAllocationsInput = {
+  id?: number
+  tenantId: number
+  branchId: number
+  jobCardNo: string
+  vehicleId: number
+  customerId: number
+  currentKmReading: number
+  previousKmReading?: number | null
+  vehicleStatus: $Enums.JobCardVehicleStatus
+  supervisorId?: number | null
+  technicianId?: number | null
+  serviceCategoryId: number
+  serviceTypeId: number
+  repairOrderTypeId: number
+  isRevisit?: boolean
+  estimateCloseAt: Date | string
+  revisedEstimateCloseAt?: Date | string | null
+  closedAt?: Date | string | null
+  status?: $Enums.JobCardStatus
+  driverName?: string | null
+  driverMobileNo?: string | null
+  isBreakdown?: boolean
+  breakdownPersonAttended?: string | null
+  breakdownDateTime?: Date | string | null
+  breakdownStartDateTime?: Date | string | null
+  breakdownEndDateTime?: Date | string | null
+  dealerVanStartKm?: number | null
+  dealerVanEndKm?: number | null
+  createdBy: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutJobCardInput
+}
+
+export type JobCardCreateOrConnectWithoutAllocationsInput = {
+  where: Prisma.JobCardWhereUniqueInput
+  create: Prisma.XOR<Prisma.JobCardCreateWithoutAllocationsInput, Prisma.JobCardUncheckedCreateWithoutAllocationsInput>
+}
+
+export type JobCardUpsertWithoutAllocationsInput = {
+  update: Prisma.XOR<Prisma.JobCardUpdateWithoutAllocationsInput, Prisma.JobCardUncheckedUpdateWithoutAllocationsInput>
+  create: Prisma.XOR<Prisma.JobCardCreateWithoutAllocationsInput, Prisma.JobCardUncheckedCreateWithoutAllocationsInput>
+  where?: Prisma.JobCardWhereInput
+}
+
+export type JobCardUpdateToOneWithWhereWithoutAllocationsInput = {
+  where?: Prisma.JobCardWhereInput
+  data: Prisma.XOR<Prisma.JobCardUpdateWithoutAllocationsInput, Prisma.JobCardUncheckedUpdateWithoutAllocationsInput>
+}
+
+export type JobCardUpdateWithoutAllocationsInput = {
+  jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
+  previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
+  isRevisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  estimateCloseAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revisedEstimateCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumJobCardStatusFieldUpdateOperationsInput | $Enums.JobCardStatus
+  driverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverMobileNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBreakdown?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  breakdownPersonAttended?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  breakdownDateTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  breakdownStartDateTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  breakdownEndDateTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dealerVanStartKm?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dealerVanEndKm?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutJobCardsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
+  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
+  createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
+  serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
+  serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
+  jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+}
+
+export type JobCardUncheckedUpdateWithoutAllocationsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  branchId?: Prisma.IntFieldUpdateOperationsInput | number
+  jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
+  previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
+  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
+  serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  repairOrderTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  isRevisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  estimateCloseAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revisedEstimateCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumJobCardStatusFieldUpdateOperationsInput | $Enums.JobCardStatus
+  driverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverMobileNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBreakdown?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  breakdownPersonAttended?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  breakdownDateTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  breakdownStartDateTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  breakdownEndDateTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dealerVanStartKm?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dealerVanEndKm?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardCreateManyTenantInput = {
@@ -2681,6 +2880,7 @@ export type JobCardUpdateWithoutTenantInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutTenantInput = {
@@ -2715,6 +2915,7 @@ export type JobCardUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutTenantInput = {
@@ -2814,6 +3015,7 @@ export type JobCardUpdateWithoutBranchInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutBranchInput = {
@@ -2848,6 +3050,7 @@ export type JobCardUncheckedUpdateWithoutBranchInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutBranchInput = {
@@ -3013,6 +3216,7 @@ export type JobCardUpdateWithoutSupervisorInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutSupervisorInput = {
@@ -3047,6 +3251,7 @@ export type JobCardUncheckedUpdateWithoutSupervisorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutSupervisorInput = {
@@ -3113,6 +3318,7 @@ export type JobCardUpdateWithoutTechnicianInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutTechnicianInput = {
@@ -3147,6 +3353,7 @@ export type JobCardUncheckedUpdateWithoutTechnicianInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutTechnicianInput = {
@@ -3213,6 +3420,7 @@ export type JobCardUpdateWithoutCreatedByUserInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutCreatedByUserInput = {
@@ -3247,6 +3455,7 @@ export type JobCardUncheckedUpdateWithoutCreatedByUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -3346,6 +3555,7 @@ export type JobCardUpdateWithoutServiceCategoryInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutServiceCategoryInput = {
@@ -3380,6 +3590,7 @@ export type JobCardUncheckedUpdateWithoutServiceCategoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutServiceCategoryInput = {
@@ -3479,6 +3690,7 @@ export type JobCardUpdateWithoutServiceTypeInput = {
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutServiceTypeInput = {
@@ -3513,6 +3725,7 @@ export type JobCardUncheckedUpdateWithoutServiceTypeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutServiceTypeInput = {
@@ -3612,6 +3825,7 @@ export type JobCardUpdateWithoutRepairOrderTypeInput = {
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutRepairOrderTypeInput = {
@@ -3646,6 +3860,7 @@ export type JobCardUncheckedUpdateWithoutRepairOrderTypeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutRepairOrderTypeInput = {
@@ -3745,6 +3960,7 @@ export type JobCardUpdateWithoutCustomerInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutCustomerInput = {
@@ -3779,6 +3995,7 @@ export type JobCardUncheckedUpdateWithoutCustomerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutCustomerInput = {
@@ -3878,6 +4095,7 @@ export type JobCardUpdateWithoutVehicleInput = {
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   repairOrderType?: Prisma.RepairOrderTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateWithoutVehicleInput = {
@@ -3912,6 +4130,7 @@ export type JobCardUncheckedUpdateWithoutVehicleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCardCustomerVoices?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutJobCardNestedInput
+  allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
 export type JobCardUncheckedUpdateManyWithoutVehicleInput = {
@@ -3954,10 +4173,12 @@ export type JobCardUncheckedUpdateManyWithoutVehicleInput = {
 
 export type JobCardCountOutputType = {
   jobCardCustomerVoices: number
+  allocations: number
 }
 
 export type JobCardCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobCardCustomerVoices?: boolean | JobCardCountOutputTypeCountJobCardCustomerVoicesArgs
+  allocations?: boolean | JobCardCountOutputTypeCountAllocationsArgs
 }
 
 /**
@@ -3975,6 +4196,13 @@ export type JobCardCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
  */
 export type JobCardCountOutputTypeCountJobCardCustomerVoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.JobCardCustomerVoiceWhereInput
+}
+
+/**
+ * JobCardCountOutputType without action
+ */
+export type JobCardCountOutputTypeCountAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobCardAllocationWhereInput
 }
 
 
@@ -4021,6 +4249,7 @@ export type JobCardSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   serviceType?: boolean | Prisma.ServiceTypeMasterDefaultArgs<ExtArgs>
   repairOrderType?: boolean | Prisma.RepairOrderTypeMasterDefaultArgs<ExtArgs>
   jobCardCustomerVoices?: boolean | Prisma.JobCard$jobCardCustomerVoicesArgs<ExtArgs>
+  allocations?: boolean | Prisma.JobCard$allocationsArgs<ExtArgs>
   _count?: boolean | Prisma.JobCardCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["jobCard"]>
 
@@ -4159,6 +4388,7 @@ export type JobCardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   serviceType?: boolean | Prisma.ServiceTypeMasterDefaultArgs<ExtArgs>
   repairOrderType?: boolean | Prisma.RepairOrderTypeMasterDefaultArgs<ExtArgs>
   jobCardCustomerVoices?: boolean | Prisma.JobCard$jobCardCustomerVoicesArgs<ExtArgs>
+  allocations?: boolean | Prisma.JobCard$allocationsArgs<ExtArgs>
   _count?: boolean | Prisma.JobCardCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type JobCardIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4200,6 +4430,7 @@ export type $JobCardPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     serviceType: Prisma.$ServiceTypeMasterPayload<ExtArgs>
     repairOrderType: Prisma.$RepairOrderTypeMasterPayload<ExtArgs>
     jobCardCustomerVoices: Prisma.$JobCardCustomerVoicePayload<ExtArgs>[]
+    allocations: Prisma.$JobCardAllocationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -4638,6 +4869,7 @@ export interface Prisma__JobCardClient<T, Null = never, ExtArgs extends runtime.
   serviceType<T extends Prisma.ServiceTypeMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceTypeMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceTypeMasterClient<runtime.Types.Result.GetResult<Prisma.$ServiceTypeMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   repairOrderType<T extends Prisma.RepairOrderTypeMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RepairOrderTypeMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__RepairOrderTypeMasterClient<runtime.Types.Result.GetResult<Prisma.$RepairOrderTypeMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   jobCardCustomerVoices<T extends Prisma.JobCard$jobCardCustomerVoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobCard$jobCardCustomerVoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardCustomerVoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  allocations<T extends Prisma.JobCard$allocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobCard$allocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5158,6 +5390,30 @@ export type JobCard$jobCardCustomerVoicesArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.JobCardCustomerVoiceScalarFieldEnum | Prisma.JobCardCustomerVoiceScalarFieldEnum[]
+}
+
+/**
+ * JobCard.allocations
+ */
+export type JobCard$allocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JobCardAllocation
+   */
+  select?: Prisma.JobCardAllocationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JobCardAllocation
+   */
+  omit?: Prisma.JobCardAllocationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobCardAllocationInclude<ExtArgs> | null
+  where?: Prisma.JobCardAllocationWhereInput
+  orderBy?: Prisma.JobCardAllocationOrderByWithRelationInput | Prisma.JobCardAllocationOrderByWithRelationInput[]
+  cursor?: Prisma.JobCardAllocationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobCardAllocationScalarFieldEnum | Prisma.JobCardAllocationScalarFieldEnum[]
 }
 
 /**

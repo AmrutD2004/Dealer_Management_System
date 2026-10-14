@@ -78,6 +78,7 @@ model Tenant {
   vehicles               Vehicle[]
   jobCards               JobCard[]
   labour                 LabourMaster[]
+  dealerBayMasters       DealerBayMaster[] 
 
   @@index([createdBy])
 }
@@ -107,7 +108,7 @@ model Branch {
   tenant   Tenant    @relation(fields: [tenantId], references: [id])
   users    Users[]
   jobCards JobCard[]
-
+  dealerBayMasters DealerBayMaster[] 
   @@unique([tenantId, branchCode])
   @@index([tenantId])
 }
@@ -141,6 +142,7 @@ model Users {
   supervisedJobCards JobCard[] @relation("JobCardSupervisor")
   technicianJobCards JobCard[] @relation("JobCardTechnician")
   createdJobCards    JobCard[] @relation("JobCardCreatedBy")
+  jobCardAllocations     JobCardAllocation[]  @relation("JobCardAllocationMechanic")
 
   @@unique([tenantId, employeeCode])
   @@unique([tenantId, email])
@@ -449,6 +451,7 @@ model JobCard {
   serviceType           ServiceTypeMaster      @relation(fields: [serviceTypeId], references: [id])
   repairOrderType       RepairOrderTypeMaster  @relation(fields: [repairOrderTypeId], references: [id])
   jobCardCustomerVoices JobCardCustomerVoice[]
+  allocations    JobCardAllocation[]
 
   @@unique([tenantId, jobCardNo])
   @@index([tenantId, status])
@@ -495,4 +498,51 @@ model LabourMaster {
 
   @@unique([tenantId, labourCode])
   @@map("LabourMaster")
+}
+
+model DealerBayMaster {
+  id          Int      @id @default(autoincrement())
+
+  tenantId    Int
+  branchId    Int
+
+  bayCode     String
+  bayName     String
+  description String?
+
+  isActive    Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  branch      Branch   @relation(fields: [branchId], references: [id])
+
+  jobCardAllocations JobCardAllocation[]
+
+  @@unique([branchId, bayCode])
+  @@map("DealerBayMaster")
+}
+
+model JobCardAllocation {
+  id            Int       @id @default(autoincrement())
+
+  jobCardId     Int
+  mechanicId    Int
+  bayId         Int
+
+  bayInDateTime DateTime
+  bayOutTime    DateTime?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  jobCard       JobCard           @relation(fields: [jobCardId], references: [id])
+  mechanic      Users             @relation("JobCardAllocationMechanic", fields: [mechanicId], references: [id])
+  bay           DealerBayMaster   @relation(fields: [bayId], references: [id])
+
+  @@index([jobCardId])
+  @@index([mechanicId])
+  @@index([bayId])
+  @@map("JobCardAllocation")
 }
