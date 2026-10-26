@@ -2,10 +2,11 @@ import { Button } from '@/components/ui/button'
 import { cn } from 'cn'
 import { Key, Plus } from 'lucide-react'
 import { useState } from 'react'
-import AssignPermissionModal from '../Modals/AssignPermissionModal'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const AssignPermissionHeader = () => {
-  const [open, setOpen] = useState(false)
+    const {id} = useParams()
+    const navigate = useNavigate()
     return (
         <>
             <div className='flex w-full items-center text-foreground'>
@@ -16,12 +17,11 @@ const AssignPermissionHeader = () => {
                     <p className='text-sm tracking-tight text-muted-foreground leading-tight'>User can assign permission to a particular role</p>
                 </div>
                 <div className='ms-auto'>
-                    <Button className={cn('flex items-center gap-2')} onClick={() => setOpen(true)}>
+                    <Button className={cn('flex items-center gap-2')} onClick={() => navigate(`/tenant/${id}/masters/assign/permission`)}>
                         <Plus />Assign Permission
                     </Button>
                 </div>
             </div>
-            <AssignPermissionModal open={open} onClose={setOpen} />
         </>
     )
 }

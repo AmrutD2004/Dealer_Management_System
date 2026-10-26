@@ -52,6 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   PlatformUser: 'PlatformUser',
+  BrandMaster: 'BrandMaster',
+  VehicleModelMaster: 'VehicleModelMaster',
+  VehicleVariantMaster: 'VehicleVariantMaster',
   Tenant: 'Tenant',
   Branch: 'Branch',
   Users: 'Users',
@@ -68,7 +71,11 @@ export const ModelName = {
   JobCardCustomerVoice: 'JobCardCustomerVoice',
   LabourMaster: 'LabourMaster',
   DealerBayMaster: 'DealerBayMaster',
-  JobCardAllocation: 'JobCardAllocation'
+  JobCardAllocation: 'JobCardAllocation',
+  HSNMaster: 'HSNMaster',
+  PartCategoryMaster: 'PartCategoryMaster',
+  PartMaster: 'PartMaster',
+  PartFitment: 'PartFitment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -98,6 +105,49 @@ export const PlatformUserScalarFieldEnum = {
 } as const
 
 export type PlatformUserScalarFieldEnum = (typeof PlatformUserScalarFieldEnum)[keyof typeof PlatformUserScalarFieldEnum]
+
+
+export const BrandMasterScalarFieldEnum = {
+  id: 'id',
+  brandCode: 'brandCode',
+  brandName: 'brandName',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BrandMasterScalarFieldEnum = (typeof BrandMasterScalarFieldEnum)[keyof typeof BrandMasterScalarFieldEnum]
+
+
+export const VehicleModelMasterScalarFieldEnum = {
+  id: 'id',
+  brandId: 'brandId',
+  modelCode: 'modelCode',
+  modelName: 'modelName',
+  bodyType: 'bodyType',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VehicleModelMasterScalarFieldEnum = (typeof VehicleModelMasterScalarFieldEnum)[keyof typeof VehicleModelMasterScalarFieldEnum]
+
+
+export const VehicleVariantMasterScalarFieldEnum = {
+  id: 'id',
+  modelId: 'modelId',
+  variantCode: 'variantCode',
+  variantName: 'variantName',
+  fuelType: 'fuelType',
+  transmissionType: 'transmissionType',
+  productionFrom: 'productionFrom',
+  productionTo: 'productionTo',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VehicleVariantMasterScalarFieldEnum = (typeof VehicleVariantMasterScalarFieldEnum)[keyof typeof VehicleVariantMasterScalarFieldEnum]
 
 
 export const TenantScalarFieldEnum = {
@@ -297,18 +347,16 @@ export const VehicleScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
   customerId: 'customerId',
+  brandId: 'brandId',
+  modelId: 'modelId',
+  variantId: 'variantId',
   vehicleNumber: 'vehicleNumber',
   chassisNumber: 'chassisNumber',
   engineNumber: 'engineNumber',
-  manufacturer: 'manufacturer',
-  model: 'model',
-  variant: 'variant',
   color: 'color',
   manufacturingYear: 'manufacturingYear',
   registrationDate: 'registrationDate',
   purchaseDate: 'purchaseDate',
-  fuelType: 'fuelType',
-  transmissionType: 'transmissionType',
   currentOdometerReading: 'currentOdometerReading',
   isActive: 'isActive',
   createdAt: 'createdAt',
@@ -411,6 +459,76 @@ export const JobCardAllocationScalarFieldEnum = {
 } as const
 
 export type JobCardAllocationScalarFieldEnum = (typeof JobCardAllocationScalarFieldEnum)[keyof typeof JobCardAllocationScalarFieldEnum]
+
+
+export const HSNMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  hsnCode: 'hsnCode',
+  description: 'description',
+  taxRate: 'taxRate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HSNMasterScalarFieldEnum = (typeof HSNMasterScalarFieldEnum)[keyof typeof HSNMasterScalarFieldEnum]
+
+
+export const PartCategoryMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  parentId: 'parentId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PartCategoryMasterScalarFieldEnum = (typeof PartCategoryMasterScalarFieldEnum)[keyof typeof PartCategoryMasterScalarFieldEnum]
+
+
+export const PartMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  partNo: 'partNo',
+  partDescription: 'partDescription',
+  partCategoryId: 'partCategoryId',
+  hsnId: 'hsnId',
+  sellingPrice: 'sellingPrice',
+  taxRate: 'taxRate',
+  unitOfMeasure: 'unitOfMeasure',
+  reorderLevel: 'reorderLevel',
+  isFastMoving: 'isFastMoving',
+  status: 'status',
+  supersededById: 'supersededById',
+  validFrom: 'validFrom',
+  validTo: 'validTo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PartMasterScalarFieldEnum = (typeof PartMasterScalarFieldEnum)[keyof typeof PartMasterScalarFieldEnum]
+
+
+export const PartFitmentScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  partId: 'partId',
+  modelId: 'modelId',
+  variantId: 'variantId',
+  brandId: 'brandId',
+  quantity: 'quantity',
+  position: 'position',
+  isOem: 'isOem',
+  validFrom: 'validFrom',
+  validTo: 'validTo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PartFitmentScalarFieldEnum = (typeof PartFitmentScalarFieldEnum)[keyof typeof PartFitmentScalarFieldEnum]
 
 
 export const SortOrder = {

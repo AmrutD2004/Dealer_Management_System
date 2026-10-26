@@ -44,6 +44,109 @@ enum SubscriptionStatus {
   CANCELLED
 }
 
+model BrandMaster {
+  id        Int    @id @default(autoincrement())
+  brandCode String @unique
+  brandName String
+
+  models   VehicleModelMaster[]
+  vehicles Vehicle[]
+  fitment  PartFitment[]
+  // variants  VehicleVariantMaster[]
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("BrandMaster")
+}
+enum CarBodyType {
+  HATCHBACK
+  MICRO_HATCHBACK
+  PREMIUM_HATCHBACK
+  MICROCAR
+
+  SEDAN
+  COMPACT_SEDAN
+  NOTCHBACK
+  FASTBACK
+  LIFTBACK
+
+  SUV
+  SUBCOMPACT_SUV
+  COMPACT_SUV
+  MID_SIZE_SUV
+  FULL_SIZE_SUV
+  CROSSOVER
+  COUPE_SUV
+  OFF_ROAD_SUV
+  LUXURY_SUV
+
+  MPV
+  MINIVAN
+  MICROVAN
+  PASSENGER_VAN
+
+  COUPE
+  CONVERTIBLE
+  ROADSTER
+  SPYDER
+  TARGA
+  STATION_WAGON
+  ESTATE
+
+  PICKUP_TRUCK
+  SPORTS_CAR
+  SUPERCAR
+  HYPERCAR
+  LIMOUSINE
+
+  OTHER
+}
+model VehicleModelMaster {
+  id        Int    @id @default(autoincrement())
+  brandId   Int
+  modelCode String @unique
+  modelName String
+  bodyType  CarBodyType
+  brand BrandMaster @relation(fields: [brandId], references: [id])
+
+  variants VehicleVariantMaster[]
+  vehicles Vehicle[]
+  fitment   PartFitment[]
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([brandId, modelCode]) // keep even with modelCode @unique; see note below
+  @@index([brandId])
+  @@map("VehicleModelMaster")
+}
+
+model VehicleVariantMaster {
+  id          Int    @id @default(autoincrement())
+  modelId     Int
+  variantCode String 
+  variantName String
+
+  model VehicleModelMaster @relation(fields: [modelId], references: [id])
+
+  fuelType         String
+  transmissionType String
+  productionFrom   DateTime?
+  productionTo     DateTime?
+
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  vehicles  Vehicle[]
+  fitment   PartFitment[]
+  @@index([modelId])
+  @@unique([modelId, fuelType, variantCode])
+  @@map("VehicleVariantMaster")
+}
+
 model Tenant {
   id                 Int                 @id @default(autoincrement())
   tenantCode         String              @unique
@@ -78,7 +181,11 @@ model Tenant {
   vehicles               Vehicle[]
   jobCards               JobCard[]
   labour                 LabourMaster[]
-  dealerBayMasters       DealerBayMaster[] 
+  dealerBayMasters       DealerBayMaster[]
+  hsnMasters             HSNMaster[]
+  partCategory            PartCategoryMaster[]
+  parts              PartMaster[]
+  fitment                PartFitment[]
 
   @@index([createdBy])
 }
@@ -105,10 +212,11 @@ model Branch {
   updatedAt DateTime @updatedAt
 
   // Relations
-  tenant   Tenant    @relation(fields: [tenantId], references: [id])
-  users    Users[]
-  jobCards JobCard[]
-  dealerBayMasters DealerBayMaster[] 
+  tenant           Tenant            @relation(fields: [tenantId], references: [id])
+  users            Users[]
+  jobCards         JobCard[]
+  dealerBayMasters DealerBayMaster[]
+
   @@unique([tenantId, branchCode])
   @@index([tenantId])
 }
@@ -139,10 +247,10 @@ model Users {
 
   authorizedCustomers Customer[]
 
-  supervisedJobCards JobCard[] @relation("JobCardSupervisor")
-  technicianJobCards JobCard[] @relation("JobCardTechnician")
-  createdJobCards    JobCard[] @relation("JobCardCreatedBy")
-  jobCardAllocations     JobCardAllocation[]  @relation("JobCardAllocationMechanic")
+  supervisedJobCards JobCard[]           @relation("JobCardSupervisor")
+  technicianJobCards JobCard[]           @relation("JobCardTechnician")
+  createdJobCards    JobCard[]           @relation("JobCardCreatedBy")
+  jobCardAllocations JobCardAllocation[] @relation("JobCardAllocationMechanic")
 
   @@unique([tenantId, employeeCode])
   @@unique([tenantId, email])
@@ -347,23 +455,18 @@ model Vehicle {
 
   tenantId   Int
   customerId Int
+  brandId    Int
+  modelId    Int
+  variantId  Int
 
   vehicleNumber String?
   chassisNumber String
   engineNumber  String
 
-  manufacturer String
-  model        String
-  variant      String?
-
   color             String?
-  manufacturingYear DateTime?
-
-  registrationDate DateTime? @db.Date
-  purchaseDate     DateTime? @db.Date
-
-  fuelType         String?
-  transmissionType String?
+  manufacturingYear Int? // keep as year, not DateTime; see note below
+  registrationDate  DateTime? @db.Date
+  purchaseDate      DateTime? @db.Date
 
   currentOdometerReading Int
 
@@ -372,13 +475,18 @@ model Vehicle {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tenant   Tenant    @relation(fields: [tenantId], references: [id])
-  customer Customer  @relation(fields: [customerId], references: [id])
+  tenant   Tenant               @relation(fields: [tenantId], references: [id])
+  customer Customer             @relation(fields: [customerId], references: [id])
+  brand    BrandMaster          @relation(fields: [brandId], references: [id])
+  model    VehicleModelMaster   @relation(fields: [modelId], references: [id])
+  variant  VehicleVariantMaster @relation(fields: [variantId], references: [id])
+
   jobCards JobCard[]
 
   @@unique([tenantId, chassisNumber])
   @@unique([tenantId, engineNumber])
   @@index([tenantId, vehicleNumber])
+  @@index([variantId])
   @@map("Vehicle")
 }
 
@@ -451,7 +559,7 @@ model JobCard {
   serviceType           ServiceTypeMaster      @relation(fields: [serviceTypeId], references: [id])
   repairOrderType       RepairOrderTypeMaster  @relation(fields: [repairOrderTypeId], references: [id])
   jobCardCustomerVoices JobCardCustomerVoice[]
-  allocations    JobCardAllocation[]
+  allocations           JobCardAllocation[]
 
   @@unique([tenantId, jobCardNo])
   @@index([tenantId, status])
@@ -501,22 +609,22 @@ model LabourMaster {
 }
 
 model DealerBayMaster {
-  id          Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  tenantId    Int
-  branchId    Int
+  tenantId Int
+  branchId Int
 
   bayCode     String
   bayName     String
   description String?
 
-  isActive    Boolean  @default(true)
+  isActive Boolean @default(true)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tenant      Tenant   @relation(fields: [tenantId], references: [id])
-  branch      Branch   @relation(fields: [branchId], references: [id])
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  branch Branch @relation(fields: [branchId], references: [id])
 
   jobCardAllocations JobCardAllocation[]
 
@@ -525,24 +633,154 @@ model DealerBayMaster {
 }
 
 model JobCardAllocation {
-  id            Int       @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  jobCardId     Int
-  mechanicId    Int
-  bayId         Int
+  jobCardId  Int
+  mechanicId Int
+  bayId      Int
 
   bayInDateTime DateTime
   bayOutTime    DateTime?
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  jobCard       JobCard           @relation(fields: [jobCardId], references: [id])
-  mechanic      Users             @relation("JobCardAllocationMechanic", fields: [mechanicId], references: [id])
-  bay           DealerBayMaster   @relation(fields: [bayId], references: [id])
+  jobCard  JobCard         @relation(fields: [jobCardId], references: [id])
+  mechanic Users           @relation("JobCardAllocationMechanic", fields: [mechanicId], references: [id])
+  bay      DealerBayMaster @relation(fields: [bayId], references: [id])
 
   @@index([jobCardId])
   @@index([mechanicId])
   @@index([bayId])
   @@map("JobCardAllocation")
+}
+
+//HSN Master
+model HSNMaster {
+  id Int @id @default(autoincrement())
+
+  tenantId Int
+
+  hsnCode     String
+  description String?
+  taxRate     Decimal? @db.Decimal(5, 2)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  parts  PartMaster[]
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  @@unique([tenantId, hsnCode])
+  @@map("HSNMaster")
+}
+
+
+model PartCategoryMaster {
+  id          Int      @id @default(autoincrement())
+  tenantId    Int
+  code        String
+  name        String
+  parentId    Int?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenant      Tenant             @relation(fields: [tenantId], references: [id])
+  parent      PartCategoryMaster? @relation("CategoryTree", fields: [parentId], references: [id])
+  children    PartCategoryMaster[] @relation("CategoryTree")
+  parts       PartMaster[]
+
+  @@unique([tenantId, code])
+  @@map("PartCategoryMaster")
+}
+
+
+enum PartStatus {
+  ACTIVE
+  SUPERSEDED
+  INACTIVE
+}
+enum UnitOfMeasure {
+  EA
+  PCS
+  SET
+  PAIR
+  L
+  ML
+  KG
+  G
+  M
+  BOX
+  PACK
+  KIT
+}
+model PartMaster {
+  id       Int    @id @default(autoincrement())
+  tenantId Int
+  partNo   String
+
+  partDescription String
+
+  partCategoryId Int?
+  hsnId          Int
+
+  sellingPrice   Decimal @db.Decimal(12, 2)
+  taxRate        Decimal @db.Decimal(5, 2)
+  unitOfMeasure  UnitOfMeasure
+
+  reorderLevel  Int?
+  isFastMoving  Boolean @default(false)
+
+  status        PartStatus @default(ACTIVE)
+  supersededById Int?
+
+  validFrom DateTime @default(now())
+  validTo   DateTime?
+
+  tenant    Tenant             @relation(fields: [tenantId], references: [id])
+  category  PartCategoryMaster? @relation(fields: [partCategoryId], references: [id])
+  hsn       HSNMaster          @relation(fields: [hsnId], references: [id])
+  supersededBy PartMaster?     @relation("PartSupersession", fields: [supersededById], references: [id])
+  supersedes   PartMaster[]    @relation("PartSupersession")
+
+  fitments       PartFitment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, partNo])
+  @@index([tenantId, status])
+  @@index([tenantId, partCategoryId])
+  @@map("PartMaster")
+}
+
+model PartFitment {
+  id        Int      @id @default(autoincrement())
+  tenantId  Int
+  partId    Int
+
+  modelId   Int
+  variantId Int
+  brandId   Int
+
+  quantity  Decimal  @default(1) @db.Decimal(10, 2)
+  position  String?
+
+  isOem     Boolean  @default(true)
+  validFrom DateTime @default(now())
+  validTo   DateTime?
+
+  tenant    Tenant               @relation(fields: [tenantId], references: [id])
+  part      PartMaster           @relation(fields: [partId], references: [id])
+  model     VehicleModelMaster  @relation(fields: [modelId], references: [id])
+  variant   VehicleVariantMaster @relation(fields: [variantId], references: [id])
+  brand     BrandMaster          @relation(fields: [brandId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tenantId, variantId])
+  @@index([tenantId, modelId])
+  @@map("PartFitment")
 }

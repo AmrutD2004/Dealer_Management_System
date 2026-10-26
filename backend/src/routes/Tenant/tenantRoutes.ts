@@ -13,6 +13,10 @@ import { closeJobCard, createJobCard, getJobcardDetails, getListOfJobCard, updat
 import { activateLabours, createLabours, deactivateLabours, getLaboursDetails, getListOfLabours, updateLabours } from "../../controllers/tenants/labourMasterManagement";
 import { activateBay, createBay, deactivateBay, getBayDetails, getListOfBay, updateBay } from "../../controllers/tenants/bayMasterManagementController";
 import { allocateJobCard, getAllocatedJobCardDetails, getListOfAllocatedJobCards, updateAllocatedJobCard } from "../../controllers/tenants/jobCardAllocationController";
+import { activateHSN, createHSN, deactivateHSN, getHSNDetails, getListOfHSN, updateHSN } from "../../controllers/tenants/hsnMasterController";
+import { activatePartCategory, addPartCategory, deactivatePartCategory, getListOfPartCategories, getPartCategoryDetails, updatePartCategory } from "../../controllers/tenants/Parts/partCategoryManagementController";
+import { activatePart, addPartMaster, deactivatePart, getListOfParts, getPartDetails, updatePartMaster } from "../../controllers/tenants/Parts/partMasterManagementController";
+import { addPartFitment, getListOfPartFitment, getPartFitmentDetails, updatePartFitment } from "../../controllers/tenants/Parts/partFitmentManagementController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -132,4 +136,38 @@ tenantRoute.post('/tenant/jobcard/allocate', authenticate, requireTenantUser, al
 tenantRoute.put('/tenant/jobcard/allocate/:allocatedId/update', authenticate, requireTenantUser, updateAllocatedJobCard)
 tenantRoute.get('/tenant/jobcard/allocate/get/all', authenticate, requireTenantUser, getListOfAllocatedJobCards)
 tenantRoute.get('/tenant/jobcard/allocate/get/:allocatedId', authenticate, requireTenantUser, getAllocatedJobCardDetails)
+
+
+//HSN Master Management
+tenantRoute.post('/tenant/hsn/create', authenticate, requireTenantUser, createHSN)
+tenantRoute.put('/tenant/hsn/:hsnId/update', authenticate, requireTenantUser, updateHSN)
+tenantRoute.get('/tenant/hsn/get/all', authenticate, requireTenantUser, getListOfHSN)
+tenantRoute.get('/tenant/hsn/get/:hsnId', authenticate, requireTenantUser, getHSNDetails)
+tenantRoute.patch('/tenant/hsn/:hsnId/deactivate', authenticate, requireTenantUser, deactivateHSN)
+tenantRoute.patch('/tenant/hsn/:hsnId/activate', authenticate, requireTenantUser, activateHSN)
+
+
+//Part Category Management
+tenantRoute.post('/tenant/part/category/create', authenticate, requireTenantUser, addPartCategory)
+tenantRoute.put('/tenant/part/category/:categoryId/update', authenticate, requireTenantUser, updatePartCategory)
+tenantRoute.get('/tenant/part/category/get/all', authenticate, requireTenantUser, getListOfPartCategories)
+tenantRoute.get('/tenant/part/category/get/:categoryId', authenticate, requireTenantUser, getPartCategoryDetails)
+tenantRoute.patch('/tenant/part/category/:categoryId/deactivate', authenticate, requireTenantUser, deactivatePartCategory)
+tenantRoute.patch('/tenant/part/category/:categoryId/activate', authenticate, requireTenantUser, activatePartCategory)
+
+
+//Part Master Management
+tenantRoute.post('/tenant/part/create', authenticate, requireTenantUser, addPartMaster)
+tenantRoute.put('/tenant/part/:partId/update', authenticate, requireTenantUser, updatePartMaster)
+tenantRoute.get('/tenant/part/get/all', authenticate, requireTenantUser, getListOfParts)
+tenantRoute.get('/tenant/part/get/:partId', authenticate, requireTenantUser, getPartDetails)
+tenantRoute.patch('/tenant/part/:partId/deactivate', authenticate, requireTenantUser, deactivatePart)
+tenantRoute.patch('/tenant/part/:partId/activate', authenticate, requireTenantUser, activatePart)
+
+
+//Part Fitment Management
+tenantRoute.post('/tenant/part/fitment/create', authenticate, requireTenantUser, addPartFitment)
+tenantRoute.put('/tenant/part/fitment/:fitmentId/update', authenticate, requireTenantUser, updatePartFitment)
+tenantRoute.get('/tenant/part/fitment/get/all', authenticate, requireTenantUser, getListOfPartFitment)
+tenantRoute.get('/tenant/part/fitment/get/:fitmentId', authenticate, requireTenantUser, getPartFitmentDetails)
 export default tenantRoute;

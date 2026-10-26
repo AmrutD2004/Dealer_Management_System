@@ -37,6 +37,47 @@ export const SubscriptionStatus = {
 export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
 
 
+export const CarBodyType = {
+  HATCHBACK: 'HATCHBACK',
+  MICRO_HATCHBACK: 'MICRO_HATCHBACK',
+  PREMIUM_HATCHBACK: 'PREMIUM_HATCHBACK',
+  MICROCAR: 'MICROCAR',
+  SEDAN: 'SEDAN',
+  COMPACT_SEDAN: 'COMPACT_SEDAN',
+  NOTCHBACK: 'NOTCHBACK',
+  FASTBACK: 'FASTBACK',
+  LIFTBACK: 'LIFTBACK',
+  SUV: 'SUV',
+  SUBCOMPACT_SUV: 'SUBCOMPACT_SUV',
+  COMPACT_SUV: 'COMPACT_SUV',
+  MID_SIZE_SUV: 'MID_SIZE_SUV',
+  FULL_SIZE_SUV: 'FULL_SIZE_SUV',
+  CROSSOVER: 'CROSSOVER',
+  COUPE_SUV: 'COUPE_SUV',
+  OFF_ROAD_SUV: 'OFF_ROAD_SUV',
+  LUXURY_SUV: 'LUXURY_SUV',
+  MPV: 'MPV',
+  MINIVAN: 'MINIVAN',
+  MICROVAN: 'MICROVAN',
+  PASSENGER_VAN: 'PASSENGER_VAN',
+  COUPE: 'COUPE',
+  CONVERTIBLE: 'CONVERTIBLE',
+  ROADSTER: 'ROADSTER',
+  SPYDER: 'SPYDER',
+  TARGA: 'TARGA',
+  STATION_WAGON: 'STATION_WAGON',
+  ESTATE: 'ESTATE',
+  PICKUP_TRUCK: 'PICKUP_TRUCK',
+  SPORTS_CAR: 'SPORTS_CAR',
+  SUPERCAR: 'SUPERCAR',
+  HYPERCAR: 'HYPERCAR',
+  LIMOUSINE: 'LIMOUSINE',
+  OTHER: 'OTHER'
+} as const
+
+export type CarBodyType = (typeof CarBodyType)[keyof typeof CarBodyType]
+
+
 export const ServiceCategoryMasterCode = {
   PDI: 'PDI',
   WARRANTY: 'WARRANTY',
@@ -75,3 +116,30 @@ export const JobCardVehicleStatus = {
 } as const
 
 export type JobCardVehicleStatus = (typeof JobCardVehicleStatus)[keyof typeof JobCardVehicleStatus]
+
+
+export const PartStatus = {
+  ACTIVE: 'ACTIVE',
+  SUPERSEDED: 'SUPERSEDED',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type PartStatus = (typeof PartStatus)[keyof typeof PartStatus]
+
+
+export const UnitOfMeasure = {
+  EA: 'EA',
+  PCS: 'PCS',
+  SET: 'SET',
+  PAIR: 'PAIR',
+  L: 'L',
+  ML: 'ML',
+  KG: 'KG',
+  G: 'G',
+  M: 'M',
+  BOX: 'BOX',
+  PACK: 'PACK',
+  KIT: 'KIT'
+} as const
+
+export type UnitOfMeasure = (typeof UnitOfMeasure)[keyof typeof UnitOfMeasure]

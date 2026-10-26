@@ -3,7 +3,7 @@ import { prisma } from "../../prisma/lib/prisma";
 
 export const createVehicle = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!;
-    const { chassisNumber, color, currentOdometerReading, customerId, engineNumber, fuleType, manufacture, manufacturingYear, model, purchaseDate, registrationDate, transmissionType, variant, vehicleNumber } = req.body;
+    const { chassisNumber, color, currentOdometerReading, customerId, engineNumber, brandId, manufacturingYear, modelId, purchaseDate, registrationDate, variantId, vehicleNumber } = req.body;
 
     if (!id || !tenantId) {
         return res.status(404).json({
@@ -12,7 +12,7 @@ export const createVehicle = async (req: Request, res: Response) => {
         })
     }
 
-    if (!model || !manufacture || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber) {
+    if (!modelId || !brandId || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber || !variantId) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -20,10 +20,12 @@ export const createVehicle = async (req: Request, res: Response) => {
     }
 
     try {
-        const isVehicleExists = await prisma.vehicle.findFirst({
+        const isVehicleExists = await prisma.vehicle.findUnique({
             where: {
-                chassisNumber: chassisNumber,
-                tenantId: Number(tenantId)
+                tenantId_chassisNumber: {
+                    chassisNumber: chassisNumber,
+                    tenantId: Number(tenantId)
+                }
             },
             include: {
                 customer: {
@@ -53,14 +55,12 @@ export const createVehicle = async (req: Request, res: Response) => {
                 currentOdometerReading: currentOdometerReading,
                 customerId: Number(customerId),
                 engineNumber: engineNumber,
-                fuelType: fuleType || null,
-                manufacturer: manufacture,
+                modelId: Number(modelId),
+                variantId: Number(variantId),
                 manufacturingYear: manufacturingYear || null,
-                model: model,
+                brandId: Number(brandId),
                 purchaseDate: purchaseDate || null,
                 registrationDate: registrationDate || null,
-                transmissionType: transmissionType || null,
-                variant: variant || null,
                 tenantId: Number(tenantId),
                 vehicleNumber: vehicleNumber,
                 isActive: true
@@ -90,7 +90,7 @@ export const updateVehicle = async (req: Request, res: Response) => {
             message: 'Vehicle Id required'
         })
     }
-    const { chassisNumber, color, currentOdometerReading, customerId, engineNumber, fuleType, manufacture, manufacturingYear, model, purchaseDate, registrationDate, transmissionType, variant, vehicleNumber } = req.body;
+    const { chassisNumber, color, currentOdometerReading, customerId, engineNumber, brandId, manufacturingYear, modelId, purchaseDate, registrationDate, variantId, vehicleNumber } = req.body;
 
     if (!id || !tenantId) {
         return res.status(404).json({
@@ -99,7 +99,7 @@ export const updateVehicle = async (req: Request, res: Response) => {
         })
     }
 
-    if (!model || !manufacture || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber) {
+    if (!modelId || !brandId || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber || !variantId) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -107,7 +107,7 @@ export const updateVehicle = async (req: Request, res: Response) => {
     }
 
     try {
-        const isVehicleExists = await prisma.customer.findUnique({
+        const isVehicleExists = await prisma.vehicle.findUnique({
             where: {
                 id: Number(vehicleId),
                 tenantId: Number(tenantId)
@@ -127,14 +127,12 @@ export const updateVehicle = async (req: Request, res: Response) => {
                 currentOdometerReading: currentOdometerReading,
                 customerId: Number(customerId),
                 engineNumber: engineNumber,
-                fuelType: fuleType || null,
-                manufacturer: manufacture,
+                modelId: Number(modelId),
+                variantId: Number(variantId),
                 manufacturingYear: manufacturingYear || null,
-                model: model,
+                brandId: Number(brandId),
                 purchaseDate: purchaseDate || null,
                 registrationDate: registrationDate || null,
-                transmissionType: transmissionType || null,
-                variant: variant || null,
                 tenantId: Number(tenantId),
                 vehicleNumber: vehicleNumber,
             },
@@ -186,7 +184,10 @@ export const getVehicleDetails = async (req: Request, res: Response) => {
                         tenantName: true
                     }
                 },
-                customer: true
+                customer: true,
+                model : true,
+                brand : true,
+                variant : true
             }
         })
         if (!isVehicleExists) {
@@ -245,7 +246,10 @@ export const getListOfVehicle = async (req: Request, res: Response) => {
                         select: {
                             tenantName: true
                         }
-                    }
+                    },
+                    model : true,
+                brand : true,
+                variant : true
                 }
             })
         } else {
@@ -265,7 +269,10 @@ export const getListOfVehicle = async (req: Request, res: Response) => {
                         select: {
                             tenantName: true
                         }
-                    }
+                    },
+                    model : true,
+                brand : true,
+                variant : true
                 }
             })
         }

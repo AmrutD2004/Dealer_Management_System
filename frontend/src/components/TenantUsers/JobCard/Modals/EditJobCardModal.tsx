@@ -163,7 +163,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
             voices.length > 0
                 ? voices.map((voice) => ({
                     id: voice.id,
-                    labourId: voice.actionToBeTaken?.toString() ?? "",
+                    labourId: voice.labour?.id?.toString() ?? "",
                     customerVoiceDescription: voice.customerVoiceDescription ?? "",
                     observation: voice.observation ?? "",
                 }))
@@ -350,7 +350,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                     <FieldLabel>Vehicle <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
                                         <Select
-                                            items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.manufacturer} ${v.model}` }))}
+                                            items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand.brandName} ${v.model.modelName}` }))}
                                             value={formData.vehicleId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleId: value ?? "" }))}
                                             required

@@ -40,6 +40,7 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
     const [reloadKey, setReloadKey] = useState(0)
 
     const noOfPages = Math.ceil(totalVehicles / TAKE)
+    
 
     useEffect(() => {
         const load = async () => {
@@ -102,9 +103,10 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
     }
 
     const openEdit = (vehicle: any) => {
-        setSelectedVehicle(vehicle)
-        setEditOpen(true)
-    }
+  console.log("Selected vehicle:", vehicle);
+  setSelectedVehicle(vehicle);
+  setEditOpen(true);
+};
 
     const closeModals = () => {
         setViewOpen(false)
@@ -121,6 +123,7 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
             setSkip((prev) => prev + TAKE)
         }
     }
+    
 
     return (
         <div className='w-full'>
@@ -131,7 +134,7 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
                         <TableHead className="text-left text-muted-foreground">Vehicle No.</TableHead>
                         <TableHead className="text-left text-muted-foreground">Customer</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Make/Model</TableHead>
+                        <TableHead className="text-left text-muted-foreground">Make/Model/Variant</TableHead>
                         <TableHead className="text-left text-muted-foreground">Chassis/Engine</TableHead>
                         <TableHead className="text-center text-muted-foreground">Fuel/Trans</TableHead>
                         <TableHead className="text-center text-muted-foreground">Status</TableHead>
@@ -154,13 +157,13 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
                                 <TableCell className='text-left font-medium'>
                                     {vehicle.customer ? `${vehicle.customer.firstName} ${vehicle.customer.lastName}` : '-'}
                                 </TableCell>
-                                <TableCell className='text-left font-medium'>{vehicle.manufacturer} - {vehicle.model}</TableCell>
+                                <TableCell className='text-left font-medium'>{vehicle.brand.brandName} - {vehicle.model.modelName} - {vehicle.variant.variantName}</TableCell>
                                 <TableCell className='text-left font-medium'>
                                     {vehicle.chassisNumber}<br />
                                     <span className="text-xs text-muted-foreground">{vehicle.engineNumber}</span>
                                 </TableCell>
                                 <TableCell className='text-center font-medium'>
-                                    {vehicle.fuelType || vehicle.fuleType || '-'} / {vehicle.transmissionType || '-'}
+                                    {vehicle.variant.fuelType || '-'} / {vehicle.variant.transmissionType || '-'}
                                 </TableCell>
                                 <TableCell className='text-center font-medium'><Badge variant={vehicle.isActive ? 'success' : 'destructive'}>{vehicle.isActive ? 'Active' : 'Deactive'}</Badge></TableCell>
                                 <TableCell className='flex items-center justify-end'>

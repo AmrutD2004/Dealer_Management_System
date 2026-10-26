@@ -67,7 +67,7 @@ export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalPro
               <Detail
                 label="Vehicle"
                 value={jobCard.vehicle
-                  ? `${jobCard.vehicle.vehicleNumber || jobCard.vehicle.chassisNumber} - ${jobCard.vehicle.manufacturer} ${jobCard.vehicle.model}`
+                  ? `${jobCard.vehicle.vehicleNumber || jobCard.vehicle.chassisNumber} - ${jobCard.vehicle.brand.brandName} ${jobCard.vehicle.model.modelName} ${jobCard.vehicle.variant.variantName}`
                   : "-"}
               />
               <Detail label="Current KM Reading" value={jobCard.currentKmReading ?? "-"} />

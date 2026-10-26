@@ -9,6 +9,9 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/PlatformUser.js'
+export type * from './models/BrandMaster.js'
+export type * from './models/VehicleModelMaster.js'
+export type * from './models/VehicleVariantMaster.js'
 export type * from './models/Tenant.js'
 export type * from './models/Branch.js'
 export type * from './models/Users.js'
@@ -26,4 +29,8 @@ export type * from './models/JobCardCustomerVoice.js'
 export type * from './models/LabourMaster.js'
 export type * from './models/DealerBayMaster.js'
 export type * from './models/JobCardAllocation.js'
+export type * from './models/HSNMaster.js'
+export type * from './models/PartCategoryMaster.js'
+export type * from './models/PartMaster.js'
+export type * from './models/PartFitment.js'
 export type * from './commonInputTypes.js'

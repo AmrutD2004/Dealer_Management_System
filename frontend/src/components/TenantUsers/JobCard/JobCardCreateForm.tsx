@@ -222,9 +222,13 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
         }
     }
 
-    const filteredVehicles = formData.customerId
-        ? vehicles.filter((v) => String(v.customerId) === formData.customerId)
-        : vehicles
+   const filteredVehicles = formData.customerId
+    ? vehicles.filter(
+        (v) =>
+            String(v.customerId) === formData.customerId &&
+            v.isActive === true
+      )
+    : vehicles.filter((v) => v.isActive === true)
 
     const filteredServiceTypes = formData.serviceCategoryId
         ? serviceTypes.filter((s) => String(s.serviceCategoryMasterId) === formData.serviceCategoryId)
@@ -284,88 +288,90 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                             <FieldLabel>Vehicle <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>
                                 <Select
-                                    items={filteredVehicles.map((v) => ({ value: String(v.id), label: `${v.vehicleNumber} - ${v.manufacture} ${v.model}` }))}
-                                    value={formData.vehicleId || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, vehicleId: value ?? "" }))}
-                                    required
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select vehicle" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {filteredVehicles.map((v) => (
-                                            <SelectItem key={v.id} value={String(v.id)}>
-                                                {v.vehicleNumber} - {v.manufacture} {v.model}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                disabled={!formData.customerId}
+                                            items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName} ${v.model?.modelName} ${v.variant?.variantName} ${v.variant?.fuelType}` }))}
+                                            value={formData.vehicleId || null}
+                                            onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleId: value ?? "" }))}
+                                            required
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select vehicle" />
+                                            </SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {filteredVehicles.map((v) => (
+                                                    <SelectItem key={v.id} value={String(v.id)}>
+                                                        {v.vehicleNumber || v.chassisNumber} - {v.brand?.brandName} {v.model?.modelName} {v.variant?.variantName} {v.variant?.fuelType}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                             </FieldContent>
                         </Field>
                         <Field>
                             <FieldLabel>Service Category <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>
-                                <Select
-                                    items={serviceCategories.map((sc) => ({ value: String(sc.id), label: sc.serviceCategoryName }))}
-                                    value={formData.serviceCategoryId || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, serviceCategoryId: value ?? "" }))}
-                                    required
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select service category" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {serviceCategories.map((sc) => (
-                                            <SelectItem key={sc.id} value={String(sc.id)}>
-                                                {sc.serviceCategoryName}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                               <Select
+                                            items={serviceCategories.map(s => ({ value: String(s.id), label: s.name }))}
+                                            value={formData.serviceCategoryId || null}
+                                            onValueChange={(value) => setFormData(prev => ({ ...prev, serviceCategoryId: value ?? "", serviceTypeId: "" }))}
+                                            required
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select service category" />
+                                            </SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {serviceCategories.map((s) => (
+                                                    <SelectItem key={s.id} value={String(s.id)}>
+                                                        {s.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                             </FieldContent>
                         </Field>
                         <Field>
                             <FieldLabel>Service Type <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>
                                 <Select
-                                    items={filteredServiceTypes.map((st) => ({ value: String(st.id), label: st.serviceTypeName }))}
-                                    value={formData.serviceTypeId || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, serviceTypeId: value ?? "" }))}
-                                    required
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select service type" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {filteredServiceTypes.map((st) => (
-                                            <SelectItem key={st.id} value={String(st.id)}>
-                                                {st.serviceTypeName}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                        disabled={!formData.serviceCategoryId}
+                                            items={filteredServiceTypes.map(s => ({ value: String(s.id), label: s.name }))}
+                                            value={formData.serviceTypeId || null}
+                                            onValueChange={(value) => setFormData(prev => ({ ...prev, serviceTypeId: value ?? "" }))}
+                                            required
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select service type" />
+                                            </SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {filteredServiceTypes.map((s) => (
+                                                    <SelectItem key={s.id} value={String(s.id)}>
+                                                        {s.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                             </FieldContent>
                         </Field>
                         <Field>
                             <FieldLabel>Repair Order Type <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>
                                 <Select
-                                    items={repairOrders.map((ro) => ({ value: String(ro.id), label: ro.repairOrderName }))}
-                                    value={formData.repairOrderTypeId || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, repairOrderTypeId: value ?? "" }))}
-                                    required
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select repair order" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {repairOrders.map((ro) => (
-                                            <SelectItem key={ro.id} value={String(ro.id)}>
-                                                {ro.repairOrderName}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                            items={repairOrders.map(r => ({ value: String(r.id), label: r.name }))}
+                                            value={formData.repairOrderTypeId || null}
+                                            onValueChange={(value) => setFormData(prev => ({ ...prev, repairOrderTypeId: value ?? "" }))}
+                                            required
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select repair order type" />
+                                            </SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {repairOrders.map((r) => (
+                                                    <SelectItem key={r.id} value={String(r.id)}>
+                                                        {r.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                             </FieldContent>
                         </Field>
                         <Field>
@@ -425,7 +431,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                         <SelectValue placeholder="Select supervisor" />
                                     </SelectTrigger>
                                     <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {employees.map((e) => (
+                                        {employees.filter((f)=>f.role.roleCode==='SUPERVISOR').map((e) => (
                                             <SelectItem key={e.id} value={String(e.id)}>
                                                 {e.firstName} {e.lastName}
                                             </SelectItem>
@@ -446,7 +452,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                         <SelectValue placeholder="Select technician" />
                                     </SelectTrigger>
                                     <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {employees.map((e) => (
+                                        {employees.filter((f)=>f.role.roleCode==='TECHNICIAN').map((e) => (
                                             <SelectItem key={e.id} value={String(e.id)}>
                                                 {e.firstName} {e.lastName}
                                             </SelectItem>

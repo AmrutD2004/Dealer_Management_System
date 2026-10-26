@@ -23,6 +23,21 @@ export * from './enums.js';
  */
 export type PlatformUser = Prisma.PlatformUserModel
 /**
+ * Model BrandMaster
+ * 
+ */
+export type BrandMaster = Prisma.BrandMasterModel
+/**
+ * Model VehicleModelMaster
+ * 
+ */
+export type VehicleModelMaster = Prisma.VehicleModelMasterModel
+/**
+ * Model VehicleVariantMaster
+ * 
+ */
+export type VehicleVariantMaster = Prisma.VehicleVariantMasterModel
+/**
  * Model Tenant
  * 
  */
@@ -107,3 +122,23 @@ export type DealerBayMaster = Prisma.DealerBayMasterModel
  * 
  */
 export type JobCardAllocation = Prisma.JobCardAllocationModel
+/**
+ * Model HSNMaster
+ * 
+ */
+export type HSNMaster = Prisma.HSNMasterModel
+/**
+ * Model PartCategoryMaster
+ * 
+ */
+export type PartCategoryMaster = Prisma.PartCategoryMasterModel
+/**
+ * Model PartMaster
+ * 
+ */
+export type PartMaster = Prisma.PartMasterModel
+/**
+ * Model PartFitment
+ * 
+ */
+export type PartFitment = Prisma.PartFitmentModel

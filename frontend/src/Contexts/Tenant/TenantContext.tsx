@@ -99,7 +99,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
         setSelectedBranch(null)
     }
 
-    const fetchDesignationList = async (skip: number, take: number) => {
+    const fetchDesignationList = useCallback(async (skip: number, take: number) => {
         try {
             const data = await getDesignationList(skip, take)
             if (data?.success) {
@@ -112,7 +112,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
                 description: err?.response?.data?.message
             })
         }
-    }
+    }, [])
 
     const fetchDesignationById = async (designationId: number) => {
         try {
@@ -150,7 +150,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
         setSelectedDesignation(null)
     }
 
-    const fetchRoleList = async (skip: number, take: number) => {
+    const fetchRoleList = useCallback(async (skip: number, take: number) => {
         try {
             const data = await getRoleList(skip, take)
             if (data?.success) {
@@ -163,7 +163,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
                 description: err?.response?.data?.message
             })
         }
-    }
+    }, [])
 
     const fetchRoleById = async (roleId: number) => {
         try {
@@ -246,7 +246,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
         setSelectedPermissionMapping(null)
     }
 
-    const fetchEmployeeList = async (skip: number, take: number) => {
+    const fetchEmployeeList = useCallback(async (skip: number, take: number) => {
         try {
             const data = await getEmployeeList(skip, take)
             if (data?.success) {
@@ -259,7 +259,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
                 description: err?.response?.data?.message
             })
         }
-    }
+    }, [])
 
     const fetchEmployeeById = async (employeeId: number) => {
         try {

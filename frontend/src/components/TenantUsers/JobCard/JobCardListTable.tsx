@@ -132,7 +132,7 @@ const JobCardListTable = ({ refreshKey = 0 }: JobCardListTableProps) => {
                                                 {jobCard.vehicle?.vehicleNumber || jobCard.vehicle?.chassisNumber || '-'}
                                             </span>
                                             <span className='text-xs text-muted-foreground'>
-                                                {jobCard.vehicle ? `${jobCard.vehicle.manufacturer} ${jobCard.vehicle.model}` : '-'}
+                                                {jobCard.vehicle ? `${jobCard.vehicle.brand.brandName} ${jobCard.vehicle.model.modelName}` : '-'}
                                             </span>
                                         </div>
                                     </TableCell>

@@ -398,6 +398,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   PlatformUser: 'PlatformUser',
+  BrandMaster: 'BrandMaster',
+  VehicleModelMaster: 'VehicleModelMaster',
+  VehicleVariantMaster: 'VehicleVariantMaster',
   Tenant: 'Tenant',
   Branch: 'Branch',
   Users: 'Users',
@@ -414,7 +417,11 @@ export const ModelName = {
   JobCardCustomerVoice: 'JobCardCustomerVoice',
   LabourMaster: 'LabourMaster',
   DealerBayMaster: 'DealerBayMaster',
-  JobCardAllocation: 'JobCardAllocation'
+  JobCardAllocation: 'JobCardAllocation',
+  HSNMaster: 'HSNMaster',
+  PartCategoryMaster: 'PartCategoryMaster',
+  PartMaster: 'PartMaster',
+  PartFitment: 'PartFitment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation"
+    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -505,6 +512,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PlatformUserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PlatformUserCountAggregateOutputType> | number
+        }
+      }
+    }
+    BrandMaster: {
+      payload: Prisma.$BrandMasterPayload<ExtArgs>
+      fields: Prisma.BrandMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BrandMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BrandMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.BrandMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BrandMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>
+        }
+        findMany: {
+          args: Prisma.BrandMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>[]
+        }
+        create: {
+          args: Prisma.BrandMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>
+        }
+        createMany: {
+          args: Prisma.BrandMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BrandMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.BrandMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>
+        }
+        update: {
+          args: Prisma.BrandMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.BrandMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BrandMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BrandMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.BrandMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrandMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.BrandMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBrandMaster>
+        }
+        groupBy: {
+          args: Prisma.BrandMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BrandMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BrandMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BrandMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    VehicleModelMaster: {
+      payload: Prisma.$VehicleModelMasterPayload<ExtArgs>
+      fields: Prisma.VehicleModelMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VehicleModelMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VehicleModelMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.VehicleModelMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VehicleModelMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>
+        }
+        findMany: {
+          args: Prisma.VehicleModelMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>[]
+        }
+        create: {
+          args: Prisma.VehicleModelMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>
+        }
+        createMany: {
+          args: Prisma.VehicleModelMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VehicleModelMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.VehicleModelMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>
+        }
+        update: {
+          args: Prisma.VehicleModelMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.VehicleModelMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VehicleModelMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VehicleModelMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.VehicleModelMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleModelMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.VehicleModelMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVehicleModelMaster>
+        }
+        groupBy: {
+          args: Prisma.VehicleModelMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VehicleModelMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VehicleModelMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VehicleModelMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    VehicleVariantMaster: {
+      payload: Prisma.$VehicleVariantMasterPayload<ExtArgs>
+      fields: Prisma.VehicleVariantMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VehicleVariantMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VehicleVariantMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.VehicleVariantMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VehicleVariantMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>
+        }
+        findMany: {
+          args: Prisma.VehicleVariantMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>[]
+        }
+        create: {
+          args: Prisma.VehicleVariantMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>
+        }
+        createMany: {
+          args: Prisma.VehicleVariantMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VehicleVariantMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.VehicleVariantMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>
+        }
+        update: {
+          args: Prisma.VehicleVariantMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.VehicleVariantMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VehicleVariantMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VehicleVariantMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.VehicleVariantMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VehicleVariantMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.VehicleVariantMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVehicleVariantMaster>
+        }
+        groupBy: {
+          args: Prisma.VehicleVariantMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VehicleVariantMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VehicleVariantMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VehicleVariantMasterCountAggregateOutputType> | number
         }
       }
     }
@@ -1766,6 +1995,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HSNMaster: {
+      payload: Prisma.$HSNMasterPayload<ExtArgs>
+      fields: Prisma.HSNMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HSNMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HSNMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.HSNMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HSNMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>
+        }
+        findMany: {
+          args: Prisma.HSNMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>[]
+        }
+        create: {
+          args: Prisma.HSNMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>
+        }
+        createMany: {
+          args: Prisma.HSNMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HSNMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.HSNMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>
+        }
+        update: {
+          args: Prisma.HSNMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.HSNMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HSNMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HSNMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.HSNMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HSNMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.HSNMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHSNMaster>
+        }
+        groupBy: {
+          args: Prisma.HSNMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HSNMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HSNMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HSNMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    PartCategoryMaster: {
+      payload: Prisma.$PartCategoryMasterPayload<ExtArgs>
+      fields: Prisma.PartCategoryMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PartCategoryMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PartCategoryMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.PartCategoryMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PartCategoryMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>
+        }
+        findMany: {
+          args: Prisma.PartCategoryMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>[]
+        }
+        create: {
+          args: Prisma.PartCategoryMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>
+        }
+        createMany: {
+          args: Prisma.PartCategoryMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PartCategoryMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.PartCategoryMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>
+        }
+        update: {
+          args: Prisma.PartCategoryMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.PartCategoryMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PartCategoryMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PartCategoryMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.PartCategoryMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartCategoryMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.PartCategoryMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePartCategoryMaster>
+        }
+        groupBy: {
+          args: Prisma.PartCategoryMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PartCategoryMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PartCategoryMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PartCategoryMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    PartMaster: {
+      payload: Prisma.$PartMasterPayload<ExtArgs>
+      fields: Prisma.PartMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PartMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PartMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.PartMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PartMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>
+        }
+        findMany: {
+          args: Prisma.PartMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>[]
+        }
+        create: {
+          args: Prisma.PartMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>
+        }
+        createMany: {
+          args: Prisma.PartMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PartMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.PartMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>
+        }
+        update: {
+          args: Prisma.PartMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.PartMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PartMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PartMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.PartMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.PartMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePartMaster>
+        }
+        groupBy: {
+          args: Prisma.PartMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PartMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PartMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PartMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    PartFitment: {
+      payload: Prisma.$PartFitmentPayload<ExtArgs>
+      fields: Prisma.PartFitmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PartFitmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PartFitmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>
+        }
+        findFirst: {
+          args: Prisma.PartFitmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PartFitmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>
+        }
+        findMany: {
+          args: Prisma.PartFitmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>[]
+        }
+        create: {
+          args: Prisma.PartFitmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>
+        }
+        createMany: {
+          args: Prisma.PartFitmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PartFitmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>[]
+        }
+        delete: {
+          args: Prisma.PartFitmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>
+        }
+        update: {
+          args: Prisma.PartFitmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PartFitmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PartFitmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PartFitmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PartFitmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PartFitmentPayload>
+        }
+        aggregate: {
+          args: Prisma.PartFitmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePartFitment>
+        }
+        groupBy: {
+          args: Prisma.PartFitmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PartFitmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PartFitmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PartFitmentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1816,6 +2341,49 @@ export const PlatformUserScalarFieldEnum = {
 } as const
 
 export type PlatformUserScalarFieldEnum = (typeof PlatformUserScalarFieldEnum)[keyof typeof PlatformUserScalarFieldEnum]
+
+
+export const BrandMasterScalarFieldEnum = {
+  id: 'id',
+  brandCode: 'brandCode',
+  brandName: 'brandName',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BrandMasterScalarFieldEnum = (typeof BrandMasterScalarFieldEnum)[keyof typeof BrandMasterScalarFieldEnum]
+
+
+export const VehicleModelMasterScalarFieldEnum = {
+  id: 'id',
+  brandId: 'brandId',
+  modelCode: 'modelCode',
+  modelName: 'modelName',
+  bodyType: 'bodyType',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VehicleModelMasterScalarFieldEnum = (typeof VehicleModelMasterScalarFieldEnum)[keyof typeof VehicleModelMasterScalarFieldEnum]
+
+
+export const VehicleVariantMasterScalarFieldEnum = {
+  id: 'id',
+  modelId: 'modelId',
+  variantCode: 'variantCode',
+  variantName: 'variantName',
+  fuelType: 'fuelType',
+  transmissionType: 'transmissionType',
+  productionFrom: 'productionFrom',
+  productionTo: 'productionTo',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VehicleVariantMasterScalarFieldEnum = (typeof VehicleVariantMasterScalarFieldEnum)[keyof typeof VehicleVariantMasterScalarFieldEnum]
 
 
 export const TenantScalarFieldEnum = {
@@ -2015,18 +2583,16 @@ export const VehicleScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
   customerId: 'customerId',
+  brandId: 'brandId',
+  modelId: 'modelId',
+  variantId: 'variantId',
   vehicleNumber: 'vehicleNumber',
   chassisNumber: 'chassisNumber',
   engineNumber: 'engineNumber',
-  manufacturer: 'manufacturer',
-  model: 'model',
-  variant: 'variant',
   color: 'color',
   manufacturingYear: 'manufacturingYear',
   registrationDate: 'registrationDate',
   purchaseDate: 'purchaseDate',
-  fuelType: 'fuelType',
-  transmissionType: 'transmissionType',
   currentOdometerReading: 'currentOdometerReading',
   isActive: 'isActive',
   createdAt: 'createdAt',
@@ -2131,6 +2697,76 @@ export const JobCardAllocationScalarFieldEnum = {
 export type JobCardAllocationScalarFieldEnum = (typeof JobCardAllocationScalarFieldEnum)[keyof typeof JobCardAllocationScalarFieldEnum]
 
 
+export const HSNMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  hsnCode: 'hsnCode',
+  description: 'description',
+  taxRate: 'taxRate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HSNMasterScalarFieldEnum = (typeof HSNMasterScalarFieldEnum)[keyof typeof HSNMasterScalarFieldEnum]
+
+
+export const PartCategoryMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  parentId: 'parentId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PartCategoryMasterScalarFieldEnum = (typeof PartCategoryMasterScalarFieldEnum)[keyof typeof PartCategoryMasterScalarFieldEnum]
+
+
+export const PartMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  partNo: 'partNo',
+  partDescription: 'partDescription',
+  partCategoryId: 'partCategoryId',
+  hsnId: 'hsnId',
+  sellingPrice: 'sellingPrice',
+  taxRate: 'taxRate',
+  unitOfMeasure: 'unitOfMeasure',
+  reorderLevel: 'reorderLevel',
+  isFastMoving: 'isFastMoving',
+  status: 'status',
+  supersededById: 'supersededById',
+  validFrom: 'validFrom',
+  validTo: 'validTo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PartMasterScalarFieldEnum = (typeof PartMasterScalarFieldEnum)[keyof typeof PartMasterScalarFieldEnum]
+
+
+export const PartFitmentScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  partId: 'partId',
+  modelId: 'modelId',
+  variantId: 'variantId',
+  brandId: 'brandId',
+  quantity: 'quantity',
+  position: 'position',
+  isOem: 'isOem',
+  validFrom: 'validFrom',
+  validTo: 'validTo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PartFitmentScalarFieldEnum = (typeof PartFitmentScalarFieldEnum)[keyof typeof PartFitmentScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2221,6 +2857,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CarBodyType'
+ */
+export type EnumCarBodyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CarBodyType'>
+    
+
+
+/**
+ * Reference to a field of type 'CarBodyType[]'
+ */
+export type ListEnumCarBodyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CarBodyType[]'>
     
 
 
@@ -2319,6 +2969,34 @@ export type EnumJobCardStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'JobCardStatus[]'
  */
 export type ListEnumJobCardStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobCardStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UnitOfMeasure'
+ */
+export type EnumUnitOfMeasureFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnitOfMeasure'>
+    
+
+
+/**
+ * Reference to a field of type 'UnitOfMeasure[]'
+ */
+export type ListEnumUnitOfMeasureFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnitOfMeasure[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PartStatus'
+ */
+export type EnumPartStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PartStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PartStatus[]'
+ */
+export type ListEnumPartStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PartStatus[]'>
     
 
 
@@ -2487,6 +3165,9 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   platformUser?: Prisma.PlatformUserOmit
+  brandMaster?: Prisma.BrandMasterOmit
+  vehicleModelMaster?: Prisma.VehicleModelMasterOmit
+  vehicleVariantMaster?: Prisma.VehicleVariantMasterOmit
   tenant?: Prisma.TenantOmit
   branch?: Prisma.BranchOmit
   users?: Prisma.UsersOmit
@@ -2504,6 +3185,10 @@ export type GlobalOmitConfig = {
   labourMaster?: Prisma.LabourMasterOmit
   dealerBayMaster?: Prisma.DealerBayMasterOmit
   jobCardAllocation?: Prisma.JobCardAllocationOmit
+  hSNMaster?: Prisma.HSNMasterOmit
+  partCategoryMaster?: Prisma.PartCategoryMasterOmit
+  partMaster?: Prisma.PartMasterOmit
+  partFitment?: Prisma.PartFitmentOmit
 }
 
 /* Types for Logging */

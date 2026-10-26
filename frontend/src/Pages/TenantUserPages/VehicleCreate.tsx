@@ -9,6 +9,7 @@ const VehicleCreate = () => {
     const { id } = useParams()
 
     const goBack = () => navigate(`/tenant/${id}/vehicle`)
+    
 
     return (
         <TenantDashboardLayout>

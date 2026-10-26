@@ -86,3 +86,68 @@ Other `JobCard` foreign keys connect it to `Tenant`, `Branch`, `Customer`, `Vehi
 The detail and list endpoints include customer voice rows and their related labour, alongside the job card's other relations. The create endpoint returns a success message with the generated number, not the complete inserted record.
 
 The same controller also has update and close operations. Updating edits the parent job card and updates submitted customer voice rows by voice ID. Closing changes the job card status to `CLOSED`. These are later lifecycle actions, separate from creation.
+
+## 7. Tenant user manages dealer bays
+
+The tenant router exposes dealer bay operations under `/api/tenant/bay`. Every route applies `authenticate` and `requireTenantUser`. A `DealerBayMaster` row belongs to a tenant and a branch and stores its bay code, name, optional description, and active state. The schema makes `(branchId, bayCode)` unique.
+
+| Operation | Endpoint | Behavior |
+|---|---|---|
+| Create | `POST /api/tenant/bay/create` | Requires bay code, name, and branch ID. Checks for an existing code in that branch, then creates the bay with the authenticated tenant ID. |
+| Update | `PUT /api/tenant/bay/:bayId/update` | Requires bay ID, code, name, and branch ID; updates the bay using both bay ID and authenticated tenant ID. |
+| List | `GET /api/tenant/bay/get/all` | Returns bays and count for the authenticated tenant, including branch and tenant relations. Supports optional `skip` and `take`. |
+| Details | `GET /api/tenant/bay/get/:bayId` | Fetches a bay by ID with branch and tenant relations. |
+| Deactivate / activate | `PATCH /api/tenant/bay/:bayId/deactivate` / `PATCH /api/tenant/bay/:bayId/activate` | Sets the selected row's `isActive` value to `false` or `true`. |
+
+Bay creation associates the supplied branch ID with the authenticated tenant ID; the handler does not independently verify that the branch belongs to that tenant. The detail and activation handlers look up rows by bay ID without a tenant filter, while the update write and list query are tenant-scoped.
+
+## 8. Tenant user allocates a job card to a bay and mechanic
+
+Allocation routes are under `/api/tenant/jobcard/allocate` and require tenant authentication. The `JobCardAllocation` row links a job card, a mechanic (`Users`), and a dealer bay, with a required bay-in time and optional bay-out time. Creating an allocation requires all four input fields: `jobCardId`, `bayId`, `mechanicId`, and `bayInDateTime`.
+
+Before creating an allocation, the controller rejects a job card that already has an allocation with `bayOutTime = null`, rejects a bay that is already occupied by such an allocation, and checks that the selected user's role code is `MECHANIC`. It then creates the allocation and returns a message naming the job card, mechanic, and bay. Updating requires the same fields and checks that the selected user has the mechanic role; it writes the new job card, bay, mechanic, and bay-in time for the allocation ID.
+
+| Operation | Endpoint | Behavior |
+|---|---|---|
+| Allocate | `POST /api/tenant/jobcard/allocate` | Creates a bay/job card/mechanic allocation after the active-allocation and mechanic-role checks. |
+| Update | `PUT /api/tenant/jobcard/allocate/:allocatedId/update` | Updates the linked job card, bay, mechanic, and bay-in time for the allocation ID. |
+| List | `GET /api/tenant/jobcard/allocate/get/all` | Returns allocations whose job card belongs to the authenticated tenant, with job card, bay, and mechanic relations; includes a count and supports optional `skip` and `take`. |
+| Details | `GET /api/tenant/jobcard/allocate/get/:allocatedId` | Fetches one allocation by ID with its job card, bay, and mechanic relations. |
+
+The list query is tenant-scoped through `JobCard.tenantId`. The create, update, and detail lookups do not add tenant filters to the referenced IDs or allocation ID. There is no allocation close-out endpoint in these routes; the active occupancy checks use a null `bayOutTime`, and this controller does not set that field.
+
+The relationship path is:
+
+```text
+Tenant (via JobCard.tenantId)
+          │
+          ▼
+       JobCard ─────── JobCardAllocation ─────── DealerBayMaster
+                              │
+                              └───────────────── Users (mechanic)
+```
+
+## 9. Tenant user manages HSN codes
+
+The tenant router exposes HSN master operations under `/api/tenant/hsn` (the server mounts the tenant router under `/api`). Every route applies `authenticate` and `requireTenantUser`, so the controller receives the tenant user's ID and tenant ID from the authenticated request. The HSN master stores a code, optional description, optional tax rate, active state, and its owning tenant in `HSNMaster`; `(tenantId, hsnCode)` is unique.
+
+| Operation | Endpoint | Behavior |
+|---|---|---|
+| Create | `POST /api/tenant/hsn/create` | Requires `hsnCode`, checks for a duplicate within the authenticated tenant, and creates the row with that tenant ID. `taxRate` is parsed as a number and `description` is optional. |
+| Update | `PUT /api/tenant/hsn/:hsnId/update` | Requires the HSN ID and code, then updates the code, tax rate, and description. The update query includes both the HSN ID and authenticated tenant ID. |
+| List | `GET /api/tenant/hsn/get/all` | Returns HSN rows and the total count for the authenticated tenant. Optional `skip` and `take` query parameters are passed to Prisma for pagination. |
+| Details | `GET /api/tenant/hsn/get/:hsnId` | Fetches one HSN row by ID and includes its tenant relation. |
+| Deactivate / activate | `PATCH /api/tenant/hsn/:hsnId/deactivate` / `PATCH /api/tenant/hsn/:hsnId/activate` | Sets `isActive` to `false` or `true` for the row identified by HSN ID. |
+
+HSN creation does not create or modify a tenant; `tenantId` comes from the tenant user's authentication claims. List and create duplicate checks are tenant-scoped. In the current controller, the detail lookup and the activate/deactivate lookups use the HSN ID without adding a tenant filter, while update's write is tenant-filtered.
+
+The HSN data path is:
+
+```text
+Tenant user (Users.id, Users.tenantId)
+                 │
+                 ▼
+       HSNMaster.tenantId
+                 │
+                 └── HSNMaster.hsnCode (unique within the tenant)
+```
