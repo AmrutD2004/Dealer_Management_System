@@ -265,7 +265,13 @@ export const getJobcardDetails = async (req: Request, res: Response) => {
                     }
                 },
                 customer: true,
-                vehicle: true,
+                vehicle: {
+                    include : {
+                        brand : true,
+                        model : true,
+                        variant : true
+                    }
+                },
                 serviceType: true,
                 serviceCategory: true,
                 repairOrderType: true,
@@ -333,7 +339,13 @@ export const getListOfJobCard = async (req: Request, res: Response) => {
                         }
                     },
                     customer: true,
-                    vehicle: true,
+                    vehicle: {
+                    include : {
+                        brand : true,
+                        model : true,
+                        variant : true
+                    }
+                },
                     serviceType: true,
                     serviceCategory: true,
                     repairOrderType: true,
@@ -362,7 +374,13 @@ export const getListOfJobCard = async (req: Request, res: Response) => {
                         }
                     },
                     customer: true,
-                    vehicle: true,
+                    vehicle: {
+                    include : {
+                        brand : true,
+                        model : true,
+                        variant : true
+                    }
+                },
                     serviceType: true,
                     serviceCategory: true,
                     repairOrderType: true,

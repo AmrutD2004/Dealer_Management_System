@@ -273,11 +273,13 @@ export const getListOfTenantEmployee = async (req: Request, res: Response) => {
           role: {
             select: {
               roleName: true,
+              roleCode : true
             },
           },
           designation: {
             select: {
               name: true,
+              code : true
             },
           },
           branch: {

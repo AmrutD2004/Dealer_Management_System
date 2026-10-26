@@ -771,10 +771,6 @@ export type UsersUncheckedUpdateManyWithoutBranchNestedInput = {
   deleteMany?: Prisma.UsersScalarWhereInput | Prisma.UsersScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type UsersCreateNestedManyWithoutDesignationInput = {
   create?: Prisma.XOR<Prisma.UsersCreateWithoutDesignationInput, Prisma.UsersUncheckedCreateWithoutDesignationInput> | Prisma.UsersCreateWithoutDesignationInput[] | Prisma.UsersUncheckedCreateWithoutDesignationInput[]
   connectOrCreate?: Prisma.UsersCreateOrConnectWithoutDesignationInput | Prisma.UsersCreateOrConnectWithoutDesignationInput[]

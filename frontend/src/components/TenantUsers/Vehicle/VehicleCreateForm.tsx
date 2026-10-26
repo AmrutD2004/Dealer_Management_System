@@ -1,4 +1,4 @@
-import { createVehicle, getCustomerList } from "@/api/endpoints"
+import { createVehicle, getBrandListWithoutPagination, getCustomerList, getModelListWithoutPagination, getVariantListWithoutPagination } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
 import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
@@ -11,6 +11,9 @@ import {
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/toast"
 import type { customerListType } from "@/Types/tenantCreateType"
+import type { vehicleBrand } from "@/Types/vehicleBrand"
+import type { vehicleModel } from "@/Types/vehicleModel"
+import type { vehicleVariant } from "@/Types/vehicleVariants"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 
@@ -38,14 +41,12 @@ const initialFormData = {
     currentOdometerReading: "",
     customerId: "",
     engineNumber: "",
-    fuleType: "",
-    manufacture: "",
+    modelId: "",
+    brandId: "",
     manufacturingYear: "",
-    model: "",
     purchaseDate: "",
     registrationDate: "",
-    transmissionType: "",
-    variant: "",
+    variantId: "",
     vehicleNumber: "",
 }
 
@@ -53,6 +54,33 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
     const [loading, setLoading] = useState<boolean>(false)
     const [customers, setCustomers] = useState<customerListType[]>([])
     const [formData, setFormData] = useState(initialFormData)
+    const [vehicleBrand, setVehicleBrand] = useState<vehicleBrand[]>([])
+    const [vehicleModel, setVehicleModel] = useState<vehicleModel[]>([])
+    const [vehicleVariant, setVehicleVariant] = useState<vehicleVariant[]>([])
+
+    const fetchDropdowns = async () => {
+        try {
+            const [brand, model, variant] = await Promise.all([
+                getBrandListWithoutPagination(),
+                getModelListWithoutPagination(),
+                getVariantListWithoutPagination()
+            ])
+            if (brand?.success) {
+                setVehicleBrand(brand?.data)
+            }
+            if (model?.success) {
+                setVehicleModel(model?.data)
+            }
+            if (variant?.success) {
+                setVehicleVariant(variant?.data)
+            }
+        } catch (err : any) {
+            toast.add({
+                type : 'error',
+                description : err?.response?.data?.message
+            })
+        }
+    }
 
     useEffect(() => {
         const fetchCustomers = async () => {
@@ -66,6 +94,7 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
             }
         }
         fetchCustomers()
+        fetchDropdowns()
     }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -79,6 +108,9 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
         try {
             const data = await createVehicle({
                 ...formData,
+                engineNumber : formData.engineNumber.toUpperCase(),
+                chassisNumber : formData.chassisNumber.toUpperCase(),
+                vehicleNumber : formData.vehicleNumber.toUpperCase(),
                 currentOdometerReading: Number(formData.currentOdometerReading),
                 customerId: Number(formData.customerId),
             })
@@ -107,7 +139,8 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
             setLoading(false)
         }
     }
-
+    const filterVehicleByBrand = formData.brandId ? vehicleModel.filter((f) => String(f.brandId) === formData.brandId) : vehicleModel
+    const filterVehicleByModel = formData.modelId ? vehicleVariant.filter((f) => String(f.modelId) === formData.modelId) : vehicleVariant
     return (
         <form id="vehicle-form" onSubmit={handleSubmit}>
             <div className="space-y-6 py-4">
@@ -117,7 +150,7 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
                         <Field>
                             <FieldLabel>Vehicle Number <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>
-                                <Input name='vehicleNumber' placeholder="Vehicle Number" required onChange={handleChange} value={formData.vehicleNumber} />
+                                <Input name='vehicleNumber' placeholder="Vehicle Number" required onChange={handleChange} value={formData.vehicleNumber.toUpperCase()} />
                             </FieldContent>
                         </Field>
                         <Field>
@@ -145,79 +178,87 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
                         <Field>
                             <FieldLabel>Chassis Number <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>
-                                <Input name='chassisNumber' placeholder="Chassis Number" required onChange={handleChange} value={formData.chassisNumber} />
+                                <Input name='chassisNumber' placeholder="Chassis Number" required onChange={handleChange} value={formData.chassisNumber.toUpperCase()} />
                             </FieldContent>
                         </Field>
                         <Field>
                             <FieldLabel>Engine Number <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>
-                                <Input name='engineNumber' placeholder="Engine Number" required onChange={handleChange} value={formData.engineNumber} />
+                                <Input name='engineNumber' placeholder="Engine Number" required onChange={handleChange} value={formData.engineNumber.toUpperCase()} />
                             </FieldContent>
                         </Field>
                         <Field>
-                            <FieldLabel>Manufacturer <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Input name='manufacture' placeholder="Manufacturer" required onChange={handleChange} value={formData.manufacture} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Model <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Input name='model' placeholder="Model" required onChange={handleChange} value={formData.model} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Variant</FieldLabel>
-                            <FieldContent>
-                                <Input name='variant' placeholder="Variant" onChange={handleChange} value={formData.variant} />
-                            </FieldContent>
-                        </Field>
+                                    <FieldLabel>Brand <span className="text-red-500">*</span></FieldLabel>
+                                    <FieldContent>
+                                        <Select
+                                            items={vehicleBrand.map(b => ({ value: String(b.id), label: `${b.brandName} - ${b.brandCode}` }))}
+                                            value={formData.brandId || null}
+                                            onValueChange={(value) => setFormData(prev => ({ ...prev, brandId: value ?? "" }))}
+                                            required
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select brand" />
+                                            </SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {vehicleBrand.map((b) => (
+                                                    <SelectItem key={b.id} value={String(b.id)}>
+                                                        {b.brandName} - {b.brandCode}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FieldContent>
+                                </Field>
+                                <Field>
+                                    <FieldLabel>Model <span className="text-red-500">*</span></FieldLabel>
+                                    <FieldContent>
+                                        <Select
+                                        disabled={!formData.brandId}
+                                            items={filterVehicleByBrand.map(m => ({ value: String(m.id), label: `${m.modelName} - ${m.modelCode}` }))}
+                                            value={formData.modelId || null}
+                                            onValueChange={(value) => setFormData(prev => ({ ...prev, modelId: value ?? "" }))}
+                                            required
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select model" />
+                                            </SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {filterVehicleByBrand.map((m) => (
+                                                    <SelectItem key={m.id} value={String(m.id)}>
+                                                        {m.modelName} - {m.modelCode}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FieldContent>
+                                </Field>
+                                <Field>
+                                    <FieldLabel>Variant</FieldLabel>
+                                    <FieldContent>
+                                        <Select
+                                        disabled={!formData.modelId}
+                                            items={filterVehicleByModel.map(v => ({ value: String(v.id), label: `${v.variantName} - ${v.variantCode} - ${v.fuelType}` }))}
+                                            value={formData.variantId || null}
+                                            onValueChange={(value) => setFormData(prev => ({ ...prev, variantId: value ?? "" }))}
+                                            required
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select brand" />
+                                            </SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {filterVehicleByModel.map((v) => (
+                                                    <SelectItem key={v.id} value={String(v.id)}>
+                                                        {v.variantName} - {v.variantCode} - {v.fuelType}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FieldContent>
+                                </Field>
                         <Field>
                             <FieldLabel>Color</FieldLabel>
                             <FieldContent>
                                 <Input name='color' placeholder="Color" onChange={handleChange} value={formData.color} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Fuel Type</FieldLabel>
-                            <FieldContent>
-                                <Select
-                                    items={fuelTypeOptions.map(f => ({ value: f.value, label: f.label }))}
-                                    value={formData.fuleType || null}
-                                    onValueChange={(value) => setFormData(prev => ({ ...prev, fuleType: value ?? "" }))}
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select fuel type" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {fuelTypeOptions.map((f) => (
-                                            <SelectItem key={f.value} value={f.value}>
-                                                {f.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Transmission Type</FieldLabel>
-                            <FieldContent>
-                                <Select
-                                    items={transmissionOptions.map(t => ({ value: t.value, label: t.label }))}
-                                    value={formData.transmissionType || null}
-                                    onValueChange={(value) => setFormData(prev => ({ ...prev, transmissionType: value ?? "" }))}
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select transmission" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {transmissionOptions.map((t) => (
-                                            <SelectItem key={t.value} value={t.value}>
-                                                {t.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
                             </FieldContent>
                         </Field>
                         <Field>

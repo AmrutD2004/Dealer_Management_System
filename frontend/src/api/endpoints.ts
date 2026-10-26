@@ -434,3 +434,38 @@ export const updateJobCard = async (payload: {}, jobCardId: number) => {
     const response = await api.put(`/api/tenant/jobcard/${jobCardId}/update`, payload)
     return await response.data;
 }
+
+
+//Vehicle Brand Routes
+export const getBrandList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/platform/brand/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getBrandListWithoutPagination = async () => {
+    const response = await api.get(`/api/platform/brand/get/all`)
+    return await response.data;
+}
+
+//Vehicle Model Routes
+export const getModelList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/platform/vehicle/model/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getModelListWithoutPagination = async () => {
+    const response = await api.get(`/api/platform/vehicle/model/get/all`)
+    return await response.data;
+}
+
+
+//Vehicle Variant Routes
+export const getVariantList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/platform/vehicle/variant/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getVariantListWithoutPagination = async () => {
+    const response = await api.get(`/api/platform/vehicle/variant/get/all`)
+    return await response.data;
+}

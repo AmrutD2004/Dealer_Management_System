@@ -92,19 +92,19 @@ export function ViewVehicleModal({ vehicle, open, onClose }: props) {
               <Label className="text-xs text-muted-foreground">
                 Manufacturer
               </Label>
-              <span className="text-sm font-medium">{vehicle.manufacturer || vehicle.manufacture || '-'}</span>
+              <span className="text-sm font-medium">{vehicle.brand.brandName || '-'}</span>
             </Field>
             <Field>
               <Label className="text-xs text-muted-foreground">
                 Model
               </Label>
-              <span className="text-sm font-medium">{vehicle.model || '-'}</span>
+              <span className="text-sm font-medium">{vehicle.model.modelName || '-'}</span>
             </Field>
             <Field>
               <Label className="text-xs text-muted-foreground">
                 Variant
               </Label>
-              <span className="text-sm font-medium">{vehicle.variant || '-'}</span>
+              <span className="text-sm font-medium">{vehicle.variant.variantName || '-'}</span>
             </Field>
             <Field>
               <Label className="text-xs text-muted-foreground">
@@ -116,13 +116,13 @@ export function ViewVehicleModal({ vehicle, open, onClose }: props) {
               <Label className="text-xs text-muted-foreground">
                 Fuel Type
               </Label>
-              <span className="text-sm font-medium">{vehicle.fuelType || vehicle.fuleType || '-'}</span>
+              <span className="text-sm font-medium">{vehicle.variant.fuelType ||  '-'}</span>
             </Field>
             <Field>
               <Label className="text-xs text-muted-foreground">
                 Transmission Type
               </Label>
-              <span className="text-sm font-medium">{vehicle.transmissionType || '-'}</span>
+              <span className="text-sm font-medium">{vehicle.variant.transmissionType || '-'}</span>
             </Field>
             <Field>
               <Label className="text-xs text-muted-foreground">

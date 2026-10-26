@@ -1,4 +1,4 @@
-import { editVehicle } from "@/api/endpoints"
+import { editVehicle, getBrandListWithoutPagination, getModelListWithoutPagination, getVariantListWithoutPagination } from "@/api/endpoints"
 import { getCustomerList } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,6 +19,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/toast"
+import type { vehicleBrand } from "@/Types/vehicleBrand"
+import type { vehicleModel } from "@/Types/vehicleModel"
+import type { vehicleVariant } from "@/Types/vehicleVariants"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 
@@ -48,14 +51,12 @@ const initialFormData = {
   currentOdometerReading: "",
   customerId: "",
   engineNumber: "",
-  fuleType: "",
-  manufacture: "",
+  modelId: "",
+  brandId: "",
   manufacturingYear: "",
-  model: "",
   purchaseDate: "",
   registrationDate: "",
-  transmissionType: "",
-  variant: "",
+  variantId: "",
   vehicleNumber: "",
 }
 
@@ -69,6 +70,34 @@ export function EditVehicleModal({
   const [prevVehicle, setPrevVehicle] = useState<any | null>(null)
   const [formData, setFormData] = useState(initialFormData)
   const [customers, setCustomers] = useState<any[]>([])
+  const [vehicleBrand, setVehicleBrand] = useState<vehicleBrand[]>([])
+  const [vehicleModel, setVehicleModel] = useState<vehicleModel[]>([])
+  const [vehicleVariant, setVehicleVariant] = useState<vehicleVariant[]>([])
+
+  
+  const fetchDropdowns = async () => {
+    try {
+      const [brand, model, variant] = await Promise.all([
+        getBrandListWithoutPagination(),
+        getModelListWithoutPagination(),
+        getVariantListWithoutPagination()
+      ])
+      if (brand?.success) {
+        setVehicleBrand(brand?.data)
+      }
+      if (model?.success) {
+        setVehicleModel(model?.data)
+      }
+      if (variant?.success) {
+        setVehicleVariant(variant?.data)
+      }
+    } catch (err: any) {
+      toast.add({
+        type: 'error',
+        description: err?.response?.data?.message
+      })
+    }
+  }
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -83,10 +112,12 @@ export function EditVehicleModal({
     }
     if (open) {
       fetchCustomers()
+      fetchDropdowns()
     }
   }, [open])
 
-  if (vehicle && vehicle !== prevVehicle) {
+ 
+ if (vehicle && vehicle !== prevVehicle) {
     setPrevVehicle(vehicle)
     setFormData({
       chassisNumber: vehicle.chassisNumber ?? "",
@@ -94,22 +125,19 @@ export function EditVehicleModal({
       currentOdometerReading: vehicle.currentOdometerReading?.toString() ?? "",
       customerId: vehicle.customerId?.toString() ?? "",
       engineNumber: vehicle.engineNumber ?? "",
-      fuleType: vehicle.fuelType ?? vehicle.fuleType ?? "",
-      manufacture: vehicle.manufacturer ?? vehicle.manufacture ?? "",
+      brandId: vehicle.brandId.toString() ?? vehicle.brand?.id.toString() ?? "",
+      modelId: vehicle.modelId.toString() ?? vehicle.model?.id.toString() ?? "",
+      variantId: vehicle.variantId.toString() ?? vehicle.variant?.id.toString() ?? "",
       manufacturingYear: vehicle.manufacturingYear?.toString() ?? "",
-      model: vehicle.model ?? "",
       purchaseDate: vehicle.purchaseDate
         ? vehicle.purchaseDate.slice(0, 10)
         : "",
       registrationDate: vehicle.registrationDate
         ? vehicle.registrationDate.slice(0, 10)
         : "",
-      transmissionType: vehicle.transmissionType ?? "",
-      variant: vehicle.variant ?? "",
       vehicleNumber: vehicle.vehicleNumber ?? "",
     })
   }
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -125,6 +153,9 @@ export function EditVehicleModal({
       const data = await editVehicle(
         {
           ...formData,
+          engineNumber: formData.engineNumber.toUpperCase(),
+          chassisNumber: formData.chassisNumber.toUpperCase(),
+          vehicleNumber: formData.vehicleNumber.toUpperCase(),
           currentOdometerReading: Number(formData.currentOdometerReading),
           customerId: Number(formData.customerId),
         },
@@ -252,42 +283,69 @@ export function EditVehicleModal({
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>
-                    Manufacturer <span className="text-red-500">*</span>
-                  </FieldLabel>
+                  <FieldLabel>Brand <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
-                    <Input
-                      name="manufacture"
-                      placeholder="Manufacturer"
+                    <Select
+                      items={vehicleBrand.map(b => ({ value: String(b.id), label: `${b.brandName} - ${b.brandCode}` }))}
+                      value={formData.brandId || null}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, brandId: value ?? "" }))}
                       required
-                      onChange={handleChange}
-                      value={formData.manufacture}
-                    />
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select brand" />
+                      </SelectTrigger>
+                      <SelectContent align="start" alignItemWithTrigger={false}>
+                        {vehicleBrand.map((b) => (
+                          <SelectItem key={b.id} value={String(b.id)}>
+                            {b.brandName} - {b.brandCode}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FieldContent>
                 </Field>
                 <Field>
-                  <FieldLabel>
-                    Model <span className="text-red-500">*</span>
-                  </FieldLabel>
+                  <FieldLabel>Model <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
-                    <Input
-                      name="model"
-                      placeholder="Model"
+                    <Select
+                      items={vehicleModel.map(m => ({ value: String(m.id), label: `${m.modelName} - ${m.modelCode}` }))}
+                      value={formData.modelId || null}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, modelId: value ?? "" }))}
                       required
-                      onChange={handleChange}
-                      value={formData.model}
-                    />
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select model" />
+                      </SelectTrigger>
+                      <SelectContent align="start" alignItemWithTrigger={false}>
+                        {vehicleModel.map((m) => (
+                          <SelectItem key={m.id} value={String(m.id)}>
+                            {m.modelName} - {m.modelCode}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FieldContent>
                 </Field>
                 <Field>
                   <FieldLabel>Variant</FieldLabel>
                   <FieldContent>
-                    <Input
-                      name="variant"
-                      placeholder="Variant"
-                      onChange={handleChange}
-                      value={formData.variant}
-                    />
+                    <Select
+                      items={vehicleVariant.map(v => ({ value: String(v.id), label: `${v.variantName} - ${v.variantCode} - ${v.fuelType}` }))}
+                      value={formData.variantId || null}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, variantId: value ?? "" }))}
+                      required
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select brand" />
+                      </SelectTrigger>
+                      <SelectContent align="start" alignItemWithTrigger={false}>
+                        {vehicleVariant.map((v) => (
+                          <SelectItem key={v.id} value={String(v.id)}>
+                            {v.variantName} - {v.variantCode} - {v.fuelType}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FieldContent>
                 </Field>
                 <Field>
@@ -299,64 +357,6 @@ export function EditVehicleModal({
                       onChange={handleChange}
                       value={formData.color}
                     />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Fuel Type</FieldLabel>
-                  <FieldContent>
-                    <Select
-                      items={fuelTypeOptions.map((f) => ({
-                        value: f.value,
-                        label: f.label,
-                      }))}
-                      value={formData.fuleType || null}
-                      onValueChange={(value) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          fuleType: value ?? "",
-                        }))
-                      }
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select fuel type" />
-                      </SelectTrigger>
-                      <SelectContent align="start" alignItemWithTrigger={false}>
-                        {fuelTypeOptions.map((f) => (
-                          <SelectItem key={f.value} value={f.value}>
-                            {f.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Transmission Type</FieldLabel>
-                  <FieldContent>
-                    <Select
-                      items={transmissionOptions.map((t) => ({
-                        value: t.value,
-                        label: t.label,
-                      }))}
-                      value={formData.transmissionType || null}
-                      onValueChange={(value) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          transmissionType: value ?? "",
-                        }))
-                      }
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select transmission" />
-                      </SelectTrigger>
-                      <SelectContent align="start" alignItemWithTrigger={false}>
-                        {transmissionOptions.map((t) => (
-                          <SelectItem key={t.value} value={t.value}>
-                            {t.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
                   </FieldContent>
                 </Field>
                 <Field>

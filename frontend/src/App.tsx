@@ -26,6 +26,7 @@ import Vehicle from "./Pages/TenantUserPages/Vehicle"
 import VehicleCreate from "./Pages/TenantUserPages/VehicleCreate"
 import JobCard from "./Pages/TenantUserPages/JobCard"
 import JobCardCreate from "./Pages/TenantUserPages/JobCardCreate"
+import AssignPermissionPage from "./Pages/TenantUserPages/Masters/AssignPermissionPage"
 
 
 export function App() {
@@ -47,6 +48,7 @@ export function App() {
             <Route path='/tenant/:id/masters/role' element={<TenantContextProvider><AuthProtectedRoute><Role /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/permission' element={<TenantContextProvider><AuthProtectedRoute><AssignPermission /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/employee' element={<TenantContextProvider><AuthProtectedRoute><Employee /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/assign/permission' element={<TenantContextProvider><AuthProtectedRoute><AssignPermissionPage /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/service-category' element={<TenantContextProvider><AuthProtectedRoute><ServiceCategory /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/service-type' element={<TenantContextProvider><AuthProtectedRoute><ServiceType /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/repair-order' element={<TenantContextProvider><AuthProtectedRoute><RepairOrder /></AuthProtectedRoute></TenantContextProvider>} />

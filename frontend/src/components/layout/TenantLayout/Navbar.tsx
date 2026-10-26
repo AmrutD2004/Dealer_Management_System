@@ -20,7 +20,7 @@ export default function Navbar() {
   const {setTheme, theme} = useTheme()
 
   return (
-    <header className="fixed flex h-20 w-full items-center border-b border-border bg-background">
+    <header className="fixed flex h-20 w-full items-center border-b border-border bg-background z-50 ms-4">
       <div className="flex w-full items-center justify-between px-6 lg:px-9">
         {/* Left: sidebar toggle + breadcrumb title */}
 

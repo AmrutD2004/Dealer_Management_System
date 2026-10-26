@@ -30,6 +30,10 @@ export type VehicleAvgAggregateOutputType = {
   id: number | null
   tenantId: number | null
   customerId: number | null
+  brandId: number | null
+  modelId: number | null
+  variantId: number | null
+  manufacturingYear: number | null
   currentOdometerReading: number | null
 }
 
@@ -37,6 +41,10 @@ export type VehicleSumAggregateOutputType = {
   id: number | null
   tenantId: number | null
   customerId: number | null
+  brandId: number | null
+  modelId: number | null
+  variantId: number | null
+  manufacturingYear: number | null
   currentOdometerReading: number | null
 }
 
@@ -44,18 +52,16 @@ export type VehicleMinAggregateOutputType = {
   id: number | null
   tenantId: number | null
   customerId: number | null
+  brandId: number | null
+  modelId: number | null
+  variantId: number | null
   vehicleNumber: string | null
   chassisNumber: string | null
   engineNumber: string | null
-  manufacturer: string | null
-  model: string | null
-  variant: string | null
   color: string | null
-  manufacturingYear: Date | null
+  manufacturingYear: number | null
   registrationDate: Date | null
   purchaseDate: Date | null
-  fuelType: string | null
-  transmissionType: string | null
   currentOdometerReading: number | null
   isActive: boolean | null
   createdAt: Date | null
@@ -66,18 +72,16 @@ export type VehicleMaxAggregateOutputType = {
   id: number | null
   tenantId: number | null
   customerId: number | null
+  brandId: number | null
+  modelId: number | null
+  variantId: number | null
   vehicleNumber: string | null
   chassisNumber: string | null
   engineNumber: string | null
-  manufacturer: string | null
-  model: string | null
-  variant: string | null
   color: string | null
-  manufacturingYear: Date | null
+  manufacturingYear: number | null
   registrationDate: Date | null
   purchaseDate: Date | null
-  fuelType: string | null
-  transmissionType: string | null
   currentOdometerReading: number | null
   isActive: boolean | null
   createdAt: Date | null
@@ -88,18 +92,16 @@ export type VehicleCountAggregateOutputType = {
   id: number
   tenantId: number
   customerId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber: number
   chassisNumber: number
   engineNumber: number
-  manufacturer: number
-  model: number
-  variant: number
   color: number
   manufacturingYear: number
   registrationDate: number
   purchaseDate: number
-  fuelType: number
-  transmissionType: number
   currentOdometerReading: number
   isActive: number
   createdAt: number
@@ -112,6 +114,10 @@ export type VehicleAvgAggregateInputType = {
   id?: true
   tenantId?: true
   customerId?: true
+  brandId?: true
+  modelId?: true
+  variantId?: true
+  manufacturingYear?: true
   currentOdometerReading?: true
 }
 
@@ -119,6 +125,10 @@ export type VehicleSumAggregateInputType = {
   id?: true
   tenantId?: true
   customerId?: true
+  brandId?: true
+  modelId?: true
+  variantId?: true
+  manufacturingYear?: true
   currentOdometerReading?: true
 }
 
@@ -126,18 +136,16 @@ export type VehicleMinAggregateInputType = {
   id?: true
   tenantId?: true
   customerId?: true
+  brandId?: true
+  modelId?: true
+  variantId?: true
   vehicleNumber?: true
   chassisNumber?: true
   engineNumber?: true
-  manufacturer?: true
-  model?: true
-  variant?: true
   color?: true
   manufacturingYear?: true
   registrationDate?: true
   purchaseDate?: true
-  fuelType?: true
-  transmissionType?: true
   currentOdometerReading?: true
   isActive?: true
   createdAt?: true
@@ -148,18 +156,16 @@ export type VehicleMaxAggregateInputType = {
   id?: true
   tenantId?: true
   customerId?: true
+  brandId?: true
+  modelId?: true
+  variantId?: true
   vehicleNumber?: true
   chassisNumber?: true
   engineNumber?: true
-  manufacturer?: true
-  model?: true
-  variant?: true
   color?: true
   manufacturingYear?: true
   registrationDate?: true
   purchaseDate?: true
-  fuelType?: true
-  transmissionType?: true
   currentOdometerReading?: true
   isActive?: true
   createdAt?: true
@@ -170,18 +176,16 @@ export type VehicleCountAggregateInputType = {
   id?: true
   tenantId?: true
   customerId?: true
+  brandId?: true
+  modelId?: true
+  variantId?: true
   vehicleNumber?: true
   chassisNumber?: true
   engineNumber?: true
-  manufacturer?: true
-  model?: true
-  variant?: true
   color?: true
   manufacturingYear?: true
   registrationDate?: true
   purchaseDate?: true
-  fuelType?: true
-  transmissionType?: true
   currentOdometerReading?: true
   isActive?: true
   createdAt?: true
@@ -279,18 +283,16 @@ export type VehicleGroupByOutputType = {
   id: number
   tenantId: number
   customerId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant: string | null
   color: string | null
-  manufacturingYear: Date | null
+  manufacturingYear: number | null
   registrationDate: Date | null
   purchaseDate: Date | null
-  fuelType: string | null
-  transmissionType: string | null
   currentOdometerReading: number
   isActive: boolean
   createdAt: Date
@@ -324,24 +326,25 @@ export type VehicleWhereInput = {
   id?: Prisma.IntFilter<"Vehicle"> | number
   tenantId?: Prisma.IntFilter<"Vehicle"> | number
   customerId?: Prisma.IntFilter<"Vehicle"> | number
+  brandId?: Prisma.IntFilter<"Vehicle"> | number
+  modelId?: Prisma.IntFilter<"Vehicle"> | number
+  variantId?: Prisma.IntFilter<"Vehicle"> | number
   vehicleNumber?: Prisma.StringNullableFilter<"Vehicle"> | string | null
   chassisNumber?: Prisma.StringFilter<"Vehicle"> | string
   engineNumber?: Prisma.StringFilter<"Vehicle"> | string
-  manufacturer?: Prisma.StringFilter<"Vehicle"> | string
-  model?: Prisma.StringFilter<"Vehicle"> | string
-  variant?: Prisma.StringNullableFilter<"Vehicle"> | string | null
   color?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  manufacturingYear?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
+  manufacturingYear?: Prisma.IntNullableFilter<"Vehicle"> | number | null
   registrationDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   purchaseDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
-  fuelType?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  transmissionType?: Prisma.StringNullableFilter<"Vehicle"> | string | null
   currentOdometerReading?: Prisma.IntFilter<"Vehicle"> | number
   isActive?: Prisma.BoolFilter<"Vehicle"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
+  brand?: Prisma.XOR<Prisma.BrandMasterScalarRelationFilter, Prisma.BrandMasterWhereInput>
+  model?: Prisma.XOR<Prisma.VehicleModelMasterScalarRelationFilter, Prisma.VehicleModelMasterWhereInput>
+  variant?: Prisma.XOR<Prisma.VehicleVariantMasterScalarRelationFilter, Prisma.VehicleVariantMasterWhereInput>
   jobCards?: Prisma.JobCardListRelationFilter
 }
 
@@ -349,24 +352,25 @@ export type VehicleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  brandId?: Prisma.SortOrder
+  modelId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrder
   vehicleNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   chassisNumber?: Prisma.SortOrder
   engineNumber?: Prisma.SortOrder
-  manufacturer?: Prisma.SortOrder
-  model?: Prisma.SortOrder
-  variant?: Prisma.SortOrderInput | Prisma.SortOrder
   color?: Prisma.SortOrderInput | Prisma.SortOrder
   manufacturingYear?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   purchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  fuelType?: Prisma.SortOrderInput | Prisma.SortOrder
-  transmissionType?: Prisma.SortOrderInput | Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   customer?: Prisma.CustomerOrderByWithRelationInput
+  brand?: Prisma.BrandMasterOrderByWithRelationInput
+  model?: Prisma.VehicleModelMasterOrderByWithRelationInput
+  variant?: Prisma.VehicleVariantMasterOrderByWithRelationInput
   jobCards?: Prisma.JobCardOrderByRelationAggregateInput
 }
 
@@ -379,24 +383,25 @@ export type VehicleWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.VehicleWhereInput | Prisma.VehicleWhereInput[]
   tenantId?: Prisma.IntFilter<"Vehicle"> | number
   customerId?: Prisma.IntFilter<"Vehicle"> | number
+  brandId?: Prisma.IntFilter<"Vehicle"> | number
+  modelId?: Prisma.IntFilter<"Vehicle"> | number
+  variantId?: Prisma.IntFilter<"Vehicle"> | number
   vehicleNumber?: Prisma.StringNullableFilter<"Vehicle"> | string | null
   chassisNumber?: Prisma.StringFilter<"Vehicle"> | string
   engineNumber?: Prisma.StringFilter<"Vehicle"> | string
-  manufacturer?: Prisma.StringFilter<"Vehicle"> | string
-  model?: Prisma.StringFilter<"Vehicle"> | string
-  variant?: Prisma.StringNullableFilter<"Vehicle"> | string | null
   color?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  manufacturingYear?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
+  manufacturingYear?: Prisma.IntNullableFilter<"Vehicle"> | number | null
   registrationDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   purchaseDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
-  fuelType?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  transmissionType?: Prisma.StringNullableFilter<"Vehicle"> | string | null
   currentOdometerReading?: Prisma.IntFilter<"Vehicle"> | number
   isActive?: Prisma.BoolFilter<"Vehicle"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
+  brand?: Prisma.XOR<Prisma.BrandMasterScalarRelationFilter, Prisma.BrandMasterWhereInput>
+  model?: Prisma.XOR<Prisma.VehicleModelMasterScalarRelationFilter, Prisma.VehicleModelMasterWhereInput>
+  variant?: Prisma.XOR<Prisma.VehicleVariantMasterScalarRelationFilter, Prisma.VehicleVariantMasterWhereInput>
   jobCards?: Prisma.JobCardListRelationFilter
 }, "id" | "tenantId_chassisNumber" | "tenantId_engineNumber">
 
@@ -404,18 +409,16 @@ export type VehicleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  brandId?: Prisma.SortOrder
+  modelId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrder
   vehicleNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   chassisNumber?: Prisma.SortOrder
   engineNumber?: Prisma.SortOrder
-  manufacturer?: Prisma.SortOrder
-  model?: Prisma.SortOrder
-  variant?: Prisma.SortOrderInput | Prisma.SortOrder
   color?: Prisma.SortOrderInput | Prisma.SortOrder
   manufacturingYear?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   purchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  fuelType?: Prisma.SortOrderInput | Prisma.SortOrder
-  transmissionType?: Prisma.SortOrderInput | Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -434,18 +437,16 @@ export type VehicleScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
   tenantId?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
   customerId?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
+  brandId?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
+  modelId?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
+  variantId?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
   vehicleNumber?: Prisma.StringNullableWithAggregatesFilter<"Vehicle"> | string | null
   chassisNumber?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
   engineNumber?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
-  manufacturer?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
-  model?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
-  variant?: Prisma.StringNullableWithAggregatesFilter<"Vehicle"> | string | null
   color?: Prisma.StringNullableWithAggregatesFilter<"Vehicle"> | string | null
-  manufacturingYear?: Prisma.DateTimeNullableWithAggregatesFilter<"Vehicle"> | Date | string | null
+  manufacturingYear?: Prisma.IntNullableWithAggregatesFilter<"Vehicle"> | number | null
   registrationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Vehicle"> | Date | string | null
   purchaseDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Vehicle"> | Date | string | null
-  fuelType?: Prisma.StringNullableWithAggregatesFilter<"Vehicle"> | string | null
-  transmissionType?: Prisma.StringNullableWithAggregatesFilter<"Vehicle"> | string | null
   currentOdometerReading?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"Vehicle"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Vehicle"> | Date | string
@@ -456,21 +457,19 @@ export type VehicleCreateInput = {
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutVehiclesInput
   customer: Prisma.CustomerCreateNestedOneWithoutVehiclesInput
+  brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
+  model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
+  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
 }
 
@@ -478,18 +477,16 @@ export type VehicleUncheckedCreateInput = {
   id?: number
   tenantId: number
   customerId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
@@ -501,21 +498,19 @@ export type VehicleUpdateInput = {
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutVehiclesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutVehiclesNestedInput
+  brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
 }
 
@@ -523,18 +518,16 @@ export type VehicleUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -546,18 +539,16 @@ export type VehicleCreateManyInput = {
   id?: number
   tenantId: number
   customerId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
@@ -568,15 +559,10 @@ export type VehicleUpdateManyMutationInput = {
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -587,18 +573,16 @@ export type VehicleUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -629,18 +613,16 @@ export type VehicleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  brandId?: Prisma.SortOrder
+  modelId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrder
   vehicleNumber?: Prisma.SortOrder
   chassisNumber?: Prisma.SortOrder
   engineNumber?: Prisma.SortOrder
-  manufacturer?: Prisma.SortOrder
-  model?: Prisma.SortOrder
-  variant?: Prisma.SortOrder
   color?: Prisma.SortOrder
   manufacturingYear?: Prisma.SortOrder
   registrationDate?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
-  fuelType?: Prisma.SortOrder
-  transmissionType?: Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -651,6 +633,10 @@ export type VehicleAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  brandId?: Prisma.SortOrder
+  modelId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrder
+  manufacturingYear?: Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
 }
 
@@ -658,18 +644,16 @@ export type VehicleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  brandId?: Prisma.SortOrder
+  modelId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrder
   vehicleNumber?: Prisma.SortOrder
   chassisNumber?: Prisma.SortOrder
   engineNumber?: Prisma.SortOrder
-  manufacturer?: Prisma.SortOrder
-  model?: Prisma.SortOrder
-  variant?: Prisma.SortOrder
   color?: Prisma.SortOrder
   manufacturingYear?: Prisma.SortOrder
   registrationDate?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
-  fuelType?: Prisma.SortOrder
-  transmissionType?: Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -680,18 +664,16 @@ export type VehicleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  brandId?: Prisma.SortOrder
+  modelId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrder
   vehicleNumber?: Prisma.SortOrder
   chassisNumber?: Prisma.SortOrder
   engineNumber?: Prisma.SortOrder
-  manufacturer?: Prisma.SortOrder
-  model?: Prisma.SortOrder
-  variant?: Prisma.SortOrder
   color?: Prisma.SortOrder
   manufacturingYear?: Prisma.SortOrder
   registrationDate?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
-  fuelType?: Prisma.SortOrder
-  transmissionType?: Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -702,12 +684,142 @@ export type VehicleSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  brandId?: Prisma.SortOrder
+  modelId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrder
+  manufacturingYear?: Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
 }
 
 export type VehicleScalarRelationFilter = {
   is?: Prisma.VehicleWhereInput
   isNot?: Prisma.VehicleWhereInput
+}
+
+export type VehicleCreateNestedManyWithoutBrandInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutBrandInput, Prisma.VehicleUncheckedCreateWithoutBrandInput> | Prisma.VehicleCreateWithoutBrandInput[] | Prisma.VehicleUncheckedCreateWithoutBrandInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutBrandInput | Prisma.VehicleCreateOrConnectWithoutBrandInput[]
+  createMany?: Prisma.VehicleCreateManyBrandInputEnvelope
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+}
+
+export type VehicleUncheckedCreateNestedManyWithoutBrandInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutBrandInput, Prisma.VehicleUncheckedCreateWithoutBrandInput> | Prisma.VehicleCreateWithoutBrandInput[] | Prisma.VehicleUncheckedCreateWithoutBrandInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutBrandInput | Prisma.VehicleCreateOrConnectWithoutBrandInput[]
+  createMany?: Prisma.VehicleCreateManyBrandInputEnvelope
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+}
+
+export type VehicleUpdateManyWithoutBrandNestedInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutBrandInput, Prisma.VehicleUncheckedCreateWithoutBrandInput> | Prisma.VehicleCreateWithoutBrandInput[] | Prisma.VehicleUncheckedCreateWithoutBrandInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutBrandInput | Prisma.VehicleCreateOrConnectWithoutBrandInput[]
+  upsert?: Prisma.VehicleUpsertWithWhereUniqueWithoutBrandInput | Prisma.VehicleUpsertWithWhereUniqueWithoutBrandInput[]
+  createMany?: Prisma.VehicleCreateManyBrandInputEnvelope
+  set?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  disconnect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  delete?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  update?: Prisma.VehicleUpdateWithWhereUniqueWithoutBrandInput | Prisma.VehicleUpdateWithWhereUniqueWithoutBrandInput[]
+  updateMany?: Prisma.VehicleUpdateManyWithWhereWithoutBrandInput | Prisma.VehicleUpdateManyWithWhereWithoutBrandInput[]
+  deleteMany?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
+}
+
+export type VehicleUncheckedUpdateManyWithoutBrandNestedInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutBrandInput, Prisma.VehicleUncheckedCreateWithoutBrandInput> | Prisma.VehicleCreateWithoutBrandInput[] | Prisma.VehicleUncheckedCreateWithoutBrandInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutBrandInput | Prisma.VehicleCreateOrConnectWithoutBrandInput[]
+  upsert?: Prisma.VehicleUpsertWithWhereUniqueWithoutBrandInput | Prisma.VehicleUpsertWithWhereUniqueWithoutBrandInput[]
+  createMany?: Prisma.VehicleCreateManyBrandInputEnvelope
+  set?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  disconnect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  delete?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  update?: Prisma.VehicleUpdateWithWhereUniqueWithoutBrandInput | Prisma.VehicleUpdateWithWhereUniqueWithoutBrandInput[]
+  updateMany?: Prisma.VehicleUpdateManyWithWhereWithoutBrandInput | Prisma.VehicleUpdateManyWithWhereWithoutBrandInput[]
+  deleteMany?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
+}
+
+export type VehicleCreateNestedManyWithoutModelInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutModelInput, Prisma.VehicleUncheckedCreateWithoutModelInput> | Prisma.VehicleCreateWithoutModelInput[] | Prisma.VehicleUncheckedCreateWithoutModelInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutModelInput | Prisma.VehicleCreateOrConnectWithoutModelInput[]
+  createMany?: Prisma.VehicleCreateManyModelInputEnvelope
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+}
+
+export type VehicleUncheckedCreateNestedManyWithoutModelInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutModelInput, Prisma.VehicleUncheckedCreateWithoutModelInput> | Prisma.VehicleCreateWithoutModelInput[] | Prisma.VehicleUncheckedCreateWithoutModelInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutModelInput | Prisma.VehicleCreateOrConnectWithoutModelInput[]
+  createMany?: Prisma.VehicleCreateManyModelInputEnvelope
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+}
+
+export type VehicleUpdateManyWithoutModelNestedInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutModelInput, Prisma.VehicleUncheckedCreateWithoutModelInput> | Prisma.VehicleCreateWithoutModelInput[] | Prisma.VehicleUncheckedCreateWithoutModelInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutModelInput | Prisma.VehicleCreateOrConnectWithoutModelInput[]
+  upsert?: Prisma.VehicleUpsertWithWhereUniqueWithoutModelInput | Prisma.VehicleUpsertWithWhereUniqueWithoutModelInput[]
+  createMany?: Prisma.VehicleCreateManyModelInputEnvelope
+  set?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  disconnect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  delete?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  update?: Prisma.VehicleUpdateWithWhereUniqueWithoutModelInput | Prisma.VehicleUpdateWithWhereUniqueWithoutModelInput[]
+  updateMany?: Prisma.VehicleUpdateManyWithWhereWithoutModelInput | Prisma.VehicleUpdateManyWithWhereWithoutModelInput[]
+  deleteMany?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
+}
+
+export type VehicleUncheckedUpdateManyWithoutModelNestedInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutModelInput, Prisma.VehicleUncheckedCreateWithoutModelInput> | Prisma.VehicleCreateWithoutModelInput[] | Prisma.VehicleUncheckedCreateWithoutModelInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutModelInput | Prisma.VehicleCreateOrConnectWithoutModelInput[]
+  upsert?: Prisma.VehicleUpsertWithWhereUniqueWithoutModelInput | Prisma.VehicleUpsertWithWhereUniqueWithoutModelInput[]
+  createMany?: Prisma.VehicleCreateManyModelInputEnvelope
+  set?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  disconnect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  delete?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  update?: Prisma.VehicleUpdateWithWhereUniqueWithoutModelInput | Prisma.VehicleUpdateWithWhereUniqueWithoutModelInput[]
+  updateMany?: Prisma.VehicleUpdateManyWithWhereWithoutModelInput | Prisma.VehicleUpdateManyWithWhereWithoutModelInput[]
+  deleteMany?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
+}
+
+export type VehicleCreateNestedManyWithoutVariantInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutVariantInput, Prisma.VehicleUncheckedCreateWithoutVariantInput> | Prisma.VehicleCreateWithoutVariantInput[] | Prisma.VehicleUncheckedCreateWithoutVariantInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutVariantInput | Prisma.VehicleCreateOrConnectWithoutVariantInput[]
+  createMany?: Prisma.VehicleCreateManyVariantInputEnvelope
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+}
+
+export type VehicleUncheckedCreateNestedManyWithoutVariantInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutVariantInput, Prisma.VehicleUncheckedCreateWithoutVariantInput> | Prisma.VehicleCreateWithoutVariantInput[] | Prisma.VehicleUncheckedCreateWithoutVariantInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutVariantInput | Prisma.VehicleCreateOrConnectWithoutVariantInput[]
+  createMany?: Prisma.VehicleCreateManyVariantInputEnvelope
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+}
+
+export type VehicleUpdateManyWithoutVariantNestedInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutVariantInput, Prisma.VehicleUncheckedCreateWithoutVariantInput> | Prisma.VehicleCreateWithoutVariantInput[] | Prisma.VehicleUncheckedCreateWithoutVariantInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutVariantInput | Prisma.VehicleCreateOrConnectWithoutVariantInput[]
+  upsert?: Prisma.VehicleUpsertWithWhereUniqueWithoutVariantInput | Prisma.VehicleUpsertWithWhereUniqueWithoutVariantInput[]
+  createMany?: Prisma.VehicleCreateManyVariantInputEnvelope
+  set?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  disconnect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  delete?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  update?: Prisma.VehicleUpdateWithWhereUniqueWithoutVariantInput | Prisma.VehicleUpdateWithWhereUniqueWithoutVariantInput[]
+  updateMany?: Prisma.VehicleUpdateManyWithWhereWithoutVariantInput | Prisma.VehicleUpdateManyWithWhereWithoutVariantInput[]
+  deleteMany?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
+}
+
+export type VehicleUncheckedUpdateManyWithoutVariantNestedInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutVariantInput, Prisma.VehicleUncheckedCreateWithoutVariantInput> | Prisma.VehicleCreateWithoutVariantInput[] | Prisma.VehicleUncheckedCreateWithoutVariantInput[]
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutVariantInput | Prisma.VehicleCreateOrConnectWithoutVariantInput[]
+  upsert?: Prisma.VehicleUpsertWithWhereUniqueWithoutVariantInput | Prisma.VehicleUpsertWithWhereUniqueWithoutVariantInput[]
+  createMany?: Prisma.VehicleCreateManyVariantInputEnvelope
+  set?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  disconnect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  delete?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  connect?: Prisma.VehicleWhereUniqueInput | Prisma.VehicleWhereUniqueInput[]
+  update?: Prisma.VehicleUpdateWithWhereUniqueWithoutVariantInput | Prisma.VehicleUpdateWithWhereUniqueWithoutVariantInput[]
+  updateMany?: Prisma.VehicleUpdateManyWithWhereWithoutVariantInput | Prisma.VehicleUpdateManyWithWhereWithoutVariantInput[]
+  deleteMany?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
 }
 
 export type VehicleCreateNestedManyWithoutTenantInput = {
@@ -794,6 +906,14 @@ export type VehicleUncheckedUpdateManyWithoutCustomerNestedInput = {
   deleteMany?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type VehicleCreateNestedOneWithoutJobCardsInput = {
   create?: Prisma.XOR<Prisma.VehicleCreateWithoutJobCardsInput, Prisma.VehicleUncheckedCreateWithoutJobCardsInput>
   connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutJobCardsInput
@@ -808,42 +928,256 @@ export type VehicleUpdateOneRequiredWithoutJobCardsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.VehicleUpdateToOneWithWhereWithoutJobCardsInput, Prisma.VehicleUpdateWithoutJobCardsInput>, Prisma.VehicleUncheckedUpdateWithoutJobCardsInput>
 }
 
+export type VehicleCreateWithoutBrandInput = {
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutVehiclesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutVehiclesInput
+  model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
+  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+}
+
+export type VehicleUncheckedCreateWithoutBrandInput = {
+  id?: number
+  tenantId: number
+  customerId: number
+  modelId: number
+  variantId: number
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+}
+
+export type VehicleCreateOrConnectWithoutBrandInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutBrandInput, Prisma.VehicleUncheckedCreateWithoutBrandInput>
+}
+
+export type VehicleCreateManyBrandInputEnvelope = {
+  data: Prisma.VehicleCreateManyBrandInput | Prisma.VehicleCreateManyBrandInput[]
+  skipDuplicates?: boolean
+}
+
+export type VehicleUpsertWithWhereUniqueWithoutBrandInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  update: Prisma.XOR<Prisma.VehicleUpdateWithoutBrandInput, Prisma.VehicleUncheckedUpdateWithoutBrandInput>
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutBrandInput, Prisma.VehicleUncheckedCreateWithoutBrandInput>
+}
+
+export type VehicleUpdateWithWhereUniqueWithoutBrandInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  data: Prisma.XOR<Prisma.VehicleUpdateWithoutBrandInput, Prisma.VehicleUncheckedUpdateWithoutBrandInput>
+}
+
+export type VehicleUpdateManyWithWhereWithoutBrandInput = {
+  where: Prisma.VehicleScalarWhereInput
+  data: Prisma.XOR<Prisma.VehicleUpdateManyMutationInput, Prisma.VehicleUncheckedUpdateManyWithoutBrandInput>
+}
+
+export type VehicleScalarWhereInput = {
+  AND?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
+  OR?: Prisma.VehicleScalarWhereInput[]
+  NOT?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
+  id?: Prisma.IntFilter<"Vehicle"> | number
+  tenantId?: Prisma.IntFilter<"Vehicle"> | number
+  customerId?: Prisma.IntFilter<"Vehicle"> | number
+  brandId?: Prisma.IntFilter<"Vehicle"> | number
+  modelId?: Prisma.IntFilter<"Vehicle"> | number
+  variantId?: Prisma.IntFilter<"Vehicle"> | number
+  vehicleNumber?: Prisma.StringNullableFilter<"Vehicle"> | string | null
+  chassisNumber?: Prisma.StringFilter<"Vehicle"> | string
+  engineNumber?: Prisma.StringFilter<"Vehicle"> | string
+  color?: Prisma.StringNullableFilter<"Vehicle"> | string | null
+  manufacturingYear?: Prisma.IntNullableFilter<"Vehicle"> | number | null
+  registrationDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
+  purchaseDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
+  currentOdometerReading?: Prisma.IntFilter<"Vehicle"> | number
+  isActive?: Prisma.BoolFilter<"Vehicle"> | boolean
+  createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
+}
+
+export type VehicleCreateWithoutModelInput = {
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutVehiclesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutVehiclesInput
+  brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
+  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+}
+
+export type VehicleUncheckedCreateWithoutModelInput = {
+  id?: number
+  tenantId: number
+  customerId: number
+  brandId: number
+  variantId: number
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+}
+
+export type VehicleCreateOrConnectWithoutModelInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutModelInput, Prisma.VehicleUncheckedCreateWithoutModelInput>
+}
+
+export type VehicleCreateManyModelInputEnvelope = {
+  data: Prisma.VehicleCreateManyModelInput | Prisma.VehicleCreateManyModelInput[]
+  skipDuplicates?: boolean
+}
+
+export type VehicleUpsertWithWhereUniqueWithoutModelInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  update: Prisma.XOR<Prisma.VehicleUpdateWithoutModelInput, Prisma.VehicleUncheckedUpdateWithoutModelInput>
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutModelInput, Prisma.VehicleUncheckedCreateWithoutModelInput>
+}
+
+export type VehicleUpdateWithWhereUniqueWithoutModelInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  data: Prisma.XOR<Prisma.VehicleUpdateWithoutModelInput, Prisma.VehicleUncheckedUpdateWithoutModelInput>
+}
+
+export type VehicleUpdateManyWithWhereWithoutModelInput = {
+  where: Prisma.VehicleScalarWhereInput
+  data: Prisma.XOR<Prisma.VehicleUpdateManyMutationInput, Prisma.VehicleUncheckedUpdateManyWithoutModelInput>
+}
+
+export type VehicleCreateWithoutVariantInput = {
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutVehiclesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutVehiclesInput
+  brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
+  model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+}
+
+export type VehicleUncheckedCreateWithoutVariantInput = {
+  id?: number
+  tenantId: number
+  customerId: number
+  brandId: number
+  modelId: number
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+}
+
+export type VehicleCreateOrConnectWithoutVariantInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutVariantInput, Prisma.VehicleUncheckedCreateWithoutVariantInput>
+}
+
+export type VehicleCreateManyVariantInputEnvelope = {
+  data: Prisma.VehicleCreateManyVariantInput | Prisma.VehicleCreateManyVariantInput[]
+  skipDuplicates?: boolean
+}
+
+export type VehicleUpsertWithWhereUniqueWithoutVariantInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  update: Prisma.XOR<Prisma.VehicleUpdateWithoutVariantInput, Prisma.VehicleUncheckedUpdateWithoutVariantInput>
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutVariantInput, Prisma.VehicleUncheckedCreateWithoutVariantInput>
+}
+
+export type VehicleUpdateWithWhereUniqueWithoutVariantInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  data: Prisma.XOR<Prisma.VehicleUpdateWithoutVariantInput, Prisma.VehicleUncheckedUpdateWithoutVariantInput>
+}
+
+export type VehicleUpdateManyWithWhereWithoutVariantInput = {
+  where: Prisma.VehicleScalarWhereInput
+  data: Prisma.XOR<Prisma.VehicleUpdateManyMutationInput, Prisma.VehicleUncheckedUpdateManyWithoutVariantInput>
+}
+
 export type VehicleCreateWithoutTenantInput = {
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutVehiclesInput
+  brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
+  model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
+  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutTenantInput = {
   id?: number
   customerId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
@@ -877,67 +1211,38 @@ export type VehicleUpdateManyWithWhereWithoutTenantInput = {
   data: Prisma.XOR<Prisma.VehicleUpdateManyMutationInput, Prisma.VehicleUncheckedUpdateManyWithoutTenantInput>
 }
 
-export type VehicleScalarWhereInput = {
-  AND?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
-  OR?: Prisma.VehicleScalarWhereInput[]
-  NOT?: Prisma.VehicleScalarWhereInput | Prisma.VehicleScalarWhereInput[]
-  id?: Prisma.IntFilter<"Vehicle"> | number
-  tenantId?: Prisma.IntFilter<"Vehicle"> | number
-  customerId?: Prisma.IntFilter<"Vehicle"> | number
-  vehicleNumber?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  chassisNumber?: Prisma.StringFilter<"Vehicle"> | string
-  engineNumber?: Prisma.StringFilter<"Vehicle"> | string
-  manufacturer?: Prisma.StringFilter<"Vehicle"> | string
-  model?: Prisma.StringFilter<"Vehicle"> | string
-  variant?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  color?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  manufacturingYear?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
-  registrationDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
-  purchaseDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
-  fuelType?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  transmissionType?: Prisma.StringNullableFilter<"Vehicle"> | string | null
-  currentOdometerReading?: Prisma.IntFilter<"Vehicle"> | number
-  isActive?: Prisma.BoolFilter<"Vehicle"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
-}
-
 export type VehicleCreateWithoutCustomerInput = {
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutVehiclesInput
+  brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
+  model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
+  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutCustomerInput = {
   id?: number
   tenantId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
@@ -975,39 +1280,35 @@ export type VehicleCreateWithoutJobCardsInput = {
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutVehiclesInput
   customer: Prisma.CustomerCreateNestedOneWithoutVehiclesInput
+  brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
+  model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
+  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
 }
 
 export type VehicleUncheckedCreateWithoutJobCardsInput = {
   id?: number
   tenantId: number
   customerId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
@@ -1034,39 +1335,266 @@ export type VehicleUpdateWithoutJobCardsInput = {
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutVehiclesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutVehiclesNestedInput
+  brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutJobCardsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type VehicleCreateManyBrandInput = {
+  id?: number
+  tenantId: number
+  customerId: number
+  modelId: number
+  variantId: number
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type VehicleUpdateWithoutBrandInput = {
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutVehiclesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutVehiclesNestedInput
+  model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+}
+
+export type VehicleUncheckedUpdateWithoutBrandInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+}
+
+export type VehicleUncheckedUpdateManyWithoutBrandInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type VehicleCreateManyModelInput = {
+  id?: number
+  tenantId: number
+  customerId: number
+  brandId: number
+  variantId: number
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type VehicleUpdateWithoutModelInput = {
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutVehiclesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutVehiclesNestedInput
+  brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+}
+
+export type VehicleUncheckedUpdateWithoutModelInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+}
+
+export type VehicleUncheckedUpdateManyWithoutModelInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type VehicleCreateManyVariantInput = {
+  id?: number
+  tenantId: number
+  customerId: number
+  brandId: number
+  modelId: number
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type VehicleUpdateWithoutVariantInput = {
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutVehiclesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutVehiclesNestedInput
+  brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+}
+
+export type VehicleUncheckedUpdateWithoutVariantInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+}
+
+export type VehicleUncheckedUpdateManyWithoutVariantInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1076,18 +1604,16 @@ export type VehicleUncheckedUpdateWithoutJobCardsInput = {
 export type VehicleCreateManyTenantInput = {
   id?: number
   customerId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
@@ -1098,38 +1624,34 @@ export type VehicleUpdateWithoutTenantInput = {
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutVehiclesNestedInput
+  brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1140,18 +1662,16 @@ export type VehicleUncheckedUpdateWithoutTenantInput = {
 export type VehicleUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1161,18 +1681,16 @@ export type VehicleUncheckedUpdateManyWithoutTenantInput = {
 export type VehicleCreateManyCustomerInput = {
   id?: number
   tenantId: number
+  brandId: number
+  modelId: number
+  variantId: number
   vehicleNumber?: string | null
   chassisNumber: string
   engineNumber: string
-  manufacturer: string
-  model: string
-  variant?: string | null
   color?: string | null
-  manufacturingYear?: Date | string | null
+  manufacturingYear?: number | null
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
-  fuelType?: string | null
-  transmissionType?: string | null
   currentOdometerReading: number
   isActive?: boolean
   createdAt?: Date | string
@@ -1183,38 +1701,34 @@ export type VehicleUpdateWithoutCustomerInput = {
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutVehiclesNestedInput
+  brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1225,18 +1739,16 @@ export type VehicleUncheckedUpdateWithoutCustomerInput = {
 export type VehicleUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
   vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
   engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  manufacturer?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturingYear?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fuelType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transmissionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1278,24 +1790,25 @@ export type VehicleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   tenantId?: boolean
   customerId?: boolean
+  brandId?: boolean
+  modelId?: boolean
+  variantId?: boolean
   vehicleNumber?: boolean
   chassisNumber?: boolean
   engineNumber?: boolean
-  manufacturer?: boolean
-  model?: boolean
-  variant?: boolean
   color?: boolean
   manufacturingYear?: boolean
   registrationDate?: boolean
   purchaseDate?: boolean
-  fuelType?: boolean
-  transmissionType?: boolean
   currentOdometerReading?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
+  model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
   jobCards?: boolean | Prisma.Vehicle$jobCardsArgs<ExtArgs>
   _count?: boolean | Prisma.VehicleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vehicle"]>
@@ -1304,86 +1817,95 @@ export type VehicleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   tenantId?: boolean
   customerId?: boolean
+  brandId?: boolean
+  modelId?: boolean
+  variantId?: boolean
   vehicleNumber?: boolean
   chassisNumber?: boolean
   engineNumber?: boolean
-  manufacturer?: boolean
-  model?: boolean
-  variant?: boolean
   color?: boolean
   manufacturingYear?: boolean
   registrationDate?: boolean
   purchaseDate?: boolean
-  fuelType?: boolean
-  transmissionType?: boolean
   currentOdometerReading?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
+  model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vehicle"]>
 
 export type VehicleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   tenantId?: boolean
   customerId?: boolean
+  brandId?: boolean
+  modelId?: boolean
+  variantId?: boolean
   vehicleNumber?: boolean
   chassisNumber?: boolean
   engineNumber?: boolean
-  manufacturer?: boolean
-  model?: boolean
-  variant?: boolean
   color?: boolean
   manufacturingYear?: boolean
   registrationDate?: boolean
   purchaseDate?: boolean
-  fuelType?: boolean
-  transmissionType?: boolean
   currentOdometerReading?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
+  model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vehicle"]>
 
 export type VehicleSelectScalar = {
   id?: boolean
   tenantId?: boolean
   customerId?: boolean
+  brandId?: boolean
+  modelId?: boolean
+  variantId?: boolean
   vehicleNumber?: boolean
   chassisNumber?: boolean
   engineNumber?: boolean
-  manufacturer?: boolean
-  model?: boolean
-  variant?: boolean
   color?: boolean
   manufacturingYear?: boolean
   registrationDate?: boolean
   purchaseDate?: boolean
-  fuelType?: boolean
-  transmissionType?: boolean
   currentOdometerReading?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VehicleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "customerId" | "vehicleNumber" | "chassisNumber" | "engineNumber" | "manufacturer" | "model" | "variant" | "color" | "manufacturingYear" | "registrationDate" | "purchaseDate" | "fuelType" | "transmissionType" | "currentOdometerReading" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicle"]>
+export type VehicleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "customerId" | "brandId" | "modelId" | "variantId" | "vehicleNumber" | "chassisNumber" | "engineNumber" | "color" | "manufacturingYear" | "registrationDate" | "purchaseDate" | "currentOdometerReading" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicle"]>
 export type VehicleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
+  model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
   jobCards?: boolean | Prisma.Vehicle$jobCardsArgs<ExtArgs>
   _count?: boolean | Prisma.VehicleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type VehicleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
+  model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
 }
 export type VehicleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
+  model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
 }
 
 export type $VehiclePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1391,24 +1913,25 @@ export type $VehiclePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
     customer: Prisma.$CustomerPayload<ExtArgs>
+    brand: Prisma.$BrandMasterPayload<ExtArgs>
+    model: Prisma.$VehicleModelMasterPayload<ExtArgs>
+    variant: Prisma.$VehicleVariantMasterPayload<ExtArgs>
     jobCards: Prisma.$JobCardPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     tenantId: number
     customerId: number
+    brandId: number
+    modelId: number
+    variantId: number
     vehicleNumber: string | null
     chassisNumber: string
     engineNumber: string
-    manufacturer: string
-    model: string
-    variant: string | null
     color: string | null
-    manufacturingYear: Date | null
+    manufacturingYear: number | null
     registrationDate: Date | null
     purchaseDate: Date | null
-    fuelType: string | null
-    transmissionType: string | null
     currentOdometerReading: number
     isActive: boolean
     createdAt: Date
@@ -1809,6 +2332,9 @@ export interface Prisma__VehicleClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  brand<T extends Prisma.BrandMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BrandMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__BrandMasterClient<runtime.Types.Result.GetResult<Prisma.$BrandMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  model<T extends Prisma.VehicleModelMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleModelMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleModelMasterClient<runtime.Types.Result.GetResult<Prisma.$VehicleModelMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  variant<T extends Prisma.VehicleVariantMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleVariantMasterClient<runtime.Types.Result.GetResult<Prisma.$VehicleVariantMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   jobCards<T extends Prisma.Vehicle$jobCardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vehicle$jobCardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1842,18 +2368,16 @@ export interface VehicleFieldRefs {
   readonly id: Prisma.FieldRef<"Vehicle", 'Int'>
   readonly tenantId: Prisma.FieldRef<"Vehicle", 'Int'>
   readonly customerId: Prisma.FieldRef<"Vehicle", 'Int'>
+  readonly brandId: Prisma.FieldRef<"Vehicle", 'Int'>
+  readonly modelId: Prisma.FieldRef<"Vehicle", 'Int'>
+  readonly variantId: Prisma.FieldRef<"Vehicle", 'Int'>
   readonly vehicleNumber: Prisma.FieldRef<"Vehicle", 'String'>
   readonly chassisNumber: Prisma.FieldRef<"Vehicle", 'String'>
   readonly engineNumber: Prisma.FieldRef<"Vehicle", 'String'>
-  readonly manufacturer: Prisma.FieldRef<"Vehicle", 'String'>
-  readonly model: Prisma.FieldRef<"Vehicle", 'String'>
-  readonly variant: Prisma.FieldRef<"Vehicle", 'String'>
   readonly color: Prisma.FieldRef<"Vehicle", 'String'>
-  readonly manufacturingYear: Prisma.FieldRef<"Vehicle", 'DateTime'>
+  readonly manufacturingYear: Prisma.FieldRef<"Vehicle", 'Int'>
   readonly registrationDate: Prisma.FieldRef<"Vehicle", 'DateTime'>
   readonly purchaseDate: Prisma.FieldRef<"Vehicle", 'DateTime'>
-  readonly fuelType: Prisma.FieldRef<"Vehicle", 'String'>
-  readonly transmissionType: Prisma.FieldRef<"Vehicle", 'String'>
   readonly currentOdometerReading: Prisma.FieldRef<"Vehicle", 'Int'>
   readonly isActive: Prisma.FieldRef<"Vehicle", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Vehicle", 'DateTime'>

@@ -1,4 +1,7 @@
 import type { PermissionListType } from "./permissionType"
+import type { vehicleBrand } from "./vehicleBrand"
+import type { vehicleModel } from "./vehicleModel"
+import type { vehicleVariant } from "./vehicleVariants"
 
 export interface tenantCreateType {
     tenantName: string,
@@ -400,7 +403,7 @@ export interface jobCardListType {
     createdAt: string,
     updatedAt: string,
     customer: { id: number, firstName: string, lastName: string, mobileNo: string } | null,
-    vehicle: { id: number, vehicleNumber: string | null, chassisNumber: string, manufacturer: string, model: string } | null,
+    vehicle: { id: number, vehicleNumber: string | null, chassisNumber: string, brand: vehicleBrand, model: vehicleModel, variant : vehicleVariant } | null,
     serviceType: { id: number, name: string } | null,
     serviceCategory: { id: number, name: string } | null,
     repairOrderType: { id: number, name: string } | null,

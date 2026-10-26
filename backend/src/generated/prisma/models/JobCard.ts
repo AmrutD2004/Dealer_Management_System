@@ -1477,14 +1477,6 @@ export type JobCardUncheckedUpdateManyWithoutVehicleNestedInput = {
   deleteMany?: Prisma.JobCardScalarWhereInput | Prisma.JobCardScalarWhereInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumJobCardVehicleStatusFieldUpdateOperationsInput = {
   set?: $Enums.JobCardVehicleStatus
 }
