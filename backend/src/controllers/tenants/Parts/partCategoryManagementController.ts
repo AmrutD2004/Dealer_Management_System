@@ -3,7 +3,7 @@ import { prisma } from "../../../prisma/lib/prisma";
 
 export const addPartCategory = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const { code, name, parentId } = req.body;
+    const { code, name } = req.body;
     if (!id || !tenantId) {
         return res.status(401).json({
             success: false,
@@ -42,7 +42,6 @@ export const addPartCategory = async (req: Request, res: Response) => {
             data: {
                 code: code,
                 name: name,
-                parentId: parentId || null,
                 tenantId: Number(tenantId)
             }
         })
@@ -61,7 +60,7 @@ export const addPartCategory = async (req: Request, res: Response) => {
 export const updatePartCategory = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
     const { categoryId } = req.params;
-    const { code, name, parentId } = req.body;
+    const { code, name } = req.body;
     if (!id || !tenantId) {
         return res.status(401).json({
             success: false,
@@ -103,7 +102,6 @@ export const updatePartCategory = async (req: Request, res: Response) => {
             data: {
                 code: code,
                 name: name,
-                parentId: parentId || null,
             },
             where: {
                 id: Number(categoryId)
@@ -132,10 +130,10 @@ export const getListOfPartCategories = async (req: Request, res: Response) => {
     }
     try {
         const totalPartCategory = await prisma.partCategoryMaster.count({
-                where: {
-                    tenantId: Number(tenantId)
-                }
-            })
+            where: {
+                tenantId: Number(tenantId)
+            }
+        })
         let listOfPartCategory
         if (skip || take) {
             listOfPartCategory = await prisma.partCategoryMaster.findMany({
@@ -144,34 +142,32 @@ export const getListOfPartCategories = async (req: Request, res: Response) => {
                 where: {
                     tenantId: Number(tenantId)
                 },
-                include : {
-                    tenant  : {
-                        select : {
-                            tenantName : true,
+                include: {
+                    tenant: {
+                        select: {
+                            tenantName: true,
                         }
-                    },
-                    parent : true
+                    }
                 }
             })
         }
         listOfPartCategory = await prisma.partCategoryMaster.findMany({
-                where: {
-                    tenantId: Number(tenantId)
-                },
-                include : {
-                    tenant  : {
-                        select : {
-                            tenantName : true,
-                        }
-                    },
-                    parent : true
+            where: {
+                tenantId: Number(tenantId)
+            },
+            include: {
+                tenant: {
+                    select: {
+                        tenantName: true,
+                    }
                 }
-            })
+            }
+        })
 
         return res.status(201).json({
             success: true,
             data: listOfPartCategory,
-            count : totalPartCategory
+            count: totalPartCategory
         })
     } catch (err) {
         return res.status(500).json({
@@ -206,8 +202,7 @@ export const getPartCategoryDetails = async (req: Request, res: Response) => {
                     select: {
                         tenantName: true
                     }
-                },
-                parent : true
+                }
             }
         })
         if (!isCategoryExists) {
@@ -264,7 +259,7 @@ export const deactivatePartCategory = async (req: Request, res: Response) => {
         }
         const data = await prisma.partCategoryMaster.update({
             data: {
-               isActive : false
+                isActive: false
             },
             where: {
                 id: Number(categoryId)
@@ -318,7 +313,7 @@ export const activatePartCategory = async (req: Request, res: Response) => {
         }
         const data = await prisma.partCategoryMaster.update({
             data: {
-               isActive : true
+                isActive: true
             },
             where: {
                 id: Number(categoryId)

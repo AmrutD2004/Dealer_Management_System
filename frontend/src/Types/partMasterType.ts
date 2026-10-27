@@ -56,7 +56,15 @@ export interface PartMasterCreateType {
     reorderLevel: string,
     isFastMoving: boolean,
     validFrom: string,
-    validTo: string
+    validTo: string,
+    brandId: string,
+    modelId: string,
+    variantId: string,
+    isOem: boolean,
+    position: string,
+    quantity: string,
+    fitmentValidFrom: string,
+    fitmentValidTo: string
 }
 
 export interface PartMasterConfirmActionType {

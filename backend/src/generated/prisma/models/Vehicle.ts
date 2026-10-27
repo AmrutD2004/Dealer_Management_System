@@ -63,6 +63,7 @@ export type VehicleMinAggregateOutputType = {
   registrationDate: Date | null
   purchaseDate: Date | null
   currentOdometerReading: number | null
+  vehicleInTime: Date | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -83,6 +84,7 @@ export type VehicleMaxAggregateOutputType = {
   registrationDate: Date | null
   purchaseDate: Date | null
   currentOdometerReading: number | null
+  vehicleInTime: Date | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -103,6 +105,7 @@ export type VehicleCountAggregateOutputType = {
   registrationDate: number
   purchaseDate: number
   currentOdometerReading: number
+  vehicleInTime: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -147,6 +150,7 @@ export type VehicleMinAggregateInputType = {
   registrationDate?: true
   purchaseDate?: true
   currentOdometerReading?: true
+  vehicleInTime?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -167,6 +171,7 @@ export type VehicleMaxAggregateInputType = {
   registrationDate?: true
   purchaseDate?: true
   currentOdometerReading?: true
+  vehicleInTime?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -187,6 +192,7 @@ export type VehicleCountAggregateInputType = {
   registrationDate?: true
   purchaseDate?: true
   currentOdometerReading?: true
+  vehicleInTime?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -294,6 +300,7 @@ export type VehicleGroupByOutputType = {
   registrationDate: Date | null
   purchaseDate: Date | null
   currentOdometerReading: number
+  vehicleInTime: Date | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -337,6 +344,7 @@ export type VehicleWhereInput = {
   registrationDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   purchaseDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   currentOdometerReading?: Prisma.IntFilter<"Vehicle"> | number
+  vehicleInTime?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Vehicle"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
@@ -363,6 +371,7 @@ export type VehicleOrderByWithRelationInput = {
   registrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   purchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -394,6 +403,7 @@ export type VehicleWhereUniqueInput = Prisma.AtLeast<{
   registrationDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   purchaseDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   currentOdometerReading?: Prisma.IntFilter<"Vehicle"> | number
+  vehicleInTime?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Vehicle"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
@@ -420,6 +430,7 @@ export type VehicleOrderByWithAggregationInput = {
   registrationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   purchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -448,6 +459,7 @@ export type VehicleScalarWhereWithAggregatesInput = {
   registrationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Vehicle"> | Date | string | null
   purchaseDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Vehicle"> | Date | string | null
   currentOdometerReading?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
+  vehicleInTime?: Prisma.DateTimeNullableWithAggregatesFilter<"Vehicle"> | Date | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Vehicle"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Vehicle"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Vehicle"> | Date | string
@@ -462,6 +474,7 @@ export type VehicleCreateInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -488,6 +501,7 @@ export type VehicleUncheckedCreateInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -503,6 +517,7 @@ export type VehicleUpdateInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -529,6 +544,7 @@ export type VehicleUncheckedUpdateInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -550,6 +566,7 @@ export type VehicleCreateManyInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -564,6 +581,7 @@ export type VehicleUpdateManyMutationInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -584,6 +602,7 @@ export type VehicleUncheckedUpdateManyInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -624,6 +643,7 @@ export type VehicleCountOrderByAggregateInput = {
   registrationDate?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -655,6 +675,7 @@ export type VehicleMaxOrderByAggregateInput = {
   registrationDate?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -675,6 +696,7 @@ export type VehicleMinOrderByAggregateInput = {
   registrationDate?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
   currentOdometerReading?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -937,6 +959,7 @@ export type VehicleCreateWithoutBrandInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -961,6 +984,7 @@ export type VehicleUncheckedCreateWithoutBrandInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1011,6 +1035,7 @@ export type VehicleScalarWhereInput = {
   registrationDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   purchaseDate?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   currentOdometerReading?: Prisma.IntFilter<"Vehicle"> | number
+  vehicleInTime?: Prisma.DateTimeNullableFilter<"Vehicle"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Vehicle"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
@@ -1025,6 +1050,7 @@ export type VehicleCreateWithoutModelInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1049,6 +1075,7 @@ export type VehicleUncheckedCreateWithoutModelInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1090,6 +1117,7 @@ export type VehicleCreateWithoutVariantInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1114,6 +1142,7 @@ export type VehicleUncheckedCreateWithoutVariantInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1155,6 +1184,7 @@ export type VehicleCreateWithoutTenantInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1179,6 +1209,7 @@ export type VehicleUncheckedCreateWithoutTenantInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1220,6 +1251,7 @@ export type VehicleCreateWithoutCustomerInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1244,6 +1276,7 @@ export type VehicleUncheckedCreateWithoutCustomerInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1285,6 +1318,7 @@ export type VehicleCreateWithoutJobCardsInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1310,6 +1344,7 @@ export type VehicleUncheckedCreateWithoutJobCardsInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1340,6 +1375,7 @@ export type VehicleUpdateWithoutJobCardsInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1365,6 +1401,7 @@ export type VehicleUncheckedUpdateWithoutJobCardsInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1384,6 +1421,7 @@ export type VehicleCreateManyBrandInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1398,6 +1436,7 @@ export type VehicleUpdateWithoutBrandInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1422,6 +1461,7 @@ export type VehicleUncheckedUpdateWithoutBrandInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1442,6 +1482,7 @@ export type VehicleUncheckedUpdateManyWithoutBrandInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1461,6 +1502,7 @@ export type VehicleCreateManyModelInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1475,6 +1517,7 @@ export type VehicleUpdateWithoutModelInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1499,6 +1542,7 @@ export type VehicleUncheckedUpdateWithoutModelInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1519,6 +1563,7 @@ export type VehicleUncheckedUpdateManyWithoutModelInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1538,6 +1583,7 @@ export type VehicleCreateManyVariantInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1552,6 +1598,7 @@ export type VehicleUpdateWithoutVariantInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1576,6 +1623,7 @@ export type VehicleUncheckedUpdateWithoutVariantInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1596,6 +1644,7 @@ export type VehicleUncheckedUpdateManyWithoutVariantInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1615,6 +1664,7 @@ export type VehicleCreateManyTenantInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1629,6 +1679,7 @@ export type VehicleUpdateWithoutTenantInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1653,6 +1704,7 @@ export type VehicleUncheckedUpdateWithoutTenantInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1673,6 +1725,7 @@ export type VehicleUncheckedUpdateManyWithoutTenantInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1692,6 +1745,7 @@ export type VehicleCreateManyCustomerInput = {
   registrationDate?: Date | string | null
   purchaseDate?: Date | string | null
   currentOdometerReading: number
+  vehicleInTime?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1706,6 +1760,7 @@ export type VehicleUpdateWithoutCustomerInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1730,6 +1785,7 @@ export type VehicleUncheckedUpdateWithoutCustomerInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1750,6 +1806,7 @@ export type VehicleUncheckedUpdateManyWithoutCustomerInput = {
   registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1801,6 +1858,7 @@ export type VehicleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   registrationDate?: boolean
   purchaseDate?: boolean
   currentOdometerReading?: boolean
+  vehicleInTime?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1828,6 +1886,7 @@ export type VehicleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   registrationDate?: boolean
   purchaseDate?: boolean
   currentOdometerReading?: boolean
+  vehicleInTime?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1853,6 +1912,7 @@ export type VehicleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   registrationDate?: boolean
   purchaseDate?: boolean
   currentOdometerReading?: boolean
+  vehicleInTime?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1878,12 +1938,13 @@ export type VehicleSelectScalar = {
   registrationDate?: boolean
   purchaseDate?: boolean
   currentOdometerReading?: boolean
+  vehicleInTime?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VehicleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "customerId" | "brandId" | "modelId" | "variantId" | "vehicleNumber" | "chassisNumber" | "engineNumber" | "color" | "manufacturingYear" | "registrationDate" | "purchaseDate" | "currentOdometerReading" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicle"]>
+export type VehicleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "customerId" | "brandId" | "modelId" | "variantId" | "vehicleNumber" | "chassisNumber" | "engineNumber" | "color" | "manufacturingYear" | "registrationDate" | "purchaseDate" | "currentOdometerReading" | "vehicleInTime" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicle"]>
 export type VehicleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -1933,6 +1994,7 @@ export type $VehiclePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     registrationDate: Date | null
     purchaseDate: Date | null
     currentOdometerReading: number
+    vehicleInTime: Date | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -2379,6 +2441,7 @@ export interface VehicleFieldRefs {
   readonly registrationDate: Prisma.FieldRef<"Vehicle", 'DateTime'>
   readonly purchaseDate: Prisma.FieldRef<"Vehicle", 'DateTime'>
   readonly currentOdometerReading: Prisma.FieldRef<"Vehicle", 'Int'>
+  readonly vehicleInTime: Prisma.FieldRef<"Vehicle", 'DateTime'>
   readonly isActive: Prisma.FieldRef<"Vehicle", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Vehicle", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Vehicle", 'DateTime'>

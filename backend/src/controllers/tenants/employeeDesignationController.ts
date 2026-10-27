@@ -19,10 +19,12 @@ export const createEmployeeDesignation = async (req: Request, res: Response) => 
     }
     try {
         //Checking is designation is exist in tenant 
-        const checkIsDesignationExists = await prisma.employeeDesignation.findFirst({
+        const checkIsDesignationExists = await prisma.employeeDesignation.findUnique({
             where: {
-                code: code,
+                tenantId_code : {
+                    code: code,
                 tenantId: tenantId
+                }
             }
         })
         if (checkIsDesignationExists) {

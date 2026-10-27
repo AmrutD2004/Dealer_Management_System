@@ -20,6 +20,18 @@ export const createBay = async (req: Request, res: Response) => {
     }
 
     try {
+        const isBranchExists = await prisma.branch.findUnique({
+            where : {
+                id : Number(branchId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isBranchExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Branch not found'
+            })
+        }
         const isBayExists = await prisma.dealerBayMaster.findUnique({
             where: {
                 branchId_bayCode: {
@@ -103,6 +115,18 @@ export const updateBay = async (req: Request, res: Response) => {
     }
 
     try {
+         const isBranchExists = await prisma.branch.findUnique({
+            where : {
+                id : Number(branchId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isBranchExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Branch not found'
+            })
+        }
         const isBayExists = await prisma.dealerBayMaster.findUnique({
             where: {
                 id: Number(bayId)

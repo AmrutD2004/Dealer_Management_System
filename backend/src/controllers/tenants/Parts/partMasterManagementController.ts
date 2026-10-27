@@ -3,20 +3,46 @@ import { prisma } from "../../../prisma/lib/prisma";
 
 export const addPartMaster = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const { partNo, partDescription, partCategoryId, isFastMoving, hsnId, reorderLevel, sellingPrice, status, supersededById, taxRate, unitOfMeasure, validFrom, validTo } = req.body;
+    const { partNo, partDescription, partCategoryId, isFastMoving, hsnId, reorderLevel, sellingPrice, status, supersededById, taxRate, unitOfMeasure, validFrom, validTo, landingPrice,
+    
+    //Fitment body
+    brandId, isOem, modelId, position, quantity, variantId, fitmentValidFrom, fitmentValidTo } = req.body;
     if (!id || !tenantId) {
         return res.status(401).json({
             success: false,
             message: 'Not authorized login again'
         })
     }
-    if (!hsnId || !partDescription || !partNo || !sellingPrice || !taxRate || !unitOfMeasure) {
+    if (!hsnId || !partDescription || !partNo || !sellingPrice || !taxRate || !unitOfMeasure || !brandId || !modelId || !variantId || !landingPrice) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
         })
     }
     try {
+        const isHSNExists = await prisma.hSNMaster.findUnique({
+            where: {
+                id: Number(hsnId)
+            }
+        })
+        if (!isHSNExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'HSN not exists'
+            })
+        }
+        const isPartCategoryExists = await prisma.partCategoryMaster.findUnique({
+            where: {
+                id: Number(partCategoryId)
+            }
+        })
+        if (!isPartCategoryExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Part category not exists'
+            })
+        }
+
         const isPartExists = await prisma.partMaster.findUnique({
             where: {
                 tenantId_partNo: {
@@ -38,7 +64,8 @@ export const addPartMaster = async (req: Request, res: Response) => {
                 message: `Part already exists with code ${partNo} in ${isPartExists.tenant.tenantName}`
             })
         }
-        const data = await prisma.partMaster.create({
+        const result = await prisma.$transaction(async (tx)=>{
+            const part = await prisma.partMaster.create({
             data: {
                 tenantId: Number(tenantId),
                 partNo: partNo,
@@ -47,7 +74,8 @@ export const addPartMaster = async (req: Request, res: Response) => {
                 partCategoryId: partCategoryId
                     ? Number(partCategoryId)
                     : null,
-                sellingPrice: Number(sellingPrice),
+                sellingPrice: parseFloat(sellingPrice).toFixed(2),
+                landingPrice : parseFloat(landingPrice).toFixed(2),
                 taxRate: Number(taxRate),
                 unitOfMeasure: unitOfMeasure,
                 isFastMoving: isFastMoving ?? false,
@@ -59,10 +87,51 @@ export const addPartMaster = async (req: Request, res: Response) => {
                 validTo: new Date(validTo) || null
             },
         });
+        const fitment = await prisma.partFitment.create({
+            data: {
+                tenantId: Number(tenantId),
+                brandId: Number(brandId),
+                modelId: Number(modelId),
+                variantId: Number(variantId),
+                isOem: isOem ?? false,
+                partId: Number(part.id),
+                position: position ? position : null,
+                quantity: quantity ? quantity : null,
+                validFrom: fitmentValidFrom ? new Date(fitmentValidFrom) : undefined,
+                validTo: fitmentValidTo ? new Date(fitmentValidTo) : null
+            },
+            include: {
+                brand: {
+                    select: {
+                        brandName: true
+                    }
+                },
+                model: {
+                    select: {
+                        modelName: true
+                    }
+                },
+                variant: {
+                    select: {
+                        variantName: true
+                    }
+                },
+                part: {
+                    select: {
+                        partNo: true
+                    }
+                }
+            }
+        });
+        return {part, fitment}
+        })
+            
+        
         return res.status(201).json({
             success: true,
-            message: `${data.partNo} part is created`
+            message: `${result.part.partNo} part is created and fitment is created with ${result.fitment.model.modelName} of ${result.fitment.variant.variantName} ${result.fitment.brand.brandName} brand`
         })
+        
     } catch (err) {
         return res.status(500).json({
             success: false,
@@ -74,7 +143,7 @@ export const addPartMaster = async (req: Request, res: Response) => {
 export const updatePartMaster = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
     const { partId } = req.params;
-    const { partNo, partDescription, partCategoryId, isFastMoving, hsnId, reorderLevel, sellingPrice, status, supersededById, taxRate, unitOfMeasure, validFrom, validTo } = req.body;
+    const { partNo, partDescription, partCategoryId, isFastMoving, hsnId, reorderLevel, sellingPrice, status, supersededById, taxRate, unitOfMeasure, validFrom, validTo, landingPrice } = req.body;
     if (!id || !tenantId) {
         return res.status(401).json({
             success: false,
@@ -87,7 +156,7 @@ export const updatePartMaster = async (req: Request, res: Response) => {
             message: 'Part Id is required'
         })
     }
-    if (!hsnId || !partDescription || !partNo || !sellingPrice || !taxRate || !unitOfMeasure) {
+    if (!hsnId || !partDescription || !partNo || !sellingPrice || !taxRate || !unitOfMeasure || !landingPrice) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -125,6 +194,16 @@ export const updatePartMaster = async (req: Request, res: Response) => {
                 message: `part not exists with code ${partNo}.`
             })
         }
+        if (supersededById) {
+            const supersedingPart = await prisma.partMaster.findUnique({
+                where: { id: Number(supersededById) },
+                include: { tenant: true }
+            });
+            if (!supersedingPart || supersedingPart.tenantId !== tenantId) {
+                return res.status(404).json({ success: false, message: 'Superseding part not found' });
+            }
+        }
+
         const data = await prisma.partMaster.update({
             data: {
                 tenantId: Number(tenantId),
@@ -134,7 +213,9 @@ export const updatePartMaster = async (req: Request, res: Response) => {
                 partCategoryId: partCategoryId
                     ? Number(partCategoryId)
                     : null,
-                sellingPrice: Number(sellingPrice),
+                sellingPrice: parseFloat(sellingPrice),
+                landingPrice : parseFloat(landingPrice),
+                supersededById: Number(supersededById) || null,
                 taxRate: Number(taxRate),
                 unitOfMeasure: unitOfMeasure,
                 isFastMoving: isFastMoving ?? false,
@@ -191,7 +272,8 @@ export const getListOfParts = async (req: Request, res: Response) => {
                         }
                     },
                     hsn: true,
-                    category: true
+                    category: true,
+                    fitments : true
                 }
             })
         }
@@ -250,7 +332,8 @@ export const getPartDetails = async (req: Request, res: Response) => {
                     }
                 },
                 hsn: true,
-                category: true
+                category: true,
+                fitments : true
             }
         })
         if (!isPartExists) {

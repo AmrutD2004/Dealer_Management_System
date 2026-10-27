@@ -16,7 +16,7 @@ import { allocateJobCard, getAllocatedJobCardDetails, getListOfAllocatedJobCards
 import { activateHSN, createHSN, deactivateHSN, getHSNDetails, getListOfHSN, updateHSN } from "../../controllers/tenants/hsnMasterController";
 import { activatePartCategory, addPartCategory, deactivatePartCategory, getListOfPartCategories, getPartCategoryDetails, updatePartCategory } from "../../controllers/tenants/Parts/partCategoryManagementController";
 import { activatePart, addPartMaster, deactivatePart, getListOfParts, getPartDetails, updatePartMaster } from "../../controllers/tenants/Parts/partMasterManagementController";
-import { addPartFitment, getListOfPartFitment, getPartFitmentDetails, updatePartFitment } from "../../controllers/tenants/Parts/partFitmentManagementController";
+import { getListOfPartFitment, getPartFitmentDetails, updatePartFitment } from "../../controllers/tenants/Parts/partFitmentManagementController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -166,7 +166,7 @@ tenantRoute.patch('/tenant/part/:partId/activate', authenticate, requireTenantUs
 
 
 //Part Fitment Management
-tenantRoute.post('/tenant/part/fitment/create', authenticate, requireTenantUser, addPartFitment)
+// tenantRoute.post('/tenant/part/fitment/create', authenticate, requireTenantUser, addPartFitment)
 tenantRoute.put('/tenant/part/fitment/:fitmentId/update', authenticate, requireTenantUser, updatePartFitment)
 tenantRoute.get('/tenant/part/fitment/get/all', authenticate, requireTenantUser, getListOfPartFitment)
 tenantRoute.get('/tenant/part/fitment/get/:fitmentId', authenticate, requireTenantUser, getPartFitmentDetails)

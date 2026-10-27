@@ -1,4 +1,4 @@
-import { createPartMaster, getHSNList, getPartCategoryList } from "@/api/endpoints"
+import { createPartMaster, getHSNList, getPartCategoryList, getBrandListWithoutPagination, getModelListWithoutPagination, getVariantListWithoutPagination } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -26,6 +26,9 @@ import dayjs from "dayjs"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { partUnitOptions } from "../PartMaster/partOptions"
+import type { vehicleBrand } from "@/Types/vehicleBrand"
+import type { vehicleModel } from "@/Types/vehicleModel"
+import type { vehicleVariant } from "@/Types/vehicleVariants"
 
 interface CreatePartMasterModalProps {
     open: boolean
@@ -45,20 +48,34 @@ const initialFormData: PartMasterCreateType = {
     isFastMoving: false,
     validFrom: dayjs().format('YYYY-MM-DD'),
     validTo: "",
+    brandId: "",
+    modelId: "",
+    variantId: "",
+    isOem: false,
+    position: "",
+    quantity: "",
+    fitmentValidFrom: dayjs().format('YYYY-MM-DD'),
+    fitmentValidTo: "",
 }
 
 export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMasterModalProps) {
     const [loading, setLoading] = useState<boolean>(false)
     const [categories, setCategories] = useState<PartCategoryListType[]>([])
     const [hsnList, setHsnList] = useState<PartMasterHSNType[]>([])
+    const [brands, setBrands] = useState<vehicleBrand[]>([])
+    const [models, setModels] = useState<vehicleModel[]>([])
+    const [variants, setVariants] = useState<vehicleVariant[]>([])
     const [formData, setFormData] = useState<PartMasterCreateType>(initialFormData)
 
     useEffect(() => {
         const loadOptions = async () => {
             try {
-                const [categoryData, hsnData] = await Promise.all([
+                const [categoryData, hsnData, brandData, modelData, variantData] = await Promise.all([
                     getPartCategoryList(),
                     getHSNList(),
+                    getBrandListWithoutPagination(),
+                    getModelListWithoutPagination(),
+                    getVariantListWithoutPagination(),
                 ])
                 if (categoryData?.success) {
                     setCategories(categoryData?.data ?? [])
@@ -103,6 +120,13 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
             })
             return
         }
+        if (!formData.brandId || !formData.modelId || !formData.variantId) {
+            toast.add({
+                type: 'error',
+                description: 'Please select Brand, Model and Variant for fitment'
+            })
+            return
+        }
         if (dayjs(formData.validTo).isBefore(dayjs(formData.validFrom), 'day')) {
             toast.add({
                 type: 'error',
@@ -110,9 +134,16 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
             })
             return
         }
+        if (formData.fitmentValidTo && dayjs(formData.fitmentValidTo).isBefore(dayjs(formData.fitmentValidFrom), 'day')) {
+            toast.add({
+                type: 'error',
+                description: 'Fitment Valid To date cannot be before Fitment Valid From date'
+            })
+            return
+        }
         setLoading(true)
         try {
-            const payload = {
+            const payload: any = {
                 partNo: formData.partNo.trim(),
                 partDescription: formData.partDescription.trim(),
                 partCategoryId: formData.partCategoryId && formData.partCategoryId !== "none" ? Number(formData.partCategoryId) : null,
@@ -124,6 +155,14 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                 isFastMoving: formData.isFastMoving,
                 validFrom: new Date(formData.validFrom).toISOString(),
                 validTo: new Date(formData.validTo).toISOString(),
+                brandId: Number(formData.brandId),
+                modelId: Number(formData.modelId),
+                variantId: Number(formData.variantId),
+                isOem: formData.isOem,
+                position: formData.position || null,
+                quantity: formData.quantity ? Number(formData.quantity) : null,
+                fitmentValidFrom: formData.fitmentValidFrom ? new Date(formData.fitmentValidFrom).toISOString() : new Date(formData.validFrom).toISOString(),
+                fitmentValidTo: formData.fitmentValidTo ? new Date(formData.fitmentValidTo).toISOString() : null,
             }
             const data = await createPartMaster(payload)
             if (data?.success) {
@@ -155,7 +194,7 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-4xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Create New Part</DialogTitle>
                     <DialogDescription>Add a new part to the tenant.</DialogDescription>
@@ -336,6 +375,78 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                             onChange={handleChange}
                                             value={formData.validTo}
                                          className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Fitment Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Brand <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Select items={brands.map((b:any)=>({value:String(b.id),label:b.brandName}))} value={formData.brandId||null} onValueChange={(value)=>setFormData(prev=>({...prev,brandId:value??""}))} required>
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder="Select brand" /></SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {brands.map((b:any)=>(<SelectItem key={b.id} value={String(b.id)}>{b.brandName}</SelectItem>))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Model <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Select items={models.map((m:any)=>({value:String(m.id),label:m.modelName}))} value={formData.modelId||null} onValueChange={(value)=>setFormData(prev=>({...prev,modelId:value??""}))} required>
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder="Select model" /></SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {models.map((m:any)=>(<SelectItem key={m.id} value={String(m.id)}>{m.modelName}</SelectItem>))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Variant <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Select items={variants.map((v:any)=>({value:String(v.id),label:v.variantName}))} value={formData.variantId||null} onValueChange={(value)=>setFormData(prev=>({...prev,variantId:value??""}))} required>
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder="Select variant" /></SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {variants.map((v:any)=>(<SelectItem key={v.id} value={String(v.id)}>{v.variantName}</SelectItem>))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">OEM</FieldLabel>
+                                    <div className="min-w-0">
+                                        <div className="flex items-center gap-2">
+                                            <Switch id="fitment-is-oem" checked={formData.isOem} onCheckedChange={(checked:boolean)=>setFormData(prev=>({...prev,isOem:checked}))} />
+                                            <span className="text-sm text-muted-foreground">{formData.isOem?"Yes":"No"}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Position</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='position' placeholder="e.g. Front/Rear" onChange={handleChange} value={formData.position} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Quantity</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='quantity' type='number' min='0' placeholder="e.g. 1" onChange={handleChange} value={formData.quantity} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Fitment Valid From</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='fitmentValidFrom' type='date' onChange={handleChange} value={formData.fitmentValidFrom} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Fitment Valid To</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='fitmentValidTo' type='date' onChange={handleChange} value={formData.fitmentValidTo} className="h-7 rounded-none px-2 text-xs" />
                                     </div>
                                 </div>
                             </div>
