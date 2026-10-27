@@ -36,7 +36,7 @@ export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalPro
     <Dialog open={open}>
       <DialogContent
         showCloseButton={false}
-        className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto py-5 md:max-w-3xl lg:max-w-4xl"
+        className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto py-5 md:max-w-3xl lg:max-w-2xl"
       >
         <DialogHeader>
           <div className="flex items-center justify-between gap-3">

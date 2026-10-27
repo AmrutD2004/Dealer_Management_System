@@ -42,6 +42,7 @@ const initialFormData: PartMasterCreateType = {
     partCategoryId: "none",
     hsnId: "",
     sellingPrice: "",
+    landingPrice: "",
     taxRate: "",
     unitOfMeasure: "",
     reorderLevel: "",
@@ -83,6 +84,15 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                 if (hsnData?.success) {
                     setHsnList(hsnData?.data ?? [])
                 }
+                if (brandData?.success) {
+                    setBrands(brandData?.data ?? [])
+                }
+                if (modelData?.success) {
+                    setModels(modelData?.data ?? [])
+                }
+                if (variantData?.success) {
+                    setVariants(variantData?.data ?? [])
+                }
             } catch (err: unknown) {
                 toast.add({
                     type: 'error',
@@ -92,6 +102,18 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
         }
         if (open) loadOptions()
     }, [open])
+
+    const filteredModels = models.filter((m: any) => {
+        if (!formData.brandId) return false
+        const modelBrandId = m.brandId ?? m.brand?.id
+        return String(modelBrandId) === String(formData.brandId)
+    })
+
+    const filteredVariants = variants.filter((v: any) => {
+        if (!formData.modelId) return false
+        const variantModelId = v.modelId ?? v.model?.id
+        return String(variantModelId) === String(formData.modelId)
+    })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
@@ -113,10 +135,10 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!formData.hsnId || !formData.unitOfMeasure) {
+        if (!formData.hsnId || !formData.unitOfMeasure || !formData.landingPrice) {
             toast.add({
                 type: 'error',
-                description: 'Please select an HSN code and unit of measure'
+                description: 'Please select an HSN code, unit of measure and enter landing price'
             })
             return
         }
@@ -149,6 +171,7 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                 partCategoryId: formData.partCategoryId && formData.partCategoryId !== "none" ? Number(formData.partCategoryId) : null,
                 hsnId: Number(formData.hsnId),
                 sellingPrice: formData.sellingPrice,
+                landingPrice: formData.landingPrice,
                 taxRate: formData.taxRate,
                 unitOfMeasure: formData.unitOfMeasure,
                 reorderLevel: formData.reorderLevel ? Number(formData.reorderLevel) : null,
@@ -310,6 +333,21 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Landing Price <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input
+                                            name='landingPrice'
+                                            type='number'
+                                            step='0.01'
+                                            min='0'
+                                            placeholder="e.g. 1200.00"
+                                            required
+                                            onChange={handleChange}
+                                            value={formData.landingPrice}
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                     <FieldLabel className="text-xs font-medium">Tax Rate (%) <span className="text-red-500">*</span></FieldLabel>
                                     <div className="min-w-0">
                                         <Input
@@ -386,7 +424,7 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                 <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                     <FieldLabel className="text-xs font-medium">Brand <span className="text-red-500">*</span></FieldLabel>
                                     <div className="min-w-0">
-                                        <Select items={brands.map((b:any)=>({value:String(b.id),label:b.brandName}))} value={formData.brandId||null} onValueChange={(value)=>setFormData(prev=>({...prev,brandId:value??""}))} required>
+                                        <Select items={brands.map((b:any)=>({value:String(b.id),label:b.brandName}))} value={formData.brandId||null} onValueChange={(value)=>setFormData(prev=>({...prev,brandId:value??"", modelId:"", variantId:""}))} required>
                                             <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder="Select brand" /></SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
                                                 {brands.map((b:any)=>(<SelectItem key={b.id} value={String(b.id)}>{b.brandName}</SelectItem>))}
@@ -397,10 +435,10 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                 <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                     <FieldLabel className="text-xs font-medium">Model <span className="text-red-500">*</span></FieldLabel>
                                     <div className="min-w-0">
-                                        <Select items={models.map((m:any)=>({value:String(m.id),label:m.modelName}))} value={formData.modelId||null} onValueChange={(value)=>setFormData(prev=>({...prev,modelId:value??""}))} required>
-                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder="Select model" /></SelectTrigger>
+                                        <Select items={filteredModels.map((m:any)=>({value:String(m.id),label:m.modelName}))} value={formData.modelId||null} onValueChange={(value)=>setFormData(prev=>({...prev,modelId:value??"", variantId:""}))} disabled={!formData.brandId || filteredModels.length === 0} required>
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder={!formData.brandId ? "Select brand first" : filteredModels.length === 0 ? "No models found" : "Select model"} /></SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {models.map((m:any)=>(<SelectItem key={m.id} value={String(m.id)}>{m.modelName}</SelectItem>))}
+                                                {filteredModels.map((m:any)=>(<SelectItem key={m.id} value={String(m.id)}>{m.modelName}</SelectItem>))}
                                             </SelectContent>
                                         </Select>
                                     </div>
@@ -408,10 +446,10 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                 <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                     <FieldLabel className="text-xs font-medium">Variant <span className="text-red-500">*</span></FieldLabel>
                                     <div className="min-w-0">
-                                        <Select items={variants.map((v:any)=>({value:String(v.id),label:v.variantName}))} value={formData.variantId||null} onValueChange={(value)=>setFormData(prev=>({...prev,variantId:value??""}))} required>
-                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder="Select variant" /></SelectTrigger>
+                                        <Select items={filteredVariants.map((v:any)=>({value:String(v.id),label:v.variantName}))} value={formData.variantId||null} onValueChange={(value)=>setFormData(prev=>({...prev,variantId:value??""}))} disabled={!formData.modelId || filteredVariants.length === 0} required>
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder={!formData.modelId ? "Select model first" : filteredVariants.length === 0 ? "No variants found" : "Select variant"} /></SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {variants.map((v:any)=>(<SelectItem key={v.id} value={String(v.id)}>{v.variantName}</SelectItem>))}
+                                                {filteredVariants.map((v:any)=>(<SelectItem key={v.id} value={String(v.id)}>{v.variantName}</SelectItem>))}
                                             </SelectContent>
                                         </Select>
                                     </div>

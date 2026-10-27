@@ -20,11 +20,11 @@ const PartFitmentHeader = ({ onCreated }: PartFitmentHeaderProps) => {
                     </div>
                     <p className='text-muted-foreground font-medium text-sm'>Manage which vehicle brands, models and variants each part fits.</p>
                 </div>
-                <div className='ms-auto'>
+                {/* <div className='ms-auto'>
                     <Button className={cn('flex items-center gap-2')} onClick={() => setOpen(true)}>
                         <Plus />Create Fitment
                     </Button>
-                </div>
+                </div> */}
             </div>
             <CreatePartFitmentModal open={open} setOpen={setOpen} onCreated={onCreated} />
         </>

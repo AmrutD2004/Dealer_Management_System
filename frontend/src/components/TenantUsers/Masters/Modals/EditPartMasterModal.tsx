@@ -44,13 +44,14 @@ export function EditPartMasterModal({ part, open, onClose, onUpdated }: EditPart
         partCategoryId: part?.partCategoryId ? String(part.partCategoryId) : "none",
         hsnId: part?.hsnId ? String(part.hsnId) : "",
         sellingPrice: part?.sellingPrice ? String(part.sellingPrice) : "",
+        landingPrice: part?.landingPrice ? String(part.landingPrice) : "",
         taxRate: part?.taxRate ? String(part.taxRate) : "",
         unitOfMeasure: part?.unitOfMeasure ?? "",
         reorderLevel: part?.reorderLevel !== null && part?.reorderLevel !== undefined ? String(part.reorderLevel) : "",
         isFastMoving: part?.isFastMoving ?? false,
         validFrom: part?.validFrom ? dayjs(part.validFrom).format('YYYY-MM-DD') : "",
         validTo: part?.validTo ? dayjs(part.validTo).format('YYYY-MM-DD') : "",
-    })
+    } as PartMasterCreateType)
 
     useEffect(() => {
         const loadOptions = async () => {
@@ -96,10 +97,10 @@ export function EditPartMasterModal({ part, open, onClose, onUpdated }: EditPart
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!part) return
-        if (!formData.hsnId || !formData.unitOfMeasure) {
+        if (!formData.hsnId || !formData.unitOfMeasure || !formData.landingPrice) {
             toast.add({
                 type: 'error',
-                description: 'Please select an HSN code and unit of measure'
+                description: 'Please select an HSN code, unit of measure and enter landing price'
             })
             return
         }
@@ -118,6 +119,7 @@ export function EditPartMasterModal({ part, open, onClose, onUpdated }: EditPart
                 partCategoryId: formData.partCategoryId && formData.partCategoryId !== "none" ? Number(formData.partCategoryId) : null,
                 hsnId: Number(formData.hsnId),
                 sellingPrice: formData.sellingPrice,
+                landingPrice: formData.landingPrice,
                 taxRate: formData.taxRate,
                 unitOfMeasure: formData.unitOfMeasure,
                 reorderLevel: formData.reorderLevel ? Number(formData.reorderLevel) : null,
@@ -156,7 +158,7 @@ export function EditPartMasterModal({ part, open, onClose, onUpdated }: EditPart
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-4xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Edit Part</DialogTitle>
                     <DialogDescription>Update the part details.</DialogDescription>
@@ -268,6 +270,21 @@ export function EditPartMasterModal({ part, open, onClose, onUpdated }: EditPart
                                             required
                                             onChange={handleChange}
                                             value={formData.sellingPrice}
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Landing Price <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input
+                                            name='landingPrice'
+                                            type='number'
+                                            step='0.01'
+                                            min='0'
+                                            placeholder="e.g. 1200.00"
+                                            required
+                                            onChange={handleChange}
+                                            value={formData.landingPrice}
                                          className="h-7 rounded-none px-2 text-xs" />
                                     </div>
                                 </div>

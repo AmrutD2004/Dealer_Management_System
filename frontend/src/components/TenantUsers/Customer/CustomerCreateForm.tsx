@@ -95,7 +95,7 @@ export function CustomerCreateForm({ onCancel, onCreated }: CustomerCreateFormPr
             <div className="space-y-4 py-3">
                 <div>
                     <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Customer Details</h3></div>
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
                         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                             <FieldLabel className="text-xs font-medium">Title <span className="text-red-500">*</span></FieldLabel>
                             <div className="min-w-0">
@@ -165,14 +165,14 @@ export function CustomerCreateForm({ onCancel, onCreated }: CustomerCreateFormPr
 
                 <div>
                     <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Address</h3></div>
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2 xl:grid-cols-3">
-                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-3">
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
                             <FieldLabel className="text-xs font-medium">Address Line 1 <span className="text-red-500">*</span></FieldLabel>
                             <div className="min-w-0">
                                 <Input name='address1' placeholder="Address Line 1" required onChange={handleChange} value={formData.address1} className="h-7 rounded-none px-2 text-xs" />
                             </div>
                         </div>
-                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-3">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
                             <FieldLabel className="text-xs font-medium">Address Line 2</FieldLabel>
                             <div className="min-w-0">
                                 <Input name='address2' placeholder="Address Line 2" onChange={handleChange} value={formData.address2} className="h-7 rounded-none px-2 text-xs" />
@@ -207,7 +207,7 @@ export function CustomerCreateForm({ onCancel, onCreated }: CustomerCreateFormPr
 
                 <div>
                     <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Discount</h3></div>
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
                         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                             <FieldLabel className="text-xs font-medium">Labour Discount % <span className="text-red-500">*</span></FieldLabel>
                             <div className="min-w-0">

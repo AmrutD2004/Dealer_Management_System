@@ -178,7 +178,7 @@ export function CreatePartFitmentModal({ open, setOpen, onCreated }: CreatePartF
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <div className="flex items-center gap-3">
                         <Link2 className="h-8 w-8 text-primary" />

@@ -227,7 +227,7 @@ export function CreateJobCardAllocationModal({ open, setOpen, onCreated }: Creat
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2 xl:col-span-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                     <FieldLabel className="text-xs font-medium">Bay In Date/Time <span className="text-red-500">*</span></FieldLabel>
                                     <Input
                                         name='bayInDateTime'

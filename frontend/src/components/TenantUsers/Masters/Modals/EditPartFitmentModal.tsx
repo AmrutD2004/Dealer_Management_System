@@ -179,7 +179,7 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Edit Part Fitment</DialogTitle>
                     <DialogDescription>Update the vehicle compatibility for this part.</DialogDescription>

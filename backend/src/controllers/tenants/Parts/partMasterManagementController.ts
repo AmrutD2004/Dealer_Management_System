@@ -65,7 +65,7 @@ export const addPartMaster = async (req: Request, res: Response) => {
             })
         }
         const result = await prisma.$transaction(async (tx)=>{
-            const part = await prisma.partMaster.create({
+            const part = await tx.partMaster.create({
             data: {
                 tenantId: Number(tenantId),
                 partNo: partNo,
@@ -87,7 +87,7 @@ export const addPartMaster = async (req: Request, res: Response) => {
                 validTo: new Date(validTo) || null
             },
         });
-        const fitment = await prisma.partFitment.create({
+        const fitment = await tx.partFitment.create({
             data: {
                 tenantId: Number(tenantId),
                 brandId: Number(brandId),

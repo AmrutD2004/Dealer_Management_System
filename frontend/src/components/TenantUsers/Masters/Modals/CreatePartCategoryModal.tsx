@@ -115,7 +115,7 @@ export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePart
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Create New Part Category</DialogTitle>
                     <DialogDescription>Add a new part category to the tenant.</DialogDescription>

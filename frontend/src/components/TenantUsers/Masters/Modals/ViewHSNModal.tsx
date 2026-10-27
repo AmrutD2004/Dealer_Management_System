@@ -24,7 +24,7 @@ export function ViewHSNModal({ hsn, open, onClose }: props) {
 
     return (
         <Dialog open={open}>
-            <DialogContent className="max-w-sm lg:max-w-3xl md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide" showCloseButton={false}>
+            <DialogContent className="max-w-sm lg:max-w-2xl md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide" showCloseButton={false}>
                 <DialogHeader>
                     <div className="flex items-center gap-3">
                         <Percent className="h-8 w-8 text-primary" />

@@ -194,7 +194,7 @@ export function EditVehicleModal({
     <Dialog open={open}>
       <DialogContent
         showCloseButton={false}
-        className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto md:max-w-xl lg:max-w-3xl"
+        className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto md:max-w-xl lg:max-w-2xl"
       >
         <DialogHeader>
           <DialogTitle>Edit Vehicle</DialogTitle>

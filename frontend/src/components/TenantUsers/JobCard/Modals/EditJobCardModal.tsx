@@ -292,7 +292,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-6xl w-full md:max-w-4xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-6xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Edit Job Card</DialogTitle>
                     <DialogDescription>Update details of {jobCard.jobCardNo}.</DialogDescription>

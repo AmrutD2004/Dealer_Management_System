@@ -115,7 +115,7 @@ export function CreateRepairOrderModal({ open, setOpen, onCreated }: CreateRepai
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-4xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Create New Repair Order</DialogTitle>
                     <DialogDescription>Add a new repair order type to the tenant.</DialogDescription>

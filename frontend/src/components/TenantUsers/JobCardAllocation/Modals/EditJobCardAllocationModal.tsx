@@ -245,9 +245,11 @@ export function EditJobCardAllocationModal({ allocation, open, onClose, onUpdate
                                                 ))}
                                             </SelectContent>
                                         </Select>
+                                        
                                     </div>
+                                    
                                 </div>
-                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                     <FieldLabel className="text-xs font-medium">Bay In Date/Time <span className="text-red-500">*</span></FieldLabel>
                                     <div className="min-w-0">
                                         <Input

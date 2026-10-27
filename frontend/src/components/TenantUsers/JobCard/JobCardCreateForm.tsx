@@ -242,7 +242,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                     <div className="mb-2 bg-muted/40 px-2 py-1">
                         <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Customer & Vehicle</h3>
                     </div>
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
                         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                             <FieldLabel className="text-xs font-medium">Branch <span className="text-red-500">*</span></FieldLabel>
                             <Select
@@ -403,7 +403,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                     <div className="mb-2 bg-muted/40 px-2 py-1">
                         <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Assignment</h3>
                     </div>
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
                         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                             <FieldLabel className="text-xs font-medium">Supervisor</FieldLabel>
                             <Select
@@ -473,7 +473,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                         </div>
                     </div>
                     {formData.isBreakDown && (
-                        <div className="mt-2 grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2 xl:grid-cols-3">
+                        <div className="mt-2 grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
                             <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                 <FieldLabel className="text-xs font-medium">Person Attended</FieldLabel>
                                 <Input name="breakdownPersonAttended" placeholder="Person Attended" value={formData.breakdownPersonAttended} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
