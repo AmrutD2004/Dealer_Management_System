@@ -110,7 +110,7 @@ export function EditDesignationModal({ designation, open, onClose }: EditDesigna
                         <div className="space-y-6 py-4">
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Designation Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Designation Code</FieldLabel>
                                     <FieldContent>
@@ -123,13 +123,13 @@ export function EditDesignationModal({ designation, open, onClose }: EditDesigna
                                         <Input name='name' placeholder="e.g. Senior Technician" required onChange={handleChange} value={formData.name} />
                                     </FieldContent>
                                 </Field>
-                                <Field className="sm:col-span-2">
+                                <Field className="sm:col-span-2 lg:col-span-3">
                                     <FieldLabel>Description <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
                                         <Textarea name='description' placeholder="Role responsibilities and scope" required onChange={handleChange} value={formData.description} />
                                     </FieldContent>
                                 </Field>
-                                <Field className="sm:col-span-2">
+                                <Field className="sm:col-span-2 lg:col-span-3">
                                     <FieldLabel>Mechanic Designation</FieldLabel>
                                     <FieldContent>
                                         <div className="flex items-center gap-2">

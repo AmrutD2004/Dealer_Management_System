@@ -309,7 +309,7 @@ export const deactivatePart = async (req: Request, res: Response) => {
         }
         const data = await prisma.partMaster.update({
             data: {
-                isActive: false
+                status: "INACTIVE"
             },
             where: {
                 id: Number(partId)
@@ -365,7 +365,7 @@ export const activatePart = async (req: Request, res: Response) => {
         }
         const data = await prisma.partMaster.update({
             data: {
-                isActive: true
+                status: "ACTIVE"
             },
             where: {
                 id: Number(partId)
@@ -373,7 +373,7 @@ export const activatePart = async (req: Request, res: Response) => {
         })
         return res.status(201).json({
             success: true,
-            message: `${data.partNo} part is deactivated`
+            message: `${data.partNo} part is activated`
         })
     } catch (err) {
         return res.status(500).json({

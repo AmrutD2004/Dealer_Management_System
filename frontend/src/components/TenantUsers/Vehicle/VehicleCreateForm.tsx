@@ -146,7 +146,7 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
             <div className="space-y-6 py-4">
                 <div>
                     <h3 className="mb-4 text-sm font-semibold text-foreground">Vehicle Details</h3>
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         <Field>
                             <FieldLabel>Vehicle Number <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>

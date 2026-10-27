@@ -117,7 +117,7 @@ export function CreateServiceTypeModal({ open, setOpen, onCreated }: CreateServi
                     <div className="space-y-6 py-4">
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Type Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Service Category <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>

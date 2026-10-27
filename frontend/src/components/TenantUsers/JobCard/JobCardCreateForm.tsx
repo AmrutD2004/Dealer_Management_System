@@ -239,7 +239,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
             <div className="space-y-6 py-4">
                 <div>
                     <h3 className="mb-4 text-sm font-semibold text-foreground">Customer & Vehicle</h3>
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         <Field>
                             <FieldLabel>Branch <span className="text-red-500">*</span></FieldLabel>
                             <FieldContent>
@@ -418,7 +418,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                 </div>
                 <div>
                     <h3 className="mb-4 text-sm font-semibold text-foreground">Assignment</h3>
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         <Field>
                             <FieldLabel>Supervisor</FieldLabel>
                             <FieldContent>
@@ -494,7 +494,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                         </div>
                     </div>
                     {formData.isBreakDown && (
-                        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                             <Field>
                                 <FieldLabel>Person Attended</FieldLabel>
                                 <FieldContent>
@@ -563,8 +563,8 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                         </Button>
                                     )}
                                 </div>
-                                <div className="grid gap-4 sm:grid-cols-2">
-                                    <Field className="sm:col-span-2">
+                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                    <Field>
                                         <FieldLabel>Action To Be Taken <span className="text-red-500">*</span></FieldLabel>
                                         <FieldContent>
                                             <Select

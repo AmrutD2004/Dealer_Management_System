@@ -134,8 +134,8 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
             {/* Tenant Identity */}
             <div>
               <h3 className="mb-4 text-sm font-semibold text-foreground">Tenant Identity</h3>
-              <div className="grid gap-4 grid-cols-2">
-                <Field className="sm:col-span-2">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <Field>
                   <FieldLabel>Tenant Code <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
@@ -169,8 +169,8 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
             {/* Contact Information */}
             <div>
               <h3 className="mb-4 text-sm font-semibold text-foreground">Contact Information</h3>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <Field className="sm:col-span-2">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <Field className="sm:col-span-2 lg:col-span-3">
                   <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
@@ -215,8 +215,8 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
             {/* Address */}
             <div>
               <h3 className="mb-4 text-sm font-semibold text-foreground">Registered Address</h3>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <Field className="sm:col-span-2">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <Field className="sm:col-span-2 lg:col-span-3">
                   <FieldLabel>Address <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>
                     <Input
@@ -287,7 +287,7 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
             {/* Subscription */}
             <div>
               <h3 className="mb-4 text-sm font-semibold text-foreground">Subscription</h3>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <Field>
                   <FieldLabel>Plan <span className="text-red-500">*</span></FieldLabel>
                   <FieldContent>

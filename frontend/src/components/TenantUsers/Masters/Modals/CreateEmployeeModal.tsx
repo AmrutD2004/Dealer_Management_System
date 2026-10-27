@@ -143,7 +143,7 @@ export function CreateEmployeeModal({ open, setOpen }: CreateEmployeeModalProps)
                     <div className="space-y-6 py-4">
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Personal Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>First Name <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
@@ -185,7 +185,7 @@ export function CreateEmployeeModal({ open, setOpen }: CreateEmployeeModalProps)
 
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Work Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Branch <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
@@ -228,7 +228,7 @@ export function CreateEmployeeModal({ open, setOpen }: CreateEmployeeModalProps)
                                         </Select>
                                     </FieldContent>
                                 </Field>
-                                <Field className="sm:col-span-2">
+                                <Field>
                                     <FieldLabel>Designation <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
                                         <Select

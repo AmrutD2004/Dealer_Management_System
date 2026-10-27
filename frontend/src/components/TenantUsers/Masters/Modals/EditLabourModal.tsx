@@ -105,7 +105,7 @@ export function EditLabourModal({ labour, open, onClose, onUpdated }: EditLabour
                     <div className="space-y-6 py-4">
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Labour Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Labour Code <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
@@ -130,7 +130,7 @@ export function EditLabourModal({ labour, open, onClose, onUpdated }: EditLabour
                                         <Input name='standardHours' type="number" step="0.01" placeholder="e.g. 1.5" required onChange={handleChange} value={formData.standardHours} />
                                     </FieldContent>
                                 </Field>
-                                <Field className="sm:col-span-2">
+                                <Field className="sm:col-span-2 lg:col-span-3">
                                     <FieldLabel>Description</FieldLabel>
                                     <FieldContent>
                                         <Textarea name='labourDescription' placeholder="Details about this labour" onChange={handleChange} value={formData.labourDescription} />

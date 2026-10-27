@@ -95,7 +95,7 @@ export function AddPermissionModal() {
                                 Permission Details
                             </h3>
 
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Permission Code <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
@@ -124,7 +124,7 @@ export function AddPermissionModal() {
                                     </FieldContent>
                                 </Field>
 
-                                <Field className="sm:col-span-2">
+                                <Field className="sm:col-span-2 lg:col-span-3">
                                     <FieldLabel>Description</FieldLabel>
                                     <FieldContent>
                                         <Textarea

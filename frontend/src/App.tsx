@@ -9,6 +9,9 @@ import { PlatformUserContextProvider } from "./Contexts/PlatformUserContext.tsx/
 import Tenant from "./Pages/PlatformUserPages/PlatformUser/Tenant"
 import CreateTenant from "./Pages/PlatformUserPages/PlatformUser/CreateTenant"
 import Permission from "./Pages/PlatformUserPages/PlatformUser/Permission"
+import Brand from "./Pages/PlatformUserPages/PlatformUser/Brand"
+import ModelMaster from "./Pages/PlatformUserPages/PlatformUser/ModelMaster"
+import VariantMaster from "./Pages/PlatformUserPages/PlatformUser/VariantMaster"
 import Dashboard from "./Pages/TenantUserPages/Dashboard"
 import Branch from "./Pages/TenantUserPages/Masters/Branch"
 import Designation from "./Pages/TenantUserPages/Masters/Designation"
@@ -20,12 +23,18 @@ import ServiceCategory from "./Pages/TenantUserPages/Masters/ServiceCategory"
 import ServiceType from "./Pages/TenantUserPages/Masters/ServiceType"
 import RepairOrder from "./Pages/TenantUserPages/Masters/RepairOrder"
 import Labour from "./Pages/TenantUserPages/Masters/Labour"
+import PartCategory from "./Pages/TenantUserPages/Masters/PartCategory"
+import PartMaster from "./Pages/TenantUserPages/Masters/PartMaster"
+import HSNMaster from "./Pages/TenantUserPages/Masters/HSNMaster"
+import PartFitment from "./Pages/TenantUserPages/Masters/PartFitment"
+import DealerBay from "./Pages/TenantUserPages/Masters/DealerBay"
 import Customer from "./Pages/TenantUserPages/Customer"
 import CustomerCreate from "./Pages/TenantUserPages/CustomerCreate"
 import Vehicle from "./Pages/TenantUserPages/Vehicle"
 import VehicleCreate from "./Pages/TenantUserPages/VehicleCreate"
 import JobCard from "./Pages/TenantUserPages/JobCard"
 import JobCardCreate from "./Pages/TenantUserPages/JobCardCreate"
+import JobCardAllocation from "./Pages/TenantUserPages/JobCardAllocation"
 import AssignPermissionPage from "./Pages/TenantUserPages/Masters/AssignPermissionPage"
 
 
@@ -42,6 +51,9 @@ export function App() {
             <Route path='/platform/tenant' element={<PlatformUserContextProvider><AuthProtectedRoute><Tenant /></AuthProtectedRoute></PlatformUserContextProvider>} />
             <Route path='/platform/tenant/create' element={<AuthProtectedRoute><CreateTenant /></AuthProtectedRoute>} />
             <Route path='/platform/permission' element={<PlatformUserContextProvider><AuthProtectedRoute><Permission /></AuthProtectedRoute></PlatformUserContextProvider>} />
+            <Route path='/platform/brand' element={<AuthProtectedRoute><Brand /></AuthProtectedRoute>} />
+            <Route path='/platform/model' element={<AuthProtectedRoute><ModelMaster /></AuthProtectedRoute>} />
+            <Route path='/platform/variant' element={<AuthProtectedRoute><VariantMaster /></AuthProtectedRoute>} />
             <Route path='/tenant/:id/dashboard' element={<TenantContextProvider><AuthProtectedRoute><Dashboard /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/branch' element={<TenantContextProvider><AuthProtectedRoute><Branch /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/designation' element={<TenantContextProvider><AuthProtectedRoute><Designation /></AuthProtectedRoute></TenantContextProvider>} />
@@ -53,12 +65,18 @@ export function App() {
             <Route path='/tenant/:id/masters/service-type' element={<TenantContextProvider><AuthProtectedRoute><ServiceType /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/repair-order' element={<TenantContextProvider><AuthProtectedRoute><RepairOrder /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/labour' element={<TenantContextProvider><AuthProtectedRoute><Labour /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/part-category' element={<TenantContextProvider><AuthProtectedRoute><PartCategory /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/part-master' element={<TenantContextProvider><AuthProtectedRoute><PartMaster /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/hsn' element={<TenantContextProvider><AuthProtectedRoute><HSNMaster /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/part-fitment' element={<TenantContextProvider><AuthProtectedRoute><PartFitment /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/dealer-bay' element={<TenantContextProvider><AuthProtectedRoute><DealerBay /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/customer' element={<TenantContextProvider><AuthProtectedRoute><Customer /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/customer/create' element={<TenantContextProvider><AuthProtectedRoute><CustomerCreate /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/vehicle' element={<TenantContextProvider><AuthProtectedRoute><Vehicle /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/vehicle/create' element={<TenantContextProvider><AuthProtectedRoute><VehicleCreate /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/job-card' element={<TenantContextProvider><AuthProtectedRoute><JobCard /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/job-card/create' element={<TenantContextProvider><AuthProtectedRoute><JobCardCreate /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/job-card/allocation' element={<TenantContextProvider><AuthProtectedRoute><JobCardAllocation /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>
