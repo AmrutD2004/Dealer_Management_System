@@ -132,7 +132,7 @@ export function EditCustomerModal({ customer, open, onClose, onUpdated }: EditCu
                     <div className="space-y-6 py-4">
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Customer Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Customer Code</FieldLabel>
                                     <FieldContent>
@@ -208,14 +208,14 @@ export function EditCustomerModal({ customer, open, onClose, onUpdated }: EditCu
 
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Address</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
-                                <Field className="sm:col-span-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                <Field className="sm:col-span-2 lg:col-span-3">
                                     <FieldLabel>Address Line 1 <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
                                         <Input name='address1' placeholder="Address Line 1" required onChange={handleChange} value={formData.address1} />
                                     </FieldContent>
                                 </Field>
-                                <Field className="sm:col-span-2">
+                                <Field className="sm:col-span-2 lg:col-span-3">
                                     <FieldLabel>Address Line 2</FieldLabel>
                                     <FieldContent>
                                         <Input name='address2' placeholder="Address Line 2" onChange={handleChange} value={formData.address2} />
@@ -250,7 +250,7 @@ export function EditCustomerModal({ customer, open, onClose, onUpdated }: EditCu
 
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Discount</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Labour Discount % <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>

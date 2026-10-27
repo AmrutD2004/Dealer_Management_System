@@ -3,7 +3,7 @@ import { prisma } from "../../../prisma/lib/prisma";
 
 export const addPartCategory = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
-    const { code, name, parentId } = req.body;
+    const { code, name } = req.body;
     if (!id || !tenantId) {
         return res.status(401).json({
             success: false,
@@ -38,23 +38,10 @@ export const addPartCategory = async (req: Request, res: Response) => {
                 message: `Part category already exists with code ${code} in ${isCategoryExists.tenant.tenantName}`
             })
         }
-        const isParentExists = await prisma.partCategoryMaster.findFirst({
-            where: {
-                parentId: Number(parentId),
-                tenantId : Number(tenantId)
-            }
-        })
-        if (!isParentExists) {
-            return res.status(404).json({
-                success: false,
-                message: 'Parent category not found'
-            })
-        }
         const data = await prisma.partCategoryMaster.create({
             data: {
                 code: code,
                 name: name,
-                parentId: parentId || null,
                 tenantId: Number(tenantId)
             }
         })
@@ -73,7 +60,7 @@ export const addPartCategory = async (req: Request, res: Response) => {
 export const updatePartCategory = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
     const { categoryId } = req.params;
-    const { code, name, parentId } = req.body;
+    const { code, name } = req.body;
     if (!id || !tenantId) {
         return res.status(401).json({
             success: false,
@@ -111,23 +98,10 @@ export const updatePartCategory = async (req: Request, res: Response) => {
                 message: `category not exists with code ${code}.`
             })
         }
-         const isParentExists = await prisma.partCategoryMaster.findFirst({
-            where: {
-                parentId: Number(parentId),
-                tenantId : Number(tenantId)
-            }
-        })
-        if (!isParentExists) {
-            return res.status(404).json({
-                success: false,
-                message: 'Parent category not found'
-            })
-        }
         const data = await prisma.partCategoryMaster.update({
             data: {
                 code: code,
                 name: name,
-                parentId: parentId || null,
             },
             where: {
                 id: Number(categoryId)
@@ -173,8 +147,7 @@ export const getListOfPartCategories = async (req: Request, res: Response) => {
                         select: {
                             tenantName: true,
                         }
-                    },
-                    parent: true
+                    }
                 }
             })
         }
@@ -187,8 +160,7 @@ export const getListOfPartCategories = async (req: Request, res: Response) => {
                     select: {
                         tenantName: true,
                     }
-                },
-                parent: true
+                }
             }
         })
 
@@ -230,8 +202,7 @@ export const getPartCategoryDetails = async (req: Request, res: Response) => {
                     select: {
                         tenantName: true
                     }
-                },
-                parent: true
+                }
             }
         })
         if (!isCategoryExists) {

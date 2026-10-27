@@ -358,6 +358,7 @@ export const VehicleScalarFieldEnum = {
   registrationDate: 'registrationDate',
   purchaseDate: 'purchaseDate',
   currentOdometerReading: 'currentOdometerReading',
+  vehicleInTime: 'vehicleInTime',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -480,7 +481,6 @@ export const PartCategoryMasterScalarFieldEnum = {
   tenantId: 'tenantId',
   code: 'code',
   name: 'name',
-  parentId: 'parentId',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -497,6 +497,7 @@ export const PartMasterScalarFieldEnum = {
   partCategoryId: 'partCategoryId',
   hsnId: 'hsnId',
   sellingPrice: 'sellingPrice',
+  landingPrice: 'landingPrice',
   taxRate: 'taxRate',
   unitOfMeasure: 'unitOfMeasure',
   reorderLevel: 'reorderLevel',

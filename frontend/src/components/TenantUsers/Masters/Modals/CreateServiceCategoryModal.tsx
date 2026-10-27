@@ -125,7 +125,7 @@ export function CreateServiceCategoryModal({ open, setOpen, onCreated }: CreateS
                     <div className="space-y-6 py-4">
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Category Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Category Code <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
@@ -158,7 +158,7 @@ export function CreateServiceCategoryModal({ open, setOpen, onCreated }: CreateS
                                         <Input name='name' placeholder="Select a category code to auto-fill" readOnly value={formData.name} />
                                     </FieldContent>
                                 </Field>
-                                <Field className="sm:col-span-2">
+                                <Field className="sm:col-span-2 lg:col-span-3">
                                     <FieldLabel>Description</FieldLabel>
                                     <FieldContent>
                                         <Textarea name='description' placeholder="Details about this service category" onChange={handleChange} value={formData.description} />

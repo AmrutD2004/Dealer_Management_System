@@ -119,6 +119,37 @@ export const activateTenantBranch = async (branchId: number) => {
     return await response.data
 }
 
+//Dealer Bay
+export const createDealerBay = async (payload: Record<string, unknown>) => {
+    const response = await api.post(`/api/tenant/bay/create`, payload)
+    return await response.data;
+}
+
+export const getDealerBayList = async () => {
+    const response = await api.get(`/api/tenant/bay/get/all`)
+    return await response.data;
+}
+
+export const getDealerBayById = async (bayId: number) => {
+    const response = await api.get(`/api/tenant/bay/get/${bayId}`)
+    return await response.data;
+}
+
+export const updateDealerBay = async (payload: Record<string, unknown>, bayId: number) => {
+    const response = await api.put(`/api/tenant/bay/${bayId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateDealerBay = async (bayId: number) => {
+    const response = await api.patch(`/api/tenant/bay/${bayId}/deactivate`)
+    return await response.data;
+}
+
+export const activateDealerBay = async (bayId: number) => {
+    const response = await api.patch(`/api/tenant/bay/${bayId}/activate`)
+    return await response.data;
+}
+
 
 //Employee Designation
 export const createDesignation = async (payload: {}) => {
@@ -353,6 +384,124 @@ export const activateLabour = async (labourId: number) => {
 }
 
 
+//HSN Master management
+export const createHSN = async (payload: Record<string, unknown>) => {
+    const response = await api.post(`/api/tenant/hsn/create`, payload)
+    return await response.data;
+}
+
+export const getHSNList = async () => {
+    const response = await api.get(`/api/tenant/hsn/get/all`)
+    return await response.data;
+}
+
+export const getHSNById = async (hsnId: number) => {
+    const response = await api.get(`/api/tenant/hsn/get/${hsnId}`)
+    return await response.data;
+}
+
+export const editHSN = async (payload: Record<string, unknown>, hsnId: number) => {
+    const response = await api.put(`/api/tenant/hsn/${hsnId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateHSN = async (hsnId: number) => {
+    const response = await api.patch(`/api/tenant/hsn/${hsnId}/deactivate`)
+    return await response.data;
+}
+
+export const activateHSN = async (hsnId: number) => {
+    const response = await api.patch(`/api/tenant/hsn/${hsnId}/activate`)
+    return await response.data;
+}
+
+
+//Part Category management
+export const createPartCategory = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/part/category/create`, payload)
+    return await response.data;
+}
+
+export const getPartCategoryList = async () => {
+    const response = await api.get(`/api/tenant/part/category/get/all`)
+    return await response.data;
+}
+
+export const getPartCategoryById = async (categoryId: number) => {
+    const response = await api.get(`/api/tenant/part/category/get/${categoryId}`)
+    return await response.data;
+}
+
+export const editPartCategory = async (payload: {}, categoryId: number) => {
+    const response = await api.put(`/api/tenant/part/category/${categoryId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivatePartCategory = async (categoryId: number) => {
+    const response = await api.patch(`/api/tenant/part/category/${categoryId}/deactivate`)
+    return await response.data
+}
+
+export const activatePartCategory = async (categoryId: number) => {
+    const response = await api.patch(`/api/tenant/part/category/${categoryId}/activate`)
+    return await response.data
+}
+
+
+//Part Master management
+export const createPartMaster = async (payload: {}) => {
+    const response = await api.post(`/api/tenant/part/create`, payload)
+    return await response.data;
+}
+
+export const getPartMasterList = async () => {
+    const response = await api.get(`/api/tenant/part/get/all`)
+    return await response.data;
+}
+
+export const getPartMasterById = async (partId: number) => {
+    const response = await api.get(`/api/tenant/part/get/${partId}`)
+    return await response.data;
+}
+
+export const editPartMaster = async (payload: {}, partId: number) => {
+    const response = await api.put(`/api/tenant/part/${partId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivatePartMaster = async (partId: number) => {
+    const response = await api.patch(`/api/tenant/part/${partId}/deactivate`)
+    return await response.data
+}
+
+export const activatePartMaster = async (partId: number) => {
+    const response = await api.patch(`/api/tenant/part/${partId}/activate`)
+    return await response.data
+}
+
+
+//Part Fitment management
+export const createPartFitment = async (payload: Record<string, unknown>) => {
+    const response = await api.post(`/api/tenant/part/fitment/create`, payload)
+    return await response.data;
+}
+
+export const getPartFitmentList = async () => {
+    const response = await api.get(`/api/tenant/part/fitment/get/all`)
+    return await response.data;
+}
+
+export const getPartFitmentById = async (fitmentId: number) => {
+    const response = await api.get(`/api/tenant/part/fitment/get/${fitmentId}`)
+    return await response.data;
+}
+
+export const editPartFitment = async (payload: Record<string, unknown>, fitmentId: number) => {
+    const response = await api.put(`/api/tenant/part/fitment/${fitmentId}/update`, payload)
+    return await response.data;
+}
+
+
 //Customer management
 export const createCustomer = async (payload: {}) => {
     const response = await api.post(`/api/tenant/customer/create`, payload)
@@ -425,6 +574,11 @@ export const getJobCardList = async (skip: number, take: number) => {
     return await response.data;
 }
 
+export const getJobCardListWithoutPagination = async () => {
+    const response = await api.get(`/api/tenant/jobcard/get/all`)
+    return await response.data;
+}
+
 export const getJobCardById = async (jobCardId: number) => {
     const response = await api.get(`/api/tenant/jobcard/get/${jobCardId}`)
     return await response.data;
@@ -435,8 +589,34 @@ export const updateJobCard = async (payload: {}, jobCardId: number) => {
     return await response.data;
 }
 
+//Job Card Allocation
+export const allocateJobCard = async (payload: Record<string, unknown>) => {
+    const response = await api.post(`/api/tenant/jobcard/allocate`, payload)
+    return await response.data;
+}
+
+export const getJobCardAllocationList = async () => {
+    const response = await api.get(`/api/tenant/jobcard/allocate/get/all`)
+    return await response.data;
+}
+
+export const getJobCardAllocationById = async (allocatedId: number) => {
+    const response = await api.get(`/api/tenant/jobcard/allocate/get/${allocatedId}`)
+    return await response.data;
+}
+
+export const updateJobCardAllocation = async (payload: Record<string, unknown>, allocatedId: number) => {
+    const response = await api.put(`/api/tenant/jobcard/allocate/${allocatedId}/update`, payload)
+    return await response.data;
+}
+
 
 //Vehicle Brand Routes
+export const createBrand = async (payload: object) => {
+    const response = await api.post(`/api/platform/brand/create`, payload)
+    return await response.data;
+}
+
 export const getBrandList = async (skip: number, take: number) => {
     const response = await api.get(`/api/platform/brand/get/all?skip=${skip}&take=${take}`)
     return await response.data;
@@ -447,7 +627,32 @@ export const getBrandListWithoutPagination = async () => {
     return await response.data;
 }
 
+export const getBrandById = async (brandId: number) => {
+    const response = await api.get(`/api/platform/brand/get/${brandId}`)
+    return await response.data;
+}
+
+export const editBrand = async (payload: object, brandId: number) => {
+    const response = await api.put(`/api/platform/brand/${brandId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateBrand = async (brandId: number) => {
+    const response = await api.patch(`/api/platform/brand/${brandId}/deactivate`)
+    return await response.data;
+}
+
+export const activateBrand = async (brandId: number) => {
+    const response = await api.patch(`/api/platform/brand/${brandId}/activate`)
+    return await response.data;
+}
+
 //Vehicle Model Routes
+export const createModel = async (payload: object) => {
+    const response = await api.post(`/api/platform/vehicle/model/create`, payload)
+    return await response.data;
+}
+
 export const getModelList = async (skip: number, take: number) => {
     const response = await api.get(`/api/platform/vehicle/model/get/all?skip=${skip}&take=${take}`)
     return await response.data;
@@ -458,8 +663,33 @@ export const getModelListWithoutPagination = async () => {
     return await response.data;
 }
 
+export const getModelById = async (modelId: number) => {
+    const response = await api.get(`/api/platform/vehicle/model/get/${modelId}`)
+    return await response.data;
+}
+
+export const editModel = async (payload: object, modelId: number) => {
+    const response = await api.put(`/api/platform/vehicle/model/${modelId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateModel = async (modelId: number) => {
+    const response = await api.patch(`/api/platform/vehicle/model/${modelId}/deactivate`)
+    return await response.data;
+}
+
+export const activateModel = async (modelId: number) => {
+    const response = await api.patch(`/api/platform/vehicle/model/${modelId}/activate`)
+    return await response.data;
+}
+
 
 //Vehicle Variant Routes
+export const createVariant = async (payload: object) => {
+    const response = await api.post(`/api/platform/vehicle/variant/create`, payload)
+    return await response.data;
+}
+
 export const getVariantList = async (skip: number, take: number) => {
     const response = await api.get(`/api/platform/vehicle/variant/get/all?skip=${skip}&take=${take}`)
     return await response.data;
@@ -467,5 +697,25 @@ export const getVariantList = async (skip: number, take: number) => {
 
 export const getVariantListWithoutPagination = async () => {
     const response = await api.get(`/api/platform/vehicle/variant/get/all`)
+    return await response.data;
+}
+
+export const getVariantById = async (variantId: number) => {
+    const response = await api.get(`/api/platform/vehicle/variant/get/${variantId}`)
+    return await response.data;
+}
+
+export const editVariant = async (payload: object, variantId: number) => {
+    const response = await api.put(`/api/platform/vehicle/variant/${variantId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateVariant = async (variantId: number) => {
+    const response = await api.patch(`/api/platform/vehicle/variant/${variantId}/deactivate`)
+    return await response.data;
+}
+
+export const activateVariant = async (variantId: number) => {
+    const response = await api.patch(`/api/platform/vehicle/variant/${variantId}/activate`)
     return await response.data;
 }

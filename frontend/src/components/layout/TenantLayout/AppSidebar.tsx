@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Boxes, Briefcase, Building, Car, ChevronDown, ClipboardList, HardHat, Key, Layers, LayoutDashboard, ShieldCheck, Tags, Users, UserRound, Wrench } from "lucide-react"
+import { Boxes, Briefcase, Building, CalendarClock, Car, ChevronDown, ClipboardList, HardHat, Key, Layers, LayoutDashboard, Link2, Package, PackageSearch, Percent, ShieldCheck, Tags, Users, UserRound, Warehouse, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -56,9 +56,16 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/vehicle` ||
     pathname.startsWith(`/tenant/${id}/vehicle/`)
 
-  const jobCardActive =
-    pathname === `/tenant/${id}/job-card` ||
-    pathname.startsWith(`/tenant/${id}/job-card/`)
+  const jobCardAllocationActive =
+    pathname === `/tenant/${id}/job-card/allocation` ||
+    pathname.startsWith(`/tenant/${id}/job-card/allocation/`)
+
+  const jobCardListActive =
+    (pathname === `/tenant/${id}/job-card` ||
+      pathname.startsWith(`/tenant/${id}/job-card/`)) &&
+    !jobCardAllocationActive
+
+  const jobCardActive = jobCardListActive || jobCardAllocationActive
 
   const branchActive =
     pathname === `/tenant/${id}/masters/branch` ||
@@ -96,13 +103,36 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/masters/labour` ||
     pathname.startsWith(`/tenant/${id}/masters/labour/`)
 
+  const partCategoryActive =
+    pathname === `/tenant/${id}/masters/part-category` ||
+    pathname.startsWith(`/tenant/${id}/masters/part-category/`)
+
+  const partMasterActive =
+    pathname === `/tenant/${id}/masters/part-master` ||
+    pathname.startsWith(`/tenant/${id}/masters/part-master/`)
+
+  const hsnActive =
+    pathname === `/tenant/${id}/masters/hsn` ||
+    pathname.startsWith(`/tenant/${id}/masters/hsn/`)
+
+  const partFitmentActive =
+    pathname === `/tenant/${id}/masters/part-fitment` ||
+    pathname.startsWith(`/tenant/${id}/masters/part-fitment/`)
+
+  const dealerBayActive =
+    pathname === `/tenant/${id}/masters/dealer-bay` ||
+    pathname.startsWith(`/tenant/${id}/masters/dealer-bay/`)
+
   const servicesActive = serviceCategoryActive || serviceTypeActive
 
   const [mastersOpen, setMastersOpen] = useState<boolean | undefined>(undefined)
-  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive)
+  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive || partCategoryActive || partMasterActive || hsnActive || partFitmentActive || dealerBayActive)
 
   const [servicesOpen, setServicesOpen] = useState<boolean | undefined>(undefined)
   const showServices = servicesOpen ?? servicesActive
+
+  const [jobCardsOpen, setJobCardsOpen] = useState<boolean | undefined>(undefined)
+  const showJobCards = jobCardsOpen ?? jobCardActive
 
   /* Collapse the mobile sheet once a destination is picked. */
   const handleNavigate = () => {
@@ -280,13 +310,8 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   isActive={jobCardActive}
                   tooltip="Job Card"
-                  onClick={handleNavigate}
-                  render={
-                    <Link
-                      to={`/tenant/${id}/job-card`}
-                      aria-current={jobCardActive ? "page" : undefined}
-                    />
-                  }
+                  aria-expanded={showJobCards}
+                  onClick={() => setJobCardsOpen(!showJobCards)}
                   className={menuButtonClass}
                 >
                   <ClipboardList
@@ -303,15 +328,52 @@ export function AppSidebar() {
                     Job Card
                   </span>
 
-                  {jobCardActive && (
-                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
-                  )}
+                  <ChevronDown
+                    size={14}
+                    className={cn(
+                      "ml-auto text-sidebar-foreground/40 transition-transform duration-200 group-data-[collapsible=icon]:hidden",
+                      showJobCards && "rotate-180"
+                    )}
+                  />
                 </SidebarMenuButton>
+
+                {showJobCards && (
+                  <SidebarMenuSub className="mt-1">
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={jobCardListActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/job-card`}
+                            aria-current={jobCardListActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><ClipboardList size={18}/>Job Cards</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={jobCardAllocationActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/job-card/allocation`}
+                            aria-current={jobCardAllocationActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><CalendarClock size={18}/>Allocations</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                )}
               </SidebarMenuItem>
 
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  isActive={branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive}
+                  isActive={branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive || partCategoryActive || partMasterActive || hsnActive || partFitmentActive || dealerBayActive}
                   tooltip="Masters"
                   aria-expanded={showMasters}
                   onClick={() => setMastersOpen(!showMasters)}
@@ -321,7 +383,7 @@ export function AppSidebar() {
                     size={18}
                     strokeWidth={1.8}
                     className={
-                      branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive
+                      branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive || partCategoryActive || partMasterActive || hsnActive || partFitmentActive || dealerBayActive
                         ? "text-sidebar-ring"
                         : "text-sidebar-foreground/55"
                     }
@@ -488,6 +550,76 @@ export function AppSidebar() {
                         }
                       >
                         <span className="flex items-center gap-2 "><HardHat size={18}/>Labour</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={partCategoryActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/part-category`}
+                            aria-current={partCategoryActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Package size={18}/>Part Category</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={partMasterActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/part-master`}
+                            aria-current={partMasterActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><PackageSearch size={18}/>Part Master</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={hsnActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/hsn`}
+                            aria-current={hsnActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Percent size={18}/>HSN</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={partFitmentActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/part-fitment`}
+                            aria-current={partFitmentActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Link2 size={18}/>Part Fitment</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={dealerBayActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/dealer-bay`}
+                            aria-current={dealerBayActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Warehouse size={18}/>Dealer's Bay</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
