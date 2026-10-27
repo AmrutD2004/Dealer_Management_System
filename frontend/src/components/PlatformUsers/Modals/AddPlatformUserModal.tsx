@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/components/ui/toast"
@@ -91,96 +91,98 @@ export function AddPlatformUserModal() {
                     </DialogHeader>
 
                     <form id="platform-user-form" onSubmit={handleSubmit}>
-                        <div className="space-y-6 py-4">
+                        <div className="space-y-4 py-3">
                             {/* Profile */}
 
                             <div>
-                                <h3 className="mb-4 text-sm font-semibold text-foreground">
-                                    Profile
-                                </h3>
+                                <div className="mb-2 bg-muted/40 px-2 py-1">
+                                    <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">
+                                        Profile
+                                    </h3>
+                                </div>
 
-                                <div className="grid gap-4 sm:grid-cols-2">
+                                <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
 
-                                    <Field className="sm:col-span-2">
-                                        <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input
-                                                name='email'
-                                                type='email'
-                                                placeholder="name@redogroup.com"
-                                                required
-                                                onChange={handleChange}
-                                                value={formData.email}
-                                            />
-                                        </FieldContent>
-                                    </Field>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
+                                        <FieldLabel className="text-xs font-medium">Email <span className="text-red-500">*</span></FieldLabel>
+                                        <Input
+                                            name='email'
+                                            type='email'
+                                            placeholder="name@redogroup.com"
+                                            required
+                                            onChange={handleChange}
+                                            value={formData.email}
+                                            className="h-7 rounded-none px-2 text-xs"
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Role */}
 
                             <div>
-                                <h3 className="mb-4 text-sm font-semibold text-foreground">
-                                    Role Assignment
-                                </h3>
+                                <div className="mb-2 bg-muted/40 px-2 py-1">
+                                    <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">
+                                        Role Assignment
+                                    </h3>
+                                </div>
 
-                                <div className=" w-full">
-                                    <Field>
-                                        <FieldLabel>Platform Role <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Select name='role'
-                                                required
-                                                value={formData.role}
-                                                onValueChange={(value) => setFormData((prev: any) => ({ ...prev, role: value }))}
-                                            >
-                                                <SelectTrigger className="w-full" >
-                                                    <SelectValue placeholder="Select Role" />
+                                <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Platform Role <span className="text-red-500">*</span></FieldLabel>
+                                        <Select name='role'
+                                            required
+                                            value={formData.role}
+                                            onValueChange={(value) => setFormData((prev: any) => ({ ...prev, role: value }))}
+                                        >
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs" >
+                                                <SelectValue placeholder="Select Role" />
 
-                                                </SelectTrigger>
+                                            </SelectTrigger>
 
-                                                <SelectContent>
+                                            <SelectContent>
 
-                                                    <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
+                                                <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
 
-                                                    <SelectItem value="SUPPORT_ADMIN">
-                                                        Support Admin
-                                                    </SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </FieldContent>
-                                    </Field>
+                                                <SelectItem value="SUPPORT_ADMIN">
+                                                    Support Admin
+                                                </SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Credentials */}
 
                             <div>
-                                <h3 className="mb-4 text-sm font-semibold text-foreground">
-                                    Credentials
-                                </h3>
+                                <div className="mb-2 bg-muted/40 px-2 py-1">
+                                    <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">
+                                        Credentials
+                                    </h3>
+                                </div>
 
-                                <div className="grid gap-4 sm:grid-cols-2">
-                                    <Field className="sm:col-span-2">
-                                        <FieldLabel>Initial Password <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input
-                                                type="password"
-                                                required
-                                                name='passwordHash'
-                                                placeholder="Set a temporary password"
-                                                onChange={handleChange}
-                                                value={formData.passwordHash}
-                                            />
-                                        </FieldContent>
-                                    </Field>
+                                <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
+                                        <FieldLabel className="text-xs font-medium">Initial Password <span className="text-red-500">*</span></FieldLabel>
+                                        <Input
+                                            type="password"
+                                            required
+                                            name='passwordHash'
+                                            placeholder="Set a temporary password"
+                                            onChange={handleChange}
+                                            value={formData.passwordHash}
+                                            className="h-7 rounded-none px-2 text-xs"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </form>
                     <DialogFooter>
-                        <Button onClick={() => setOpen(false)} variant="outline">Cancel</Button>
-                        <Button form="platform-user-form" type="submit" >
-                            {loading ? <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating....</span> : ' Create Platform User' }
+                        <Button onClick={() => setOpen(false)} variant="outline" size="sm" className="h-7 px-3 text-xs">Cancel</Button>
+                        <Button form="platform-user-form" type="submit" size="sm" className="h-7 px-3 text-xs" >
+                            {loading ? <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" /> Creating....</span> : ' Create Platform User' }
 
                            
                         </Button>

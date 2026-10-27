@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -186,20 +186,20 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                 </DialogHeader>
 
                 <form id="part-fitment-edit-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Vehicle Compatibility</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Brand <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Vehicle Compatibility</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Brand <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={brands.map((brand) => ({ value: String(brand.id), label: `${brand.brandName} - ${brand.brandCode}` }))}
                                             value={formData.brandId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, brandId: value ?? "", modelId: "", variantId: "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select brand" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -210,11 +210,11 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Model <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Model <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={modelItems}
                                             value={formData.modelId || null}
@@ -222,7 +222,7 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                                             disabled={!formData.brandId}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder={formData.brandId ? "Select model" : "Select brand first"} />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -233,11 +233,11 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Variant <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Variant <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={variantItems}
                                             value={formData.variantId || null}
@@ -245,7 +245,7 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                                             disabled={!formData.modelId}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder={formData.modelId ? "Select variant" : "Select model first"} />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -256,18 +256,18 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Part <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Part <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={partItems}
                                             value={formData.partId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, partId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select part" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -278,28 +278,28 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Fitment Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Position</FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Fitment Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Position</FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='position'
                                             placeholder="e.g. Front Left"
                                             onChange={handleChange}
                                             value={formData.position}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Quantity <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Quantity <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='quantity'
                                             type='number'
@@ -309,12 +309,12 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                                             required
                                             onChange={handleChange}
                                             value={formData.quantity}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>OEM Part</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">OEM Part</FieldLabel>
+                                    <div className="min-w-0">
                                         <div className="flex items-center gap-2">
                                             <Switch
                                                 id="edit-part-fitment-is-oem"
@@ -325,40 +325,40 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                                                 {formData.isOem ? "Yes" : "No"}
                                             </span>
                                         </div>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Valid From <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Valid From <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='validFrom'
                                             type='date'
                                             required
                                             onChange={handleChange}
                                             value={formData.validFrom}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Valid To</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Valid To</FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='validTo'
                                             type='date'
                                             onChange={handleChange}
                                             value={formData.validTo}
-                                        />
-                                    </FieldContent>
-                                </Field>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <DialogFooter>
-                    <Button type="button" onClick={onClose} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button form="part-fitment-edit-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving....</span>}
+                    <Button size="sm" type="button" onClick={onClose} variant="outline" disabled={loading} className="h-7 px-3 text-xs">Cancel</Button>
+                    <Button size="sm" form="part-fitment-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                         Save Changes
                     </Button>
                 </DialogFooter>

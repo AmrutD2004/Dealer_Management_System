@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
@@ -107,31 +107,31 @@ export function EditDesignationModal({ designation, open, onClose }: EditDesigna
                     </DialogHeader>
 
                     <form id="designation-edit-form" onSubmit={handleSubmit}>
-                        <div className="space-y-6 py-4">
+                        <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Designation Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Designation Code</FieldLabel>
-                                    <FieldContent>
-                                        <Input name='code' value={formData.code} onChange={handleChange} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Designation Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='name' placeholder="e.g. Senior Technician" required onChange={handleChange} value={formData.name} />
-                                    </FieldContent>
-                                </Field>
-                                <Field className="sm:col-span-2 lg:col-span-3">
-                                    <FieldLabel>Description <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Textarea name='description' placeholder="Role responsibilities and scope" required onChange={handleChange} value={formData.description} />
-                                    </FieldContent>
-                                </Field>
-                                <Field className="sm:col-span-2 lg:col-span-3">
-                                    <FieldLabel>Mechanic Designation</FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Designation Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Designation Code</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='code' value={formData.code} onChange={handleChange}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Designation Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='name' placeholder="e.g. Senior Technician" required onChange={handleChange} value={formData.name}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                    <FieldLabel className="text-xs font-medium">Description <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Textarea name='description' placeholder="Role responsibilities and scope" required onChange={handleChange} value={formData.description}  className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                    <FieldLabel className="text-xs font-medium">Mechanic Designation</FieldLabel>
+                                    <div className="min-w-0">
                                         <div className="flex items-center gap-2">
                                             <Switch
                                                 id="edit-isMechanic"
@@ -142,17 +142,17 @@ export function EditDesignationModal({ designation, open, onClose }: EditDesigna
                                                 {formData.isMechanic ? "Yes" : "No"}
                                             </span>
                                         </div>
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         </div>
                     </form>
 
                     <DialogFooter>
-                        <Button type="button" onClick={handleCancel} variant="outline">Cancel</Button>
-                        <Button form="designation-edit-form" type="submit" disabled={loading}>
-                            {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving....</span>}
+                        <Button size="sm" type="button" onClick={handleCancel} variant="outline" className="h-7 px-3 text-xs">Cancel</Button>
+                        <Button size="sm" form="designation-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                            {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                             Save Changes
                         </Button>
                     </DialogFooter>

@@ -8,7 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { VariantListType } from "@/Types/variantMasterType"
 import dayjs from "dayjs"
@@ -37,60 +36,60 @@ export function ViewVariantModal({ variant, modelName, open, onClose }: props) {
                             </DialogDescription>
                         </div>
                     </div>
-                    <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 gap-4">
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Variant ID</Label>
-                            <span className="text-md font-semibold font-mono">{variant.id}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Variant Code</Label>
-                            <span className="text-md font-semibold font-mono">{variant.variantCode}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Status</Label>
+                    <div className="space-y-4 py-3"><div><div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Details</h3></div><div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Variant ID</Label>
+                            <span className="text-xs font-semibold font-mono">{variant.id}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Variant Code</Label>
+                            <span className="text-xs font-semibold font-mono">{variant.variantCode}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Status</Label>
                             <span>
                                 <Badge variant={variant.isActive ? "success" : "destructive"}>
                                     {variant.isActive ? "Active" : "Inactive"}
                                 </Badge>
                             </span>
-                        </Field>
-                        <Field className="sm:col-span-2 lg:col-span-3">
-                            <Label className="text-sm font-medium text-muted-foreground">Variant Name</Label>
-                            <span className="text-md font-semibold">{variant.variantName}</span>
-                        </Field>
-                        <Field className="sm:col-span-2 lg:col-span-3">
-                            <Label className="text-sm font-medium text-muted-foreground">Model</Label>
-                            <span className="text-md font-medium">{modelName || `#${variant.modelId}`}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Fuel Type</Label>
-                            <span className="text-md font-medium">{variant.fuelType}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Transmission Type</Label>
-                            <span className="text-md font-medium">{variant.transmissionType}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Production From</Label>
-                            <span className="text-md font-medium">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                            <Label className="text-xs font-medium text-muted-foreground">Variant Name</Label>
+                            <span className="text-xs font-semibold">{variant.variantName}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                            <Label className="text-xs font-medium text-muted-foreground">Model</Label>
+                            <span className="text-xs font-medium">{modelName || `#${variant.modelId}`}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Fuel Type</Label>
+                            <span className="text-xs font-medium">{variant.fuelType}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Transmission Type</Label>
+                            <span className="text-xs font-medium">{variant.transmissionType}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Production From</Label>
+                            <span className="text-xs font-medium">
                                 {variant.productionFrom ? dayjs(variant.productionFrom).format('DD MMM YYYY') : '—'}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Production To</Label>
-                            <span className="text-md font-medium">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Production To</Label>
+                            <span className="text-xs font-medium">
                                 {variant.productionTo ? dayjs(variant.productionTo).format('DD MMM YYYY') : '—'}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Created At</Label>
-                            <span className="text-md font-medium">{dayjs(variant.createdAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Updated At</Label>
-                            <span className="text-md font-medium">{dayjs(variant.updatedAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                    </FieldGroup>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Created At</Label>
+                            <span className="text-xs font-medium">{dayjs(variant.createdAt).format('DD MMM YYYY')}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Updated At</Label>
+                            <span className="text-xs font-medium">{dayjs(variant.updatedAt).format('DD MMM YYYY')}</span>
+                        </div>
+                    </div></div></div>
                 </DialogHeader>
                 <DialogFooter>
                     <Button onClick={onClose} variant="outline">Close</Button>

@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/toast"
@@ -89,16 +89,14 @@ export function AddPermissionModal() {
                 </DialogHeader>
 
                 <form id="permission-create-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">
-                                Permission Details
-                            </h3>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Permission Details</h3></div>
 
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Permission Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="w-full grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Permission Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='permissionCode'
                                             type='text'
@@ -106,13 +104,14 @@ export function AddPermissionModal() {
                                             required
                                             onChange={handleChange}
                                             value={formData.permissionCode}
+                                            className="h-7 rounded-none px-2 text-xs"
                                         />
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
 
-                                <Field>
-                                    <FieldLabel>Permission Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                <div className="w-full grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="w-full text-xs font-medium">Permission Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='permissionName'
                                             type='text'
@@ -120,29 +119,31 @@ export function AddPermissionModal() {
                                             required
                                             onChange={handleChange}
                                             value={formData.permissionName}
+                                            className="h-7 rounded-none px-2 text-xs"
                                         />
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
 
-                                <Field className="sm:col-span-2 lg:col-span-3">
-                                    <FieldLabel>Description</FieldLabel>
-                                    <FieldContent>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                    <FieldLabel className="text-xs font-medium">Description</FieldLabel>
+                                    <div className="min-w-0">
                                         <Textarea
                                             name='permissionDescription'
                                             placeholder="Describe what this permission allows"
                                             onChange={handleChange}
                                             value={formData.permissionDescription}
+                                            className="min-h-[48px] rounded-none px-2 py-1 text-xs"
                                         />
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
                 <DialogFooter>
-                    <Button onClick={() => setOpen(false)} variant="outline">Cancel</Button>
-                    <Button form="permission-create-form" type="submit" >
-                        {loading ? <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating....</span> : ' Create Permission' }
+                    <Button onClick={() => setOpen(false)} variant="outline" size="sm" className="h-7 px-3 text-xs">Cancel</Button>
+                    <Button form="permission-create-form" type="submit" size="sm" className="h-7 px-3 text-xs" >
+                        {loading ? <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" /> Creating....</span> : ' Create Permission' }
                     </Button>
                 </DialogFooter>
             </DialogContent>

@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -162,31 +162,31 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                 </DialogHeader>
 
                 <form id="part-master-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Part Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Part Number <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Part Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Part Number <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='partNo'
                                             placeholder="e.g. P-10001"
                                             required
                                             onChange={handleChange}
                                             value={formData.partNo}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Part Category</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Part Category</FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={categoryItems}
                                             value={formData.partCategoryId || "none"}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, partCategoryId: value ?? "none" }))}
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select part category" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -197,30 +197,30 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field className="sm:col-span-2 lg:col-span-3">
-                                    <FieldLabel>Part Description <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                    <FieldLabel className="text-xs font-medium">Part Description <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Textarea
                                             name='partDescription'
                                             placeholder="Description of the part"
                                             required
                                             onChange={handleChange}
                                             value={formData.partDescription}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>HSN Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">HSN Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={hsnItems}
                                             value={formData.hsnId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, hsnId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select HSN code" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -231,18 +231,18 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Unit of Measure <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Unit of Measure <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={partUnitOptions}
                                             value={formData.unitOfMeasure || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, unitOfMeasure: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select unit" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -253,11 +253,11 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Selling Price <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Selling Price <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='sellingPrice'
                                             type='number'
@@ -267,12 +267,12 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                             required
                                             onChange={handleChange}
                                             value={formData.sellingPrice}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Tax Rate (%) <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Tax Rate (%) <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='taxRate'
                                             type='number'
@@ -282,12 +282,12 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                             required
                                             onChange={handleChange}
                                             value={formData.taxRate}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Reorder Level</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Reorder Level</FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='reorderLevel'
                                             type='number'
@@ -296,12 +296,12 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                             placeholder="e.g. 10"
                                             onChange={handleChange}
                                             value={formData.reorderLevel}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Fast Moving</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Fast Moving</FieldLabel>
+                                    <div className="min-w-0">
                                         <div className="flex items-center gap-2">
                                             <Switch
                                                 id="part-is-fast-moving"
@@ -312,32 +312,32 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                                 {formData.isFastMoving ? "Yes" : "No"}
                                             </span>
                                         </div>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Valid From <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Valid From <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='validFrom'
                                             type='date'
                                             required
                                             onChange={handleChange}
                                             value={formData.validFrom}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Valid To <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Valid To <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='validTo'
                                             type='date'
                                             required
                                             onChange={handleChange}
                                             value={formData.validTo}
-                                        />
-                                    </FieldContent>
-                                </Field>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -345,8 +345,8 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
 
                 <DialogFooter>
                     <Button type="button" onClick={() => setOpen(false)} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button form="part-master-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating....</span>}
+                    <Button size="sm" form="part-master-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Part
                     </Button>
                 </DialogFooter>

@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { designationListType } from "@/Types/tenantCreateType"
 import dayjs from "dayjs"
@@ -39,25 +38,25 @@ export function ViewDesignationModal({ designation, open, onClose }: props) {
               </DialogDescription>
             </div>
           </div>
-          <FieldGroup className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+          <div className="space-y-4 py-3"><div><div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Details</h3></div><div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Designation ID
               </Label>
-              <span className="text-md font-mono font-semibold">
+              <span className="text-xs font-mono font-semibold">
                 {designation.id}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Designation Code
               </Label>
-              <span className="text-md font-mono font-semibold">
+              <span className="text-xs font-mono font-semibold">
                 {designation.code}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Status
               </Label>
               <span>
@@ -65,26 +64,26 @@ export function ViewDesignationModal({ designation, open, onClose }: props) {
                   {designation.isActive ? "Active" : "Inactive"}
                 </Badge>
               </span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Designation Name
               </Label>
-              <span className="text-md font-semibold">{designation.name}</span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-sm font-medium text-muted-foreground">
+              <span className="text-xs font-medium">{designation.name}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Description
               </Label>
               <div className="flex items-start gap-2">
                 <FileText className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
-                <span className="text-md font-medium">
+                <span className="text-xs font-medium">
                   {designation.description || "—"}
                 </span>
               </div>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Mechanic Designation
               </Label>
               <span>
@@ -92,27 +91,27 @@ export function ViewDesignationModal({ designation, open, onClose }: props) {
                   {designation.isMechanic ? "Yes" : "No"}
                 </Badge>
               </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Created At
               </Label>
-              <span className="text-md font-medium">
+              <span className="text-xs font-medium">
                 {dayjs(designation.createdAt).format("DD MMM YYYY")}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Updated At
               </Label>
-              <span className="text-md font-medium">
+              <span className="text-xs font-medium">
                 {dayjs(designation.updatedAt).format("DD MMM YYYY")}
               </span>
-            </Field>
-          </FieldGroup>
+            </div>
+          </div></div></div>
         </DialogHeader>
         <DialogFooter>
-          <Button onClick={onClose} variant="outline">
+          <Button size="sm" onClick={onClose} variant="outline" className="h-7 px-3 text-xs">
             Close
           </Button>
         </DialogFooter>

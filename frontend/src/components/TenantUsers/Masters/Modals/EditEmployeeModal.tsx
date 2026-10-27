@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -164,61 +164,61 @@ export function EditEmployeeModal({ employee, open, onClose }: EditEmployeeModal
                 </DialogHeader>
 
                 <form id="employee-edit-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Personal Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>First Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='firstName' placeholder="e.g. John" required onChange={handleChange} value={formData.firstName} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Middle Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='middleName' placeholder="e.g. Kumar" required onChange={handleChange} value={formData.middleName} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Last Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='lastName' placeholder="e.g. Doe" required onChange={handleChange} value={formData.lastName} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='email' type='email' placeholder="e.g. john@example.com" required onChange={handleChange} value={formData.email} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Mobile No <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='mobileNo' placeholder="e.g. 9876543210" required onChange={handleChange} value={formData.mobileNo} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Password</FieldLabel>
-                                    <FieldContent>
-                                        <Input name='passwordHash' type='password' placeholder="Leave blank to keep current" onChange={handleChange} value={formData.passwordHash} />
-                                    </FieldContent>
-                                </Field>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Personal Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">First Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='firstName' placeholder="e.g. John" required onChange={handleChange} value={formData.firstName}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Middle Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='middleName' placeholder="e.g. Kumar" required onChange={handleChange} value={formData.middleName}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Last Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='lastName' placeholder="e.g. Doe" required onChange={handleChange} value={formData.lastName}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Email <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='email' type='email' placeholder="e.g. john@example.com" required onChange={handleChange} value={formData.email}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Mobile No <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='mobileNo' placeholder="e.g. 9876543210" required onChange={handleChange} value={formData.mobileNo}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Password</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='passwordHash' type='password' placeholder="Leave blank to keep current" onChange={handleChange} value={formData.passwordHash}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Work Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Branch <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Work Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Branch <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={branchItems}
                                             value={formData.branchId}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, branchId: value ?? "" }))}
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select a branch" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -229,17 +229,17 @@ export function EditEmployeeModal({ employee, open, onClose }: EditEmployeeModal
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Role <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Role <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={roleItems}
                                             value={formData.roleId}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, roleId: value ?? "" }))}
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select a role" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -250,17 +250,17 @@ export function EditEmployeeModal({ employee, open, onClose }: EditEmployeeModal
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Designation <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Designation <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={designationItems}
                                             value={formData.designationId}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, designationId: value ?? "" }))}
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select a designation" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -271,17 +271,17 @@ export function EditEmployeeModal({ employee, open, onClose }: EditEmployeeModal
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <DialogFooter>
-                    <Button type="button" onClick={handleCancel} variant="outline">Cancel</Button>
-                    <Button form="employee-edit-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving....</span>}
+                    <Button size="sm" type="button" onClick={handleCancel} variant="outline" className="h-7 px-3 text-xs">Cancel</Button>
+                    <Button size="sm" form="employee-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                         Save Changes
                     </Button>
                 </DialogFooter>

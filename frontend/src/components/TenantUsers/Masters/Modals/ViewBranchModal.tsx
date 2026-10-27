@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { branchListType } from "@/Types/tenantCreateType"
 import dayjs from "dayjs"
@@ -39,25 +38,25 @@ export function ViewBranchModal({ branch, open, onClose }: props) {
               </DialogDescription>
             </div>
           </div>
-          <FieldGroup className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+          <div className="space-y-4 py-3"><div><div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Details</h3></div><div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Branch ID
               </Label>
-              <span className="text-md font-mono font-semibold">
+              <span className="text-xs font-mono font-semibold">
                 {branch.id}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Branch Code
               </Label>
-              <span className="text-md font-mono font-semibold">
+              <span className="text-xs font-mono font-semibold">
                 {branch.branchCode}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Status
               </Label>
               <span>
@@ -65,100 +64,100 @@ export function ViewBranchModal({ branch, open, onClose }: props) {
                   {branch.isActive ? "Active" : "Inactive"}
                 </Badge>
               </span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Branch Name
               </Label>
-              <span className="text-md font-semibold">{branch.branchName}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+              <span className="text-xs font-medium">{branch.branchName}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Email
               </Label>
               <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <span className="text-md font-medium">{branch.email}</span>
+                <Mail className="h-3 w-3 text-muted-foreground" />
+                <span className="text-xs font-medium">{branch.email}</span>
               </div>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Phone
               </Label>
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-muted-foreground" />
-                <span className="text-md font-medium">{branch.phone}</span>
+                <Phone className="h-3 w-3 text-muted-foreground" />
+                <span className="text-xs font-medium">{branch.phone}</span>
               </div>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Address Line 1
               </Label>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
-                <span className="text-md font-medium">{branch.address1}</span>
+                <MapPin className="h-3 w-3 text-muted-foreground" />
+                <span className="text-xs font-medium">{branch.address1}</span>
               </div>
-            </Field>
+            </div>
             {branch.address2 && (
-              <Field className="sm:col-span-2 lg:col-span-3">
-                <Label className="text-sm font-medium text-muted-foreground">
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                <Label className="text-xs font-medium text-muted-foreground">
                   Address Line 2
                 </Label>
-                <span className="text-md font-medium">{branch.address2}</span>
-              </Field>
+                <span className="text-xs font-medium">{branch.address2}</span>
+              </div>
             )}
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Locality
               </Label>
-              <span className="text-md font-medium">{branch.locality}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+              <span className="text-xs font-medium">{branch.locality}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 City
               </Label>
-              <span className="text-md font-medium">{branch.city}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+              <span className="text-xs font-medium">{branch.city}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 State
               </Label>
-              <span className="text-md font-medium">{branch.state}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+              <span className="text-xs font-medium">{branch.state}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Country
               </Label>
-              <span className="text-md font-medium">{branch.country}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+              <span className="text-xs font-medium">{branch.country}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Pincode
               </Label>
-              <span className="text-md font-mono font-medium">
+              <span className="text-xs font-mono font-medium">
                 {branch.pincode}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Created At
               </Label>
-              <span className="text-md font-medium">
+              <span className="text-xs font-medium">
                 {dayjs(branch.createdAt).format("DD MMM YYYY")}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Updated At
               </Label>
-              <span className="text-md font-medium">
+              <span className="text-xs font-medium">
                 {dayjs(branch.updatedAt).format("DD MMM YYYY")}
               </span>
-            </Field>
-          </FieldGroup>
+            </div>
+          </div></div></div>
         </DialogHeader>
         <DialogFooter>
-          <Button onClick={onClose} variant="outline">
+          <Button size="sm" onClick={onClose} variant="outline" className="h-7 px-3 text-xs">
             Close
           </Button>
         </DialogFooter>

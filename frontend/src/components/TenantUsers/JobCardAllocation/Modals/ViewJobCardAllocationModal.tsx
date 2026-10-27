@@ -8,7 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { JobCardAllocationType } from "@/Types/jobCardAllocationType"
 import dayjs from "dayjs"
@@ -44,87 +43,87 @@ export function ViewJobCardAllocationModal({ allocation, open, onClose }: Props)
                             </DialogDescription>
                         </div>
                     </div>
-                    <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 gap-4">
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Allocation ID</Label>
-                            <span className="text-md font-semibold font-mono">{allocation.id}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Job Card No.</Label>
-                            <span className="text-md font-semibold font-mono">{allocation.jobCard?.jobCardNo ?? `#${allocation.jobCardId}`}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Allocation Status</Label>
+                    <div className="space-y-4 py-3"><div><div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Details</h3></div><div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Allocation ID</Label>
+                            <span className="text-xs font-medium font-mono">{allocation.id}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Job Card No.</Label>
+                            <span className="text-xs font-medium font-mono">{allocation.jobCard?.jobCardNo ?? `#${allocation.jobCardId}`}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Allocation Status</Label>
                             <span>
                                 <Badge variant={allocation.bayOutTime ? "outline" : "success"}>
                                     {allocation.bayOutTime ? "Released" : "In Bay"}
                                 </Badge>
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Job Card Status</Label>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Job Card Status</Label>
                             <span>
                                 <Badge variant={allocation.jobCard?.status === "OPEN" ? "success" : "outline"}>
                                     {allocation.jobCard?.status === "OPEN" ? "Open" : "Closed"}
                                 </Badge>
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Vehicle Status</Label>
-                            <span className="text-md font-medium">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Vehicle Status</Label>
+                            <span className="text-xs font-medium">
                                 {allocation.jobCard
                                     ? allocation.jobCard.vehicleStatus === "MOBILIZE" ? "Mobilize" : "Immobilize"
                                     : "—"}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Current KM Reading</Label>
-                            <span className="text-md font-medium">{allocation.jobCard?.currentKmReading ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Bay</Label>
-                            <span className="text-md font-medium">{allocation.bay?.bayName ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Bay Code</Label>
-                            <span className="text-md font-medium font-mono">{allocation.bay?.bayCode ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Bay In Date/Time</Label>
-                            <span className="text-md font-medium">{formatDateTime(allocation.bayInDateTime)}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Bay Out Date/Time</Label>
-                            <span className="text-md font-medium">{formatDateTime(allocation.bayOutTime)}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Mechanic</Label>
-                            <span className="text-md font-semibold">{mechanicName}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Employee Code</Label>
-                            <span className="text-md font-medium font-mono">{allocation.mechanic?.employeeCode ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Mechanic Email</Label>
-                            <span className="text-md font-medium">{allocation.mechanic?.email ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Mechanic Mobile</Label>
-                            <span className="text-md font-medium">{allocation.mechanic?.mobileNo ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Created At</Label>
-                            <span className="text-md font-medium">{formatDateTime(allocation.createdAt)}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Updated At</Label>
-                            <span className="text-md font-medium">{formatDateTime(allocation.updatedAt)}</span>
-                        </Field>
-                    </FieldGroup>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Current KM Reading</Label>
+                            <span className="text-xs font-medium">{allocation.jobCard?.currentKmReading ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Bay</Label>
+                            <span className="text-xs font-medium">{allocation.bay?.bayName ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Bay Code</Label>
+                            <span className="text-xs font-medium font-mono">{allocation.bay?.bayCode ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Bay In Date/Time</Label>
+                            <span className="text-xs font-medium">{formatDateTime(allocation.bayInDateTime)}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Bay Out Date/Time</Label>
+                            <span className="text-xs font-medium">{formatDateTime(allocation.bayOutTime)}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Mechanic</Label>
+                            <span className="text-xs font-medium">{mechanicName}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Employee Code</Label>
+                            <span className="text-xs font-medium font-mono">{allocation.mechanic?.employeeCode ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Mechanic Email</Label>
+                            <span className="text-xs font-medium">{allocation.mechanic?.email ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Mechanic Mobile</Label>
+                            <span className="text-xs font-medium">{allocation.mechanic?.mobileNo ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Created At</Label>
+                            <span className="text-xs font-medium">{formatDateTime(allocation.createdAt)}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Updated At</Label>
+                            <span className="text-xs font-medium">{formatDateTime(allocation.updatedAt)}</span>
+                        </div>
+                    </div></div></div>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button onClick={onClose} variant="outline">Close</Button>
+                    <Button size="sm" onClick={onClose} variant="outline" className="h-7 px-3 text-xs">Close</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

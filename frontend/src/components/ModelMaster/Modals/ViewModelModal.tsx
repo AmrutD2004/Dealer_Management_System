@@ -8,7 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { ModelListType } from "@/Types/modelMasterType"
 import dayjs from "dayjs"
@@ -21,6 +20,13 @@ type props = {
     open: boolean
     onClose: () => void
 }
+
+const Detail = ({ label, value }: { label: string, value: React.ReactNode }) => (
+    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+        <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
+        <span className="text-xs font-medium">{value}</span>
+    </div>
+)
 
 export function ViewModelModal({ model, brandName, open, onClose }: props) {
     if (!model) return null
@@ -38,47 +44,26 @@ export function ViewModelModal({ model, brandName, open, onClose }: props) {
                             </DialogDescription>
                         </div>
                     </div>
-                    <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 gap-4">
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Model ID</Label>
-                            <span className="text-md font-semibold font-mono">{model.id}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Model Code</Label>
-                            <span className="text-md font-semibold font-mono">{model.modelCode}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Status</Label>
-                            <span>
-                                <Badge variant={model.isActive ? "success" : "destructive"}>
-                                    {model.isActive ? "Active" : "Inactive"}
-                                </Badge>
-                            </span>
-                        </Field>
-                        <Field className="sm:col-span-2 lg:col-span-3">
-                            <Label className="text-sm font-medium text-muted-foreground">Model Name</Label>
-                            <span className="text-md font-semibold">{model.modelName}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Brand</Label>
-                            <span className="text-md font-medium">{brandName || `#${model.brandId}`}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Body Type</Label>
-                            <span className="text-md font-medium">{getBodyTypeLabel(model.bodyType)}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Created At</Label>
-                            <span className="text-md font-medium">{dayjs(model.createdAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Updated At</Label>
-                            <span className="text-md font-medium">{dayjs(model.updatedAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                    </FieldGroup>
                 </DialogHeader>
+                <div className="space-y-4 py-3">
+                    <div>
+                        <div className="mb-2 bg-muted/40 px-2 py-1">
+                            <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Model Details</h3>
+                        </div>
+                        <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                            <Detail label="Model ID" value={<span className="font-mono">{model.id}</span>} />
+                            <Detail label="Model Code" value={<span className="font-mono">{model.modelCode}</span>} />
+                            <Detail label="Status" value={<Badge variant={model.isActive ? "success" : "destructive"}>{model.isActive ? "Active" : "Inactive"}</Badge>} />
+                            <Detail label="Model Name" value={model.modelName} />
+                            <Detail label="Brand" value={brandName || ("#" + model.brandId)} />
+                            <Detail label="Body Type" value={getBodyTypeLabel(model.bodyType)} />
+                            <Detail label="Created At" value={dayjs(model.createdAt).format('DD MMM YYYY')} />
+                            <Detail label="Updated At" value={dayjs(model.updatedAt).format('DD MMM YYYY')} />
+                        </div>
+                    </div>
+                </div>
                 <DialogFooter>
-                    <Button onClick={onClose} variant="outline">Close</Button>
+                    <Button onClick={onClose} variant="outline" size="sm" className="h-7 px-3 text-xs">Close</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

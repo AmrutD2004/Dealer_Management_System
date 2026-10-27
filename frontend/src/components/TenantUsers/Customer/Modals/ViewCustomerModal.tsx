@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { customerListType } from "@/Types/tenantCreateType"
 import dayjs from "dayjs"
@@ -42,25 +41,25 @@ export function ViewCustomerModal({ customer, open, onClose }: props) {
               </DialogDescription>
             </div>
           </div>
-          <FieldGroup className="mt-3 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+          <div className="space-y-4 py-3"><div><div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Details</h3></div><div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Customer ID
               </Label>
-              <span className="text-sm font-mono font-semibold">
+              <span className="text-xs font-medium font-mono">
                 {customer.id}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Customer Code
               </Label>
-              <span className="text-sm font-mono font-semibold">
+              <span className="text-xs font-medium font-mono">
                 {customer.customerCode}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Status
               </Label>
               <span>
@@ -68,129 +67,129 @@ export function ViewCustomerModal({ customer, open, onClose }: props) {
                   {customer.isActive ? "Active" : "Inactive"}
                 </Badge>
               </span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Name
               </Label>
-              <span className="text-sm font-semibold">
+              <span className="text-xs font-medium">
                 {customer.title ? `${customer.title} ` : ""}{fullName(customer)}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Email
               </Label>
               <div className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                <Mail className="h-3 w-3 shrink-0 text-muted-foreground" />
                 <span className="truncate text-sm font-medium">{customer.email || "-"}</span>
               </div>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Mobile No
               </Label>
               <div className="flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-                <span className="text-sm font-medium">{customer.mobileNo}</span>
+                <Phone className="h-3 w-3 shrink-0 text-muted-foreground" />
+                <span className="text-xs font-medium">{customer.mobileNo}</span>
               </div>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Alternate Mobile No
               </Label>
-              <span className="text-sm font-medium">{customer.alternateMobileNo || "-"}</span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+              <span className="text-xs font-medium">{customer.alternateMobileNo || "-"}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Date of Birth
               </Label>
-              <span className="text-sm font-medium">
+              <span className="text-xs font-medium">
                 {customer.dateOfBirth ? dayjs(customer.dateOfBirth).format("DD MMM YYYY") : "-"}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Labour Discount %
               </Label>
-              <span className="text-sm font-medium">{customer.laborDiscountPercent}%</span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+              <span className="text-xs font-medium">{customer.laborDiscountPercent}%</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Part Discount %
               </Label>
-              <span className="text-sm font-medium">{customer.partDiscountPercent}%</span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-xs text-muted-foreground">
+              <span className="text-xs font-medium">{customer.partDiscountPercent}%</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Address Line 1
               </Label>
               <div className="flex items-center gap-2">
-                <MapPin className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-                <span className="text-sm font-medium">{customer.address1 || "-"}</span>
+                <MapPin className="h-3 w-3 shrink-0 text-muted-foreground" />
+                <span className="text-xs font-medium">{customer.address1 || "-"}</span>
               </div>
-            </Field>
+            </div>
             {customer.address2 && (
-              <Field className="sm:col-span-2 lg:col-span-3">
-                <Label className="text-xs text-muted-foreground">
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                <Label className="text-xs font-medium text-muted-foreground">
                   Address Line 2
                 </Label>
-                <span className="text-sm font-medium">{customer.address2}</span>
-              </Field>
+                <span className="text-xs font-medium">{customer.address2}</span>
+              </div>
             )}
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 City
               </Label>
-              <span className="text-sm font-medium">{customer.city || "-"}</span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+              <span className="text-xs font-medium">{customer.city || "-"}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 State
               </Label>
-              <span className="text-sm font-medium">{customer.state || "-"}</span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+              <span className="text-xs font-medium">{customer.state || "-"}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Country
               </Label>
-              <span className="text-sm font-medium">{customer.country || "-"}</span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+              <span className="text-xs font-medium">{customer.country || "-"}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Pincode
               </Label>
               <span className="text-sm font-mono font-medium">
                 {customer.pincode || "-"}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Created By
               </Label>
-              <span className="text-sm font-medium">
+              <span className="text-xs font-medium">
                 {customer.authorizedByUser
                   ? `${customer.authorizedByUser.firstName} ${customer.authorizedByUser.lastName}`
                   : "-"}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Created At
               </Label>
-              <span className="text-sm font-medium">
+              <span className="text-xs font-medium">
                 {dayjs(customer.createdAt).format("DD MMM YYYY")}
               </span>
-            </Field>
-            <Field>
-              <Label className="text-xs text-muted-foreground">
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
                 Updated At
               </Label>
-              <span className="text-sm font-medium">
+              <span className="text-xs font-medium">
                 {dayjs(customer.updatedAt).format("DD MMM YYYY")}
               </span>
-            </Field>
-          </FieldGroup>
+            </div>
+          </div></div></div>
         </DialogHeader>
         <DialogFooter className="mt-0">
           <Button onClick={onClose} variant="outline">

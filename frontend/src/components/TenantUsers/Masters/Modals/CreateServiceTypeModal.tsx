@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -114,20 +114,20 @@ export function CreateServiceTypeModal({ open, setOpen, onCreated }: CreateServi
                 </DialogHeader>
 
                 <form id="service-type-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Type Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Service Category <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Type Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Service Category <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={categoryItems}
                                             value={formData.serviceCategoryId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, serviceCategoryId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select a category" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -138,26 +138,26 @@ export function CreateServiceTypeModal({ open, setOpen, onCreated }: CreateServi
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Type Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='code' placeholder="e.g. ST001" required onChange={handleChange} value={formData.code} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Type Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='name' placeholder="e.g. Engine Oil Change" required onChange={handleChange} value={formData.name} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Description</FieldLabel>
-                                    <FieldContent>
-                                        <Input name='description' placeholder="Details about this service type" onChange={handleChange} value={formData.description} />
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Type Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='code' placeholder="e.g. ST001" required onChange={handleChange} value={formData.code}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Type Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='name' placeholder="e.g. Engine Oil Change" required onChange={handleChange} value={formData.name}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Description</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='description' placeholder="Details about this service type" onChange={handleChange} value={formData.description}  className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -165,8 +165,8 @@ export function CreateServiceTypeModal({ open, setOpen, onCreated }: CreateServi
 
                 <DialogFooter>
                     <Button type="button" onClick={() => setOpen(false)} variant="outline">Cancel</Button>
-                    <Button form="service-type-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating....</span>}
+                    <Button size="sm" form="service-type-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Type
                     </Button>
                 </DialogFooter>

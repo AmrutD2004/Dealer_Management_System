@@ -19,7 +19,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -29,6 +29,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/toast"
 import dayjs from "dayjs"
@@ -291,111 +292,107 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-6xl w-full md:max-w-4xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Edit Job Card</DialogTitle>
                     <DialogDescription>Update details of {jobCard.jobCardNo}.</DialogDescription>
                 </DialogHeader>
 
                 <form id="job-card-edit-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Customer & Vehicle</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Branch <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={branches.map(b => ({ value: String(b.id), label: b.branchName }))}
-                                            value={formData.branchId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, branchId: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select branch" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {branches.map((b) => (
-                                                    <SelectItem key={b.id} value={String(b.id)}>
-                                                        {b.branchName}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Customer <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={customers.map(c => ({ value: String(c.id), label: `${c.firstName} ${c.lastName} - ${c.mobileNo}` }))}
-                                            value={formData.customerId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, customerId: value ?? "", vehicleId: "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select customer" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {customers.map((c) => (
-                                                    <SelectItem key={c.id} value={String(c.id)}>
-                                                        {c.firstName} {c.lastName} - {c.mobileNo}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Vehicle <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand.brandName} ${v.model.modelName}` }))}
-                                            value={formData.vehicleId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleId: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select vehicle" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {filteredVehicles.map((v) => (
-                                                    <SelectItem key={v.id} value={String(v.id)}>
-                                                        {v.vehicleNumber || v.chassisNumber} - {v.manufacturer} {v.model}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Current KM Reading <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='currentKmReading' type='number' placeholder="Current KM reading" required onChange={handleChange} value={formData.currentKmReading} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Previous KM Reading</FieldLabel>
-                                    <FieldContent>
-                                        <Input name='previousKmReading' type='number' placeholder="Previous KM reading" onChange={handleChange} value={formData.previousKmReading} />
-                                    </FieldContent>
-                                </Field>
+                            <div className="mb-2 bg-muted/40 px-2 py-1">
+                                <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Customer & Vehicle</h3>
+                            </div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Branch <span className="text-red-500">*</span></FieldLabel>
+                                    <Select
+                                        items={branches.map(b => ({ value: String(b.id), label: b.branchName }))}
+                                        value={formData.branchId || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, branchId: value ?? "" }))}
+                                        required
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select branch" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {branches.map((b) => (
+                                                <SelectItem key={b.id} value={String(b.id)}>
+                                                    {b.branchName}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Customer <span className="text-red-500">*</span></FieldLabel>
+                                    <Select
+                                        items={customers.map(c => ({ value: String(c.id), label: `${c.firstName} ${c.lastName} - ${c.mobileNo}` }))}
+                                        value={formData.customerId || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, customerId: value ?? "", vehicleId: "" }))}
+                                        required
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select customer" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {customers.map((c) => (
+                                                <SelectItem key={c.id} value={String(c.id)}>
+                                                    {c.firstName} {c.lastName} - {c.mobileNo}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Vehicle <span className="text-red-500">*</span></FieldLabel>
+                                    <Select
+                                        items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName || v.manufacturer} ${v.model?.modelName || v.model}` }))}
+                                        value={formData.vehicleId || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleId: value ?? "" }))}
+                                        required
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select vehicle" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {filteredVehicles.map((v) => (
+                                                <SelectItem key={v.id} value={String(v.id)}>
+                                                    {v.vehicleNumber || v.chassisNumber} - {v.brand?.brandName || v.manufacturer} {v.model?.modelName || v.model}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Current KM Reading <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='currentKmReading' type='number' placeholder="Current KM reading" required onChange={handleChange} value={formData.currentKmReading} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Previous KM Reading</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='previousKmReading' type='number' placeholder="Previous KM reading" onChange={handleChange} value={formData.previousKmReading} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Service Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Service Category <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Service Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Service Category <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={serviceCategories.map(s => ({ value: String(s.id), label: s.name }))}
                                             value={formData.serviceCategoryId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, serviceCategoryId: value ?? "", serviceTypeId: "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select service category" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -406,18 +403,18 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Service Type <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Service Type <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={filteredServiceTypes.map(s => ({ value: String(s.id), label: s.name }))}
                                             value={formData.serviceTypeId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, serviceTypeId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select service type" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -428,18 +425,18 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Repair Order Type <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Repair Order Type <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={repairOrders.map(r => ({ value: String(r.id), label: r.name }))}
                                             value={formData.repairOrderTypeId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, repairOrderTypeId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select repair order type" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -450,81 +447,73 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Vehicle Status <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={vehicleStatusOptions}
-                                            value={formData.vehicleStatus || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleStatus: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select vehicle status" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {vehicleStatusOptions.map((v) => (
-                                                    <SelectItem key={v.value} value={v.value}>
-                                                        {v.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Estimate Close At <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='estimateCloseJobcardAt' type='datetime-local' required onChange={handleChange} value={formData.estimateCloseJobcardAt} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Supervisor</FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={employees.map(e => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
-                                            value={formData.supervisorId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, supervisorId: value ?? "" }))}
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select supervisor" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {employees.map((e) => (
-                                                    <SelectItem key={e.id} value={String(e.id)}>
-                                                        {e.firstName} {e.lastName}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Technician</FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={employees.map(e => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
-                                            value={formData.technicianId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, technicianId: value ?? "" }))}
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select technician" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {employees.map((e) => (
-                                                    <SelectItem key={e.id} value={String(e.id)}>
-                                                        {e.firstName} {e.lastName}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Is Revisit</FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Vehicle Status <span className="text-red-500">*</span></FieldLabel>
+                                    <Select
+                                        items={vehicleStatusOptions}
+                                        value={formData.vehicleStatus || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleStatus: value ?? "" }))}
+                                        required
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select status" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {vehicleStatusOptions.map((v) => (
+                                                <SelectItem key={v.value} value={v.value}>
+                                                    {v.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Est. Close At <span className="text-red-500">*</span></FieldLabel>
+                                    <Input name='estimateCloseJobcardAt' type='datetime-local' required onChange={handleChange} value={formData.estimateCloseJobcardAt} className="h-7 rounded-none px-2 text-xs" />
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Supervisor</FieldLabel>
+                                    <Select
+                                        items={employees.map(e => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
+                                        value={formData.supervisorId || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, supervisorId: value ?? "" }))}
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {employees.map((e) => (
+                                                <SelectItem key={e.id} value={String(e.id)}>
+                                                    {e.firstName} {e.lastName}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Technician</FieldLabel>
+                                    <Select
+                                        items={employees.map(e => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
+                                        value={formData.technicianId || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, technicianId: value ?? "" }))}
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {employees.map((e) => (
+                                                <SelectItem key={e.id} value={String(e.id)}>
+                                                    {e.firstName} {e.lastName}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Is Revisit</FieldLabel>
+                                    <div className="min-w-0">
                                         <div className="flex items-center gap-2">
                                             <Switch
                                                 id="edit-isRevisit"
@@ -533,11 +522,11 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                             />
                                             <span className="text-sm text-muted-foreground">{formData.isRevisit ? "Yes" : "No"}</span>
                                         </div>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Is Breakdown</FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Is Breakdown</FieldLabel>
+                                    <div className="min-w-0">
                                         <div className="flex items-center gap-2">
                                             <Switch
                                                 id="edit-isBreakDown"
@@ -546,112 +535,104 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                             />
                                             <span className="text-sm text-muted-foreground">{formData.isBreakDown ? "Yes" : "No"}</span>
                                         </div>
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Driver Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Driver Name</FieldLabel>
-                                    <FieldContent>
-                                        <Input name='driverName' placeholder="Driver name" onChange={handleChange} value={formData.driverName} />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Driver Mobile No.</FieldLabel>
-                                    <FieldContent>
-                                        <Input name='driverMobileNo' placeholder="Driver mobile number" onChange={handleChange} value={formData.driverMobileNo} />
-                                    </FieldContent>
-                                </Field>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Driver Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Driver Name</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='driverName' placeholder="Driver name" onChange={handleChange} value={formData.driverName} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Driver Mobile No.</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='driverMobileNo' placeholder="Driver mobile number" onChange={handleChange} value={formData.driverMobileNo} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         {formData.isBreakDown && (
                             <div>
-                                <h3 className="mb-4 text-sm font-semibold text-foreground">Breakdown Details</h3>
-                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                    <Field>
-                                        <FieldLabel>Breakdown Person Attended</FieldLabel>
-                                        <FieldContent>
-                                            <Input name='breakdownPersonAttended' placeholder="Person attended" onChange={handleChange} value={formData.breakdownPersonAttended} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Breakdown Date & Time</FieldLabel>
-                                        <FieldContent>
-                                            <Input name='breakdownDateTime' type='datetime-local' onChange={handleChange} value={formData.breakdownDateTime} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Breakdown Start</FieldLabel>
-                                        <FieldContent>
-                                            <Input name='breakdownStartDateTime' type='datetime-local' onChange={handleChange} value={formData.breakdownStartDateTime} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Breakdown End</FieldLabel>
-                                        <FieldContent>
-                                            <Input name='breakdownEndDateTime' type='datetime-local' onChange={handleChange} value={formData.breakdownEndDateTime} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Dealer Van Start KM</FieldLabel>
-                                        <FieldContent>
-                                            <Input name='dealerVanStartKm' type='number' placeholder="Dealer van start KM" onChange={handleChange} value={formData.dealerVanStartKm} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Dealer Van End KM</FieldLabel>
-                                        <FieldContent>
-                                            <Input name='dealerVanEndKm' type='number' placeholder="Dealer van end KM" onChange={handleChange} value={formData.dealerVanEndKm} />
-                                        </FieldContent>
-                                    </Field>
+                                <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Breakdown Details</h3></div>
+                                <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Breakdown Person Attended</FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='breakdownPersonAttended' placeholder="Person attended" onChange={handleChange} value={formData.breakdownPersonAttended} className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Breakdown Date & Time</FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='breakdownDateTime' type='datetime-local' onChange={handleChange} value={formData.breakdownDateTime} className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Breakdown Start</FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='breakdownStartDateTime' type='datetime-local' onChange={handleChange} value={formData.breakdownStartDateTime} className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Breakdown End</FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='breakdownEndDateTime' type='datetime-local' onChange={handleChange} value={formData.breakdownEndDateTime} className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Dealer Van Start KM</FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='dealerVanStartKm' type='number' placeholder="Dealer van start KM" onChange={handleChange} value={formData.dealerVanStartKm} className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Dealer Van End KM</FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='dealerVanEndKm' type='number' placeholder="Dealer van end KM" onChange={handleChange} value={formData.dealerVanEndKm} className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         )}
 
                         <div>
-                            <div className="mb-4 flex items-center justify-between">
+                            <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
                                 <div>
-                                    <h3 className="text-sm font-semibold text-foreground">Customer Voice</h3>
-                                    <p className="text-sm text-muted-foreground">Record what the customer reported along with the observation and action to be taken.</p>
+                                    <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Customer Voice</h3>
+                                    <p className="text-[11px] text-muted-foreground">Record what the customer reported along with the observation and action to be taken.</p>
                                 </div>
-                                <Button type="button" variant="outline" size="sm" className="gap-2" onClick={addCustomerVoice}>
-                                    <Plus className="h-4 w-4" />
+                                <Button type="button" variant="outline" size="sm" className="h-6 gap-1 px-2 text-xs" onClick={addCustomerVoice}>
+                                    <Plus className="h-3 w-3" />
                                     Add Voice
                                 </Button>
                             </div>
-                            <div className="space-y-4">
-                                {customerVoices.map((voice, index) => (
-                                    <div key={index} className="rounded-lg border p-4">
-                                        <div className="mb-3 flex items-center justify-between">
-                                            <span className="text-sm font-medium text-muted-foreground">Voice #{index + 1}</span>
-                                            {customerVoices.length > 1 && (
-                                                <Button
-                                                    type="button"
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    className="h-8 w-8 text-destructive"
-                                                    aria-label={`Remove voice ${index + 1}`}
-                                                    onClick={() => removeCustomerVoice(index)}
-                                                >
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
-                                            )}
-                                        </div>
-                                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                            <Field>
-                                                <FieldLabel>Action To Be Taken <span className="text-red-500">*</span></FieldLabel>
-                                                <FieldContent>
+                            <div className="rounded border">
+                                <Table className="[&_th]:border-r [&_th]:border-slate-200 [&_th:last-child]:border-r-0 [&_td]:border-r [&_td]:border-slate-200 [&_td:last-child]:border-r-0">
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="w-[220px]">Action To Be Taken <span className="text-red-500">*</span></TableHead>
+                                            <TableHead>Customer Voice Description <span className="text-red-500">*</span></TableHead>
+                                            <TableHead>Observation</TableHead>
+                                            <TableHead className="w-[80px] text-right">Action</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {customerVoices.map((voice, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell className="align-top">
                                                     <Select
                                                         items={labours.map(l => ({ value: String(l.id), label: l.labourName }))}
                                                         value={voice.labourId || null}
                                                         onValueChange={(value) => handleCustomerVoiceChange(index, "labourId", value ?? "")}
                                                     >
-                                                        <SelectTrigger className="w-full">
+                                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                             <SelectValue placeholder="Select labour" />
                                                         </SelectTrigger>
                                                         <SelectContent align="start" alignItemWithTrigger={false}>
@@ -662,42 +643,50 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                                             ))}
                                                         </SelectContent>
                                                     </Select>
-                                                </FieldContent>
-                                            </Field>
-                                            <Field>
-                                                <FieldLabel>Customer Voice Description <span className="text-red-500">*</span></FieldLabel>
-                                                <FieldContent>
+                                                </TableCell>
+                                                <TableCell className="align-top">
                                                     <Textarea
                                                         placeholder="Describe what the customer reported"
                                                         value={voice.customerVoiceDescription}
                                                         onChange={(e) => handleCustomerVoiceChange(index, "customerVoiceDescription", e.target.value)}
                                                     />
-                                                </FieldContent>
-                                            </Field>
-                                            <Field>
-                                                <FieldLabel>Observation</FieldLabel>
-                                                <FieldContent>
+                                                </TableCell>
+                                                <TableCell className="align-top">
                                                     <Textarea
                                                         placeholder="Observation noted"
                                                         value={voice.observation}
                                                         onChange={(e) => handleCustomerVoiceChange(index, "observation", e.target.value)}
                                                     />
-                                                </FieldContent>
-                                            </Field>
-                                        </div>
-                                    </div>
-                                ))}
+                                                </TableCell>
+                                                <TableCell className="align-top text-right">
+                                                    {customerVoices.length > 1 && (
+                                                        <Button
+                                                            type="button"
+                                                            variant="ghost"
+                                                            size="icon"
+                                                            className="h-8 w-8 text-destructive"
+                                                            aria-label={`Remove voice ${index + 1}`}
+                                                            onClick={() => removeCustomerVoice(index)}
+                                                        >
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </Button>
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <DialogFooter className="gap-2">
-                    <Button type="button" variant="outline" onClick={onClose}>
+                    <Button type="button" variant="outline" size="sm" className="h-7 px-3 text-xs" onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button type="submit" form="job-card-edit-form" disabled={loading}>
-                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    <Button type="submit" form="job-card-edit-form" size="sm" className="h-7 px-3 text-xs" disabled={loading}>
+                        {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
                         Update Job Card
                     </Button>
                 </DialogFooter>

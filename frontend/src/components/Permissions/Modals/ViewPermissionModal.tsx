@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { PermissionListType } from "@/Types/permissionType"
 import dayjs from "dayjs"
@@ -21,6 +20,13 @@ type props = {
   open: boolean,
   onClose: () => void
 }
+
+const Detail = ({ label, value }: { label: string, value: React.ReactNode }) => (
+  <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+    <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
+    <span className="text-xs font-medium">{value}</span>
+  </div>
+)
 
 export function ViewPermissionModal({ permission, open, onClose }: props) {
   const { closeAllPermissionModals } = useContext(PlatformUserContext)
@@ -45,43 +51,25 @@ export function ViewPermissionModal({ permission, open, onClose }: props) {
               </DialogDescription>
             </div>
           </div>
-          <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 gap-4">
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Permission ID</Label>
-              <span className="text-md font-semibold font-mono">{permission.id}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Permission Code</Label>
-              <span className="text-md font-semibold font-mono">{permission.permissionCode}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Status</Label>
-              <span>
-                <Badge variant={permission.isActive ? "success" : "destructive"}>
-                  {permission.isActive ? "Active" : "Inactive"}
-                </Badge>
-              </span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-sm font-medium text-muted-foreground">Permission Name</Label>
-              <span className="text-md font-semibold">{permission.permissionName}</span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-sm font-medium text-muted-foreground">Description</Label>
-              <span className="text-md font-medium">{permission.description || "—"}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Created At</Label>
-              <span className="text-md font-medium">{dayjs(permission.createdAt).format('DD MMM YYYY')}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Updated At</Label>
-              <span className="text-md font-medium">{dayjs(permission.updatedAt).format('DD MMM YYYY')}</span>
-            </Field>
-          </FieldGroup>
         </DialogHeader>
+        <div className="space-y-4 py-3">
+          <div>
+            <div className="mb-2 bg-muted/40 px-2 py-1">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Permission Details</h3>
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+              <Detail label="Permission ID" value={<span className="font-mono">{permission.id}</span>} />
+              <Detail label="Permission Code" value={<span className="font-mono">{permission.permissionCode}</span>} />
+              <Detail label="Status" value={<Badge variant={permission.isActive ? "success" : "destructive"}>{permission.isActive ? "Active" : "Inactive"}</Badge>} />
+              <Detail label="Permission Name" value={permission.permissionName} />
+              <Detail label="Description" value={permission.description || "—"} />
+              <Detail label="Created At" value={dayjs(permission.createdAt).format('DD MMM YYYY')} />
+              <Detail label="Updated At" value={dayjs(permission.updatedAt).format('DD MMM YYYY')} />
+            </div>
+          </div>
+        </div>
         <DialogFooter>
-          <Button onClick={handleClose} variant="outline">Close</Button>
+          <Button onClick={handleClose} variant="outline" size="sm" className="h-7 px-3 text-xs">Close</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

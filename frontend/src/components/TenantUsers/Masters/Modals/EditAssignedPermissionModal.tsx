@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import {
     Select,
     SelectContent,
@@ -138,12 +138,12 @@ const EditAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
                 </DialogHeader>
 
                 <form id="assigned-permission-edit-form" onSubmit={handleSubmit}>
-                    <div className="space-y-4 py-4">
-                        <Field>
-                            <FieldLabel>Role <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
+                    <div className="space-y-4 py-3">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Role <span className="text-red-500">*</span></FieldLabel>
+                            <div className="min-w-0">
                                 <Select items={roleItems} value={roleId} onValueChange={(value) => setRoleId(value ?? "")}>
-                                    <SelectTrigger className="w-full">
+                                    <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                         <SelectValue placeholder="Select a role" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -154,14 +154,14 @@ const EditAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                            </FieldContent>
-                        </Field>
+                            </div>
+                        </div>
 
-                        <Field>
-                            <FieldLabel>Permission <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Permission <span className="text-red-500">*</span></FieldLabel>
+                            <div className="min-w-0">
                                 <Select items={permissionItems} value={permissionId} onValueChange={(value) => setPermissionId(value ?? "")}>
-                                    <SelectTrigger className="w-full">
+                                    <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                         <SelectValue placeholder="Select a permission" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -172,15 +172,15 @@ const EditAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                            </FieldContent>
-                        </Field>
+                            </div>
+                        </div>
                     </div>
                 </form>
 
                 <DialogFooter>
-                    <Button type="button" onClick={handleCancel} variant="outline">Cancel</Button>
-                    <Button form="assigned-permission-edit-form" type="submit" disabled={loading}>
-                        {loading ? <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving....</span> : 'Save Changes'}
+                    <Button size="sm" type="button" onClick={handleCancel} variant="outline" className="h-7 px-3 text-xs">Cancel</Button>
+                    <Button size="sm" form="assigned-permission-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading ? <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span> : 'Save Changes'}
                     </Button>
                 </DialogFooter>
             </DialogContent>

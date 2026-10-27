@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -161,97 +161,92 @@ export function CreateJobCardAllocationModal({ open, setOpen, onCreated }: Creat
                 </DialogHeader>
 
                 <form id="job-card-allocation-create-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Allocation Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Job Card <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={eligibleJobCards.map((jobCard) => ({ value: String(jobCard.id), label: getJobCardLabel(jobCard) }))}
-                                            value={formData.jobCardId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, jobCardId: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select open job card" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {eligibleJobCards.map((jobCard) => (
-                                                    <SelectItem key={jobCard.id} value={String(jobCard.id)}>
-                                                        {getJobCardLabel(jobCard)}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Bay <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={eligibleBays.map((bay) => ({ value: String(bay.id), label: `${bay.bayName} - ${bay.bayCode}` }))}
-                                            value={formData.bayId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, bayId: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select available bay" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {eligibleBays.map((bay) => (
-                                                    <SelectItem key={bay.id} value={String(bay.id)}>
-                                                        {bay.bayName} - {bay.bayCode}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Mechanic <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Select
-                                            items={mechanics.map((mechanic) => ({ value: String(mechanic.id), label: `${mechanic.firstName} ${mechanic.lastName ?? ""} - ${mechanic.employeeCode}` }))}
-                                            value={formData.mechanicId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, mechanicId: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select mechanic" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {mechanics.map((mechanic) => (
-                                                    <SelectItem key={mechanic.id} value={String(mechanic.id)}>
-                                                        {mechanic.firstName} {mechanic.lastName ?? ""} - {mechanic.employeeCode}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field className="sm:col-span-2 lg:col-span-3">
-                                    <FieldLabel>Bay In Date/Time <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input
-                                            name='bayInDateTime'
-                                            type='datetime-local'
-                                            required
-                                            onChange={handleChange}
-                                            value={formData.bayInDateTime}
-                                        />
-                                    </FieldContent>
-                                </Field>
+                            <div className="mb-2 bg-muted/40 px-2 py-1">
+                                <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Allocation Details</h3>
+                            </div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Job Card <span className="text-red-500">*</span></FieldLabel>
+                                    <Select
+                                        items={eligibleJobCards.map((jobCard) => ({ value: String(jobCard.id), label: getJobCardLabel(jobCard) }))}
+                                        value={formData.jobCardId || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, jobCardId: value ?? "" }))}
+                                        required
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {eligibleJobCards.map((jobCard) => (
+                                                <SelectItem key={jobCard.id} value={String(jobCard.id)}>
+                                                    {getJobCardLabel(jobCard)}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Bay <span className="text-red-500">*</span></FieldLabel>
+                                    <Select
+                                        items={eligibleBays.map((bay) => ({ value: String(bay.id), label: `${bay.bayName} - ${bay.bayCode}` }))}
+                                        value={formData.bayId || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, bayId: value ?? "" }))}
+                                        required
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {eligibleBays.map((bay) => (
+                                                <SelectItem key={bay.id} value={String(bay.id)}>
+                                                    {bay.bayName} - {bay.bayCode}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Mechanic <span className="text-red-500">*</span></FieldLabel>
+                                    <Select
+                                        items={mechanics.map((mechanic) => ({ value: String(mechanic.id), label: `${mechanic.firstName} ${mechanic.lastName ?? ""} - ${mechanic.employeeCode}` }))}
+                                        value={formData.mechanicId || null}
+                                        onValueChange={(value) => setFormData(prev => ({ ...prev, mechanicId: value ?? "" }))}
+                                        required
+                                    >
+                                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                            <SelectValue placeholder="Select" />
+                                        </SelectTrigger>
+                                        <SelectContent align="start" alignItemWithTrigger={false}>
+                                            {mechanics.map((mechanic) => (
+                                                <SelectItem key={mechanic.id} value={String(mechanic.id)}>
+                                                    {mechanic.firstName} {mechanic.lastName ?? ""} - {mechanic.employeeCode}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2 xl:col-span-2">
+                                    <FieldLabel className="text-xs font-medium">Bay In Date/Time <span className="text-red-500">*</span></FieldLabel>
+                                    <Input
+                                        name='bayInDateTime'
+                                        type='datetime-local'
+                                        required
+                                        onChange={handleChange}
+                                        value={formData.bayInDateTime}
+                                        className="h-7 rounded-none px-2 text-xs"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <DialogFooter>
-                    <Button type="button" onClick={() => setOpen(false)} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button form="job-card-allocation-create-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Allocating....</span>}
+                    <Button type="button" onClick={() => setOpen(false)} variant="outline" size="sm" className="h-7 px-3 text-xs" disabled={loading}>Cancel</Button>
+                    <Button form="job-card-allocation-create-form" type="submit" size="sm" className="h-7 px-3 text-xs" disabled={loading}>
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Allocating....</span>}
                         Allocate Job Card
                     </Button>
                 </DialogFooter>
