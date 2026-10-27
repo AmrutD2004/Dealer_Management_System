@@ -199,7 +199,7 @@ export interface employeeListType {
     updatedAt: string,
     tenant: { tenantName: string } | null,
     branch: { branchName: string } | null,
-    role: { roleName: string } | null,
+    role: { roleName: string, roleCode?: string } | null,
     designation: { name: string } | null
 }
 

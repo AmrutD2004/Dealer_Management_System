@@ -200,7 +200,7 @@ export function TenantCreateForm({ onCancel }: props) {
           </FieldContent>
         </Field>
 
-        <Field className="sm:col-span-2">
+        <Field className="sm:col-span-2 lg:col-span-3">
           <FieldLabel>Address <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
             <Textarea name="address" value={tenantData.address} required placeholder="Business address" onChange={handleTenantChange} />
@@ -291,13 +291,13 @@ export function TenantCreateForm({ onCancel }: props) {
           </FieldContent>
         </Field>
 
-        <Field className="sm:col-span-2">
+        <Field className="sm:col-span-2 lg:col-span-3">
           <FieldLabel>Address 1 <span className="text-red-500">*</span></FieldLabel>
           <FieldContent>
             <Textarea name="address1" value={initialBranchData.address1} required placeholder="Branch address" onChange={handleBranchChange} />
           </FieldContent>
         </Field>
-        <Field className="sm:col-span-2">
+        <Field className="sm:col-span-2 lg:col-span-3">
           <FieldLabel>Address 2</FieldLabel>
           <FieldContent>
             <Textarea name="address2" value={initialBranchData.address2 ?? ''} placeholder="Branch address" onChange={handleBranchChange} />

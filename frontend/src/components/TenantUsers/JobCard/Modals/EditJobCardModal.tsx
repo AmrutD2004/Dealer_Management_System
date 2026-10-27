@@ -301,7 +301,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                     <div className="space-y-6 py-4">
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Customer & Vehicle</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Branch <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
@@ -346,7 +346,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                         </Select>
                                     </FieldContent>
                                 </Field>
-                                <Field className="sm:col-span-2">
+                                <Field>
                                     <FieldLabel>Vehicle <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
                                         <Select
@@ -385,7 +385,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
 
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Service Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Service Category <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
@@ -553,7 +553,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
 
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Driver Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Driver Name</FieldLabel>
                                     <FieldContent>
@@ -572,7 +572,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                         {formData.isBreakDown && (
                             <div>
                                 <h3 className="mb-4 text-sm font-semibold text-foreground">Breakdown Details</h3>
-                                <div className="grid gap-4 sm:grid-cols-2">
+                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                     <Field>
                                         <FieldLabel>Breakdown Person Attended</FieldLabel>
                                         <FieldContent>
@@ -642,8 +642,8 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                                 </Button>
                                             )}
                                         </div>
-                                        <div className="grid gap-4 sm:grid-cols-2">
-                                            <Field className="sm:col-span-2">
+                                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                            <Field>
                                                 <FieldLabel>Action To Be Taken <span className="text-red-500">*</span></FieldLabel>
                                                 <FieldContent>
                                                     <Select

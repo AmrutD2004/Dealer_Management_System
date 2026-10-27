@@ -18,7 +18,7 @@ export function FormSection({
       <div>
         <h3 className="mb-4 text-sm font-semibold text-slate-900">{title}</h3>
 
-        <div className="grid gap-4 sm:grid-cols-2">{children}</div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{children}</div>
       </div>
 
       {withSeparator && <Separator />}

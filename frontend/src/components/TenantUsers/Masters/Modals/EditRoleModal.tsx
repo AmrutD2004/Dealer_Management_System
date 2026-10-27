@@ -159,7 +159,7 @@ export function EditRoleModal({ role, open, onClose }: EditRoleModalProps) {
                     <div className="space-y-6 py-4">
                         <div>
                             <h3 className="mb-4 text-sm font-semibold text-foreground">Role Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 <Field>
                                     <FieldLabel>Role Code <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
@@ -207,7 +207,7 @@ export function EditRoleModal({ role, open, onClose }: EditRoleModalProps) {
                                         <Input name='roleName' placeholder="e.g. Service Admin" required onChange={handleChange} value={formData.roleName} disabled={!!formData.roleName} readOnly/>
                                     </FieldContent>
                                 </Field>
-                                <Field className="sm:col-span-2">
+                                <Field className="sm:col-span-2 lg:col-span-3">
                                     <FieldLabel>Description <span className="text-red-500">*</span></FieldLabel>
                                     <FieldContent>
                                         <Textarea name='roleDescription' placeholder="Role responsibilities and scope" required onChange={handleChange} value={formData.roleDescription} disabled={!!formData.roleDescription} readOnly/>
