@@ -94,6 +94,17 @@ export const editPlatformUser = async (req: Request, res: Response) => {
             message: 'Email is required'
         })
     } try {
+        const isUserExists = await prisma.platformUser.findUnique({
+            where : {
+                id : Number(userId)
+            }
+        })
+        if(!isUserExists){
+            return res.status(404).json({
+                success : true,
+                message : 'User not found'
+            })
+        }
         const data = await prisma.platformUser.update({
             data: {
                 email: email,

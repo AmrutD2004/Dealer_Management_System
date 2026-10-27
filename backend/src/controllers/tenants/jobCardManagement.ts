@@ -25,6 +25,18 @@ export const createJobCard = async (req: Request, res: Response) => {
         })
     }
     try {
+        const isCustomerExists = await prisma.customer.findUnique({
+            where : {
+                id : Number(customerId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isCustomerExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Customer not found'
+            })
+        }
         const getFinacialYear = () => {
             const get = new GetFiscalYear();
             const Years = get.getFiscalYear("IN", "current");

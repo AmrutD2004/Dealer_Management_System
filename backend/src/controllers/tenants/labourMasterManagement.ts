@@ -42,10 +42,14 @@ export const createLabours = async (req: Request, res: Response) => {
         }
         const data = await prisma.labourMaster.create({
             data: {
+                tenant : {
+                    connect :{
+                         id: Number(tenantId),
+                    }
+                },
                 labourCode: labourCode,
                 labourName: labourName,
                 labourDescription: labourDescription || null,
-                tenantId: Number(tenantId),
                 rate: parseFloat(rate),
                 standardHours: parseFloat(standardHours),
                 isActive: true

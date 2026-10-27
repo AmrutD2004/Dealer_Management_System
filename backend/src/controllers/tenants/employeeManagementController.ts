@@ -38,10 +38,48 @@ export const createEmployee = async (req: Request, res: Response) => {
     });
   }
   try {
-    const isUserExists = await prisma.users.findFirst({
+    const isRoleExists = await prisma.role.findUnique({
+            where : {
+                id : Number(roleId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isRoleExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Role not exists'
+            })
+        }
+        const isBranchExists = await prisma.branch.findUnique({
+            where : {
+                id : Number(branchId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isBranchExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Branch not exists'
+            })
+        }
+        const isDesignationExists = await prisma.employeeDesignation.findUnique({
+            where : {
+                id : Number(designationId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isDesignationExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Designation not exists'
+            })
+        }
+    const isUserExists = await prisma.users.findUnique({
       where: {
-        email: email,
+        tenantId_email : {
+          email: email,
         tenantId: tenantId,
+        }
       },
       include: {
         tenant: {
@@ -165,6 +203,42 @@ export const updateEmployeeDetails = async (req: Request, res: Response) => {
     });
   }
   try {
+     const isRoleExists = await prisma.role.findUnique({
+            where : {
+                id : Number(roleId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isRoleExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Role not exists'
+            })
+        }
+        const isBranchExists = await prisma.branch.findUnique({
+            where : {
+                id : Number(branchId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isBranchExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Branch not exists'
+            })
+        }
+        const isDesignationExists = await prisma.employeeDesignation.findUnique({
+            where : {
+                id : Number(designationId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isDesignationExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Designation not exists'
+            })
+        }
     const isUserExists = await prisma.users.findUnique({
       where: {
         id: Number(employeeId),
@@ -347,6 +421,18 @@ export const getTenantEmployeeDetails = async (req: Request, res: Response) => {
     });
   }
   try {
+    const isEmployeeExists = await prisma.users.findUnique({
+            where : {
+                id : Number(employeeId),
+                tenantId : Number(tenantId)
+            }
+        })
+        if(!isEmployeeExists){
+            return res.status(404).json({
+                success : false,
+                message : 'Employee not exists'
+            })
+        }
     const employeeDetails = await prisma.users.findUnique({
       where: { id: Number(employeeId), tenantId: Number(tenantId) },
       include: {
@@ -399,6 +485,30 @@ export const deactivateEmployee = async (req: Request, res: Response) => {
     });
   }
   try {
+    const isUserExists = await prisma.users.findUnique({
+      where: {
+        id: Number(employeeId),
+        tenantId: Number(tenantId),
+      },
+      include: {
+        tenant: {
+          select: {
+            tenantName: true,
+          },
+        },
+        branch: {
+          select: {
+            branchName: true,
+          },
+        },
+      },
+    });
+    if (!isUserExists) {
+      return res.status(302).json({
+        success: false,
+        message: `Employess not exists`,
+      });
+    }
     const data = await prisma.users.update({
       where: { id: Number(employeeId), tenantId: Number(tenantId) },
       data: {
@@ -432,6 +542,30 @@ export const activateEmployee = async (req: Request, res: Response) => {
     });
   }
   try {
+    const isUserExists = await prisma.users.findUnique({
+      where: {
+        id: Number(employeeId),
+        tenantId: Number(tenantId),
+      },
+      include: {
+        tenant: {
+          select: {
+            tenantName: true,
+          },
+        },
+        branch: {
+          select: {
+            branchName: true,
+          },
+        },
+      },
+    });
+    if (!isUserExists) {
+      return res.status(302).json({
+        success: false,
+        message: `Employess not exists`,
+      });
+    }
     const data = await prisma.users.update({
       where: { id: Number(employeeId), tenantId: Number(tenantId) },
       data: {

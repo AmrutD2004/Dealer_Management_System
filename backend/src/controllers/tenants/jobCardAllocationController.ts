@@ -20,6 +20,30 @@ export const allocateJobCard = async (req: Request, res: Response) => {
     }
 
     try {
+        const isBayExists = await prisma.dealerBayMaster.findUnique({
+            where: {
+                id: Number(bayId),
+                tenantId: Number(tenantId)
+            }
+        })
+        if (!isBayExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Bay not found'
+            })
+        }
+        const isJobCardExists = await prisma.jobCard.findUnique({
+            where: {
+                id: Number(jobCardId),
+                tenantId: Number(tenantId)
+            }
+        })
+        if (!isJobCardExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Job card not found'
+            })
+        }
         const existingAllocation = await prisma.jobCardAllocation.findFirst({
             where: {
                 jobCardId: Number(jobCardId),
@@ -47,6 +71,18 @@ export const allocateJobCard = async (req: Request, res: Response) => {
                 success: false,
                 message: "This bay is already occupied.",
             });
+        }
+        const isMechanicExists = await prisma.users.findUnique({
+            where: {
+                id: Number(mechanicId),
+                tenantId: Number(tenantId)
+            }
+        })
+        if (!isMechanicExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Mechanic not found'
+            })
         }
         const checkIsMechanic = await prisma.users.findUnique({
             where: {
@@ -114,6 +150,30 @@ export const updateAllocatedJobCard = async (req: Request, res: Response) => {
     }
 
     try {
+        const isBayExists = await prisma.dealerBayMaster.findUnique({
+            where: {
+                id: Number(bayId),
+                tenantId: Number(tenantId)
+            }
+        })
+        if (!isBayExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Bay not found'
+            })
+        }
+        const isJobCardExists = await prisma.jobCard.findUnique({
+            where: {
+                id: Number(jobCardId),
+                tenantId: Number(tenantId)
+            }
+        })
+        if (!isJobCardExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Job card not found'
+            })
+        }
         const existingAllocation = await prisma.jobCardAllocation.findUnique({
             where: {
                 id: Number(allocatedId)
@@ -125,6 +185,18 @@ export const updateAllocatedJobCard = async (req: Request, res: Response) => {
                 success: false,
                 message: "This job card not allocated",
             });
+        }
+        const isMechanicExists = await prisma.users.findUnique({
+            where: {
+                id: Number(mechanicId),
+                tenantId: Number(tenantId)
+            }
+        })
+        if (!isMechanicExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Mechanic not found'
+            })
         }
         const checkIsMechanic = await prisma.users.findUnique({
             where: {
@@ -239,37 +311,37 @@ export const getListOfAllocatedJobCards = async (req: Request, res: Response) =>
         let listOfJobcardAllocation
         if (skip || take) {
             listOfJobcardAllocation = await prisma.jobCardAllocation.findMany({
-                skip : Number(skip),
-                take : Number(take),
+                skip: Number(skip),
+                take: Number(take),
                 where: {
                     jobCard: {
                         tenantId: Number(tenantId)
                     }
                 },
-                include : {
-                    jobCard : true,
-                    bay : true,
-                    mechanic : true
+                include: {
+                    jobCard: true,
+                    bay: true,
+                    mechanic: true
                 }
             })
-        }else {
+        } else {
             listOfJobcardAllocation = await prisma.jobCardAllocation.findMany({
                 where: {
                     jobCard: {
                         tenantId: Number(tenantId)
                     }
                 },
-                include : {
-                    jobCard : true,
-                    bay : true,
-                    mechanic : true
+                include: {
+                    jobCard: true,
+                    bay: true,
+                    mechanic: true
                 }
             })
         }
         return res.status(201).json({
             success: true,
             data: listOfJobcardAllocation,
-            count : totalAllocatedJobCards
+            count: totalAllocatedJobCards
         })
     } catch (err) {
         return res.status(500).json({

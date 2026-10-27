@@ -23,6 +23,17 @@ export const addModel = async (req: Request, res: Response) => {
         })
     }
     try {
+        const isBrandExists = await prisma.brandMaster.findUnique({
+            where : {
+                id : Number(brandId)
+            }
+        })
+        if(!isBrandExists){
+            return res.status(404).json({
+                success : true,
+                message : 'Brand not exists'
+            })
+        }
         const isModelExits = await prisma.vehicleModelMaster.findUnique({
             where: {
                 brandId_modelCode: {
@@ -93,6 +104,17 @@ export const updateModel = async (req: Request, res: Response) => {
         })
     }
     try {
+        const isBrandExists = await prisma.brandMaster.findUnique({
+            where : {
+                id : Number(brandId)
+            }
+        })
+        if(!isBrandExists){
+            return res.status(404).json({
+                success : true,
+                message : 'Brand not exists'
+            })
+        }
         const isModelExits = await prisma.vehicleModelMaster.findUnique({
             where: {
                 brandId_modelCode: {
