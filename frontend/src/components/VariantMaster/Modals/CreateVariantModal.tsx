@@ -113,9 +113,9 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
                 })
                 setFormData(initialFormData)
                 onCreated?.()
-                // setTimeout(() => {
-                //     setOpen(false)
-                // }, 2000)
+                setTimeout(() => {
+                    setOpen(false)
+                }, 2000)
             }
             if (!data?.success) {
                 toast.add({

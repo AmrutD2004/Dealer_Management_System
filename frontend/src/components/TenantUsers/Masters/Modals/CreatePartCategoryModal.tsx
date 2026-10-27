@@ -93,9 +93,9 @@ export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePart
                 })
                 setFormData(initialFormData)
                 onCreated?.()
-                // setTimeout(() => {
-                //     setOpen(false)
-                // }, 2000)
+                setTimeout(() => {
+                    setOpen(false)
+                }, 2000)
             }
             if (!data?.success) {
                 toast.add({
