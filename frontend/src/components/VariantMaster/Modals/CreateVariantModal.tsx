@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -153,20 +153,20 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
                 </DialogHeader>
 
                 <form id="variant-create-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Variant Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Model <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Variant Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Model <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={modelItems}
                                             value={formData.modelId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, modelId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select model" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -177,11 +177,11 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Variant Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Variant Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='variantCode'
                                             type='text'
@@ -189,12 +189,12 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
                                             required
                                             onChange={handleChange}
                                             value={formData.variantCode}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Variant Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Variant Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='variantName'
                                             type='text'
@@ -202,19 +202,19 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
                                             required
                                             onChange={handleChange}
                                             value={formData.variantName}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Fuel Type <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Fuel Type <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={fuelTypeOptions}
                                             value={formData.fuelType || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, fuelType: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select fuel type" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -225,18 +225,18 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Transmission Type <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Transmission Type <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={transmissionOptions}
                                             value={formData.transmissionType || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, transmissionType: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select transmission" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -247,31 +247,31 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Production From <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Production From <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='productionFrom'
                                             type='date'
                                             required
                                             onChange={handleChange}
                                             value={formData.productionFrom}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Production To</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Production To</FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='productionTo'
                                             type='date'
                                             onChange={handleChange}
                                             value={formData.productionTo}
-                                        />
-                                    </FieldContent>
-                                </Field>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -279,8 +279,8 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
 
                 <DialogFooter>
                     <Button onClick={() => setOpen(false)} variant="outline">Cancel</Button>
-                    <Button form="variant-create-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating....</span>}
+                    <Button size="sm" form="variant-create-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Variant
                     </Button>
                 </DialogFooter>

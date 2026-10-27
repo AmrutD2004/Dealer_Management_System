@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/toast"
 import type { BrandCreateType, BrandListType } from "@/Types/brandMasterType"
@@ -89,45 +89,45 @@ export function EditBrandModal({ brand, open, onClose, onUpdated }: EditBrandMod
                 </DialogHeader>
 
                 <form id="brand-edit-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-1">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Brand Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Brand Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input
-                                            name='brandCode'
-                                            type='text'
-                                            placeholder="e.g. HONDA"
-                                            required
-                                            onChange={handleChange}
-                                            value={formData.brandCode}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Brand Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input
-                                            name='brandName'
-                                            type='text'
-                                            placeholder="e.g. Honda"
-                                            required
-                                            onChange={handleChange}
-                                            value={formData.brandName}
-                                        />
-                                    </FieldContent>
-                                </Field>
+                            <div className="mb-2 bg-muted/40 px-2 py-1">
+                                <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Brand Details</h3>
+                            </div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Brand Code <span className="text-red-500">*</span></FieldLabel>
+                                    <Input
+                                        name='brandCode'
+                                        type='text'
+                                        placeholder="e.g. HONDA"
+                                        required
+                                        onChange={handleChange}
+                                        value={formData.brandCode}
+                                        className="h-7 rounded-none px-2 text-xs"
+                                    />
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Brand Name <span className="text-red-500">*</span></FieldLabel>
+                                    <Input
+                                        name='brandName'
+                                        type='text'
+                                        placeholder="e.g. Honda"
+                                        required
+                                        onChange={handleChange}
+                                        value={formData.brandName}
+                                        className="h-7 rounded-none px-2 text-xs"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <DialogFooter>
-                    <Button onClick={onClose} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button form="brand-edit-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving....</span>}
+                    <Button onClick={onClose} variant="outline" size="sm" className="h-7 px-3 text-xs" disabled={loading}>Cancel</Button>
+                    <Button form="brand-edit-form" type="submit" disabled={loading} size="sm" className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                         Save Changes
                     </Button>
                 </DialogFooter>

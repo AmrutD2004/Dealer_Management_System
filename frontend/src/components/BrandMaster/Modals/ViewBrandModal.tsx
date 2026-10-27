@@ -8,7 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { BrandListType } from "@/Types/brandMasterType"
 import dayjs from "dayjs"
@@ -19,6 +18,13 @@ type props = {
     open: boolean
     onClose: () => void
 }
+
+const Detail = ({ label, value }: { label: string, value: React.ReactNode }) => (
+    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+        <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
+        <span className="text-xs font-medium">{value}</span>
+    </div>
+)
 
 export function ViewBrandModal({ brand, open, onClose }: props) {
     if (!brand) return null
@@ -36,39 +42,24 @@ export function ViewBrandModal({ brand, open, onClose }: props) {
                             </DialogDescription>
                         </div>
                     </div>
-                    <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 gap-4">
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Brand ID</Label>
-                            <span className="text-md font-semibold font-mono">{brand.id}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Brand Code</Label>
-                            <span className="text-md font-semibold font-mono">{brand.brandCode}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Status</Label>
-                            <span>
-                                <Badge variant={brand.isActive ? "success" : "destructive"}>
-                                    {brand.isActive ? "Active" : "Inactive"}
-                                </Badge>
-                            </span>
-                        </Field>
-                        <Field className="sm:col-span-2 lg:col-span-3">
-                            <Label className="text-sm font-medium text-muted-foreground">Brand Name</Label>
-                            <span className="text-md font-semibold">{brand.brandName}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Created At</Label>
-                            <span className="text-md font-medium">{dayjs(brand.createdAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Updated At</Label>
-                            <span className="text-md font-medium">{dayjs(brand.updatedAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                    </FieldGroup>
                 </DialogHeader>
+                <div className="space-y-4 py-3">
+                    <div>
+                        <div className="mb-2 bg-muted/40 px-2 py-1">
+                            <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Brand Details</h3>
+                        </div>
+                        <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                            <Detail label="Brand ID" value={<span className="font-mono">{brand.id}</span>} />
+                            <Detail label="Brand Code" value={<span className="font-mono">{brand.brandCode}</span>} />
+                            <Detail label="Status" value={<Badge variant={brand.isActive ? "success" : "destructive"}>{brand.isActive ? "Active" : "Inactive"}</Badge>} />
+                            <Detail label="Brand Name" value={brand.brandName} />
+                            <Detail label="Created At" value={dayjs(brand.createdAt).format('DD MMM YYYY')} />
+                            <Detail label="Updated At" value={dayjs(brand.updatedAt).format('DD MMM YYYY')} />
+                        </div>
+                    </div>
+                </div>
                 <DialogFooter>
-                    <Button onClick={onClose} variant="outline">Close</Button>
+                    <Button onClick={onClose} variant="outline" size="sm" className="h-7 px-3 text-xs">Close</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

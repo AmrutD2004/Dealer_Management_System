@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
@@ -149,20 +149,20 @@ export function EditRoleModal({ role, open, onClose }: EditRoleModalProps) {
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Edit Role</DialogTitle>
                     <DialogDescription>Update the role details.</DialogDescription>
                 </DialogHeader>
 
                 <form id="role-edit-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Role Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Role Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Role Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Role Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             value={formData.roleCode}
                                             onValueChange={(value) => {
@@ -171,7 +171,7 @@ export function EditRoleModal({ role, open, onClose }: EditRoleModalProps) {
                                             }
                                             }
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select a role" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -199,29 +199,29 @@ export function EditRoleModal({ role, open, onClose }: EditRoleModalProps) {
                                                 </SelectItem>
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Role Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Input name='roleName' placeholder="e.g. Service Admin" required onChange={handleChange} value={formData.roleName} disabled={!!formData.roleName} readOnly/>
-                                    </FieldContent>
-                                </Field>
-                                <Field className="sm:col-span-2 lg:col-span-3">
-                                    <FieldLabel>Description <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
-                                        <Textarea name='roleDescription' placeholder="Role responsibilities and scope" required onChange={handleChange} value={formData.roleDescription} disabled={!!formData.roleDescription} readOnly/>
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Role Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='roleName' placeholder="e.g. Service Admin" required onChange={handleChange} value={formData.roleName} disabled={!!formData.roleName} readOnly className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                    <FieldLabel className="text-xs font-medium">Description <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Textarea name='roleDescription' placeholder="Role responsibilities and scope" required onChange={handleChange} value={formData.roleDescription} disabled={!!formData.roleDescription} readOnly className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <DialogFooter>
-                    <Button type="button" onClick={handleCancel} variant="outline">Cancel</Button>
-                    <Button form="role-edit-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving....</span>}
+                    <Button size="sm" type="button" onClick={handleCancel} variant="outline" className="h-7 px-3 text-xs">Cancel</Button>
+                    <Button size="sm" form="role-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                         Save Changes
                     </Button>
                 </DialogFooter>

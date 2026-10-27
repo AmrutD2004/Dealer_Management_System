@@ -99,7 +99,7 @@ function SelectLabel({
   return (
     <SelectPrimitive.GroupLabel
       data-slot="select-label"
-      className={cn("px-3 py-2.5 text-xs text-muted-foreground", className)}
+      className={cn("px-3 py-1 text-xs text-muted-foreground", className)}
       {...props}
     />
   )
@@ -162,8 +162,7 @@ function SelectScrollUpButton({
       )}
       {...props}
     >
-      <ChevronUpIcon
-      />
+      <ChevronUpIcon />
     </SelectPrimitive.ScrollUpArrow>
   )
 }
@@ -181,8 +180,7 @@ function SelectScrollDownButton({
       )}
       {...props}
     >
-      <ChevronDownIcon
-      />
+      <ChevronDownIcon />
     </SelectPrimitive.ScrollDownArrow>
   )
 }

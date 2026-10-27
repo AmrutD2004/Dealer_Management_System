@@ -1,6 +1,6 @@
 import { createVehicle, getBrandListWithoutPagination, getCustomerList, getModelListWithoutPagination, getVariantListWithoutPagination } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -143,26 +143,26 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
     const filterVehicleByModel = formData.modelId ? vehicleVariant.filter((f) => String(f.modelId) === formData.modelId) : vehicleVariant
     return (
         <form id="vehicle-form" onSubmit={handleSubmit}>
-            <div className="space-y-6 py-4">
+            <div className="space-y-4 py-3">
                 <div>
-                    <h3 className="mb-4 text-sm font-semibold text-foreground">Vehicle Details</h3>
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        <Field>
-                            <FieldLabel>Vehicle Number <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Input name='vehicleNumber' placeholder="Vehicle Number" required onChange={handleChange} value={formData.vehicleNumber.toUpperCase()} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Customer <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
+                    <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Vehicle Details</h3></div>
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Vehicle Number <span className="text-red-500">*</span></FieldLabel>
+                            <div className="min-w-0">
+                                <Input name='vehicleNumber' placeholder="Vehicle Number" required onChange={handleChange} value={formData.vehicleNumber.toUpperCase()} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Customer <span className="text-red-500">*</span></FieldLabel>
+                            <div className="min-w-0">
                                 <Select
                                     items={customers.map(c => ({ value: String(c.id), label: `${c.firstName} ${c.lastName} - ${c.mobileNo}` }))}
                                     value={formData.customerId || null}
                                     onValueChange={(value) => setFormData(prev => ({ ...prev, customerId: value ?? "" }))}
                                     required
                                 >
-                                    <SelectTrigger className="w-full">
+                                    <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                         <SelectValue placeholder="Select customer" />
                                     </SelectTrigger>
                                     <SelectContent align="start" alignItemWithTrigger={false}>
@@ -173,30 +173,30 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
                                         ))}
                                     </SelectContent>
                                 </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Chassis Number <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Input name='chassisNumber' placeholder="Chassis Number" required onChange={handleChange} value={formData.chassisNumber.toUpperCase()} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Engine Number <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Input name='engineNumber' placeholder="Engine Number" required onChange={handleChange} value={formData.engineNumber.toUpperCase()} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                                    <FieldLabel>Brand <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Chassis Number <span className="text-red-500">*</span></FieldLabel>
+                            <div className="min-w-0">
+                                <Input name='chassisNumber' placeholder="Chassis Number" required onChange={handleChange} value={formData.chassisNumber.toUpperCase()} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Engine Number <span className="text-red-500">*</span></FieldLabel>
+                            <div className="min-w-0">
+                                <Input name='engineNumber' placeholder="Engine Number" required onChange={handleChange} value={formData.engineNumber.toUpperCase()} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Brand <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={vehicleBrand.map(b => ({ value: String(b.id), label: `${b.brandName} - ${b.brandCode}` }))}
                                             value={formData.brandId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, brandId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select brand" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -207,11 +207,11 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Model <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Model <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                         disabled={!formData.brandId}
                                             items={filterVehicleByBrand.map(m => ({ value: String(m.id), label: `${m.modelName} - ${m.modelCode}` }))}
@@ -219,7 +219,7 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, modelId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select model" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -230,11 +230,11 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Variant</FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Variant</FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                         disabled={!formData.modelId}
                                             items={filterVehicleByModel.map(v => ({ value: String(v.id), label: `${v.variantName} - ${v.variantCode} - ${v.fuelType}` }))}
@@ -242,7 +242,7 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, variantId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select brand" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -253,48 +253,48 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                        <Field>
-                            <FieldLabel>Color</FieldLabel>
-                            <FieldContent>
-                                <Input name='color' placeholder="Color" onChange={handleChange} value={formData.color} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Manufacturing Year</FieldLabel>
-                            <FieldContent>
-                                <Input name='manufacturingYear' type='number' placeholder="YYYY" onChange={handleChange} value={formData.manufacturingYear} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Registration Date</FieldLabel>
-                            <FieldContent>
-                                <Input name='registrationDate' type='date' onChange={handleChange} value={formData.registrationDate} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Purchase Date</FieldLabel>
-                            <FieldContent>
-                                <Input name='purchaseDate' type='date' onChange={handleChange} value={formData.purchaseDate} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Current Odometer Reading <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Input name='currentOdometerReading' type='number' placeholder="Odometer reading" required onChange={handleChange} value={formData.currentOdometerReading} />
-                            </FieldContent>
-                        </Field>
+                                    </div>
+                                </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Color</FieldLabel>
+                            <div className="min-w-0">
+                                <Input name='color' placeholder="Color" onChange={handleChange} value={formData.color} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Manufacturing Year</FieldLabel>
+                            <div className="min-w-0">
+                                <Input name='manufacturingYear' type='number' placeholder="YYYY" onChange={handleChange} value={formData.manufacturingYear} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Registration Date</FieldLabel>
+                            <div className="min-w-0">
+                                <Input name='registrationDate' type='date' onChange={handleChange} value={formData.registrationDate} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Purchase Date</FieldLabel>
+                            <div className="min-w-0">
+                                <Input name='purchaseDate' type='date' onChange={handleChange} value={formData.purchaseDate} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Current Odometer Reading <span className="text-red-500">*</span></FieldLabel>
+                            <div className="min-w-0">
+                                <Input name='currentOdometerReading' type='number' placeholder="Odometer reading" required onChange={handleChange} value={formData.currentOdometerReading} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div className="flex justify-end gap-3 border-t border-slate-200 pt-6 m-5 ">
-                <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
+            <div className="flex justify-end gap-2 border-t border-slate-200 pt-4 m-5 ">
+                <Button type="button" variant="outline" size="sm" className="h-7 px-3 text-xs" onClick={onCancel} disabled={loading}>
                     Cancel
                 </Button>
-                <Button type="submit" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                <Button type="submit" size="sm" className="h-7 px-3 text-xs" disabled={loading}>
+                    {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
                     Create
                 </Button>
             </div>

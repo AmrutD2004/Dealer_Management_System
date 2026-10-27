@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from '@/components/ui/field'
+import { FieldLabel } from '@/components/ui/field'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -16,6 +16,7 @@ import { toast } from '@/components/ui/toast'
 import { editTenant } from '@/api/endpoints'
 import { PlatformUserContext } from '@/Contexts/PlatformUserContext.tsx/PlatformUserContext'
 import { Loader2, Building2 } from 'lucide-react'
+import { Textarea } from '@/components/ui/textarea'
 
 type props = {
   tenant: tenantDetailType | null,
@@ -60,7 +61,7 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
         }
     }, [tenant])
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement| HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }))
     }
@@ -130,212 +131,206 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
           </div>
         </DialogHeader>
         <form id="tenant-edit-form" onSubmit={handleSubmit}>
-          <div className="space-y-6 py-1">
+          <div className="space-y-4 py-3">
             {/* Tenant Identity */}
             <div>
-              <h3 className="mb-4 text-sm font-semibold text-foreground">Tenant Identity</h3>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <Field>
-                  <FieldLabel>Tenant Code <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_code'
-                      type='text'
-                      className='hover:cursor-not-allowed'
-                      placeholder="T-ABCD1234"
-                      onChange={handleChange}
-                      value={formData.tenant_code}
-                      readOnly
-                      disabled
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Tenant Name <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_name'
-                      type='text'
-                      placeholder="Acme Corporation"
-                      required
-                      onChange={handleChange}
-                      value={formData.tenant_name}
-                    />
-                  </FieldContent>
-                </Field>
+              <div className="mb-2 bg-muted/40 px-2 py-1">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Tenant Identity</h3>
+              </div>
+              <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Tenant Code <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_code'
+                    type='text'
+                    className='h-7 rounded-none px-2 text-xs hover:cursor-not-allowed'
+                    placeholder="T-ABCD1234"
+                    onChange={handleChange}
+                    value={formData.tenant_code}
+                    readOnly
+                    disabled
+                  />
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Tenant Name <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_name'
+                    type='text'
+                    placeholder="Acme Corporation"
+                    required
+                    onChange={handleChange}
+                    value={formData.tenant_name}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                </div>
               </div>
             </div>
 
             {/* Contact Information */}
             <div>
-              <h3 className="mb-4 text-sm font-semibold text-foreground">Contact Information</h3>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <Field className="sm:col-span-2 lg:col-span-3">
-                  <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_email'
-                      type='email'
-                      placeholder="contact@acme.com"
-                      required
-                      onChange={handleChange}
-                      value={formData.tenant_email}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Phone <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_phone'
-                      type='tel'
-                      placeholder="+91 98765 xxxxx"
-                      required
-                      onChange={handleChange}
-                      value={formData.tenant_phone}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>GST Number <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_gst_number'
-                      type='text'
-                      placeholder="29ABCDE1234F1Z5"
-                      required
-                      onChange={handleChange}
-                      value={formData.tenant_gst_number}
-                    />
-                  </FieldContent>
-                </Field>
+              <div className="mb-2 bg-muted/40 px-2 py-1">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Contact Information</h3>
+              </div>
+              <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                  <FieldLabel className="text-xs font-medium">Email <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_email'
+                    type='email'
+                    placeholder="contact@acme.com"
+                    required
+                    onChange={handleChange}
+                    value={formData.tenant_email}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Phone <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_phone'
+                    type='tel'
+                    placeholder="+91 98765 xxxxx"
+                    required
+                    onChange={handleChange}
+                    value={formData.tenant_phone}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">GST Number <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_gst_number'
+                    type='text'
+                    placeholder="29ABCDE1234F1Z5"
+                    required
+                    onChange={handleChange}
+                    value={formData.tenant_gst_number}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                </div>
               </div>
             </div>
 
             {/* Address */}
             <div>
-              <h3 className="mb-4 text-sm font-semibold text-foreground">Registered Address</h3>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <Field className="sm:col-span-2 lg:col-span-3">
-                  <FieldLabel>Address <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_address'
-                      type='text'
-                      placeholder="123 Business Park, Sector 1"
-                      onChange={handleChange}
-                      required
-                      value={formData.tenant_address}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>City <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_register_city'
-                      type='text'
-                      placeholder="Bangalore"
-                      required
-                      onChange={handleChange}
-                      value={formData.tenant_register_city}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>State <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_register_state'
-                      type='text'
-                      placeholder="Karnataka"
-                      required
-                      onChange={handleChange}
-                      value={formData.tenant_register_state}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Country <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_register_country'
-                      type='text'
-                      placeholder="India"
-                      required
-                      onChange={handleChange}
-                      value={formData.tenant_register_country}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Pincode <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Input
-                      name='tenant_register_pincode'
-                      type='text'
-                      placeholder="560001"
-                      required
-                      onChange={handleChange}
-                      value={formData.tenant_register_pincode}
-                    />
-                  </FieldContent>
-                </Field>
+              <div className="mb-2 bg-muted/40 px-2 py-1">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Registered Address</h3>
+              </div>
+              <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                <div className="flex items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                  <FieldLabel className="w-[110px] shrink-0 text-xs font-medium">Address <span className="text-red-500">*</span></FieldLabel>
+                  <div className="min-w-0 flex-1 max-w-sm">
+                  <Textarea
+                    name='tenant_address'
+                    placeholder="123 Business Park, Sector 1"
+                    onChange={handleChange}
+                    required
+                    value={formData.tenant_address}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">City <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_register_city'
+                    type='text'
+                    placeholder="Bangalore"
+                    required
+                    onChange={handleChange}
+                    value={formData.tenant_register_city}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">State <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_register_state'
+                    type='text'
+                    placeholder="Karnataka"
+                    required
+                    onChange={handleChange}
+                    value={formData.tenant_register_state}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Country <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_register_country'
+                    type='text'
+                    placeholder="India"
+                    required
+                    onChange={handleChange}
+                    value={formData.tenant_register_country}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Pincode <span className="text-red-500">*</span></FieldLabel>
+                  <Input
+                    name='tenant_register_pincode'
+                    type='text'
+                    placeholder="560001"
+                    required
+                    onChange={handleChange}
+                    value={formData.tenant_register_pincode}
+                    className="h-7 rounded-none px-2 text-xs"
+                  />
+                </div>
               </div>
             </div>
 
             {/* Subscription */}
             <div>
-              <h3 className="mb-4 text-sm font-semibold text-foreground">Subscription</h3>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <Field>
-                  <FieldLabel>Plan <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Select
-                      name='tenant_sub_plan'
-                      value={formData.tenant_sub_plan}
-                      required
-                      onValueChange={(value) => handleSelectChange('tenant_sub_plan', value)}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select Plan" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {planOptions.map((plan) => (
-                          <SelectItem key={plan} value={plan}>{plan}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Status <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
-                    <Select
-                      name='tenant_sub_status'
-                      value={formData.tenant_sub_status}
-                      required
-                      onValueChange={(value) => handleSelectChange('tenant_sub_status', value)}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select Status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {statusOptions.map((status) => (
-                          <SelectItem key={status} value={status}>{status}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FieldContent>
-                </Field>
+              <div className="mb-2 bg-muted/40 px-2 py-1">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Subscription</h3>
+              </div>
+              <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Plan <span className="text-red-500">*</span></FieldLabel>
+                  <Select
+                    name='tenant_sub_plan'
+                    value={formData.tenant_sub_plan}
+                    required
+                    onValueChange={(value) => handleSelectChange('tenant_sub_plan', value)}
+                  >
+                    <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                      <SelectValue placeholder="Select Plan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {planOptions.map((plan) => (
+                        <SelectItem key={plan} value={plan}>{plan}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Status <span className="text-red-500">*</span></FieldLabel>
+                  <Select
+                    name='tenant_sub_status'
+                    value={formData.tenant_sub_status}
+                    required
+                    onValueChange={(value) => handleSelectChange('tenant_sub_status', value)}
+                  >
+                    <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {statusOptions.map((status) => (
+                        <SelectItem key={status} value={status}>{status}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
           </div>
         </form>
         <DialogFooter>
-          <Button onClick={() => { closeAllModals(); onClose() }} variant="outline" disabled={loading}>Cancel</Button>
-          <Button disabled={loading} form="tenant-edit-form" type="submit">
-            {loading ? <span className='flex items-center gap-2'><Loader2 className="animate-spin" />Saving....</span> : " Save Changes"}
+          <Button onClick={() => { closeAllModals(); onClose() }} variant="outline" size="sm" className="h-7 px-3 text-xs" disabled={loading}>Cancel</Button>
+          <Button disabled={loading} form="tenant-edit-form" type="submit" size="sm" className="h-7 px-3 text-xs">
+            {loading ? <span className='flex items-center gap-2'><Loader2 className="h-3 w-3 animate-spin" />Saving....</span> : " Save Changes"}
           </Button>
         </DialogFooter>
       </DialogContent>

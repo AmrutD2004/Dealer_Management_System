@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { tenantDetailType } from "@/Types/tenantCreateType"
 import dayjs from "dayjs"
@@ -21,6 +20,13 @@ type props = {
   open: boolean,
   onClose: () => void
 }
+
+const Detail = ({ label, value }: { label: string, value: React.ReactNode }) => (
+  <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+    <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
+    <span className="text-xs font-medium">{value}</span>
+  </div>
+)
 
 export function ViewTenantModal({ tenant, open, onClose }: props) {
   const { closeAllModals } = useContext(PlatformUserContext)
@@ -61,89 +67,47 @@ export function ViewTenantModal({ tenant, open, onClose }: props) {
               </DialogDescription>
             </div>
           </div>
-          <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 gap-4">
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Tenant ID</Label>
-              <span className="text-md font-semibold font-mono">{tenant.id}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Tenant Code</Label>
-              <span className="text-md font-semibold font-mono">{tenant.tenantCode}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Status</Label>
-              <span>
-                <Badge variant={tenant.isActive ? "success" : "destructive"}>
-                  {tenant.isActive ? "Active" : "Inactive"}
-                </Badge>
-              </span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-sm font-medium text-muted-foreground">Tenant Name</Label>
-              <span className="text-md font-semibold">{tenant.tenantName}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Email</Label>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <span className="text-md font-medium">{tenant.email}</span>
-              </div>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Phone</Label>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-muted-foreground" />
-                <span className="text-md font-medium">{tenant.phone}</span>
-              </div>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">GST Number</Label>
-              <span className="text-md font-medium font-mono text-sm">{tenant.gstNumber}</span>
-            </Field>
-            <Field className="sm:col-span-2 lg:col-span-3">
-              <Label className="text-sm font-medium text-muted-foreground">Address</Label>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
-                <span className="text-md font-medium">
-                  {tenant.address}, {tenant.city}, {tenant.state}, {tenant.country} - {tenant.pincode}
-                </span>
-              </div>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Subscription Plan</Label>
-              <span>
-                <Badge variant="outline">
-                  <CreditCard className="mr-1 h-3 w-3" />
-                  {tenant.subscriptionPlan}
-                </Badge>
-              </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Subscription Status</Label>
-              <span>
-                <Badge variant={getStatusBadgeVariant(tenant.subscriptionStatus)}>
-                  {tenant.subscriptionStatus}
-                </Badge>
-              </span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Created At</Label>
-              <span className="text-md font-medium">{dayjs(tenant.createdAt).format('DD MMM YYYY')}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Updated At</Label>
-              <span className="text-md font-medium">{dayjs(tenant.updatedAt).format('DD MMM YYYY')}</span>
-            </Field>
-            <Field>
-              <Label className="text-sm font-medium text-muted-foreground">Created By</Label>
-              <span className="text-md font-medium">
-                {tenant.createdByUser?.email || `User ID: ${tenant.createdBy}`}
-              </span>
-            </Field>
-          </FieldGroup>
         </DialogHeader>
+        <div className="space-y-4 py-3">
+          <div>
+            <div className="mb-2 bg-muted/40 px-2 py-1">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Tenant Identity</h3>
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+              <Detail label="Tenant ID" value={<span className="font-mono">{tenant.id}</span>} />
+              <Detail label="Tenant Code" value={<span className="font-mono">{tenant.tenantCode}</span>} />
+              <Detail label="Status" value={<Badge variant={tenant.isActive ? "success" : "destructive"}>{tenant.isActive ? "Active" : "Inactive"}</Badge>} />
+              <Detail label="Tenant Name" value={tenant.tenantName} />
+            </div>
+          </div>
+
+          <div>
+            <div className="mb-2 bg-muted/40 px-2 py-1">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Contact Information</h3>
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+              <Detail label="Email" value={<span className="flex items-center gap-2"><Mail className="h-3 w-3 text-muted-foreground" />{tenant.email}</span>} />
+              <Detail label="Phone" value={<span className="flex items-center gap-2"><Phone className="h-3 w-3 text-muted-foreground" />{tenant.phone}</span>} />
+              <Detail label="GST Number" value={<span className="font-mono">{tenant.gstNumber}</span>} />
+              <Detail label="Address" value={<span className="flex items-center gap-2"><MapPin className="h-3 w-3 text-muted-foreground" />{tenant.address}, {tenant.city}, {tenant.state}, {tenant.country} - {tenant.pincode}</span>} />
+            </div>
+          </div>
+
+          <div>
+            <div className="mb-2 bg-muted/40 px-2 py-1">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Subscription</h3>
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+              <Detail label="Plan" value={<Badge variant="outline"><CreditCard className="mr-1 h-3 w-3" />{tenant.subscriptionPlan}</Badge>} />
+              <Detail label="Status" value={<Badge variant={getStatusBadgeVariant(tenant.subscriptionStatus)}>{tenant.subscriptionStatus}</Badge>} />
+              <Detail label="Created At" value={dayjs(tenant.createdAt).format('DD MMM YYYY')} />
+              <Detail label="Updated At" value={dayjs(tenant.updatedAt).format('DD MMM YYYY')} />
+              <Detail label="Created By" value={tenant.createdByUser?.email || `User ID: ${tenant.createdBy}`} />
+            </div>
+          </div>
+        </div>
         <DialogFooter>
-          <Button onClick={handleClose} variant="outline">Close</Button>
+          <Button onClick={handleClose} variant="outline" size="sm" className="h-7 px-3 text-xs">Close</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

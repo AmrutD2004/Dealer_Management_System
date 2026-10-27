@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -194,7 +194,7 @@ export function EditVehicleModal({
     <Dialog open={open}>
       <DialogContent
         showCloseButton={false}
-        className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto md:max-w-xl lg:max-w-3xl"
+        className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto md:max-w-xl lg:max-w-2xl"
       >
         <DialogHeader>
           <DialogTitle>Edit Vehicle</DialogTitle>
@@ -202,31 +202,31 @@ export function EditVehicleModal({
         </DialogHeader>
 
         <form id="vehicle-edit-form" onSubmit={handleSubmit}>
-          <div className="space-y-6 py-4">
+          <div className="space-y-4 py-3">
             <div>
-              <h3 className="mb-4 text-sm font-semibold text-foreground">
+              <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">
                 Vehicle Details
-              </h3>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <Field>
-                  <FieldLabel>
+              </h3></div>
+              <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">
                     Vehicle Number <span className="text-red-500">*</span>
                   </FieldLabel>
-                  <FieldContent>
+                  <div className="min-w-0">
                     <Input
                       name="vehicleNumber"
                       placeholder="Vehicle Number"
                       required
                       onChange={handleChange}
                       value={formData.vehicleNumber}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>
+                     className="h-7 rounded-none px-2 text-xs" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">
                     Customer <span className="text-red-500">*</span>
                   </FieldLabel>
-                  <FieldContent>
+                  <div className="min-w-0">
                     <Select
                       items={customers.map((c) => ({
                         value: String(c.id),
@@ -241,7 +241,7 @@ export function EditVehicleModal({
                       }
                       required
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                         <SelectValue placeholder="Select customer" />
                       </SelectTrigger>
                       <SelectContent align="start" alignItemWithTrigger={false}>
@@ -252,46 +252,46 @@ export function EditVehicleModal({
                         ))}
                       </SelectContent>
                     </Select>
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">
                     Chassis Number <span className="text-red-500">*</span>
                   </FieldLabel>
-                  <FieldContent>
+                  <div className="min-w-0">
                     <Input
                       name="chassisNumber"
                       placeholder="Chassis Number"
                       required
                       onChange={handleChange}
                       value={formData.chassisNumber}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>
+                     className="h-7 rounded-none px-2 text-xs" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">
                     Engine Number <span className="text-red-500">*</span>
                   </FieldLabel>
-                  <FieldContent>
+                  <div className="min-w-0">
                     <Input
                       name="engineNumber"
                       placeholder="Engine Number"
                       required
                       onChange={handleChange}
                       value={formData.engineNumber}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Brand <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
+                     className="h-7 rounded-none px-2 text-xs" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Brand <span className="text-red-500">*</span></FieldLabel>
+                  <div className="min-w-0">
                     <Select
                       items={vehicleBrand.map(b => ({ value: String(b.id), label: `${b.brandName} - ${b.brandCode}` }))}
                       value={formData.brandId || null}
                       onValueChange={(value) => setFormData(prev => ({ ...prev, brandId: value ?? "" }))}
                       required
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                         <SelectValue placeholder="Select brand" />
                       </SelectTrigger>
                       <SelectContent align="start" alignItemWithTrigger={false}>
@@ -302,18 +302,18 @@ export function EditVehicleModal({
                         ))}
                       </SelectContent>
                     </Select>
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Model <span className="text-red-500">*</span></FieldLabel>
-                  <FieldContent>
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Model <span className="text-red-500">*</span></FieldLabel>
+                  <div className="min-w-0">
                     <Select
                       items={vehicleModel.map(m => ({ value: String(m.id), label: `${m.modelName} - ${m.modelCode}` }))}
                       value={formData.modelId || null}
                       onValueChange={(value) => setFormData(prev => ({ ...prev, modelId: value ?? "" }))}
                       required
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                         <SelectValue placeholder="Select model" />
                       </SelectTrigger>
                       <SelectContent align="start" alignItemWithTrigger={false}>
@@ -324,18 +324,18 @@ export function EditVehicleModal({
                         ))}
                       </SelectContent>
                     </Select>
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Variant</FieldLabel>
-                  <FieldContent>
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Variant</FieldLabel>
+                  <div className="min-w-0">
                     <Select
                       items={vehicleVariant.map(v => ({ value: String(v.id), label: `${v.variantName} - ${v.variantCode} - ${v.fuelType}` }))}
                       value={formData.variantId || null}
                       onValueChange={(value) => setFormData(prev => ({ ...prev, variantId: value ?? "" }))}
                       required
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                         <SelectValue placeholder="Select brand" />
                       </SelectTrigger>
                       <SelectContent align="start" alignItemWithTrigger={false}>
@@ -346,59 +346,59 @@ export function EditVehicleModal({
                         ))}
                       </SelectContent>
                     </Select>
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Color</FieldLabel>
-                  <FieldContent>
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Color</FieldLabel>
+                  <div className="min-w-0">
                     <Input
                       name="color"
                       placeholder="Color"
                       onChange={handleChange}
                       value={formData.color}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Manufacturing Year</FieldLabel>
-                  <FieldContent>
+                     className="h-7 rounded-none px-2 text-xs" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Manufacturing Year</FieldLabel>
+                  <div className="min-w-0">
                     <Input
                       name="manufacturingYear"
                       type="number"
                       placeholder="YYYY"
                       onChange={handleChange}
                       value={formData.manufacturingYear}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Registration Date</FieldLabel>
-                  <FieldContent>
+                     className="h-7 rounded-none px-2 text-xs" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Registration Date</FieldLabel>
+                  <div className="min-w-0">
                     <Input
                       name="registrationDate"
                       type="date"
                       onChange={handleChange}
                       value={formData.registrationDate}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>Purchase Date</FieldLabel>
-                  <FieldContent>
+                     className="h-7 rounded-none px-2 text-xs" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">Purchase Date</FieldLabel>
+                  <div className="min-w-0">
                     <Input
                       name="purchaseDate"
                       type="date"
                       onChange={handleChange}
                       value={formData.purchaseDate}
-                    />
-                  </FieldContent>
-                </Field>
-                <Field>
-                  <FieldLabel>
+                     className="h-7 rounded-none px-2 text-xs" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                  <FieldLabel className="text-xs font-medium">
                     Current Odometer Reading{" "}
                     <span className="text-red-500">*</span>
                   </FieldLabel>
-                  <FieldContent>
+                  <div className="min-w-0">
                     <Input
                       name="currentOdometerReading"
                       type="number"
@@ -406,9 +406,9 @@ export function EditVehicleModal({
                       required
                       onChange={handleChange}
                       value={formData.currentOdometerReading}
-                    />
-                  </FieldContent>
-                </Field>
+                     className="h-7 rounded-none px-2 text-xs" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -419,7 +419,7 @@ export function EditVehicleModal({
             Cancel
           </Button>
           <Button type="submit" form="vehicle-edit-form" disabled={loading}>
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
             Update
           </Button>
         </DialogFooter>

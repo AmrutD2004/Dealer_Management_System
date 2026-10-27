@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/toast"
 import { TenantContext } from "@/Contexts/Tenant/TenantContext"
@@ -116,97 +116,97 @@ export function EditBranchModal({ branch, open, onClose }: EditBranchModalProps)
     return (
         <Dialog open={open}>
             <form>
-                <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+                <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                     <DialogHeader>
                         <DialogTitle>Edit Branch</DialogTitle>
                         <DialogDescription>Update the branch details.</DialogDescription>
                     </DialogHeader>
 
                     <form id="branch-edit-form" onSubmit={handleSubmit}>
-                        <div className="space-y-6 py-4">
+                        <div className="space-y-4 py-3">
                             <div>
-                                <h3 className="mb-4 text-sm font-semibold text-foreground">Branch Details</h3>
-                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                    <Field>
-                                        <FieldLabel>Branch Code</FieldLabel>
-                                        <FieldContent>
-                                            <Input name='branchCode' disabled value={branch.branchCode} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Branch Name <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='branchName' placeholder="Branch Name" required onChange={handleChange} value={formData.branchName} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='email' type='email' placeholder="branch@redogroup.com" required onChange={handleChange} value={formData.email} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Phone <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='phone' placeholder="+91 00000 00000" required onChange={handleChange} value={formData.phone} />
-                                        </FieldContent>
-                                    </Field>
+                                <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Branch Details</h3></div>
+                                <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Branch Code</FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='branchCode' disabled value={branch.branchCode}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Branch Name <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='branchName' placeholder="Branch Name" required onChange={handleChange} value={formData.branchName}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Email <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='email' type='email' placeholder="branch@redogroup.com" required onChange={handleChange} value={formData.email}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Phone <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='phone' placeholder="+91 00000 00000" required onChange={handleChange} value={formData.phone}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div>
-                                <h3 className="mb-4 text-sm font-semibold text-foreground">Address</h3>
-                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                    <Field className="sm:col-span-2 lg:col-span-3">
-                                        <FieldLabel>Address Line 1 <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='address1' placeholder="Address Line 1" required onChange={handleChange} value={formData.address1} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field className="sm:col-span-2 lg:col-span-3">
-                                        <FieldLabel>Address Line 2</FieldLabel>
-                                        <FieldContent>
-                                            <Input name='address2' placeholder="Address Line 2" onChange={handleChange} value={formData.address2} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Locality <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='locality' placeholder="Locality" required onChange={handleChange} value={formData.locality} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>City <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='city' placeholder="City" required onChange={handleChange} value={formData.city} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>State <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='state' placeholder="State" required onChange={handleChange} value={formData.state} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Country <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='country' placeholder="Country" required onChange={handleChange} value={formData.country} />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Pincode <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
-                                            <Input name='pincode' placeholder="Pincode" required onChange={handleChange} value={formData.pincode} />
-                                        </FieldContent>
-                                    </Field>
+                                <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Address</h3></div>
+                                <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                        <FieldLabel className="text-xs font-medium">Address Line 1 <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='address1' placeholder="Address Line 1" required onChange={handleChange} value={formData.address1}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                        <FieldLabel className="text-xs font-medium">Address Line 2</FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='address2' placeholder="Address Line 2" onChange={handleChange} value={formData.address2}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Locality <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='locality' placeholder="Locality" required onChange={handleChange} value={formData.locality}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">City <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='city' placeholder="City" required onChange={handleChange} value={formData.city}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">State <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='state' placeholder="State" required onChange={handleChange} value={formData.state}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Country <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='country' placeholder="Country" required onChange={handleChange} value={formData.country}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                        <FieldLabel className="text-xs font-medium">Pincode <span className="text-red-500">*</span></FieldLabel>
+                                        <div className="min-w-0">
+                                            <Input name='pincode' placeholder="Pincode" required onChange={handleChange} value={formData.pincode}  className="h-7 rounded-none px-2 text-xs" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </form>
                     <DialogFooter>
-                        <Button onClick={handleCancel} variant="outline">Cancel</Button>
-                        <Button form="branch-edit-form" type="submit" disabled={loading}>
-                            {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving....</span>}
+                        <Button size="sm" onClick={handleCancel} variant="outline" className="h-7 px-3 text-xs">Cancel</Button>
+                        <Button size="sm" form="branch-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                            {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                             Save Changes
                         </Button>
                     </DialogFooter>

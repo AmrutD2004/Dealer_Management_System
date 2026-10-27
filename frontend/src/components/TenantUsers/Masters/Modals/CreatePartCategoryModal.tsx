@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -115,50 +115,50 @@ export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePart
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Create New Part Category</DialogTitle>
                     <DialogDescription>Add a new part category to the tenant.</DialogDescription>
                 </DialogHeader>
 
                 <form id="part-category-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Category Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Category Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Category Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Category Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='code'
                                             placeholder="e.g. ENGINE"
                                             required
                                             onChange={handleChange}
                                             value={formData.code}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Category Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Category Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='name'
                                             placeholder="e.g. Engine Parts"
                                             required
                                             onChange={handleChange}
                                             value={formData.name}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Parent Category</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Parent Category</FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={parentItems}
                                             value={formData.parentId || "none"}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, parentId: value ?? "none" }))}
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select parent category" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -169,8 +169,8 @@ export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePart
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,8 +178,8 @@ export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePart
 
                 <DialogFooter>
                     <Button type="button" onClick={() => setOpen(false)} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button form="part-category-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating....</span>}
+                    <Button size="sm" form="part-category-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Category
                     </Button>
                 </DialogFooter>

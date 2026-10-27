@@ -10,7 +10,7 @@ import {
     getVehicleList,
 } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -20,6 +20,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/toast"
 import type { labourListType } from "@/Types/tenantCreateType"
@@ -236,343 +237,301 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
 
     return (
         <form id="job-card-form" onSubmit={handleSubmit}>
-            <div className="space-y-6 py-4">
+            <div className="space-y-4 py-3">
                 <div>
-                    <h3 className="mb-4 text-sm font-semibold text-foreground">Customer & Vehicle</h3>
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        <Field>
-                            <FieldLabel>Branch <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Select
-                                    items={branches.map((b) => ({ value: String(b.id), label: b.branchName }))}
-                                    value={formData.branchId || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, branchId: value ?? "" }))}
-                                    required
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select branch" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {branches.map((b) => (
-                                            <SelectItem key={b.id} value={String(b.id)}>
-                                                {b.branchName}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Customer <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Select
-                                    items={customers.map((c) => ({ value: String(c.id), label: `${c.firstName} ${c.lastName} - ${c.mobileNo}` }))}
-                                    value={formData.customerId || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, customerId: value ?? "" }))}
-                                    required
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select customer" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {customers.map((c) => (
-                                            <SelectItem key={c.id} value={String(c.id)}>
-                                                {c.firstName} {c.lastName} - {c.mobileNo}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Vehicle <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Select
+                    <div className="mb-2 bg-muted/40 px-2 py-1">
+                        <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Customer & Vehicle</h3>
+                    </div>
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Branch <span className="text-red-500">*</span></FieldLabel>
+                            <Select
+                                items={branches.map((b) => ({ value: String(b.id), label: b.branchName }))}
+                                value={formData.branchId || null}
+                                onValueChange={(value) => setFormData((prev) => ({ ...prev, branchId: value ?? "" }))}
+                                required
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select branch" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {branches.map((b) => (
+                                        <SelectItem key={b.id} value={String(b.id)}>
+                                            {b.branchName}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Customer <span className="text-red-500">*</span></FieldLabel>
+                            <Select
+                                items={customers.map((c) => ({ value: String(c.id), label: `${c.firstName} ${c.lastName} - ${c.mobileNo}` }))}
+                                value={formData.customerId || null}
+                                onValueChange={(value) => setFormData((prev) => ({ ...prev, customerId: value ?? "" }))}
+                                required
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select customer" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {customers.map((c) => (
+                                        <SelectItem key={c.id} value={String(c.id)}>
+                                            {c.firstName} {c.lastName} - {c.mobileNo}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Vehicle <span className="text-red-500">*</span></FieldLabel>
+                            <Select
                                 disabled={!formData.customerId}
-                                            items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName} ${v.model?.modelName} ${v.variant?.variantName} ${v.variant?.fuelType}` }))}
-                                            value={formData.vehicleId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleId: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select vehicle" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {filteredVehicles.map((v) => (
-                                                    <SelectItem key={v.id} value={String(v.id)}>
-                                                        {v.vehicleNumber || v.chassisNumber} - {v.brand?.brandName} {v.model?.modelName} {v.variant?.variantName} {v.variant?.fuelType}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Service Category <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                               <Select
-                                            items={serviceCategories.map(s => ({ value: String(s.id), label: s.name }))}
-                                            value={formData.serviceCategoryId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, serviceCategoryId: value ?? "", serviceTypeId: "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select service category" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {serviceCategories.map((s) => (
-                                                    <SelectItem key={s.id} value={String(s.id)}>
-                                                        {s.name}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Service Type <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Select
-                                        disabled={!formData.serviceCategoryId}
-                                            items={filteredServiceTypes.map(s => ({ value: String(s.id), label: s.name }))}
-                                            value={formData.serviceTypeId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, serviceTypeId: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select service type" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {filteredServiceTypes.map((s) => (
-                                                    <SelectItem key={s.id} value={String(s.id)}>
-                                                        {s.name}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Repair Order Type <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Select
-                                            items={repairOrders.map(r => ({ value: String(r.id), label: r.name }))}
-                                            value={formData.repairOrderTypeId || null}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, repairOrderTypeId: value ?? "" }))}
-                                            required
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select repair order type" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {repairOrders.map((r) => (
-                                                    <SelectItem key={r.id} value={String(r.id)}>
-                                                        {r.name}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Vehicle Status <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Select
-                                    items={vehicleStatusOptions.map((vs) => ({ value: vs.value, label: vs.label }))}
-                                    value={formData.vehicleStatus || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, vehicleStatus: value ?? "" }))}
-                                    required
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select status" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {vehicleStatusOptions.map((vs) => (
-                                            <SelectItem key={vs.value} value={vs.value}>
-                                                {vs.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Current KM Reading <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Input name="currentKmReading" type="number" placeholder="Current KM" required value={formData.currentKmReading} onChange={handleChange} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Previous KM Reading</FieldLabel>
-                            <FieldContent>
-                                <Input name="previousKmReading" type="number" placeholder="Previous KM" value={formData.previousKmReading} onChange={handleChange} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Estimated Job Card Close <span className="text-red-500">*</span></FieldLabel>
-                            <FieldContent>
-                                <Input name="estimateCloseJobcardAt" type="datetime-local" required value={formData.estimateCloseJobcardAt} onChange={handleChange} />
-                            </FieldContent>
-                        </Field>
+                                items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName} ${v.model?.modelName} ${v.variant?.variantName} ${v.variant?.fuelType}` }))}
+                                value={formData.vehicleId || null}
+                                onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleId: value ?? "" }))}
+                                required
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select vehicle" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {filteredVehicles.map((v) => (
+                                        <SelectItem key={v.id} value={String(v.id)}>
+                                            {v.vehicleNumber || v.chassisNumber} - {v.brand?.brandName} {v.model?.modelName} {v.variant?.variantName} {v.variant?.fuelType}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Service Category <span className="text-red-500">*</span></FieldLabel>
+                            <Select
+                                items={serviceCategories.map(s => ({ value: String(s.id), label: s.name }))}
+                                value={formData.serviceCategoryId || null}
+                                onValueChange={(value) => setFormData(prev => ({ ...prev, serviceCategoryId: value ?? "", serviceTypeId: "" }))}
+                                required
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {serviceCategories.map((s) => (
+                                        <SelectItem key={s.id} value={String(s.id)}>
+                                            {s.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Service Type <span className="text-red-500">*</span></FieldLabel>
+                            <Select
+                                disabled={!formData.serviceCategoryId}
+                                items={filteredServiceTypes.map(s => ({ value: String(s.id), label: s.name }))}
+                                value={formData.serviceTypeId || null}
+                                onValueChange={(value) => setFormData(prev => ({ ...prev, serviceTypeId: value ?? "" }))}
+                                required
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {filteredServiceTypes.map((s) => (
+                                        <SelectItem key={s.id} value={String(s.id)}>
+                                            {s.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Repair Order Type <span className="text-red-500">*</span></FieldLabel>
+                            <Select
+                                items={repairOrders.map(r => ({ value: String(r.id), label: r.name }))}
+                                value={formData.repairOrderTypeId || null}
+                                onValueChange={(value) => setFormData(prev => ({ ...prev, repairOrderTypeId: value ?? "" }))}
+                                required
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {repairOrders.map((r) => (
+                                        <SelectItem key={r.id} value={String(r.id)}>
+                                            {r.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Vehicle Status <span className="text-red-500">*</span></FieldLabel>
+                            <Select
+                                items={vehicleStatusOptions.map((vs) => ({ value: vs.value, label: vs.label }))}
+                                value={formData.vehicleStatus || null}
+                                onValueChange={(value) => setFormData((prev) => ({ ...prev, vehicleStatus: value ?? "" }))}
+                                required
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {vehicleStatusOptions.map((vs) => (
+                                        <SelectItem key={vs.value} value={vs.value}>
+                                            {vs.label}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Current KM <span className="text-red-500">*</span></FieldLabel>
+                            <Input name="currentKmReading" type="number" placeholder="Current KM" required value={formData.currentKmReading} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Previous KM</FieldLabel>
+                            <Input name="previousKmReading" type="number" placeholder="Previous KM" value={formData.previousKmReading} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2 xl:col-span-1">
+                            <FieldLabel className="text-xs font-medium">Est. Job Card Close <span className="text-red-500">*</span></FieldLabel>
+                            <Input name="estimateCloseJobcardAt" type="datetime-local" required value={formData.estimateCloseJobcardAt} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <h3 className="mb-4 text-sm font-semibold text-foreground">Assignment</h3>
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        <Field>
-                            <FieldLabel>Supervisor</FieldLabel>
-                            <FieldContent>
-                                <Select
-                                    items={employees.map((e) => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
-                                    value={formData.supervisorId || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, supervisorId: value ?? "" }))}
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select supervisor" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {employees.filter((f)=>f.role.roleCode==='SUPERVISOR').map((e) => (
-                                            <SelectItem key={e.id} value={String(e.id)}>
-                                                {e.firstName} {e.lastName}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Technician</FieldLabel>
-                            <FieldContent>
-                                <Select
-                                    items={employees.map((e) => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
-                                    value={formData.technicianId || null}
-                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, technicianId: value ?? "" }))}
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select technician" />
-                                    </SelectTrigger>
-                                    <SelectContent align="start" alignItemWithTrigger={false}>
-                                        {employees.filter((f)=>f.role.roleCode==='TECHNICIAN').map((e) => (
-                                            <SelectItem key={e.id} value={String(e.id)}>
-                                                {e.firstName} {e.lastName}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Driver Name</FieldLabel>
-                            <FieldContent>
-                                <Input name="driverName" placeholder="Driver Name" value={formData.driverName} onChange={handleChange} />
-                            </FieldContent>
-                        </Field>
-                        <Field>
-                            <FieldLabel>Driver Mobile No</FieldLabel>
-                            <FieldContent>
-                                <Input name="driverMobileNo" placeholder="Driver Mobile No" value={formData.driverMobileNo} onChange={handleChange} />
-                            </FieldContent>
-                        </Field>
+                    <div className="mb-2 bg-muted/40 px-2 py-1">
+                        <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Assignment</h3>
+                    </div>
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Supervisor</FieldLabel>
+                            <Select
+                                items={employees.map((e) => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
+                                value={formData.supervisorId || null}
+                                onValueChange={(value) => setFormData((prev) => ({ ...prev, supervisorId: value ?? "" }))}
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {employees.filter((f)=>f.role.roleCode==='SUPERVISOR').map((e) => (
+                                        <SelectItem key={e.id} value={String(e.id)}>
+                                            {e.firstName} {e.lastName}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Technician</FieldLabel>
+                            <Select
+                                items={employees.map((e) => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
+                                value={formData.technicianId || null}
+                                onValueChange={(value) => setFormData((prev) => ({ ...prev, technicianId: value ?? "" }))}
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {employees.filter((f)=>f.role.roleCode==='TECHNICIAN').map((e) => (
+                                        <SelectItem key={e.id} value={String(e.id)}>
+                                            {e.firstName} {e.lastName}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Driver Name</FieldLabel>
+                            <Input name="driverName" placeholder="Driver Name" value={formData.driverName} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <FieldLabel className="text-xs font-medium">Driver Mobile</FieldLabel>
+                            <Input name="driverMobileNo" placeholder="Driver Mobile No" value={formData.driverMobileNo} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <h3 className="mb-4 text-sm font-semibold text-foreground">Additional Details</h3>
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between rounded-lg border p-4">
+                    <div className="mb-2 bg-muted/40 px-2 py-1">
+                        <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Additional Details</h3>
+                    </div>
+                    <div className="space-y-2">
+                        <div className="flex items-center justify-between rounded border p-2">
                             <div>
-                                <p className="text-sm font-medium">Revisit</p>
-                                <p className="text-sm text-muted-foreground">Mark if this is a revisit job card</p>
+                                <p className="text-xs font-medium">Revisit</p>
+                                <p className="text-xs text-muted-foreground">Mark if this is a revisit job card</p>
                             </div>
                             <Switch checked={formData.isRevisit} onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, isRevisit: checked }))} />
                         </div>
-                        <div className="flex items-center justify-between rounded-lg border p-4">
+                        <div className="flex items-center justify-between rounded border p-2">
                             <div>
-                                <p className="text-sm font-medium">Breakdown</p>
-                                <p className="text-sm text-muted-foreground">Mark if this is a breakdown case</p>
+                                <p className="text-xs font-medium">Breakdown</p>
+                                <p className="text-xs text-muted-foreground">Mark if this is a breakdown case</p>
                             </div>
                             <Switch checked={formData.isBreakDown} onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, isBreakDown: checked }))} />
                         </div>
                     </div>
                     {formData.isBreakDown && (
-                        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                            <Field>
-                                <FieldLabel>Person Attended</FieldLabel>
-                                <FieldContent>
-                                    <Input name="breakdownPersonAttended" placeholder="Person Attended" value={formData.breakdownPersonAttended} onChange={handleChange} />
-                                </FieldContent>
-                            </Field>
-                            <Field>
-                                <FieldLabel>Breakdown Date & Time</FieldLabel>
-                                <FieldContent>
-                                    <Input name="breakdownDateTime" type="datetime-local" value={formData.breakdownDateTime} onChange={handleChange} />
-                                </FieldContent>
-                            </Field>
-                            <Field>
-                                <FieldLabel>Breakdown Start Date & Time</FieldLabel>
-                                <FieldContent>
-                                    <Input name="breakdownStartDateTime" type="datetime-local" value={formData.breakdownStartDateTime} onChange={handleChange} />
-                                </FieldContent>
-                            </Field>
-                            <Field>
-                                <FieldLabel>Breakdown End Date & Time</FieldLabel>
-                                <FieldContent>
-                                    <Input name="breakdownEndDateTime" type="datetime-local" value={formData.breakdownEndDateTime} onChange={handleChange} />
-                                </FieldContent>
-                            </Field>
-                            <Field>
-                                <FieldLabel>Dealer Van Start KM</FieldLabel>
-                                <FieldContent>
-                                    <Input name="dealerVanStartKm" type="number" placeholder="Start KM" value={formData.dealerVanStartKm} onChange={handleChange} />
-                                </FieldContent>
-                            </Field>
-                            <Field>
-                                <FieldLabel>Dealer Van End KM</FieldLabel>
-                                <FieldContent>
-                                    <Input name="dealerVanEndKm" type="number" placeholder="End KM" value={formData.dealerVanEndKm} onChange={handleChange} />
-                                </FieldContent>
-                            </Field>
+                        <div className="mt-2 grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                <FieldLabel className="text-xs font-medium">Person Attended</FieldLabel>
+                                <Input name="breakdownPersonAttended" placeholder="Person Attended" value={formData.breakdownPersonAttended} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                <FieldLabel className="text-xs font-medium">Breakdown Date & Time</FieldLabel>
+                                <Input name="breakdownDateTime" type="datetime-local" value={formData.breakdownDateTime} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                <FieldLabel className="text-xs font-medium">Breakdown Start</FieldLabel>
+                                <Input name="breakdownStartDateTime" type="datetime-local" value={formData.breakdownStartDateTime} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                <FieldLabel className="text-xs font-medium">Breakdown End</FieldLabel>
+                                <Input name="breakdownEndDateTime" type="datetime-local" value={formData.breakdownEndDateTime} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                <FieldLabel className="text-xs font-medium">Van Start KM</FieldLabel>
+                                <Input name="dealerVanStartKm" type="number" placeholder="Start KM" value={formData.dealerVanStartKm} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
+                            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                <FieldLabel className="text-xs font-medium">Van End KM</FieldLabel>
+                                <Input name="dealerVanEndKm" type="number" placeholder="End KM" value={formData.dealerVanEndKm} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            </div>
                         </div>
                     )}
                 </div>
                 <div>
-                    <div className="mb-4 flex items-center justify-between">
+                    <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
                         <div>
-                            <h3 className="text-sm font-semibold text-foreground">Customer Voice</h3>
-                            <p className="text-sm text-muted-foreground">Record what the customer reported along with the observation and action to be taken.</p>
+                            <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Customer Voice</h3>
+                            <p className="text-[11px] text-muted-foreground">Record customer reported issues with observation/action.</p>
                         </div>
-                        <Button type="button" variant="outline" size="sm" className="gap-2" onClick={addCustomerVoice}>
-                            <Plus className="h-4 w-4" />
+                        <Button type="button" variant="outline" size="sm" className="h-6 gap-1 px-2 text-xs" onClick={addCustomerVoice}>
+                            <Plus className="h-3 w-3" />
                             Add Voice
                         </Button>
                     </div>
-                    <div className="space-y-4">
-                        {customerVoices.map((voice, index) => (
-                            <div key={index} className="rounded-lg border p-4">
-                                <div className="mb-3 flex items-center justify-between">
-                                    <span className="text-sm font-medium text-muted-foreground">Voice #{index + 1}</span>
-                                    {customerVoices.length > 1 && (
-                                        <Button
-                                            type="button"
-                                            variant="ghost"
-                                            size="icon"
-                                            className="h-8 w-8 text-destructive"
-                                            aria-label={`Remove voice ${index + 1}`}
-                                            onClick={() => removeCustomerVoice(index)}
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    )}
-                                </div>
-                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                    <Field>
-                                        <FieldLabel>Action To Be Taken <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
+                    <div className="rounded border">
+                        <Table className="[&_th]:border-r [&_th]:border-slate-200 [&_th]:h-7 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0 [&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0">
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="w-[200px]">Action To Be Taken <span className="text-red-500">*</span></TableHead>
+                                    <TableHead>Customer Voice Description <span className="text-red-500">*</span></TableHead>
+                                    <TableHead>Observation</TableHead>
+                                    <TableHead className="w-[60px] text-right">Action</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {customerVoices.map((voice, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell className="align-top">
                                             <Select
                                                 items={labours.map((l) => ({ value: String(l.id), label: l.labourName }))}
                                                 value={voice.labourId || null}
                                                 onValueChange={(value) => handleCustomerVoiceChange(index, "labourId", value ?? "")}
                                             >
-                                                <SelectTrigger className="w-full">
+                                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                     <SelectValue placeholder="Select labour" />
                                                 </SelectTrigger>
                                                 <SelectContent align="start" alignItemWithTrigger={false}>
@@ -583,40 +542,50 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                                     ))}
                                                 </SelectContent>
                                             </Select>
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Customer Voice Description <span className="text-red-500">*</span></FieldLabel>
-                                        <FieldContent>
+                                        </TableCell>
+                                        <TableCell className="align-top">
                                             <Textarea
                                                 placeholder="Describe what the customer reported"
                                                 value={voice.customerVoiceDescription}
                                                 onChange={(e) => handleCustomerVoiceChange(index, "customerVoiceDescription", e.target.value)}
+                                                className="min-h-[48px] rounded-none px-2 py-1 text-xs"
                                             />
-                                        </FieldContent>
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel>Observation</FieldLabel>
-                                        <FieldContent>
+                                        </TableCell>
+                                        <TableCell className="align-top">
                                             <Textarea
                                                 placeholder="Observation noted"
                                                 value={voice.observation}
                                                 onChange={(e) => handleCustomerVoiceChange(index, "observation", e.target.value)}
+                                                className="min-h-[48px] rounded-none px-2 py-1 text-xs"
                                             />
-                                        </FieldContent>
-                                    </Field>
-                                </div>
-                            </div>
-                        ))}
+                                        </TableCell>
+                                        <TableCell className="align-top text-right">
+                                            {customerVoices.length > 1 && (
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-6 w-6 text-destructive"
+                                                    aria-label={`Remove voice ${index + 1}`}
+                                                    onClick={() => removeCustomerVoice(index)}
+                                                >
+                                                    <Trash2 className="h-3 w-3" />
+                                                </Button>
+                                            )}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
                     </div>
                 </div>
             </div>
-            <div className="flex justify-end gap-3 border-t border-slate-200 pt-6 m-5">
-                <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
+            <div className="flex justify-end gap-2 border-t border-slate-200 pt-4 m-5">
+                <Button type="button" variant="outline" size="sm" className="h-7 px-3 text-xs" onClick={onCancel} disabled={loading}>
                     Cancel
                 </Button>
-                <Button type="submit" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                <Button type="submit" size="sm" className="h-7 px-3 text-xs" disabled={loading}>
+                    {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
                     Create Job Card
                 </Button>
             </div>

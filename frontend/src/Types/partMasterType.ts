@@ -30,6 +30,7 @@ export interface PartMasterListType {
     partCategoryId: number | null,
     hsnId: number,
     sellingPrice: string,
+    landingPrice?: string,
     taxRate: string,
     unitOfMeasure: string,
     reorderLevel: number | null,
@@ -51,12 +52,21 @@ export interface PartMasterCreateType {
     partCategoryId: string,
     hsnId: string,
     sellingPrice: string,
+    landingPrice?: string,
     taxRate: string,
     unitOfMeasure: string,
     reorderLevel: string,
     isFastMoving: boolean,
     validFrom: string,
-    validTo: string
+    validTo: string,
+    brandId: string,
+    modelId: string,
+    variantId: string,
+    isOem: boolean,
+    position: string,
+    quantity: string,
+    fitmentValidFrom: string,
+    fitmentValidTo: string
 }
 
 export interface PartMasterConfirmActionType {

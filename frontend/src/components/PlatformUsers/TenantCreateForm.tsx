@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-import { Field, FieldLabel, FieldContent } from "@/components/ui/field";
+import { FieldLabel } from "@/components/ui/field";
 import { FormSection } from "./FormSection";
 import { useState } from "react";
 import { type userCreateType, type tenantCreateType, type branchCreateType } from "@/Types/tenantCreateType";
@@ -171,78 +171,78 @@ export function TenantCreateForm({ onCancel }: props) {
     <form className="space-y-4 py-5" onSubmit={handleSubmit} >
       {/* Tenant Details */}
       <FormSection title="Tenant Details"  withSeparator={false}>
-        <Field>
-          <FieldLabel>Tenant Name <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="tenantName" value={tenantData.tenantName} required placeholder="ABC Motors Pvt Ltd" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Tenant Name <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="tenantName" value={tenantData.tenantName} required placeholder="ABC Motors Pvt Ltd" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="email" value={tenantData.email} type="email" required placeholder="admin@company.com" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Email <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="email" value={tenantData.email} type="email" required placeholder="admin@company.com" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Phone <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="phone" value={tenantData.phone} required placeholder="98765 43210" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Phone <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="phone" value={tenantData.phone} required placeholder="98765 43210" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>GST Number <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input className="uppercase" name="gstNumber" value={tenantData.gstNumber} 
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">GST Number <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input className="h-7 rounded-none px-2 text-xs uppercase" name="gstNumber" value={tenantData.gstNumber} 
             required placeholder="27AAECA1234A1Z5" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+          </div>
+        </div>
 
-        <Field className="sm:col-span-2 lg:col-span-3">
-          <FieldLabel>Address <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Textarea name="address" value={tenantData.address} required placeholder="Business address" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="w-[110px] shrink-0 text-xs font-medium">Address <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0 flex-1 max-w-sm">
+            <Textarea name="address" value={tenantData.address} required placeholder="Business address" onChange={handleTenantChange} className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>City <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="city" value={tenantData.city} required placeholder="Pune" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">City <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="city" value={tenantData.city} required placeholder="Pune" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>State <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="state" value={tenantData.state} required placeholder="Maharashtra" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">State <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="state" value={tenantData.state} required placeholder="Maharashtra" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Country <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="country" value={tenantData.country} required placeholder="India" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Country <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="country" value={tenantData.country} required placeholder="India" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Pincode <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="pincode" value={tenantData.pincode} required placeholder="411001" onChange={handleTenantChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Pincode <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="pincode" value={tenantData.pincode} required placeholder="411001" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
       </FormSection>
 
       {/* Subscription */}
       <FormSection title="Subscription">
-        <Field>
-          <FieldLabel>Subscription Plan <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Subscription Plan <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
             <Select name="subscriptionPlan" required value={tenantData.subscriptionPlan || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionPlan: value }))}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                 <SelectValue placeholder="Select Plan" />
               </SelectTrigger>
               <SelectContent>
@@ -252,14 +252,14 @@ export function TenantCreateForm({ onCancel }: props) {
                 <SelectItem value="Premium">Premium</SelectItem>
               </SelectContent>
             </Select>
-          </FieldContent>
-        </Field>
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Subscription Status <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Subscription Status<span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
             <Select name="subscriptionStatus" required value={tenantData.subscriptionStatus || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionStatus: value }))}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                 <SelectValue placeholder="Select Status" />
               </SelectTrigger>
               <SelectContent>
@@ -270,136 +270,137 @@ export function TenantCreateForm({ onCancel }: props) {
                 <SelectItem value="CANCELLED">Cancelled</SelectItem>
               </SelectContent>
             </Select>
-          </FieldContent>
-        </Field>
+          </div>
+        </div>
       </FormSection>
 
       {/* Initial Branch */}
       <FormSection title="Initial Branch">
 
-        <Field>
-          <FieldLabel>Branch Name <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="branchName" value={initialBranchData.branchName} required placeholder="Pune Main Branch" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Branch Name <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="branchName" value={initialBranchData.branchName} required placeholder="Pune Main Branch" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="email" value={initialBranchData.email} type="email" required placeholder="branch@company.com" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Email <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="email" value={initialBranchData.email} type="email" required placeholder="branch@company.com" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field className="sm:col-span-2 lg:col-span-3">
-          <FieldLabel>Address 1 <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Textarea name="address1" value={initialBranchData.address1} required placeholder="Branch address" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
-        <Field className="sm:col-span-2 lg:col-span-3">
-          <FieldLabel>Address 2</FieldLabel>
-          <FieldContent>
-            <Textarea name="address2" value={initialBranchData.address2 ?? ''} placeholder="Branch address" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="w-[110px] shrink-0 text-xs font-medium">Address 1 <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0 flex-1">
+            <Textarea name="address1" value={initialBranchData.address1} required placeholder="Branch address" onChange={handleBranchChange} className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
+          </div>
+          
+        </div>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="w-[80px] shrink-0 text-xs font-medium">Address 2</FieldLabel>
+          <div className="min-w-0 flex-1">
+            <Textarea name="address2" value={initialBranchData.address2 ?? ''} placeholder="Branch address" onChange={handleBranchChange} className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Locality <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="locality" value={initialBranchData.locality} required placeholder="Kothrud" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Locality <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="locality" value={initialBranchData.locality} required placeholder="Kothrud" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>City <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="city" value={initialBranchData.city} required placeholder="Pune" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">City <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="city" value={initialBranchData.city} required placeholder="Pune" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>State <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="state" value={initialBranchData.state} required placeholder="Maharashtra" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">State <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="state" value={initialBranchData.state} required placeholder="Maharashtra" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Country <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="country" value={initialBranchData.country} required placeholder="India" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Country <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="country" value={initialBranchData.country} required placeholder="India" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Phone <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="phone" value={initialBranchData.phone} required placeholder="98765 43210" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Phone <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="phone" value={initialBranchData.phone} required placeholder="98765 43210" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
         
-        <Field>
-          <FieldLabel>Pincode <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="pincode" value={initialBranchData.pincode} required placeholder="411038" onChange={handleBranchChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Pincode <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="pincode" value={initialBranchData.pincode} required placeholder="411038" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
       </FormSection>
 
       {/* Initial Tenant Admin */}
       <FormSection title="Initial Tenant Admin" withSeparator={false}>
 
-        <Field>
-          <FieldLabel>First Name <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="firstName" value={initialUserData.firstName} required placeholder="Rajesh" onChange={handleUserChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">First Name <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="firstName" value={initialUserData.firstName} required placeholder="Rajesh" onChange={handleUserChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Middle Name <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="middleName" value={initialUserData.middleName} required placeholder="Kumar" onChange={handleUserChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Middle Name <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="middleName" value={initialUserData.middleName} required placeholder="Kumar" onChange={handleUserChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Last Name <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="lastName" value={initialUserData.lastName} required placeholder="Sharma" onChange={handleUserChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Last Name <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="lastName" value={initialUserData.lastName} required placeholder="Sharma" onChange={handleUserChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Email <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="email" value={initialUserData.email} type="email" required placeholder="admin@company.com" onChange={handleUserChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Email <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="email" value={initialUserData.email} type="email" required placeholder="admin@company.com" onChange={handleUserChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Mobile No <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="mobileNo" value={initialUserData.mobileNo} required placeholder="98765 43210" onChange={handleUserChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Mobile No <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="mobileNo" value={initialUserData.mobileNo} required placeholder="98765 43210" onChange={handleUserChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
 
-        <Field>
-          <FieldLabel>Password <span className="text-red-500">*</span></FieldLabel>
-          <FieldContent>
-            <Input name="passwordHash" value={initialUserData.passwordHash} type="password" required placeholder="••••••••••" onChange={handleUserChange} />
-          </FieldContent>
-        </Field>
+        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+          <FieldLabel className="text-xs font-medium">Password <span className="text-red-500">*</span></FieldLabel>
+          <div className="min-w-0">
+            <Input name="passwordHash" value={initialUserData.passwordHash} type="password" required placeholder="••••••••••" onChange={handleUserChange} className="h-7 rounded-none px-2 text-xs" />
+          </div>
+        </div>
       </FormSection>
 
-      <div className="flex justify-end gap-3 border-t border-slate-200 pt-6">
-        <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
+      <div className="flex justify-end gap-2 border-t border-slate-200 pt-4">
+        <Button type="button" variant="outline" size="sm" className="h-7 px-3 text-xs" onClick={onCancel} disabled={loading}>
           Cancel
         </Button>
 
-        <Button type="submit" disabled={loading} className={cn(`${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}w-full`)}>
-          {loading ? <span className="flex items-center gap-2"><Loader2 className="animate-spin" />Creating...</span> : 'Create Tenant'}
+        <Button type="submit" size="sm" disabled={loading} className={cn(`h-7 px-3 text-xs ${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}`)}>
+          {loading ? <span className="flex items-center gap-2"><Loader2 className="h-3 w-3 animate-spin" />Creating...</span> : 'Create Tenant'}
         </Button>
       </div>
     </form>

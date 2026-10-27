@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -112,51 +112,51 @@ export function EditDealerBayModal({ bay, open, onClose, onUpdated }: EditDealer
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-3xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Edit Dealer's Bay</DialogTitle>
                     <DialogDescription>Update the details of this service bay.</DialogDescription>
                 </DialogHeader>
 
                 <form id="dealer-bay-edit-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Bay Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Bay Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Bay Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Bay Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='bayCode'
                                             placeholder="e.g. BAY-01"
                                             required
                                             onChange={handleChange}
                                             value={formData.bayCode}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Bay Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Bay Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='bayName'
                                             placeholder="e.g. General Service Bay"
                                             required
                                             onChange={handleChange}
                                             value={formData.bayName}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Branch <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Branch <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={branches.map((branch) => ({ value: String(branch.id), label: `${branch.branchName} - ${branch.branchCode}` }))}
                                             value={formData.branchId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, branchId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select branch" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -167,28 +167,28 @@ export function EditDealerBayModal({ bay, open, onClose, onUpdated }: EditDealer
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field className="sm:col-span-2 lg:col-span-3">
-                                    <FieldLabel>Description</FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                    <FieldLabel className="text-xs font-medium">Description</FieldLabel>
+                                    <div className="min-w-0">
                                         <Textarea
                                             name='description'
                                             placeholder="Description of the bay"
                                             onChange={handleChange}
                                             value={formData.description}
-                                        />
-                                    </FieldContent>
-                                </Field>
+                                         className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <DialogFooter>
-                    <Button type="button" onClick={onClose} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button form="dealer-bay-edit-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving....</span>}
+                    <Button size="sm" type="button" onClick={onClose} variant="outline" disabled={loading} className="h-7 px-3 text-xs">Cancel</Button>
+                    <Button size="sm" form="dealer-bay-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                         Save Changes
                     </Button>
                 </DialogFooter>

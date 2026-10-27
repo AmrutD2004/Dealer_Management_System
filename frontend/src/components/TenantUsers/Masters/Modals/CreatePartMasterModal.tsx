@@ -1,4 +1,4 @@
-import { createPartMaster, getHSNList, getPartCategoryList } from "@/api/endpoints"
+import { createPartMaster, getHSNList, getPartCategoryList, getBrandListWithoutPagination, getModelListWithoutPagination, getVariantListWithoutPagination } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -26,6 +26,9 @@ import dayjs from "dayjs"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { partUnitOptions } from "../PartMaster/partOptions"
+import type { vehicleBrand } from "@/Types/vehicleBrand"
+import type { vehicleModel } from "@/Types/vehicleModel"
+import type { vehicleVariant } from "@/Types/vehicleVariants"
 
 interface CreatePartMasterModalProps {
     open: boolean
@@ -39,32 +42,56 @@ const initialFormData: PartMasterCreateType = {
     partCategoryId: "none",
     hsnId: "",
     sellingPrice: "",
+    landingPrice: "",
     taxRate: "",
     unitOfMeasure: "",
     reorderLevel: "",
     isFastMoving: false,
     validFrom: dayjs().format('YYYY-MM-DD'),
     validTo: "",
+    brandId: "",
+    modelId: "",
+    variantId: "",
+    isOem: false,
+    position: "",
+    quantity: "",
+    fitmentValidFrom: dayjs().format('YYYY-MM-DD'),
+    fitmentValidTo: "",
 }
 
 export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMasterModalProps) {
     const [loading, setLoading] = useState<boolean>(false)
     const [categories, setCategories] = useState<PartCategoryListType[]>([])
     const [hsnList, setHsnList] = useState<PartMasterHSNType[]>([])
+    const [brands, setBrands] = useState<vehicleBrand[]>([])
+    const [models, setModels] = useState<vehicleModel[]>([])
+    const [variants, setVariants] = useState<vehicleVariant[]>([])
     const [formData, setFormData] = useState<PartMasterCreateType>(initialFormData)
 
     useEffect(() => {
         const loadOptions = async () => {
             try {
-                const [categoryData, hsnData] = await Promise.all([
+                const [categoryData, hsnData, brandData, modelData, variantData] = await Promise.all([
                     getPartCategoryList(),
                     getHSNList(),
+                    getBrandListWithoutPagination(),
+                    getModelListWithoutPagination(),
+                    getVariantListWithoutPagination(),
                 ])
                 if (categoryData?.success) {
                     setCategories(categoryData?.data ?? [])
                 }
                 if (hsnData?.success) {
                     setHsnList(hsnData?.data ?? [])
+                }
+                if (brandData?.success) {
+                    setBrands(brandData?.data ?? [])
+                }
+                if (modelData?.success) {
+                    setModels(modelData?.data ?? [])
+                }
+                if (variantData?.success) {
+                    setVariants(variantData?.data ?? [])
                 }
             } catch (err: unknown) {
                 toast.add({
@@ -75,6 +102,18 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
         }
         if (open) loadOptions()
     }, [open])
+
+    const filteredModels = models.filter((m: any) => {
+        if (!formData.brandId) return false
+        const modelBrandId = m.brandId ?? m.brand?.id
+        return String(modelBrandId) === String(formData.brandId)
+    })
+
+    const filteredVariants = variants.filter((v: any) => {
+        if (!formData.modelId) return false
+        const variantModelId = v.modelId ?? v.model?.id
+        return String(variantModelId) === String(formData.modelId)
+    })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
@@ -96,10 +135,17 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!formData.hsnId || !formData.unitOfMeasure) {
+        if (!formData.hsnId || !formData.unitOfMeasure || !formData.landingPrice) {
             toast.add({
                 type: 'error',
-                description: 'Please select an HSN code and unit of measure'
+                description: 'Please select an HSN code, unit of measure and enter landing price'
+            })
+            return
+        }
+        if (!formData.brandId || !formData.modelId || !formData.variantId) {
+            toast.add({
+                type: 'error',
+                description: 'Please select Brand, Model and Variant for fitment'
             })
             return
         }
@@ -110,20 +156,36 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
             })
             return
         }
+        if (formData.fitmentValidTo && dayjs(formData.fitmentValidTo).isBefore(dayjs(formData.fitmentValidFrom), 'day')) {
+            toast.add({
+                type: 'error',
+                description: 'Fitment Valid To date cannot be before Fitment Valid From date'
+            })
+            return
+        }
         setLoading(true)
         try {
-            const payload = {
+            const payload: any = {
                 partNo: formData.partNo.trim(),
                 partDescription: formData.partDescription.trim(),
                 partCategoryId: formData.partCategoryId && formData.partCategoryId !== "none" ? Number(formData.partCategoryId) : null,
                 hsnId: Number(formData.hsnId),
                 sellingPrice: formData.sellingPrice,
+                landingPrice: formData.landingPrice,
                 taxRate: formData.taxRate,
                 unitOfMeasure: formData.unitOfMeasure,
                 reorderLevel: formData.reorderLevel ? Number(formData.reorderLevel) : null,
                 isFastMoving: formData.isFastMoving,
                 validFrom: new Date(formData.validFrom).toISOString(),
                 validTo: new Date(formData.validTo).toISOString(),
+                brandId: Number(formData.brandId),
+                modelId: Number(formData.modelId),
+                variantId: Number(formData.variantId),
+                isOem: formData.isOem,
+                position: formData.position || null,
+                quantity: formData.quantity ? Number(formData.quantity) : null,
+                fitmentValidFrom: formData.fitmentValidFrom ? new Date(formData.fitmentValidFrom).toISOString() : new Date(formData.validFrom).toISOString(),
+                fitmentValidTo: formData.fitmentValidTo ? new Date(formData.fitmentValidTo).toISOString() : null,
             }
             const data = await createPartMaster(payload)
             if (data?.success) {
@@ -155,38 +217,38 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-4xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Create New Part</DialogTitle>
                     <DialogDescription>Add a new part to the tenant.</DialogDescription>
                 </DialogHeader>
 
                 <form id="part-master-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Part Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Part Number <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Part Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Part Number <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='partNo'
                                             placeholder="e.g. P-10001"
                                             required
                                             onChange={handleChange}
                                             value={formData.partNo}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Part Category</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Part Category</FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={categoryItems}
                                             value={formData.partCategoryId || "none"}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, partCategoryId: value ?? "none" }))}
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select part category" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -197,30 +259,30 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field className="sm:col-span-2 lg:col-span-3">
-                                    <FieldLabel>Part Description <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                                    <FieldLabel className="text-xs font-medium">Part Description <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Textarea
                                             name='partDescription'
                                             placeholder="Description of the part"
                                             required
                                             onChange={handleChange}
                                             value={formData.partDescription}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>HSN Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">HSN Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={hsnItems}
                                             value={formData.hsnId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, hsnId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select HSN code" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -231,18 +293,18 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Unit of Measure <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Unit of Measure <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={partUnitOptions}
                                             value={formData.unitOfMeasure || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, unitOfMeasure: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select unit" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -253,11 +315,11 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Selling Price <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Selling Price <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='sellingPrice'
                                             type='number'
@@ -267,12 +329,27 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                             required
                                             onChange={handleChange}
                                             value={formData.sellingPrice}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Tax Rate (%) <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Landing Price <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input
+                                            name='landingPrice'
+                                            type='number'
+                                            step='0.01'
+                                            min='0'
+                                            placeholder="e.g. 1200.00"
+                                            required
+                                            onChange={handleChange}
+                                            value={formData.landingPrice}
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Tax Rate (%) <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='taxRate'
                                             type='number'
@@ -282,12 +359,12 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                             required
                                             onChange={handleChange}
                                             value={formData.taxRate}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Reorder Level</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Reorder Level</FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='reorderLevel'
                                             type='number'
@@ -296,12 +373,12 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                             placeholder="e.g. 10"
                                             onChange={handleChange}
                                             value={formData.reorderLevel}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Fast Moving</FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Fast Moving</FieldLabel>
+                                    <div className="min-w-0">
                                         <div className="flex items-center gap-2">
                                             <Switch
                                                 id="part-is-fast-moving"
@@ -312,32 +389,104 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                                                 {formData.isFastMoving ? "Yes" : "No"}
                                             </span>
                                         </div>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Valid From <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Valid From <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='validFrom'
                                             type='date'
                                             required
                                             onChange={handleChange}
                                             value={formData.validFrom}
-                                        />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Valid To <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Valid To <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='validTo'
                                             type='date'
                                             required
                                             onChange={handleChange}
                                             value={formData.validTo}
-                                        />
-                                    </FieldContent>
-                                </Field>
+                                         className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Fitment Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Brand <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Select items={brands.map((b:any)=>({value:String(b.id),label:b.brandName}))} value={formData.brandId||null} onValueChange={(value)=>setFormData(prev=>({...prev,brandId:value??"", modelId:"", variantId:""}))} required>
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder="Select brand" /></SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {brands.map((b:any)=>(<SelectItem key={b.id} value={String(b.id)}>{b.brandName}</SelectItem>))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Model <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Select items={filteredModels.map((m:any)=>({value:String(m.id),label:m.modelName}))} value={formData.modelId||null} onValueChange={(value)=>setFormData(prev=>({...prev,modelId:value??"", variantId:""}))} disabled={!formData.brandId || filteredModels.length === 0} required>
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder={!formData.brandId ? "Select brand first" : filteredModels.length === 0 ? "No models found" : "Select model"} /></SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {filteredModels.map((m:any)=>(<SelectItem key={m.id} value={String(m.id)}>{m.modelName}</SelectItem>))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Variant <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
+                                        <Select items={filteredVariants.map((v:any)=>({value:String(v.id),label:v.variantName}))} value={formData.variantId||null} onValueChange={(value)=>setFormData(prev=>({...prev,variantId:value??""}))} disabled={!formData.modelId || filteredVariants.length === 0} required>
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs"><SelectValue placeholder={!formData.modelId ? "Select model first" : filteredVariants.length === 0 ? "No variants found" : "Select variant"} /></SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {filteredVariants.map((v:any)=>(<SelectItem key={v.id} value={String(v.id)}>{v.variantName}</SelectItem>))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">OEM</FieldLabel>
+                                    <div className="min-w-0">
+                                        <div className="flex items-center gap-2">
+                                            <Switch id="fitment-is-oem" checked={formData.isOem} onCheckedChange={(checked:boolean)=>setFormData(prev=>({...prev,isOem:checked}))} />
+                                            <span className="text-sm text-muted-foreground">{formData.isOem?"Yes":"No"}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Position</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='position' placeholder="e.g. Front/Rear" onChange={handleChange} value={formData.position} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Quantity</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='quantity' type='number' min='0' placeholder="e.g. 1" onChange={handleChange} value={formData.quantity} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Fitment Valid From</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='fitmentValidFrom' type='date' onChange={handleChange} value={formData.fitmentValidFrom} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Fitment Valid To</FieldLabel>
+                                    <div className="min-w-0">
+                                        <Input name='fitmentValidTo' type='date' onChange={handleChange} value={formData.fitmentValidTo} className="h-7 rounded-none px-2 text-xs" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -345,8 +494,8 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
 
                 <DialogFooter>
                     <Button type="button" onClick={() => setOpen(false)} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button form="part-master-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating....</span>}
+                    <Button size="sm" form="part-master-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Part
                     </Button>
                 </DialogFooter>

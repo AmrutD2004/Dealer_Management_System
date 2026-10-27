@@ -8,7 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { PartCategoryListType } from "@/Types/partCategoryType"
 import dayjs from "dayjs"
@@ -31,7 +30,7 @@ export function ViewPartCategoryModal({ category, open, onClose }: props) {
 
     return (
         <Dialog open={open}>
-            <DialogContent className="max-w-sm lg:max-w-3xl md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide" showCloseButton={false}>
+            <DialogContent className="max-w-sm lg:max-w-2xl md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide" showCloseButton={false}>
                 <DialogHeader>
                     <div className="flex items-center gap-3">
                         <Package className="h-8 w-8 text-primary" />
@@ -42,47 +41,47 @@ export function ViewPartCategoryModal({ category, open, onClose }: props) {
                             </DialogDescription>
                         </div>
                     </div>
-                    <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 gap-4">
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Category ID</Label>
-                            <span className="text-md font-semibold font-mono">{category.id}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Category Code</Label>
-                            <span className="text-md font-semibold font-mono">{category.code}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Status</Label>
+                    <div className="space-y-4 py-3"><div><div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Details</h3></div><div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Category ID</Label>
+                            <span className="text-xs font-medium font-mono">{category.id}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Category Code</Label>
+                            <span className="text-xs font-medium font-mono">{category.code}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Status</Label>
                             <span>
                                 <Badge variant={category.isActive ? "success" : "destructive"}>
                                     {category.isActive ? "Active" : "Inactive"}
                                 </Badge>
                             </span>
-                        </Field>
-                        <Field className="sm:col-span-2 lg:col-span-3">
-                            <Label className="text-sm font-medium text-muted-foreground">Category Name</Label>
-                            <span className="text-md font-semibold">{category.name}</span>
-                        </Field>
-                        <Field className="sm:col-span-2 lg:col-span-3">
-                            <Label className="text-sm font-medium text-muted-foreground">Parent Category</Label>
-                            <span className="text-md font-medium">{parentName}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Tenant</Label>
-                            <span className="text-md font-medium">{category.tenant?.tenantName ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Created At</Label>
-                            <span className="text-md font-medium">{dayjs(category.createdAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Updated At</Label>
-                            <span className="text-md font-medium">{dayjs(category.updatedAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                    </FieldGroup>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                            <Label className="text-xs font-medium text-muted-foreground">Category Name</Label>
+                            <span className="text-xs font-medium">{category.name}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                            <Label className="text-xs font-medium text-muted-foreground">Parent Category</Label>
+                            <span className="text-xs font-medium">{parentName}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Tenant</Label>
+                            <span className="text-xs font-medium">{category.tenant?.tenantName ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Created At</Label>
+                            <span className="text-xs font-medium">{dayjs(category.createdAt).format('DD MMM YYYY')}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Updated At</Label>
+                            <span className="text-xs font-medium">{dayjs(category.updatedAt).format('DD MMM YYYY')}</span>
+                        </div>
+                    </div></div></div>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button onClick={onClose} variant="outline">Close</Button>
+                    <Button size="sm" onClick={onClose} variant="outline" className="h-7 px-3 text-xs">Close</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

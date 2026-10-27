@@ -8,7 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { PartMasterListType } from "@/Types/partMasterType"
 import dayjs from "dayjs"
@@ -38,7 +37,7 @@ export function ViewPartMasterModal({ part, open, onClose }: props) {
 
     return (
         <Dialog open={open}>
-            <DialogContent className="max-w-sm lg:max-w-4xl md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide" showCloseButton={false}>
+            <DialogContent className="max-w-sm lg:max-w-2xl md:max-w-2xl max-h-[90vh] overflow-y-auto scrollbarHide" showCloseButton={false}>
                 <DialogHeader>
                     <div className="flex items-center gap-3">
                         <PackageSearch className="h-8 w-8 text-primary" />
@@ -49,87 +48,87 @@ export function ViewPartMasterModal({ part, open, onClose }: props) {
                             </DialogDescription>
                         </div>
                     </div>
-                    <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6 gap-4">
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Part ID</Label>
-                            <span className="text-md font-semibold font-mono">{part.id}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Part Number</Label>
-                            <span className="text-md font-semibold font-mono">{part.partNo}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Part Status</Label>
+                    <div className="space-y-4 py-3"><div><div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Details</h3></div><div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Part ID</Label>
+                            <span className="text-xs font-medium font-mono">{part.id}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Part Number</Label>
+                            <span className="text-xs font-medium font-mono">{part.partNo}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Part Status</Label>
                             <span>
                                 <Badge variant={getPartStatusVariant(part.status)}>
                                     {getPartStatusLabel(part.status)}
                                 </Badge>
                             </span>
-                        </Field>
-                        <Field className="sm:col-span-2 lg:col-span-3">
-                            <Label className="text-sm font-medium text-muted-foreground">Part Description</Label>
-                            <span className="text-md font-semibold">{part.partDescription}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Part Category</Label>
-                            <span className="text-md font-medium">{categoryName}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">HSN Code</Label>
-                            <span className="text-md font-medium">{hsnName}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">HSN Tax Rate</Label>
-                            <span className="text-md font-medium">{part.hsn?.taxRate ? `${part.hsn.taxRate}%` : "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Selling Price</Label>
-                            <span className="text-md font-semibold">{formatPartCurrency(part.sellingPrice)}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Tax Rate</Label>
-                            <span className="text-md font-medium">{Number(part.taxRate)}%</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Unit of Measure</Label>
-                            <span className="text-md font-medium">{getPartUnitLabel(part.unitOfMeasure)}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Reorder Level</Label>
-                            <span className="text-md font-medium">{part.reorderLevel ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Fast Moving</Label>
-                            <span className="text-md font-medium">{part.isFastMoving ? "Yes" : "No"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Valid From</Label>
-                            <span className="text-md font-medium">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                            <Label className="text-xs font-medium text-muted-foreground">Part Description</Label>
+                            <span className="text-xs font-medium">{part.partDescription}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Part Category</Label>
+                            <span className="text-xs font-medium">{categoryName}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">HSN Code</Label>
+                            <span className="text-xs font-medium">{hsnName}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">HSN Tax Rate</Label>
+                            <span className="text-xs font-medium">{part.hsn?.taxRate ? `${part.hsn.taxRate}%` : "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Selling Price</Label>
+                            <span className="text-xs font-medium">{formatPartCurrency(part.sellingPrice)}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Tax Rate</Label>
+                            <span className="text-xs font-medium">{Number(part.taxRate)}%</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Unit of Measure</Label>
+                            <span className="text-xs font-medium">{getPartUnitLabel(part.unitOfMeasure)}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Reorder Level</Label>
+                            <span className="text-xs font-medium">{part.reorderLevel ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Fast Moving</Label>
+                            <span className="text-xs font-medium">{part.isFastMoving ? "Yes" : "No"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Valid From</Label>
+                            <span className="text-xs font-medium">
                                 {part.validFrom ? dayjs(part.validFrom).format('DD MMM YYYY') : "—"}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Valid To</Label>
-                            <span className="text-md font-medium">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Valid To</Label>
+                            <span className="text-xs font-medium">
                                 {part.validTo ? dayjs(part.validTo).format('DD MMM YYYY') : "—"}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Tenant</Label>
-                            <span className="text-md font-medium">{part.tenant?.tenantName ?? "—"}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Created At</Label>
-                            <span className="text-md font-medium">{dayjs(part.createdAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">Updated At</Label>
-                            <span className="text-md font-medium">{dayjs(part.updatedAt).format('DD MMM YYYY')}</span>
-                        </Field>
-                    </FieldGroup>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Tenant</Label>
+                            <span className="text-xs font-medium">{part.tenant?.tenantName ?? "—"}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Created At</Label>
+                            <span className="text-xs font-medium">{dayjs(part.createdAt).format('DD MMM YYYY')}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">Updated At</Label>
+                            <span className="text-xs font-medium">{dayjs(part.updatedAt).format('DD MMM YYYY')}</span>
+                        </div>
+                    </div></div></div>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button onClick={onClose} variant="outline">Close</Button>
+                    <Button size="sm" onClick={onClose} variant="outline" className="h-7 px-3 text-xs">Close</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

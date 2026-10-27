@@ -8,7 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
 import type { rolePermissionMappingType } from "@/Types/tenantCreateType"
 import dayjs from "dayjs"
@@ -39,45 +38,45 @@ const ViewAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
                             </DialogDescription>
                         </div>
                     </div>
-                    <FieldGroup className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">
+                    <div className="space-y-4 py-3"><div><div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Details</h3></div><div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Mapping ID
                             </Label>
-                            <span className="text-md font-mono font-semibold">
+                            <span className="text-xs font-mono font-semibold">
                                 {mapping.id}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Role Code
                             </Label>
-                            <span className="text-md font-mono font-semibold">
+                            <span className="text-xs font-mono font-semibold">
                                 {mapping?.role?.roleCode}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Role Name
                             </Label>
-                            <span className="text-md font-semibold">{mapping?.role?.roleName}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">
+                            <span className="text-xs font-medium">{mapping?.role?.roleName}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Permission Code
                             </Label>
-                            <span className="text-md font-mono font-semibold">
+                            <span className="text-xs font-mono font-semibold">
                                 {mapping?.permission?.permissionCode}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Permission Name
                             </Label>
-                            <span className="text-md font-semibold">{mapping?.permission?.permissionName}</span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">
+                            <span className="text-xs font-medium">{mapping?.permission?.permissionName}</span>
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Status
                             </Label>
                             <span>
@@ -85,38 +84,38 @@ const ViewAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
                                     {mapping?.permission?.isActive ? "Active" : "Inactive"}
                                 </Badge>
                             </span>
-                        </Field>
-                        <Field className="sm:col-span-2 lg:col-span-3">
-                            <Label className="text-sm font-medium text-muted-foreground">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Permission Description
                             </Label>
                             <div className="flex items-start gap-2">
                                 <KeyRound className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
-                                <span className="text-md font-medium">
+                                <span className="text-xs font-medium">
                                     {mapping?.permission?.description || "—"}
                                 </span>
                             </div>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Assigned At
                             </Label>
-                            <span className="text-md font-medium">
+                            <span className="text-xs font-medium">
                                 {dayjs(mapping.createdAt).format("DD MMM YYYY")}
                             </span>
-                        </Field>
-                        <Field>
-                            <Label className="text-sm font-medium text-muted-foreground">
+                        </div>
+                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                            <Label className="text-xs font-medium text-muted-foreground">
                                 Updated At
                             </Label>
-                            <span className="text-md font-medium">
+                            <span className="text-xs font-medium">
                                 {dayjs(mapping.updatedAt).format("DD MMM YYYY")}
                             </span>
-                        </Field>
-                    </FieldGroup>
+                        </div>
+                    </div></div></div>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button onClick={onClose} variant="outline">
+                    <Button size="sm" onClick={onClose} variant="outline" className="h-7 px-3 text-xs">
                         Close
                     </Button>
                 </DialogFooter>

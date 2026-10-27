@@ -9,9 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
 import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
 import dayjs from "dayjs"
 import { ClipboardList } from "lucide-react"
 
@@ -21,11 +19,11 @@ interface ViewJobCardModalProps {
   onClose: () => void
 }
 
-const Detail = ({ label, value, className }: { label: string, value: React.ReactNode, className?: string }) => (
-  <Field className={cn("gap-1", className)}>
+const Detail = ({ label, value }: { label: string, value: React.ReactNode }) => (
+  <div className="grid grid-cols-[110px_minmax(0,1fr)] items-start gap-x-2 gap-y-1">
     <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
-    <span className="text-sm font-medium text-foreground">{value}</span>
-  </Field>
+    <div className="text-xs font-medium text-foreground break-words">{value}</div>
+  </div>
 )
 
 export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalProps) {
@@ -38,7 +36,7 @@ export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalPro
     <Dialog open={open}>
       <DialogContent
         showCloseButton={false}
-        className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto py-5 md:max-w-3xl lg:max-w-4xl"
+        className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto py-5 md:max-w-3xl lg:max-w-2xl"
       >
         <DialogHeader>
           <div className="flex items-center justify-between gap-3">
@@ -57,10 +55,10 @@ export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalPro
           </div>
         </DialogHeader>
 
-        <div className="space-y-6 py-2">
+        <div className="space-y-4 py-3">
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground">Customer & Vehicle</h3>
-            <FieldGroup className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Customer & Vehicle</h3></div>
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
               <Detail label="Customer" value={fullName(jobCard.customer)} />
               <Detail label="Mobile No." value={jobCard.customer?.mobileNo || "-"} />
               <Detail label="Branch" value={jobCard.branch?.branchName || "-"} />
@@ -72,12 +70,12 @@ export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalPro
               />
               <Detail label="Current KM Reading" value={jobCard.currentKmReading ?? "-"} />
               <Detail label="Previous KM Reading" value={jobCard.previousKmReading ?? "-"} />
-            </FieldGroup>
+            </div>
           </div>
 
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground">Service Details</h3>
-            <FieldGroup className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Service Details</h3></div>
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
               <Detail label="Service Category" value={jobCard.serviceCategory?.name || "-"} />
               <Detail label="Service Type" value={jobCard.serviceType?.name || "-"} />
               <Detail label="Repair Order Type" value={jobCard.repairOrderType?.name || "-"} />
@@ -94,12 +92,12 @@ export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalPro
               <Detail label="Supervisor" value={fullName(jobCard.supervisor)} />
               <Detail label="Technician" value={fullName(jobCard.technician)} />
               <Detail label="Revisit" value={jobCard.isRevisit ? "Yes" : "No"} />
-            </FieldGroup>
+            </div>
           </div>
 
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground">Driver & Breakdown</h3>
-            <FieldGroup className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Driver & Breakdown</h3></div>
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
               <Detail label="Breakdown" value={jobCard.isBreakdown ? "Yes" : "No"} />
               <Detail label="Driver Name" value={jobCard.driverName || "-"} />
               <Detail label="Driver Mobile No." value={jobCard.driverMobileNo || "-"} />
@@ -115,12 +113,12 @@ export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalPro
               )}
               <Detail label="Created At" value={dayjs(jobCard.createdAt).format("DD MMM YYYY, hh:mm A")} />
               <Detail label="Updated At" value={dayjs(jobCard.updatedAt).format("DD MMM YYYY, hh:mm A")} />
-            </FieldGroup>
+            </div>
           </div>
         </div>
 
         <DialogFooter className="mt-0">
-          <Button onClick={onClose} variant="outline">
+          <Button onClick={onClose} variant="outline" size="sm" className="h-7 px-3 text-xs">
             Close
           </Button>
         </DialogFooter>

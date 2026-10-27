@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
+import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -130,20 +130,20 @@ export function CreateModelModal({ onCreated }: CreateModelModalProps) {
                 </DialogHeader>
 
                 <form id="model-create-form" onSubmit={handleSubmit}>
-                    <div className="space-y-6 py-4">
+                    <div className="space-y-4 py-3">
                         <div>
-                            <h3 className="mb-4 text-sm font-semibold text-foreground">Model Details</h3>
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <Field>
-                                    <FieldLabel>Brand <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                            <div className="mb-2 bg-muted/40 px-2 py-1"><h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Model Details</h3></div>
+                            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Brand <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={brands.map(brand => ({ value: String(brand.id), label: `${brand.brandName} - ${brand.brandCode}` }))}
                                             value={formData.brandId || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, brandId: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select brand" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -154,18 +154,18 @@ export function CreateModelModal({ onCreated }: CreateModelModalProps) {
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Body Type <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Body Type <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Select
                                             items={carBodyTypeOptions}
                                             value={formData.bodyType || null}
                                             onValueChange={(value) => setFormData(prev => ({ ...prev, bodyType: value ?? "" }))}
                                             required
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                                 <SelectValue placeholder="Select body type" />
                                             </SelectTrigger>
                                             <SelectContent align="start" alignItemWithTrigger={false}>
@@ -176,11 +176,11 @@ export function CreateModelModal({ onCreated }: CreateModelModalProps) {
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Model Code <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Model Code <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='modelCode'
                                             type='text'
@@ -188,12 +188,13 @@ export function CreateModelModal({ onCreated }: CreateModelModalProps) {
                                             required
                                             onChange={handleChange}
                                             value={formData.modelCode}
+                                            className="h-7 rounded-none px-2 text-xs"
                                         />
-                                    </FieldContent>
-                                </Field>
-                                <Field>
-                                    <FieldLabel>Model Name <span className="text-red-500">*</span></FieldLabel>
-                                    <FieldContent>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                                    <FieldLabel className="text-xs font-medium">Model Name <span className="text-red-500">*</span></FieldLabel>
+                                    <div className="min-w-0">
                                         <Input
                                             name='modelName'
                                             type='text'
@@ -201,18 +202,19 @@ export function CreateModelModal({ onCreated }: CreateModelModalProps) {
                                             required
                                             onChange={handleChange}
                                             value={formData.modelName}
+                                            className="h-7 rounded-none px-2 text-xs"
                                         />
-                                    </FieldContent>
-                                </Field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <DialogFooter>
-                    <Button onClick={() => setOpen(false)} variant="outline">Cancel</Button>
-                    <Button form="model-create-form" type="submit" disabled={loading}>
-                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating....</span>}
+                    <Button onClick={() => setOpen(false)} variant="outline" size="sm" className="h-7 px-3 text-xs">Cancel</Button>
+                    <Button form="model-create-form" type="submit" disabled={loading} size="sm" className="h-7 px-3 text-xs">
+                        {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Model
                     </Button>
                 </DialogFooter>
