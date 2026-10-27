@@ -23,6 +23,17 @@ export const addVariants = async (req: Request, res: Response) => {
         })
     }
     try {
+        const isModelExists = await prisma.vehicleModelMaster.findUnique({
+            where: {
+                id: Number(modelId)
+            }
+        })
+        if (!isModelExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Model not found'
+            })
+        }
         const isVariantExits = await prisma.vehicleVariantMaster.findUnique({
             where: {
                 modelId_fuelType_variantCode: {
@@ -104,6 +115,17 @@ export const updateVariant = async (req: Request, res: Response) => {
         })
     }
     try {
+        const isModelExists = await prisma.vehicleModelMaster.findUnique({
+            where: {
+                id: Number(modelId)
+            }
+        })
+        if (!isModelExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Model not found'
+            })
+        }
         const isVariantExits = await prisma.vehicleVariantMaster.findUnique({
             where: {
                 id: Number(id)
@@ -193,7 +215,7 @@ export const getVariantDetails = async (req: Request, res: Response) => {
 
 
 export const getListOfVariants = async (req: Request, res: Response) => {
-    const { id, userType } = req.user!;
+    const { id } = req.user!;
     const { skip, take } = req.query;
     if (!id) {
         return res.status(401).json({

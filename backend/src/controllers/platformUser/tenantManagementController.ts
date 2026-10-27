@@ -96,7 +96,7 @@ export const createTenant = async (req: Request, res: Response) => {
             const codePart = lastTenant.tenantCode.split("-")[1];
 
             if (codePart) {
-                const numericPart = codePart.slice(-4); 
+                const numericPart = codePart.slice(-4);
                 tenantNextNumber = parseInt(numericPart, 10) + 1;
             }
         }
@@ -378,6 +378,12 @@ export const editTenant = async (req: Request, res: Response) => {
             message: 'Id required'
         })
     }
+    if (!tenantId) {
+        return res.status(403).json({
+            success: false,
+            message: 'Tenant id required'
+        })
+    }
     const required = {
         tenant_code,
         tenant_name,
@@ -404,6 +410,17 @@ export const editTenant = async (req: Request, res: Response) => {
         });
     }
     try {
+        const isTenantExists = await prisma.tenant.findUnique({
+            where: {
+                id: Number(tenantId)
+            }
+        })
+        if (!isTenantExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Tenant not found'
+            })
+        }
         const data = await prisma.tenant.update({
             data: {
                 tenantCode: tenant_code,
@@ -449,6 +466,12 @@ export const suspendTenant = async (req: Request, res: Response) => {
             message: 'Id required'
         })
     }
+    if (!tenantId) {
+        return res.status(403).json({
+            success: false,
+            message: 'Tenant id required'
+        })
+    }
     if (!status) {
         return res.status(400).json({
             success: false,
@@ -456,6 +479,17 @@ export const suspendTenant = async (req: Request, res: Response) => {
         })
     }
     try {
+        const isTenantExists = await prisma.tenant.findUnique({
+            where: {
+                id: Number(tenantId)
+            }
+        })
+        if (!isTenantExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Tenant not found'
+            })
+        }
         const data = await prisma.tenant.update({
             data: {
                 subscriptionStatus: status
@@ -497,7 +531,24 @@ export const deactivateTenant = async (req: Request, res: Response) => {
             message: 'Id required'
         })
     }
+    if (!tenantId) {
+        return res.status(403).json({
+            success: false,
+            message: 'Tenant id required'
+        })
+    }
     try {
+        const isTenantExists = await prisma.tenant.findUnique({
+            where: {
+                id: Number(tenantId)
+            }
+        })
+        if (!isTenantExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Tenant not found'
+            })
+        }
         const data = await prisma.tenant.update({
             data: {
                 isActive: false
@@ -505,8 +556,8 @@ export const deactivateTenant = async (req: Request, res: Response) => {
             where: { id: Number(tenantId) }
         })
         return res.status(201).json({
-            success : true,
-            message : `Tenant ${data.tenantName} is deactivated`
+            success: true,
+            message: `Tenant ${data.tenantName} is deactivated`
         })
     } catch (error) {
         return res.status(500).json({
@@ -537,7 +588,24 @@ export const activateTenant = async (req: Request, res: Response) => {
             message: 'Id required'
         })
     }
+    if (!tenantId) {
+        return res.status(403).json({
+            success: false,
+            message: 'Tenant id required'
+        })
+    }
     try {
+        const isTenantExists = await prisma.tenant.findUnique({
+            where: {
+                id: Number(tenantId)
+            }
+        })
+        if (!isTenantExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Tenant not found'
+            })
+        }
         const data = await prisma.tenant.update({
             data: {
                 isActive: true
@@ -545,8 +613,8 @@ export const activateTenant = async (req: Request, res: Response) => {
             where: { id: Number(tenantId) }
         })
         return res.status(201).json({
-            success : true,
-            message : `Tenant ${data.tenantName} is activated`
+            success: true,
+            message: `Tenant ${data.tenantName} is activated`
         })
     } catch (error) {
         return res.status(500).json({

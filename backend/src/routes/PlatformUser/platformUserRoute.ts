@@ -9,7 +9,7 @@ import { activateVariant, addVariants, deactivateVariant, getListOfVariants, get
 const platformUserRoute = Router()
 
 //PlatformUser management Routes
-platformUserRoute.post('/platform/newuser/create', authenticate, requirePlatformUser, addPlatformUsers)
+platformUserRoute.post('/platform/newuser/create',  addPlatformUsers)
 platformUserRoute.put('/platform/user/update/:userId', authenticate, requirePlatformUser, editPlatformUser)
 platformUserRoute.patch('/platform/user/deactivate/:userId', authenticate, requirePlatformUser, deactivatePlatformUser)
 platformUserRoute.patch('/platform/user/activate/:userId', authenticate, requirePlatformUser, activatePlatformUser)

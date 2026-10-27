@@ -17,6 +17,29 @@ export const addPartMaster = async (req: Request, res: Response) => {
         })
     }
     try {
+        const isHSNExists = await prisma.hSNMaster.findUnique({
+            where: {
+                id: Number(hsnId)
+            }
+        })
+        if (!isHSNExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'HSN not exists'
+            })
+        }
+        const isPartCategoryExists = await prisma.partCategoryMaster.findUnique({
+            where: {
+                id: Number(partCategoryId)
+            }
+        })
+        if (!isPartCategoryExists) {
+            return res.status(404).json({
+                success: false,
+                message: 'Part category not exists'
+            })
+        }
+
         const isPartExists = await prisma.partMaster.findUnique({
             where: {
                 tenantId_partNo: {
@@ -125,6 +148,16 @@ export const updatePartMaster = async (req: Request, res: Response) => {
                 message: `part not exists with code ${partNo}.`
             })
         }
+        if (supersededById) {
+            const supersedingPart = await prisma.partMaster.findUnique({
+                where: { id: Number(supersededById) },
+                include: { tenant: true }
+            });
+            if (!supersedingPart || supersedingPart.tenantId !== tenantId) {
+                return res.status(404).json({ success: false, message: 'Superseding part not found' });
+            }
+        }
+
         const data = await prisma.partMaster.update({
             data: {
                 tenantId: Number(tenantId),
@@ -135,6 +168,7 @@ export const updatePartMaster = async (req: Request, res: Response) => {
                     ? Number(partCategoryId)
                     : null,
                 sellingPrice: Number(sellingPrice),
+                supersededById: Number(supersededById) || null,
                 taxRate: Number(taxRate),
                 unitOfMeasure: unitOfMeasure,
                 isFastMoving: isFastMoving ?? false,
