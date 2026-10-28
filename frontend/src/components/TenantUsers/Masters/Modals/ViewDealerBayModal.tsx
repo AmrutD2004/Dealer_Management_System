@@ -91,7 +91,7 @@ export function ViewDealerBayModal({ bay, open, onClose }: Props) {
                     </div></div></div>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button size="sm" onClick={onClose} variant="outline" className="h-7 px-3 text-xs">Close</Button>
+                    <Button  onClick={onClose} variant="outline" >Close</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

@@ -195,8 +195,8 @@ export function EditPartCategoryModal({ category, open, onClose, onUpdated }: Ed
                 </form>
 
                 <DialogFooter>
-                    <Button size="sm" type="button" onClick={onClose} variant="outline" disabled={loading} className="h-7 px-3 text-xs">Cancel</Button>
-                    <Button size="sm" form="part-category-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                    <Button  type="button" onClick={onClose} variant="outline" disabled={loading} >Cancel</Button>
+                    <Button  form="part-category-edit-form" type="submit" disabled={loading} >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                         Save Changes
                     </Button>

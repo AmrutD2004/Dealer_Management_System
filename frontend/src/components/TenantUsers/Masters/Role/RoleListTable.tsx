@@ -170,7 +170,7 @@ const RoleListTable = () => {
                             const pageNext = i * roleTake
                             return (
                                 <PaginationItem key={i}>
-                                    <Button className={cn('rounded-lg')} onClick={() => setRoleSkip(pageNext)} variant={roleSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                                    <Button  onClick={() => setRoleSkip(pageNext)} variant={roleSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
                                 </PaginationItem>
                             )
                         })}

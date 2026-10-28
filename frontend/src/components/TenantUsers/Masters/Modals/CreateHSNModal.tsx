@@ -146,7 +146,7 @@ export function CreateHSNModal({ open, setOpen, onCreated }: CreateHSNModalProps
 
                 <DialogFooter>
                     <Button type="button" onClick={() => setOpen(false)} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button size="sm" form="hsn-create-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                    <Button  form="hsn-create-form" type="submit" disabled={loading} >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create HSN
                     </Button>

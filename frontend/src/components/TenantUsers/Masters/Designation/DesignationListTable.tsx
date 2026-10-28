@@ -170,7 +170,7 @@ const DesignationListTable = () => {
                             const pageNext = i * designationTake
                             return (
                                 <PaginationItem key={i}>
-                                    <Button className={cn('rounded-lg')} onClick={() => setDesignationSkip(pageNext)} variant={designationSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                                    <Button  onClick={() => setDesignationSkip(pageNext)} variant={designationSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
                                 </PaginationItem>
                             )
                         })}

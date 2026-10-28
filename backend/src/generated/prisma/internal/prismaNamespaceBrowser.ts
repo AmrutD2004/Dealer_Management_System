@@ -374,6 +374,7 @@ export const JobCardScalarFieldEnum = {
   jobCardNo: 'jobCardNo',
   vehicleId: 'vehicleId',
   customerId: 'customerId',
+  vehicleInTime: 'vehicleInTime',
   currentKmReading: 'currentKmReading',
   previousKmReading: 'previousKmReading',
   vehicleStatus: 'vehicleStatus',

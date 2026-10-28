@@ -395,11 +395,11 @@ export function TenantCreateForm({ onCancel }: props) {
       </FormSection>
 
       <div className="flex justify-end gap-2 border-t border-slate-200 pt-4">
-        <Button type="button" variant="outline" size="sm" className="h-7 px-3 text-xs" onClick={onCancel} disabled={loading}>
+        <Button type="button" variant="outline"   onClick={onCancel} disabled={loading}>
           Cancel
         </Button>
 
-        <Button type="submit" size="sm" disabled={loading} className={cn(`h-7 px-3 text-xs ${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}`)}>
+        <Button type="submit"  disabled={loading} className={cn(`h-7 px-3 text-xs ${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}`)}>
           {loading ? <span className="flex items-center gap-2"><Loader2 className="h-3 w-3 animate-spin" />Creating...</span> : 'Create Tenant'}
         </Button>
       </div>

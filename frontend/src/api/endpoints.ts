@@ -532,6 +532,12 @@ export const activateCustomer = async (custId: number) => {
     const response = await api.patch(`/api/tenant/customer/${custId}/activate`)
     return await response.data
 }
+
+export const findCustomer = async(custName : string)=>{
+    const response = await api.get(`/api/tenant/customer/find?custName=${custName}`)
+    return await response.data
+}
+
 //Vehicle management
 export const createVehicle = async (payload: {}) => {
     const response = await api.post(`/api/tenant/vehicle/create`, payload)

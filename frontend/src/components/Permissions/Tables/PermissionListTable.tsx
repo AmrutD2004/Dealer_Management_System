@@ -143,7 +143,7 @@ const PermissionListTable = () => {
                             const pageNext = i * permissionTake
                             return (
                                 <PaginationItem key={i}>
-                                    <Button className={cn('rounded-lg')} onClick={() => setPermissionSkip(pageNext)} variant={permissionSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                                    <Button  onClick={() => setPermissionSkip(pageNext)} variant={permissionSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
                                 </PaginationItem>
                             )
                         })}

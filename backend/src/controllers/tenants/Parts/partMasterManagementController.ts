@@ -13,7 +13,7 @@ export const addPartMaster = async (req: Request, res: Response) => {
             message: 'Not authorized login again'
         })
     }
-    if (!hsnId || !partDescription || !partNo || !sellingPrice || !taxRate || !unitOfMeasure || !brandId || !modelId || !variantId || !landingPrice) {
+    if (!hsnId || !partDescription || !partNo || !sellingPrice || !taxRate || !unitOfMeasure || !brandId || !modelId || !variantId || !landingPrice || !quantity) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -84,7 +84,7 @@ export const addPartMaster = async (req: Request, res: Response) => {
                         ? Number(reorderLevel)
                         : null,
                 validFrom: new Date(validFrom) || null,
-                validTo: new Date(validTo) || null
+                validTo: validTo ?  new Date(validTo) : null
             },
         });
         const fitment = await tx.partFitment.create({

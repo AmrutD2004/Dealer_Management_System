@@ -154,8 +154,8 @@ const EditPermissionModal = ({ permission, open, onClose }: props) => {
           </div>
         </form>
         <DialogFooter>
-          <Button onClick={() => { closeAllPermissionModals(); onClose() }} variant="outline" size="sm" className="h-7 px-3 text-xs" disabled={loading}>Cancel</Button>
-          <Button disabled={loading} form="permission-edit-form" type="submit" size="sm" className="h-7 px-3 text-xs">
+          <Button onClick={() => { closeAllPermissionModals(); onClose() }} variant="outline"   disabled={loading}>Cancel</Button>
+          <Button disabled={loading} form="permission-edit-form" type="submit"  >
             {loading ? <span className='flex items-center gap-2'><Loader2 className="h-3 w-3 animate-spin" />Saving....</span> : " Save Changes"}
           </Button>
         </DialogFooter>

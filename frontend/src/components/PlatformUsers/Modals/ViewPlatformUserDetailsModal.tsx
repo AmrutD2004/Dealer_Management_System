@@ -50,7 +50,7 @@ export function ViewPlatformUserDetailsModal({ user, open, onClose }: props) {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={onClose} variant="outline" size="sm" className="h-7 px-3 text-xs">Close</Button>
+          <Button onClick={onClose} variant="outline"  >Close</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

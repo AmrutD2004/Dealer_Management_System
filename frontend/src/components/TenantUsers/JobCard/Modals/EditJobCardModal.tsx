@@ -608,7 +608,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                     <h3 className="text-xs font-semibold uppercase tracking-wide text-foreground">Customer Voice</h3>
                                     <p className="text-[11px] text-muted-foreground">Record what the customer reported along with the observation and action to be taken.</p>
                                 </div>
-                                <Button type="button" variant="outline" size="sm" className="h-6 gap-1 px-2 text-xs" onClick={addCustomerVoice}>
+                                <Button type="button" variant="outline"  className="h-6 gap-1 px-2 text-xs" onClick={addCustomerVoice}>
                                     <Plus className="h-3 w-3" />
                                     Add Voice
                                 </Button>
@@ -682,10 +682,10 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                 </form>
 
                 <DialogFooter className="gap-2">
-                    <Button type="button" variant="outline" size="sm" className="h-7 px-3 text-xs" onClick={onClose}>
+                    <Button type="button" variant="outline"   onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button type="submit" form="job-card-edit-form" size="sm" className="h-7 px-3 text-xs" disabled={loading}>
+                    <Button type="submit" form="job-card-edit-form"   disabled={loading}>
                         {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
                         Update Job Card
                     </Button>

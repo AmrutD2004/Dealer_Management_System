@@ -255,8 +255,8 @@ export function CreateEmployeeModal({ open, setOpen }: CreateEmployeeModalProps)
                 </form>
 
                 <DialogFooter>
-                    <Button type="button" onClick={() => setOpen(false)} variant="outline" size="sm" className="h-7 px-3 text-xs">Cancel</Button>
-                    <Button form="employee-form" type="submit" size="sm" className="h-7 px-3 text-xs" disabled={loading}>
+                    <Button type="button" onClick={() => setOpen(false)} variant="outline"  >Cancel</Button>
+                    <Button form="employee-form" type="submit"   disabled={loading}>
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Employee
                     </Button>

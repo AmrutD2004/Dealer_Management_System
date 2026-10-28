@@ -125,8 +125,8 @@ export function EditBrandModal({ brand, open, onClose, onUpdated }: EditBrandMod
                 </form>
 
                 <DialogFooter>
-                    <Button onClick={onClose} variant="outline" size="sm" className="h-7 px-3 text-xs" disabled={loading}>Cancel</Button>
-                    <Button form="brand-edit-form" type="submit" disabled={loading} size="sm" className="h-7 px-3 text-xs">
+                    <Button onClick={onClose} variant="outline"   disabled={loading}>Cancel</Button>
+                    <Button form="brand-edit-form" type="submit" disabled={loading}  >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                         Save Changes
                     </Button>

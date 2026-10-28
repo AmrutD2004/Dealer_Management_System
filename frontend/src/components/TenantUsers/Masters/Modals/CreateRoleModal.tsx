@@ -215,7 +215,7 @@ export function CreateRoleModal({ open, setOpen }: CreateRoleModalProps) {
                             roleDescription: "",
                         })
                     }} variant="outline">Cancel</Button>
-                    <Button size="sm" form="role-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                    <Button  form="role-form" type="submit" disabled={loading} >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Role
                     </Button>

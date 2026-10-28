@@ -225,8 +225,8 @@ export function CustomerCreateForm({ onCancel, onCreated }: CustomerCreateFormPr
             </div>
 
             <div className="flex justify-end gap-2 border-t border-slate-200 pt-4 m-5">
-                <Button type="button" onClick={onCancel} variant="outline" size="sm" className="h-7 px-3 text-xs" disabled={loading}>Cancel</Button>
-                <Button type="submit" size="sm" className="h-7 px-3 text-xs" disabled={loading}>
+                <Button type="button" onClick={onCancel} variant="outline"   disabled={loading}>Cancel</Button>
+                <Button type="submit"   disabled={loading}>
                     {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                     Create Customer
                 </Button>

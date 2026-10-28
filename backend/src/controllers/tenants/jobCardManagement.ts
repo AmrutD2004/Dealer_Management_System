@@ -16,9 +16,9 @@ export const createJobCard = async (req: Request, res: Response) => {
             message: 'Not Authorized'
         })
     }
-    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, customerVoices } = req.body
+    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, customerVoices, vehicleInTime } = req.body
 
-    if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus || customerVoices == null) {
+    if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus || customerVoices == null || !vehicleInTime) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -112,6 +112,7 @@ export const createJobCard = async (req: Request, res: Response) => {
                     technicianId: Number(technicianId) || null,
                     tenantId: Number(tenantId),
                     vehicleId: Number(vehicleId),
+                    vehicleInTime : vehicleInTime ? new Date(vehicleInTime) : null,
                     vehicleStatus: vehicleStatus
 
                 }
@@ -157,9 +158,9 @@ export const updateJobCard = async (req: Request, res: Response) => {
             message: 'job card is required'
         })
     }
-    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, revisedEstimateCloseAt, customerVoices } = req.body
+    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, revisedEstimateCloseAt, customerVoices, vehicleInTime } = req.body
 
-    if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus || customerVoices == null) {
+    if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus || customerVoices == null || !vehicleInTime) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -208,6 +209,7 @@ export const updateJobCard = async (req: Request, res: Response) => {
                     technicianId: Number(technicianId) || null,
                     tenantId: Number(tenantId),
                     vehicleId: Number(vehicleId),
+                    vehicleInTime : vehicleInTime ? new Date(vehicleInTime) : null,
                     vehicleStatus: vehicleStatus,
 
                 },

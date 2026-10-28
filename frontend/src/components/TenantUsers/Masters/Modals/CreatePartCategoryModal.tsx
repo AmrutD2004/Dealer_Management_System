@@ -83,7 +83,6 @@ export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePart
             const payload = {
                 code: formData.code.trim(),
                 name: formData.name.trim(),
-                parentId: formData.parentId && formData.parentId !== "none" ? Number(formData.parentId) : null,
             }
             const data = await createPartCategory(payload)
             if (data?.success) {
@@ -150,27 +149,6 @@ export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePart
                                          className="h-7 rounded-none px-2 text-xs" />
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                                    <FieldLabel className="text-xs font-medium">Parent Category</FieldLabel>
-                                    <div className="min-w-0">
-                                        <Select
-                                            items={parentItems}
-                                            value={formData.parentId || "none"}
-                                            onValueChange={(value) => setFormData(prev => ({ ...prev, parentId: value ?? "none" }))}
-                                        >
-                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                                                <SelectValue placeholder="Select parent category" />
-                                            </SelectTrigger>
-                                            <SelectContent align="start" alignItemWithTrigger={false}>
-                                                {parentItems.map((item) => (
-                                                    <SelectItem key={item.value} value={item.value}>
-                                                        {item.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,7 +156,7 @@ export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePart
 
                 <DialogFooter>
                     <Button type="button" onClick={() => setOpen(false)} variant="outline" disabled={loading}>Cancel</Button>
-                    <Button size="sm" form="part-category-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                    <Button  form="part-category-form" type="submit" disabled={loading} >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Category
                     </Button>

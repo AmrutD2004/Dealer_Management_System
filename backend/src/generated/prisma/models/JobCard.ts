@@ -69,6 +69,7 @@ export type JobCardMinAggregateOutputType = {
   jobCardNo: string | null
   vehicleId: number | null
   customerId: number | null
+  vehicleInTime: Date | null
   currentKmReading: number | null
   previousKmReading: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus | null
@@ -103,6 +104,7 @@ export type JobCardMaxAggregateOutputType = {
   jobCardNo: string | null
   vehicleId: number | null
   customerId: number | null
+  vehicleInTime: Date | null
   currentKmReading: number | null
   previousKmReading: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus | null
@@ -137,6 +139,7 @@ export type JobCardCountAggregateOutputType = {
   jobCardNo: number
   vehicleId: number
   customerId: number
+  vehicleInTime: number
   currentKmReading: number
   previousKmReading: number
   vehicleStatus: number
@@ -209,6 +212,7 @@ export type JobCardMinAggregateInputType = {
   jobCardNo?: true
   vehicleId?: true
   customerId?: true
+  vehicleInTime?: true
   currentKmReading?: true
   previousKmReading?: true
   vehicleStatus?: true
@@ -243,6 +247,7 @@ export type JobCardMaxAggregateInputType = {
   jobCardNo?: true
   vehicleId?: true
   customerId?: true
+  vehicleInTime?: true
   currentKmReading?: true
   previousKmReading?: true
   vehicleStatus?: true
@@ -277,6 +282,7 @@ export type JobCardCountAggregateInputType = {
   jobCardNo?: true
   vehicleId?: true
   customerId?: true
+  vehicleInTime?: true
   currentKmReading?: true
   previousKmReading?: true
   vehicleStatus?: true
@@ -398,6 +404,7 @@ export type JobCardGroupByOutputType = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime: Date | null
   currentKmReading: number
   previousKmReading: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -455,6 +462,7 @@ export type JobCardWhereInput = {
   jobCardNo?: Prisma.StringFilter<"JobCard"> | string
   vehicleId?: Prisma.IntFilter<"JobCard"> | number
   customerId?: Prisma.IntFilter<"JobCard"> | number
+  vehicleInTime?: Prisma.DateTimeNullableFilter<"JobCard"> | Date | string | null
   currentKmReading?: Prisma.IntFilter<"JobCard"> | number
   previousKmReading?: Prisma.IntNullableFilter<"JobCard"> | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFilter<"JobCard"> | $Enums.JobCardVehicleStatus
@@ -501,6 +509,7 @@ export type JobCardOrderByWithRelationInput = {
   jobCardNo?: Prisma.SortOrder
   vehicleId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrderInput | Prisma.SortOrder
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrderInput | Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
@@ -551,6 +560,7 @@ export type JobCardWhereUniqueInput = Prisma.AtLeast<{
   jobCardNo?: Prisma.StringFilter<"JobCard"> | string
   vehicleId?: Prisma.IntFilter<"JobCard"> | number
   customerId?: Prisma.IntFilter<"JobCard"> | number
+  vehicleInTime?: Prisma.DateTimeNullableFilter<"JobCard"> | Date | string | null
   currentKmReading?: Prisma.IntFilter<"JobCard"> | number
   previousKmReading?: Prisma.IntNullableFilter<"JobCard"> | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFilter<"JobCard"> | $Enums.JobCardVehicleStatus
@@ -597,6 +607,7 @@ export type JobCardOrderByWithAggregationInput = {
   jobCardNo?: Prisma.SortOrder
   vehicleId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrderInput | Prisma.SortOrder
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrderInput | Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
@@ -639,6 +650,7 @@ export type JobCardScalarWhereWithAggregatesInput = {
   jobCardNo?: Prisma.StringWithAggregatesFilter<"JobCard"> | string
   vehicleId?: Prisma.IntWithAggregatesFilter<"JobCard"> | number
   customerId?: Prisma.IntWithAggregatesFilter<"JobCard"> | number
+  vehicleInTime?: Prisma.DateTimeNullableWithAggregatesFilter<"JobCard"> | Date | string | null
   currentKmReading?: Prisma.IntWithAggregatesFilter<"JobCard"> | number
   previousKmReading?: Prisma.IntNullableWithAggregatesFilter<"JobCard"> | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusWithAggregatesFilter<"JobCard"> | $Enums.JobCardVehicleStatus
@@ -668,6 +680,7 @@ export type JobCardScalarWhereWithAggregatesInput = {
 
 export type JobCardCreateInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -708,6 +721,7 @@ export type JobCardUncheckedCreateInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -739,6 +753,7 @@ export type JobCardUncheckedCreateInput = {
 
 export type JobCardUpdateInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -779,6 +794,7 @@ export type JobCardUncheckedUpdateInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -815,6 +831,7 @@ export type JobCardCreateManyInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -844,6 +861,7 @@ export type JobCardCreateManyInput = {
 
 export type JobCardUpdateManyMutationInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -872,6 +890,7 @@ export type JobCardUncheckedUpdateManyInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -921,6 +940,7 @@ export type JobCardCountOrderByAggregateInput = {
   jobCardNo?: Prisma.SortOrder
   vehicleId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrder
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
@@ -973,6 +993,7 @@ export type JobCardMaxOrderByAggregateInput = {
   jobCardNo?: Prisma.SortOrder
   vehicleId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrder
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
@@ -1007,6 +1028,7 @@ export type JobCardMinOrderByAggregateInput = {
   jobCardNo?: Prisma.SortOrder
   vehicleId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  vehicleInTime?: Prisma.SortOrder
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
@@ -1515,6 +1537,7 @@ export type JobCardUpdateOneRequiredWithoutAllocationsNestedInput = {
 
 export type JobCardCreateWithoutTenantInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1553,6 +1576,7 @@ export type JobCardUncheckedCreateWithoutTenantInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1618,6 +1642,7 @@ export type JobCardScalarWhereInput = {
   jobCardNo?: Prisma.StringFilter<"JobCard"> | string
   vehicleId?: Prisma.IntFilter<"JobCard"> | number
   customerId?: Prisma.IntFilter<"JobCard"> | number
+  vehicleInTime?: Prisma.DateTimeNullableFilter<"JobCard"> | Date | string | null
   currentKmReading?: Prisma.IntFilter<"JobCard"> | number
   previousKmReading?: Prisma.IntNullableFilter<"JobCard"> | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFilter<"JobCard"> | $Enums.JobCardVehicleStatus
@@ -1647,6 +1672,7 @@ export type JobCardScalarWhereInput = {
 
 export type JobCardCreateWithoutBranchInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1685,6 +1711,7 @@ export type JobCardUncheckedCreateWithoutBranchInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1742,6 +1769,7 @@ export type JobCardUpdateManyWithWhereWithoutBranchInput = {
 
 export type JobCardCreateWithoutSupervisorInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1781,6 +1809,7 @@ export type JobCardUncheckedCreateWithoutSupervisorInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1821,6 +1850,7 @@ export type JobCardCreateManySupervisorInputEnvelope = {
 
 export type JobCardCreateWithoutTechnicianInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1860,6 +1890,7 @@ export type JobCardUncheckedCreateWithoutTechnicianInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1900,6 +1931,7 @@ export type JobCardCreateManyTechnicianInputEnvelope = {
 
 export type JobCardCreateWithoutCreatedByUserInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -1939,6 +1971,7 @@ export type JobCardUncheckedCreateWithoutCreatedByUserInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2027,6 +2060,7 @@ export type JobCardUpdateManyWithWhereWithoutCreatedByUserInput = {
 
 export type JobCardCreateWithoutServiceCategoryInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2066,6 +2100,7 @@ export type JobCardUncheckedCreateWithoutServiceCategoryInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2122,6 +2157,7 @@ export type JobCardUpdateManyWithWhereWithoutServiceCategoryInput = {
 
 export type JobCardCreateWithoutServiceTypeInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2161,6 +2197,7 @@ export type JobCardUncheckedCreateWithoutServiceTypeInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2217,6 +2254,7 @@ export type JobCardUpdateManyWithWhereWithoutServiceTypeInput = {
 
 export type JobCardCreateWithoutRepairOrderTypeInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2256,6 +2294,7 @@ export type JobCardUncheckedCreateWithoutRepairOrderTypeInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2312,6 +2351,7 @@ export type JobCardUpdateManyWithWhereWithoutRepairOrderTypeInput = {
 
 export type JobCardCreateWithoutCustomerInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2350,6 +2390,7 @@ export type JobCardUncheckedCreateWithoutCustomerInput = {
   branchId: number
   jobCardNo: string
   vehicleId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2407,6 +2448,7 @@ export type JobCardUpdateManyWithWhereWithoutCustomerInput = {
 
 export type JobCardCreateWithoutVehicleInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2445,6 +2487,7 @@ export type JobCardUncheckedCreateWithoutVehicleInput = {
   branchId: number
   jobCardNo: string
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2502,6 +2545,7 @@ export type JobCardUpdateManyWithWhereWithoutVehicleInput = {
 
 export type JobCardCreateWithoutJobCardCustomerVoicesInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2541,6 +2585,7 @@ export type JobCardUncheckedCreateWithoutJobCardCustomerVoicesInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2587,6 +2632,7 @@ export type JobCardUpdateToOneWithWhereWithoutJobCardCustomerVoicesInput = {
 
 export type JobCardUpdateWithoutJobCardCustomerVoicesInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -2626,6 +2672,7 @@ export type JobCardUncheckedUpdateWithoutJobCardCustomerVoicesInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -2656,6 +2703,7 @@ export type JobCardUncheckedUpdateWithoutJobCardCustomerVoicesInput = {
 
 export type JobCardCreateWithoutAllocationsInput = {
   jobCardNo: string
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2695,6 +2743,7 @@ export type JobCardUncheckedCreateWithoutAllocationsInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2741,6 +2790,7 @@ export type JobCardUpdateToOneWithWhereWithoutAllocationsInput = {
 
 export type JobCardUpdateWithoutAllocationsInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -2780,6 +2830,7 @@ export type JobCardUncheckedUpdateWithoutAllocationsInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -2814,6 +2865,7 @@ export type JobCardCreateManyTenantInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2843,6 +2895,7 @@ export type JobCardCreateManyTenantInput = {
 
 export type JobCardUpdateWithoutTenantInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -2881,6 +2934,7 @@ export type JobCardUncheckedUpdateWithoutTenantInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -2916,6 +2970,7 @@ export type JobCardUncheckedUpdateManyWithoutTenantInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -2949,6 +3004,7 @@ export type JobCardCreateManyBranchInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -2978,6 +3034,7 @@ export type JobCardCreateManyBranchInput = {
 
 export type JobCardUpdateWithoutBranchInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3016,6 +3073,7 @@ export type JobCardUncheckedUpdateWithoutBranchInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3051,6 +3109,7 @@ export type JobCardUncheckedUpdateManyWithoutBranchInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3085,6 +3144,7 @@ export type JobCardCreateManySupervisorInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -3118,6 +3178,7 @@ export type JobCardCreateManyTechnicianInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -3151,6 +3212,7 @@ export type JobCardCreateManyCreatedByUserInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -3179,6 +3241,7 @@ export type JobCardCreateManyCreatedByUserInput = {
 
 export type JobCardUpdateWithoutSupervisorInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3218,6 +3281,7 @@ export type JobCardUncheckedUpdateWithoutSupervisorInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3253,6 +3317,7 @@ export type JobCardUncheckedUpdateManyWithoutSupervisorInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3281,6 +3346,7 @@ export type JobCardUncheckedUpdateManyWithoutSupervisorInput = {
 
 export type JobCardUpdateWithoutTechnicianInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3320,6 +3386,7 @@ export type JobCardUncheckedUpdateWithoutTechnicianInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3355,6 +3422,7 @@ export type JobCardUncheckedUpdateManyWithoutTechnicianInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3383,6 +3451,7 @@ export type JobCardUncheckedUpdateManyWithoutTechnicianInput = {
 
 export type JobCardUpdateWithoutCreatedByUserInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3422,6 +3491,7 @@ export type JobCardUncheckedUpdateWithoutCreatedByUserInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3457,6 +3527,7 @@ export type JobCardUncheckedUpdateManyWithoutCreatedByUserInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3490,6 +3561,7 @@ export type JobCardCreateManyServiceCategoryInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -3518,6 +3590,7 @@ export type JobCardCreateManyServiceCategoryInput = {
 
 export type JobCardUpdateWithoutServiceCategoryInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3557,6 +3630,7 @@ export type JobCardUncheckedUpdateWithoutServiceCategoryInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3592,6 +3666,7 @@ export type JobCardUncheckedUpdateManyWithoutServiceCategoryInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3625,6 +3700,7 @@ export type JobCardCreateManyServiceTypeInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -3653,6 +3729,7 @@ export type JobCardCreateManyServiceTypeInput = {
 
 export type JobCardUpdateWithoutServiceTypeInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3692,6 +3769,7 @@ export type JobCardUncheckedUpdateWithoutServiceTypeInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3727,6 +3805,7 @@ export type JobCardUncheckedUpdateManyWithoutServiceTypeInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3760,6 +3839,7 @@ export type JobCardCreateManyRepairOrderTypeInput = {
   jobCardNo: string
   vehicleId: number
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -3788,6 +3868,7 @@ export type JobCardCreateManyRepairOrderTypeInput = {
 
 export type JobCardUpdateWithoutRepairOrderTypeInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3827,6 +3908,7 @@ export type JobCardUncheckedUpdateWithoutRepairOrderTypeInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3862,6 +3944,7 @@ export type JobCardUncheckedUpdateManyWithoutRepairOrderTypeInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3894,6 +3977,7 @@ export type JobCardCreateManyCustomerInput = {
   branchId: number
   jobCardNo: string
   vehicleId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -3923,6 +4007,7 @@ export type JobCardCreateManyCustomerInput = {
 
 export type JobCardUpdateWithoutCustomerInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3961,6 +4046,7 @@ export type JobCardUncheckedUpdateWithoutCustomerInput = {
   branchId?: Prisma.IntFieldUpdateOperationsInput | number
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -3996,6 +4082,7 @@ export type JobCardUncheckedUpdateManyWithoutCustomerInput = {
   branchId?: Prisma.IntFieldUpdateOperationsInput | number
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -4029,6 +4116,7 @@ export type JobCardCreateManyVehicleInput = {
   branchId: number
   jobCardNo: string
   customerId: number
+  vehicleInTime?: Date | string | null
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
@@ -4058,6 +4146,7 @@ export type JobCardCreateManyVehicleInput = {
 
 export type JobCardUpdateWithoutVehicleInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -4096,6 +4185,7 @@ export type JobCardUncheckedUpdateWithoutVehicleInput = {
   branchId?: Prisma.IntFieldUpdateOperationsInput | number
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -4131,6 +4221,7 @@ export type JobCardUncheckedUpdateManyWithoutVehicleInput = {
   branchId?: Prisma.IntFieldUpdateOperationsInput | number
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
@@ -4205,6 +4296,7 @@ export type JobCardSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   jobCardNo?: boolean
   vehicleId?: boolean
   customerId?: boolean
+  vehicleInTime?: boolean
   currentKmReading?: boolean
   previousKmReading?: boolean
   vehicleStatus?: boolean
@@ -4252,6 +4344,7 @@ export type JobCardSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   jobCardNo?: boolean
   vehicleId?: boolean
   customerId?: boolean
+  vehicleInTime?: boolean
   currentKmReading?: boolean
   previousKmReading?: boolean
   vehicleStatus?: boolean
@@ -4296,6 +4389,7 @@ export type JobCardSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   jobCardNo?: boolean
   vehicleId?: boolean
   customerId?: boolean
+  vehicleInTime?: boolean
   currentKmReading?: boolean
   previousKmReading?: boolean
   vehicleStatus?: boolean
@@ -4340,6 +4434,7 @@ export type JobCardSelectScalar = {
   jobCardNo?: boolean
   vehicleId?: boolean
   customerId?: boolean
+  vehicleInTime?: boolean
   currentKmReading?: boolean
   previousKmReading?: boolean
   vehicleStatus?: boolean
@@ -4367,7 +4462,7 @@ export type JobCardSelectScalar = {
   updatedAt?: boolean
 }
 
-export type JobCardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "branchId" | "jobCardNo" | "vehicleId" | "customerId" | "currentKmReading" | "previousKmReading" | "vehicleStatus" | "supervisorId" | "technicianId" | "serviceCategoryId" | "serviceTypeId" | "repairOrderTypeId" | "isRevisit" | "estimateCloseAt" | "revisedEstimateCloseAt" | "closedAt" | "status" | "driverName" | "driverMobileNo" | "isBreakdown" | "breakdownPersonAttended" | "breakdownDateTime" | "breakdownStartDateTime" | "breakdownEndDateTime" | "dealerVanStartKm" | "dealerVanEndKm" | "createdBy" | "createdAt" | "updatedAt", ExtArgs["result"]["jobCard"]>
+export type JobCardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "branchId" | "jobCardNo" | "vehicleId" | "customerId" | "vehicleInTime" | "currentKmReading" | "previousKmReading" | "vehicleStatus" | "supervisorId" | "technicianId" | "serviceCategoryId" | "serviceTypeId" | "repairOrderTypeId" | "isRevisit" | "estimateCloseAt" | "revisedEstimateCloseAt" | "closedAt" | "status" | "driverName" | "driverMobileNo" | "isBreakdown" | "breakdownPersonAttended" | "breakdownDateTime" | "breakdownStartDateTime" | "breakdownEndDateTime" | "dealerVanStartKm" | "dealerVanEndKm" | "createdBy" | "createdAt" | "updatedAt", ExtArgs["result"]["jobCard"]>
 export type JobCardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
@@ -4431,6 +4526,7 @@ export type $JobCardPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     jobCardNo: string
     vehicleId: number
     customerId: number
+    vehicleInTime: Date | null
     currentKmReading: number
     previousKmReading: number | null
     vehicleStatus: $Enums.JobCardVehicleStatus
@@ -4897,6 +4993,7 @@ export interface JobCardFieldRefs {
   readonly jobCardNo: Prisma.FieldRef<"JobCard", 'String'>
   readonly vehicleId: Prisma.FieldRef<"JobCard", 'Int'>
   readonly customerId: Prisma.FieldRef<"JobCard", 'Int'>
+  readonly vehicleInTime: Prisma.FieldRef<"JobCard", 'DateTime'>
   readonly currentKmReading: Prisma.FieldRef<"JobCard", 'Int'>
   readonly previousKmReading: Prisma.FieldRef<"JobCard", 'Int'>
   readonly vehicleStatus: Prisma.FieldRef<"JobCard", 'JobCardVehicleStatus'>

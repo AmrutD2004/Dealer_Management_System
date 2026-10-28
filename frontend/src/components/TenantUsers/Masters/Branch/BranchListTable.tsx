@@ -161,7 +161,7 @@ const BranchListTable = () => {
                             const pageNext = i * take
                             return (
                                 <PaginationItem>
-                                    <Button className={cn('rounded-lg')} onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                                    <Button  onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
                                 </PaginationItem>
                             )
                         })}
