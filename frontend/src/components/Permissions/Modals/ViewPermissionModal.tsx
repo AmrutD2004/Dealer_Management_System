@@ -69,7 +69,7 @@ export function ViewPermissionModal({ permission, open, onClose }: props) {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={handleClose} variant="outline" size="sm" className="h-7 px-3 text-xs">Close</Button>
+          <Button onClick={handleClose} variant="outline"  >Close</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

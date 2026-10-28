@@ -3,7 +3,7 @@ import { prisma } from "../../prisma/lib/prisma";
 
 export const createVehicle = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!;
-    const { chassisNumber, color, currentOdometerReading, customerId, engineNumber, brandId, manufacturingYear, modelId, purchaseDate, registrationDate, variantId, vehicleNumber, vehicleInTime } = req.body;
+    const { chassisNumber, color, currentOdometerReading, customerId, engineNumber, brandId, manufacturingYear, modelId, purchaseDate, registrationDate, variantId, vehicleNumber } = req.body;
 
     if (!id || !tenantId) {
         return res.status(404).json({
@@ -12,7 +12,7 @@ export const createVehicle = async (req: Request, res: Response) => {
         })
     }
 
-    if (!modelId || !brandId || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber || !variantId || !vehicleInTime) {
+    if (!modelId || !brandId || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber || !variantId) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -63,7 +63,6 @@ export const createVehicle = async (req: Request, res: Response) => {
                 registrationDate: registrationDate || null,
                 tenantId: Number(tenantId),
                 vehicleNumber: vehicleNumber,
-                vehicleInTime : vehicleInTime,
                 isActive: true
             }
         })
@@ -91,7 +90,7 @@ export const updateVehicle = async (req: Request, res: Response) => {
             message: 'Vehicle Id required'
         })
     }
-    const { chassisNumber, color, currentOdometerReading, customerId, engineNumber, brandId, manufacturingYear, modelId, purchaseDate, registrationDate, variantId, vehicleNumber, vehicleInTime } = req.body;
+    const { chassisNumber, color, currentOdometerReading, customerId, engineNumber, brandId, manufacturingYear, modelId, purchaseDate, registrationDate, variantId, vehicleNumber } = req.body;
 
     if (!id || !tenantId) {
         return res.status(404).json({
@@ -100,7 +99,7 @@ export const updateVehicle = async (req: Request, res: Response) => {
         })
     }
 
-    if (!modelId || !brandId || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber || !variantId || !vehicleInTime) {
+    if (!modelId || !brandId || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber || !variantId) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -135,7 +134,6 @@ export const updateVehicle = async (req: Request, res: Response) => {
                 purchaseDate: purchaseDate || null,
                 registrationDate: registrationDate || null,
                 tenantId: Number(tenantId),
-                vehicleInTime : vehicleInTime,
                 vehicleNumber: vehicleNumber,
             },
             where: {

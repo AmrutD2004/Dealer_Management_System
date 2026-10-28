@@ -129,7 +129,7 @@ function ToastDescription({
 
 function ToastAction({
   className,
-  render = <Button variant="outline" size="sm" />,
+  render = <Button variant="outline"  />,
   ...props
 }: ToastPrimitive.Action.Props) {
   return (

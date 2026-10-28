@@ -181,8 +181,8 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
                         </div>
                     </form>
         <DialogFooter>
-          <Button onClick={onClose} variant="outline" size="sm" className="h-7 px-3 text-xs">Cancel</Button>
-           <Button disabled={loading} form="platform-user-update" type="submit" size="sm" className="h-7 px-3 text-xs" >
+          <Button onClick={onClose} variant="outline"  >Cancel</Button>
+           <Button disabled={loading} form="platform-user-update" type="submit"   >
                             {loading ? <span className='flex items-center gap-2'><Loader2 className="h-3 w-3 animate-spin" />Saving....</span> : " Save Changes"}
 
                             

@@ -234,7 +234,7 @@ const PlatformUsersListTable = () => {
               const pageNext = i * platformUserTake
               return (
                 <PaginationItem>
-                  <Button className={cn('rounded-lg')} onClick={() => setPlatformUserSkip(pageNext)} variant={platformUserSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                  <Button  onClick={() => setPlatformUserSkip(pageNext)} variant={platformUserSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
                 </PaginationItem>
               )
             })}

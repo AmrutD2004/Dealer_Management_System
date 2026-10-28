@@ -231,7 +231,7 @@ const VariantMasterListTable = ({ refreshKey = 0 }: VariantMasterListTableProps)
                         {[...Array(noOfPages).keys()].map((i) => (
                             <PaginationItem key={i}>
                                 <Button
-                                    className={cn('rounded-lg')}
+                                    
                                     onClick={() => setPage(i)}
                                     variant={page === i ? 'default' : 'outline'}
                                 >

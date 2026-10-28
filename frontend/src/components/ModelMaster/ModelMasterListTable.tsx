@@ -206,7 +206,7 @@ const ModelMasterListTable = ({ refreshKey = 0 }: ModelMasterListTableProps) => 
                         {[...Array(noOfPages).keys()].map((i) => (
                             <PaginationItem key={i}>
                                 <Button
-                                    className={cn('rounded-lg')}
+                                    
                                     onClick={() => setPage(i)}
                                     variant={page === i ? 'default' : 'outline'}
                                 >

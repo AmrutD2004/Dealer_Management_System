@@ -118,7 +118,7 @@ export function ViewJobCardModal({ jobCard, open, onClose }: ViewJobCardModalPro
         </div>
 
         <DialogFooter className="mt-0">
-          <Button onClick={onClose} variant="outline" size="sm" className="h-7 px-3 text-xs">
+          <Button onClick={onClose} variant="outline"  >
             Close
           </Button>
         </DialogFooter>

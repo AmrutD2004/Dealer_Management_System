@@ -142,8 +142,8 @@ export function EditLabourModal({ labour, open, onClose, onUpdated }: EditLabour
                 </form>
 
                 <DialogFooter>
-                    <Button size="sm" type="button" onClick={onClose} variant="outline" className="h-7 px-3 text-xs">Cancel</Button>
-                    <Button size="sm" form="labour-edit-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                    <Button  type="button" onClick={onClose} variant="outline" >Cancel</Button>
+                    <Button  form="labour-edit-form" type="submit" disabled={loading} >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Saving....</span>}
                         Save Changes
                     </Button>

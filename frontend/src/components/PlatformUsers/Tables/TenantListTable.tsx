@@ -165,7 +165,7 @@ const TenantListTable = () => {
                             const pageNext = i * tenantTake
                             return (
                                 <PaginationItem>
-                                    <Button className={cn('rounded-lg')} onClick={() => setTenantSkip(pageNext)} variant={tenantSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                                    <Button  onClick={() => setTenantSkip(pageNext)} variant={tenantSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
                                 </PaginationItem>
                             )
                         })}

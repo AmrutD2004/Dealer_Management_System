@@ -511,7 +511,7 @@ model JobCard {
 
   vehicleId  Int
   customerId Int
-
+  vehicleInTime   DateTime?
   currentKmReading  Int
   previousKmReading Int?
 

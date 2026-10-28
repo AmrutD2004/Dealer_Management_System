@@ -218,7 +218,7 @@ const CustomerListTable = ({ refreshKey = 0 }: CustomerListTableProps) => {
                                 const pageNext = i * TAKE
                                 return (
                                     <PaginationItem key={i}>
-                                        <Button className={cn('rounded-lg')} onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                                        <Button  onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
                                     </PaginationItem>
                                 )
                             })}

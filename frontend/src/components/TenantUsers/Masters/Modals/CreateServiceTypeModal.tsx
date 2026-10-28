@@ -165,7 +165,7 @@ export function CreateServiceTypeModal({ open, setOpen, onCreated }: CreateServi
 
                 <DialogFooter>
                     <Button type="button" onClick={() => setOpen(false)} variant="outline">Cancel</Button>
-                    <Button size="sm" form="service-type-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                    <Button  form="service-type-form" type="submit" disabled={loading} >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Type
                     </Button>

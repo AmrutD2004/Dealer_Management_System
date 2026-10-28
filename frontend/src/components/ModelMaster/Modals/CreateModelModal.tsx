@@ -212,8 +212,8 @@ export function CreateModelModal({ onCreated }: CreateModelModalProps) {
                 </form>
 
                 <DialogFooter>
-                    <Button onClick={() => setOpen(false)} variant="outline" size="sm" className="h-7 px-3 text-xs">Cancel</Button>
-                    <Button form="model-create-form" type="submit" disabled={loading} size="sm" className="h-7 px-3 text-xs">
+                    <Button onClick={() => setOpen(false)} variant="outline"  >Cancel</Button>
+                    <Button form="model-create-form" type="submit" disabled={loading}  >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Model
                     </Button>

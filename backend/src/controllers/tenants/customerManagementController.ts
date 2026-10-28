@@ -430,3 +430,54 @@ export const activateCustomer = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const findCustomer = async (req : Request, res : Response)=>{
+     const { id, tenantId } = req.user!;
+    const { custName } = req.query;
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: "Not Authorized login again",
+        });
+    }
+    try {
+        const findedCust = await prisma.customer.findMany({
+            where : {
+                firstName : {
+                    contains : String(custName),
+                    mode : 'insensitive'
+                },
+                tenantId : Number(tenantId)
+            },
+            include: {
+                    authorizedByUser: {
+                        select: {
+                            firstName: true,
+                            lastName: true,
+                            mobileNo: true,
+                            designation: {
+                                select: {
+                                    name: true
+                                }
+                            }
+                        }
+                    }
+                }
+        })
+        if(findedCust.length===0){
+            return res.status(404).json({
+                success : false,
+                message : 'No customer found'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            data: findedCust,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `server error : ${err}`
+        });
+    }
+}

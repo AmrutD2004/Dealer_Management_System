@@ -279,7 +279,7 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
 
                 <DialogFooter>
                     <Button onClick={() => setOpen(false)} variant="outline">Cancel</Button>
-                    <Button size="sm" form="variant-create-form" type="submit" disabled={loading} className="h-7 px-3 text-xs">
+                    <Button  form="variant-create-form" type="submit" disabled={loading} >
                         {loading && <span className="flex items-center gap-2"><Loader2 className="mr-2 h-3 w-3 animate-spin" />Creating....</span>}
                         Create Variant
                     </Button>

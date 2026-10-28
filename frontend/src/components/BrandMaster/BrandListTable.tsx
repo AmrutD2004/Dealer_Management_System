@@ -189,7 +189,7 @@ const BrandListTable = ({ refreshKey = 0 }: BrandListTableProps) => {
                         {[...Array(noOfPages).keys()].map((i) => (
                             <PaginationItem key={i}>
                                 <Button
-                                    className={cn('rounded-lg')}
+                                    
                                     onClick={() => setPage(i)}
                                     variant={page === i ? 'default' : 'outline'}
                                 >
