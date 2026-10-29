@@ -110,7 +110,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
     const [searchCustomer, setSearchCustomer] = useState<string>('')
     const [customerOpen, setCustomerOpen] = useState<boolean>(false)
     const [findedCustomers, setFindedCustomers] = useState<customerListType[]>([])
-    const [isCustomerFound, setIsCustomerFound] = useState<boolean>(false)
+    const [searchingCustomers, setSearchingCustomers] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -254,24 +254,35 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
         ? serviceTypes.filter((s) => String(s.serviceCategoryMasterId) === formData.serviceCategoryId)
         : serviceTypes
 
-    const handleSearch = async (qury: string) => {
-        try {
-            const data = await findCustomer(qury)
-            if (data.success) {
-                setFindedCustomers(data?.data)
-            }
-        } catch (err: any) {
-            setIsCustomerFound(true)
-            toast.add({
-                type: 'error',
-                description: err?.response?.data?.message
-            })
-        }
+   const handleSearch = async (query: string) => {
+    const searchTerm = query.trim();
+
+    if (!searchTerm) {
+        setFindedCustomers([]);
+        setSearchingCustomers(false);
+        return;
     }
+
+    setSearchingCustomers(true);
+
+    try {
+        const response = await findCustomer(searchTerm);
+
+        if (response?.success) {
+            setFindedCustomers(response.data ?? []);
+        } else {
+            setFindedCustomers([]);
+        }
+    } catch (err: any) {
+        setFindedCustomers([]);
+    } finally {
+        setSearchingCustomers(false);
+    }
+};
     useEffect(() => {
         const timer = setTimeout(() => {
             handleSearch(searchCustomer);
-        }, 300);
+        }, 800);
 
         return () => clearTimeout(timer);
     }, [searchCustomer])
@@ -333,10 +344,10 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                 </PopoverTrigger>
 
                                 <PopoverContent
-                                    align="start"
-                                    className="p-0"
+                                    align="center"
+                                    className="p-0 lg:w-117 md:w-md"
                                 >
-                                    <Command shouldFilter={false} className="w-full">
+                                    <Command shouldFilter={false} className="w-">
                                         <CommandInput
                                             placeholder="Enter customer name or mobile..."
                                             value={searchCustomer}

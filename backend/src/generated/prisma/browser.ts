@@ -142,3 +142,23 @@ export type PartMaster = Prisma.PartMasterModel
  * 
  */
 export type PartFitment = Prisma.PartFitmentModel
+/**
+ * Model ServiceQuotationMaster
+ * 
+ */
+export type ServiceQuotationMaster = Prisma.ServiceQuotationMasterModel
+/**
+ * Model ServiceQuotationPart
+ * 
+ */
+export type ServiceQuotationPart = Prisma.ServiceQuotationPartModel
+/**
+ * Model ServiceQuotationLabour
+ * 
+ */
+export type ServiceQuotationLabour = Prisma.ServiceQuotationLabourModel
+/**
+ * Model ServiceQuotationCustomerVoice
+ * 
+ */
+export type ServiceQuotationCustomerVoice = Prisma.ServiceQuotationCustomerVoiceModel

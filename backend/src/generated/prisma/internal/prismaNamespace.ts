@@ -421,7 +421,11 @@ export const ModelName = {
   HSNMaster: 'HSNMaster',
   PartCategoryMaster: 'PartCategoryMaster',
   PartMaster: 'PartMaster',
-  PartFitment: 'PartFitment'
+  PartFitment: 'PartFitment',
+  ServiceQuotationMaster: 'ServiceQuotationMaster',
+  ServiceQuotationPart: 'ServiceQuotationPart',
+  ServiceQuotationLabour: 'ServiceQuotationLabour',
+  ServiceQuotationCustomerVoice: 'ServiceQuotationCustomerVoice'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -437,7 +441,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment"
+    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment" | "serviceQuotationMaster" | "serviceQuotationPart" | "serviceQuotationLabour" | "serviceQuotationCustomerVoice"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2291,6 +2295,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ServiceQuotationMaster: {
+      payload: Prisma.$ServiceQuotationMasterPayload<ExtArgs>
+      fields: Prisma.ServiceQuotationMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceQuotationMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceQuotationMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceQuotationMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceQuotationMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceQuotationMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceQuotationMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceQuotationMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceQuotationMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceQuotationMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>
+        }
+        update: {
+          args: Prisma.ServiceQuotationMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceQuotationMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceQuotationMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceQuotationMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceQuotationMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceQuotationMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceQuotationMaster>
+        }
+        groupBy: {
+          args: Prisma.ServiceQuotationMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceQuotationMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceQuotationMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceQuotationMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceQuotationPart: {
+      payload: Prisma.$ServiceQuotationPartPayload<ExtArgs>
+      fields: Prisma.ServiceQuotationPartFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceQuotationPartFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceQuotationPartFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceQuotationPartFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceQuotationPartFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceQuotationPartFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceQuotationPartCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceQuotationPartCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceQuotationPartCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceQuotationPartDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>
+        }
+        update: {
+          args: Prisma.ServiceQuotationPartUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceQuotationPartDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceQuotationPartUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceQuotationPartUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceQuotationPartUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationPartPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceQuotationPartAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceQuotationPart>
+        }
+        groupBy: {
+          args: Prisma.ServiceQuotationPartGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceQuotationPartGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceQuotationPartCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceQuotationPartCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceQuotationLabour: {
+      payload: Prisma.$ServiceQuotationLabourPayload<ExtArgs>
+      fields: Prisma.ServiceQuotationLabourFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceQuotationLabourFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceQuotationLabourFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceQuotationLabourFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceQuotationLabourFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceQuotationLabourFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceQuotationLabourCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceQuotationLabourCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceQuotationLabourCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceQuotationLabourDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>
+        }
+        update: {
+          args: Prisma.ServiceQuotationLabourUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceQuotationLabourDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceQuotationLabourUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceQuotationLabourUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceQuotationLabourUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationLabourPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceQuotationLabourAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceQuotationLabour>
+        }
+        groupBy: {
+          args: Prisma.ServiceQuotationLabourGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceQuotationLabourGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceQuotationLabourCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceQuotationLabourCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceQuotationCustomerVoice: {
+      payload: Prisma.$ServiceQuotationCustomerVoicePayload<ExtArgs>
+      fields: Prisma.ServiceQuotationCustomerVoiceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceQuotationCustomerVoiceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceQuotationCustomerVoiceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceQuotationCustomerVoiceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceQuotationCustomerVoiceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>
+        }
+        findMany: {
+          args: Prisma.ServiceQuotationCustomerVoiceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>[]
+        }
+        create: {
+          args: Prisma.ServiceQuotationCustomerVoiceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>
+        }
+        createMany: {
+          args: Prisma.ServiceQuotationCustomerVoiceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceQuotationCustomerVoiceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceQuotationCustomerVoiceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>
+        }
+        update: {
+          args: Prisma.ServiceQuotationCustomerVoiceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceQuotationCustomerVoiceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceQuotationCustomerVoiceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceQuotationCustomerVoiceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceQuotationCustomerVoiceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceQuotationCustomerVoicePayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceQuotationCustomerVoiceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceQuotationCustomerVoice>
+        }
+        groupBy: {
+          args: Prisma.ServiceQuotationCustomerVoiceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceQuotationCustomerVoiceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceQuotationCustomerVoiceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceQuotationCustomerVoiceCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2662,6 +2962,7 @@ export const LabourMasterScalarFieldEnum = {
   labourDescription: 'labourDescription',
   standardHours: 'standardHours',
   rate: 'rate',
+  hsnId: 'hsnId',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2767,6 +3068,101 @@ export const PartFitmentScalarFieldEnum = {
 } as const
 
 export type PartFitmentScalarFieldEnum = (typeof PartFitmentScalarFieldEnum)[keyof typeof PartFitmentScalarFieldEnum]
+
+
+export const ServiceQuotationMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  quotationNo: 'quotationNo',
+  originalQuotationId: 'originalQuotationId',
+  action: 'action',
+  status: 'status',
+  vehicleId: 'vehicleId',
+  customerId: 'customerId',
+  currentReading: 'currentReading',
+  serviceCategoryId: 'serviceCategoryId',
+  serviceTypeId: 'serviceTypeId',
+  repairOrderTypeId: 'repairOrderTypeId',
+  insurancePartyName: 'insurancePartyName',
+  partsBasicAmount: 'partsBasicAmount',
+  partsDiscountAmount: 'partsDiscountAmount',
+  partsTaxAmount: 'partsTaxAmount',
+  partsTotalAmount: 'partsTotalAmount',
+  labourBasicAmount: 'labourBasicAmount',
+  labourDiscountAmount: 'labourDiscountAmount',
+  labourTaxAmount: 'labourTaxAmount',
+  labourTotalAmount: 'labourTotalAmount',
+  grandTotal: 'grandTotal',
+  closeAt: 'closeAt',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceQuotationMasterScalarFieldEnum = (typeof ServiceQuotationMasterScalarFieldEnum)[keyof typeof ServiceQuotationMasterScalarFieldEnum]
+
+
+export const ServiceQuotationPartScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceQuotationId: 'serviceQuotationId',
+  partId: 'partId',
+  partNo: 'partNo',
+  partDescription: 'partDescription',
+  quantity: 'quantity',
+  rate: 'rate',
+  basicAmount: 'basicAmount',
+  discountType: 'discountType',
+  discountRate: 'discountRate',
+  discountAmount: 'discountAmount',
+  hsnCode: 'hsnCode',
+  taxRate: 'taxRate',
+  taxableAmount: 'taxableAmount',
+  taxAmount: 'taxAmount',
+  totalAmount: 'totalAmount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceQuotationPartScalarFieldEnum = (typeof ServiceQuotationPartScalarFieldEnum)[keyof typeof ServiceQuotationPartScalarFieldEnum]
+
+
+export const ServiceQuotationLabourScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceQuotationId: 'serviceQuotationId',
+  labourId: 'labourId',
+  labourName: 'labourName',
+  labourCode: 'labourCode',
+  labourDescription: 'labourDescription',
+  rate: 'rate',
+  basicAmount: 'basicAmount',
+  discountType: 'discountType',
+  discountRate: 'discountRate',
+  discountAmount: 'discountAmount',
+  taxRate: 'taxRate',
+  taxableAmount: 'taxableAmount',
+  taxAmount: 'taxAmount',
+  totalAmount: 'totalAmount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceQuotationLabourScalarFieldEnum = (typeof ServiceQuotationLabourScalarFieldEnum)[keyof typeof ServiceQuotationLabourScalarFieldEnum]
+
+
+export const ServiceQuotationCustomerVoiceScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceQuotationId: 'serviceQuotationId',
+  customerVoice: 'customerVoice',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceQuotationCustomerVoiceScalarFieldEnum = (typeof ServiceQuotationCustomerVoiceScalarFieldEnum)[keyof typeof ServiceQuotationCustomerVoiceScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3003,6 +3399,62 @@ export type ListEnumPartStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'Action'
+ */
+export type EnumActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Action'>
+    
+
+
+/**
+ * Reference to a field of type 'Action[]'
+ */
+export type ListEnumActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Action[]'>
+    
+
+
+/**
+ * Reference to a field of type 'serviceQuotationStatus'
+ */
+export type EnumserviceQuotationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'serviceQuotationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'serviceQuotationStatus[]'
+ */
+export type ListEnumserviceQuotationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'serviceQuotationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DiscountType'
+ */
+export type EnumDiscountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountType'>
+    
+
+
+/**
+ * Reference to a field of type 'DiscountType[]'
+ */
+export type ListEnumDiscountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Sources'
+ */
+export type EnumSourcesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Sources'>
+    
+
+
+/**
+ * Reference to a field of type 'Sources[]'
+ */
+export type ListEnumSourcesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Sources[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3191,6 +3643,10 @@ export type GlobalOmitConfig = {
   partCategoryMaster?: Prisma.PartCategoryMasterOmit
   partMaster?: Prisma.PartMasterOmit
   partFitment?: Prisma.PartFitmentOmit
+  serviceQuotationMaster?: Prisma.ServiceQuotationMasterOmit
+  serviceQuotationPart?: Prisma.ServiceQuotationPartOmit
+  serviceQuotationLabour?: Prisma.ServiceQuotationLabourOmit
+  serviceQuotationCustomerVoice?: Prisma.ServiceQuotationCustomerVoiceOmit
 }
 
 /* Types for Logging */

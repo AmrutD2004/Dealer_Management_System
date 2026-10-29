@@ -17,7 +17,7 @@ const iconButtonClass =
   "h-10 w-10 border-border bg-background text-muted-foreground shadow-sm hover:bg-muted";
 
 export default function Navbar() {
-  const {setTheme, theme} = useTheme()
+  const { setTheme, theme } = useTheme()
 
   return (
     <header className="fixed flex h-20 w-full items-center border-b border-border bg-background z-50 ms-4">
@@ -39,7 +39,7 @@ export default function Navbar() {
         {/* Right: actions */}
 
         <div className="flex items-center gap-3 fixed right-0">
-          <Button className={cn('px-2.5')} variant={'outline'} onClick={() => setTheme(theme==='light' ? 'dark' : 'light')}>
+          <Button className={cn('px-2.5')} variant={'outline'} onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
             {theme === 'light' ? <Moon /> : <Sun />}
           </Button>
           <Button

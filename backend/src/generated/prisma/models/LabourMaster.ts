@@ -31,6 +31,7 @@ export type LabourMasterAvgAggregateOutputType = {
   tenantId: number | null
   standardHours: runtime.Decimal | null
   rate: runtime.Decimal | null
+  hsnId: number | null
 }
 
 export type LabourMasterSumAggregateOutputType = {
@@ -38,6 +39,7 @@ export type LabourMasterSumAggregateOutputType = {
   tenantId: number | null
   standardHours: runtime.Decimal | null
   rate: runtime.Decimal | null
+  hsnId: number | null
 }
 
 export type LabourMasterMinAggregateOutputType = {
@@ -48,6 +50,7 @@ export type LabourMasterMinAggregateOutputType = {
   labourDescription: string | null
   standardHours: runtime.Decimal | null
   rate: runtime.Decimal | null
+  hsnId: number | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -61,6 +64,7 @@ export type LabourMasterMaxAggregateOutputType = {
   labourDescription: string | null
   standardHours: runtime.Decimal | null
   rate: runtime.Decimal | null
+  hsnId: number | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -74,6 +78,7 @@ export type LabourMasterCountAggregateOutputType = {
   labourDescription: number
   standardHours: number
   rate: number
+  hsnId: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -86,6 +91,7 @@ export type LabourMasterAvgAggregateInputType = {
   tenantId?: true
   standardHours?: true
   rate?: true
+  hsnId?: true
 }
 
 export type LabourMasterSumAggregateInputType = {
@@ -93,6 +99,7 @@ export type LabourMasterSumAggregateInputType = {
   tenantId?: true
   standardHours?: true
   rate?: true
+  hsnId?: true
 }
 
 export type LabourMasterMinAggregateInputType = {
@@ -103,6 +110,7 @@ export type LabourMasterMinAggregateInputType = {
   labourDescription?: true
   standardHours?: true
   rate?: true
+  hsnId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -116,6 +124,7 @@ export type LabourMasterMaxAggregateInputType = {
   labourDescription?: true
   standardHours?: true
   rate?: true
+  hsnId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -129,6 +138,7 @@ export type LabourMasterCountAggregateInputType = {
   labourDescription?: true
   standardHours?: true
   rate?: true
+  hsnId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -229,6 +239,7 @@ export type LabourMasterGroupByOutputType = {
   labourDescription: string
   standardHours: runtime.Decimal
   rate: runtime.Decimal
+  hsnId: number | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -265,11 +276,14 @@ export type LabourMasterWhereInput = {
   labourDescription?: Prisma.StringFilter<"LabourMaster"> | string
   standardHours?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.IntNullableFilter<"LabourMaster"> | number | null
   isActive?: Prisma.BoolFilter<"LabourMaster"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LabourMaster"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LabourMaster"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
+  hsn?: Prisma.XOR<Prisma.HSNMasterNullableScalarRelationFilter, Prisma.HSNMasterWhereInput> | null
   actionToBeTaken?: Prisma.JobCardCustomerVoiceListRelationFilter
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourListRelationFilter
 }
 
 export type LabourMasterOrderByWithRelationInput = {
@@ -280,11 +294,14 @@ export type LabourMasterOrderByWithRelationInput = {
   labourDescription?: Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
+  hsnId?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
+  hsn?: Prisma.HSNMasterOrderByWithRelationInput
   actionToBeTaken?: Prisma.JobCardCustomerVoiceOrderByRelationAggregateInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourOrderByRelationAggregateInput
 }
 
 export type LabourMasterWhereUniqueInput = Prisma.AtLeast<{
@@ -299,11 +316,14 @@ export type LabourMasterWhereUniqueInput = Prisma.AtLeast<{
   labourDescription?: Prisma.StringFilter<"LabourMaster"> | string
   standardHours?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.IntNullableFilter<"LabourMaster"> | number | null
   isActive?: Prisma.BoolFilter<"LabourMaster"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LabourMaster"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LabourMaster"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
+  hsn?: Prisma.XOR<Prisma.HSNMasterNullableScalarRelationFilter, Prisma.HSNMasterWhereInput> | null
   actionToBeTaken?: Prisma.JobCardCustomerVoiceListRelationFilter
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourListRelationFilter
 }, "id" | "tenantId_labourCode">
 
 export type LabourMasterOrderByWithAggregationInput = {
@@ -314,6 +334,7 @@ export type LabourMasterOrderByWithAggregationInput = {
   labourDescription?: Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
+  hsnId?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -335,6 +356,7 @@ export type LabourMasterScalarWhereWithAggregatesInput = {
   labourDescription?: Prisma.StringWithAggregatesFilter<"LabourMaster"> | string
   standardHours?: Prisma.DecimalWithAggregatesFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalWithAggregatesFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.IntNullableWithAggregatesFilter<"LabourMaster"> | number | null
   isActive?: Prisma.BoolWithAggregatesFilter<"LabourMaster"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LabourMaster"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LabourMaster"> | Date | string
@@ -350,7 +372,9 @@ export type LabourMasterCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutLabourInput
+  hsn?: Prisma.HSNMasterCreateNestedOneWithoutLabourInput
   actionToBeTaken?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutLabourInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutLaboursInput
 }
 
 export type LabourMasterUncheckedCreateInput = {
@@ -361,10 +385,12 @@ export type LabourMasterUncheckedCreateInput = {
   labourDescription: string
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   actionToBeTaken?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutLabourInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutLaboursInput
 }
 
 export type LabourMasterUpdateInput = {
@@ -377,7 +403,9 @@ export type LabourMasterUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutLabourNestedInput
+  hsn?: Prisma.HSNMasterUpdateOneWithoutLabourNestedInput
   actionToBeTaken?: Prisma.JobCardCustomerVoiceUpdateManyWithoutLabourNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutLaboursNestedInput
 }
 
 export type LabourMasterUncheckedUpdateInput = {
@@ -388,10 +416,12 @@ export type LabourMasterUncheckedUpdateInput = {
   labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   actionToBeTaken?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutLabourNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutLaboursNestedInput
 }
 
 export type LabourMasterCreateManyInput = {
@@ -402,6 +432,7 @@ export type LabourMasterCreateManyInput = {
   labourDescription: string
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -426,6 +457,7 @@ export type LabourMasterUncheckedUpdateManyInput = {
   labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -459,6 +491,7 @@ export type LabourMasterCountOrderByAggregateInput = {
   labourDescription?: Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
+  hsnId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -469,6 +502,7 @@ export type LabourMasterAvgOrderByAggregateInput = {
   tenantId?: Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
+  hsnId?: Prisma.SortOrder
 }
 
 export type LabourMasterMaxOrderByAggregateInput = {
@@ -479,6 +513,7 @@ export type LabourMasterMaxOrderByAggregateInput = {
   labourDescription?: Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
+  hsnId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -492,6 +527,7 @@ export type LabourMasterMinOrderByAggregateInput = {
   labourDescription?: Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
+  hsnId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -502,6 +538,7 @@ export type LabourMasterSumOrderByAggregateInput = {
   tenantId?: Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
+  hsnId?: Prisma.SortOrder
 }
 
 export type LabourMasterCreateNestedManyWithoutTenantInput = {
@@ -560,6 +597,62 @@ export type LabourMasterUpdateOneRequiredWithoutActionToBeTakenNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LabourMasterUpdateToOneWithWhereWithoutActionToBeTakenInput, Prisma.LabourMasterUpdateWithoutActionToBeTakenInput>, Prisma.LabourMasterUncheckedUpdateWithoutActionToBeTakenInput>
 }
 
+export type LabourMasterCreateNestedManyWithoutHsnInput = {
+  create?: Prisma.XOR<Prisma.LabourMasterCreateWithoutHsnInput, Prisma.LabourMasterUncheckedCreateWithoutHsnInput> | Prisma.LabourMasterCreateWithoutHsnInput[] | Prisma.LabourMasterUncheckedCreateWithoutHsnInput[]
+  connectOrCreate?: Prisma.LabourMasterCreateOrConnectWithoutHsnInput | Prisma.LabourMasterCreateOrConnectWithoutHsnInput[]
+  createMany?: Prisma.LabourMasterCreateManyHsnInputEnvelope
+  connect?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+}
+
+export type LabourMasterUncheckedCreateNestedManyWithoutHsnInput = {
+  create?: Prisma.XOR<Prisma.LabourMasterCreateWithoutHsnInput, Prisma.LabourMasterUncheckedCreateWithoutHsnInput> | Prisma.LabourMasterCreateWithoutHsnInput[] | Prisma.LabourMasterUncheckedCreateWithoutHsnInput[]
+  connectOrCreate?: Prisma.LabourMasterCreateOrConnectWithoutHsnInput | Prisma.LabourMasterCreateOrConnectWithoutHsnInput[]
+  createMany?: Prisma.LabourMasterCreateManyHsnInputEnvelope
+  connect?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+}
+
+export type LabourMasterUpdateManyWithoutHsnNestedInput = {
+  create?: Prisma.XOR<Prisma.LabourMasterCreateWithoutHsnInput, Prisma.LabourMasterUncheckedCreateWithoutHsnInput> | Prisma.LabourMasterCreateWithoutHsnInput[] | Prisma.LabourMasterUncheckedCreateWithoutHsnInput[]
+  connectOrCreate?: Prisma.LabourMasterCreateOrConnectWithoutHsnInput | Prisma.LabourMasterCreateOrConnectWithoutHsnInput[]
+  upsert?: Prisma.LabourMasterUpsertWithWhereUniqueWithoutHsnInput | Prisma.LabourMasterUpsertWithWhereUniqueWithoutHsnInput[]
+  createMany?: Prisma.LabourMasterCreateManyHsnInputEnvelope
+  set?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+  disconnect?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+  delete?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+  connect?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+  update?: Prisma.LabourMasterUpdateWithWhereUniqueWithoutHsnInput | Prisma.LabourMasterUpdateWithWhereUniqueWithoutHsnInput[]
+  updateMany?: Prisma.LabourMasterUpdateManyWithWhereWithoutHsnInput | Prisma.LabourMasterUpdateManyWithWhereWithoutHsnInput[]
+  deleteMany?: Prisma.LabourMasterScalarWhereInput | Prisma.LabourMasterScalarWhereInput[]
+}
+
+export type LabourMasterUncheckedUpdateManyWithoutHsnNestedInput = {
+  create?: Prisma.XOR<Prisma.LabourMasterCreateWithoutHsnInput, Prisma.LabourMasterUncheckedCreateWithoutHsnInput> | Prisma.LabourMasterCreateWithoutHsnInput[] | Prisma.LabourMasterUncheckedCreateWithoutHsnInput[]
+  connectOrCreate?: Prisma.LabourMasterCreateOrConnectWithoutHsnInput | Prisma.LabourMasterCreateOrConnectWithoutHsnInput[]
+  upsert?: Prisma.LabourMasterUpsertWithWhereUniqueWithoutHsnInput | Prisma.LabourMasterUpsertWithWhereUniqueWithoutHsnInput[]
+  createMany?: Prisma.LabourMasterCreateManyHsnInputEnvelope
+  set?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+  disconnect?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+  delete?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+  connect?: Prisma.LabourMasterWhereUniqueInput | Prisma.LabourMasterWhereUniqueInput[]
+  update?: Prisma.LabourMasterUpdateWithWhereUniqueWithoutHsnInput | Prisma.LabourMasterUpdateWithWhereUniqueWithoutHsnInput[]
+  updateMany?: Prisma.LabourMasterUpdateManyWithWhereWithoutHsnInput | Prisma.LabourMasterUpdateManyWithWhereWithoutHsnInput[]
+  deleteMany?: Prisma.LabourMasterScalarWhereInput | Prisma.LabourMasterScalarWhereInput[]
+}
+
+export type LabourMasterCreateNestedOneWithoutServiceQuotationLaboursInput = {
+  create?: Prisma.XOR<Prisma.LabourMasterCreateWithoutServiceQuotationLaboursInput, Prisma.LabourMasterUncheckedCreateWithoutServiceQuotationLaboursInput>
+  connectOrCreate?: Prisma.LabourMasterCreateOrConnectWithoutServiceQuotationLaboursInput
+  connect?: Prisma.LabourMasterWhereUniqueInput
+}
+
+export type LabourMasterUpdateOneRequiredWithoutServiceQuotationLaboursNestedInput = {
+  create?: Prisma.XOR<Prisma.LabourMasterCreateWithoutServiceQuotationLaboursInput, Prisma.LabourMasterUncheckedCreateWithoutServiceQuotationLaboursInput>
+  connectOrCreate?: Prisma.LabourMasterCreateOrConnectWithoutServiceQuotationLaboursInput
+  upsert?: Prisma.LabourMasterUpsertWithoutServiceQuotationLaboursInput
+  connect?: Prisma.LabourMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LabourMasterUpdateToOneWithWhereWithoutServiceQuotationLaboursInput, Prisma.LabourMasterUpdateWithoutServiceQuotationLaboursInput>, Prisma.LabourMasterUncheckedUpdateWithoutServiceQuotationLaboursInput>
+}
+
 export type LabourMasterCreateWithoutTenantInput = {
   labourCode: string
   labourName: string
@@ -569,7 +662,9 @@ export type LabourMasterCreateWithoutTenantInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  hsn?: Prisma.HSNMasterCreateNestedOneWithoutLabourInput
   actionToBeTaken?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutLabourInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutLaboursInput
 }
 
 export type LabourMasterUncheckedCreateWithoutTenantInput = {
@@ -579,10 +674,12 @@ export type LabourMasterUncheckedCreateWithoutTenantInput = {
   labourDescription: string
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   actionToBeTaken?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutLabourInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutLaboursInput
 }
 
 export type LabourMasterCreateOrConnectWithoutTenantInput = {
@@ -622,6 +719,7 @@ export type LabourMasterScalarWhereInput = {
   labourDescription?: Prisma.StringFilter<"LabourMaster"> | string
   standardHours?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.IntNullableFilter<"LabourMaster"> | number | null
   isActive?: Prisma.BoolFilter<"LabourMaster"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LabourMaster"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LabourMaster"> | Date | string
@@ -637,6 +735,8 @@ export type LabourMasterCreateWithoutActionToBeTakenInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutLabourInput
+  hsn?: Prisma.HSNMasterCreateNestedOneWithoutLabourInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutLaboursInput
 }
 
 export type LabourMasterUncheckedCreateWithoutActionToBeTakenInput = {
@@ -647,9 +747,11 @@ export type LabourMasterUncheckedCreateWithoutActionToBeTakenInput = {
   labourDescription: string
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutLaboursInput
 }
 
 export type LabourMasterCreateOrConnectWithoutActionToBeTakenInput = {
@@ -678,6 +780,8 @@ export type LabourMasterUpdateWithoutActionToBeTakenInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutLabourNestedInput
+  hsn?: Prisma.HSNMasterUpdateOneWithoutLabourNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutLaboursNestedInput
 }
 
 export type LabourMasterUncheckedUpdateWithoutActionToBeTakenInput = {
@@ -688,9 +792,140 @@ export type LabourMasterUncheckedUpdateWithoutActionToBeTakenInput = {
   labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutLaboursNestedInput
+}
+
+export type LabourMasterCreateWithoutHsnInput = {
+  labourCode: string
+  labourName: string
+  labourDescription: string
+  standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutLabourInput
+  actionToBeTaken?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutLabourInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutLaboursInput
+}
+
+export type LabourMasterUncheckedCreateWithoutHsnInput = {
+  id?: number
+  tenantId: number
+  labourCode: string
+  labourName: string
+  labourDescription: string
+  standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  actionToBeTaken?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutLabourInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutLaboursInput
+}
+
+export type LabourMasterCreateOrConnectWithoutHsnInput = {
+  where: Prisma.LabourMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.LabourMasterCreateWithoutHsnInput, Prisma.LabourMasterUncheckedCreateWithoutHsnInput>
+}
+
+export type LabourMasterCreateManyHsnInputEnvelope = {
+  data: Prisma.LabourMasterCreateManyHsnInput | Prisma.LabourMasterCreateManyHsnInput[]
+  skipDuplicates?: boolean
+}
+
+export type LabourMasterUpsertWithWhereUniqueWithoutHsnInput = {
+  where: Prisma.LabourMasterWhereUniqueInput
+  update: Prisma.XOR<Prisma.LabourMasterUpdateWithoutHsnInput, Prisma.LabourMasterUncheckedUpdateWithoutHsnInput>
+  create: Prisma.XOR<Prisma.LabourMasterCreateWithoutHsnInput, Prisma.LabourMasterUncheckedCreateWithoutHsnInput>
+}
+
+export type LabourMasterUpdateWithWhereUniqueWithoutHsnInput = {
+  where: Prisma.LabourMasterWhereUniqueInput
+  data: Prisma.XOR<Prisma.LabourMasterUpdateWithoutHsnInput, Prisma.LabourMasterUncheckedUpdateWithoutHsnInput>
+}
+
+export type LabourMasterUpdateManyWithWhereWithoutHsnInput = {
+  where: Prisma.LabourMasterScalarWhereInput
+  data: Prisma.XOR<Prisma.LabourMasterUpdateManyMutationInput, Prisma.LabourMasterUncheckedUpdateManyWithoutHsnInput>
+}
+
+export type LabourMasterCreateWithoutServiceQuotationLaboursInput = {
+  labourCode: string
+  labourName: string
+  labourDescription: string
+  standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutLabourInput
+  hsn?: Prisma.HSNMasterCreateNestedOneWithoutLabourInput
+  actionToBeTaken?: Prisma.JobCardCustomerVoiceCreateNestedManyWithoutLabourInput
+}
+
+export type LabourMasterUncheckedCreateWithoutServiceQuotationLaboursInput = {
+  id?: number
+  tenantId: number
+  labourCode: string
+  labourName: string
+  labourDescription: string
+  standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: number | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  actionToBeTaken?: Prisma.JobCardCustomerVoiceUncheckedCreateNestedManyWithoutLabourInput
+}
+
+export type LabourMasterCreateOrConnectWithoutServiceQuotationLaboursInput = {
+  where: Prisma.LabourMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.LabourMasterCreateWithoutServiceQuotationLaboursInput, Prisma.LabourMasterUncheckedCreateWithoutServiceQuotationLaboursInput>
+}
+
+export type LabourMasterUpsertWithoutServiceQuotationLaboursInput = {
+  update: Prisma.XOR<Prisma.LabourMasterUpdateWithoutServiceQuotationLaboursInput, Prisma.LabourMasterUncheckedUpdateWithoutServiceQuotationLaboursInput>
+  create: Prisma.XOR<Prisma.LabourMasterCreateWithoutServiceQuotationLaboursInput, Prisma.LabourMasterUncheckedCreateWithoutServiceQuotationLaboursInput>
+  where?: Prisma.LabourMasterWhereInput
+}
+
+export type LabourMasterUpdateToOneWithWhereWithoutServiceQuotationLaboursInput = {
+  where?: Prisma.LabourMasterWhereInput
+  data: Prisma.XOR<Prisma.LabourMasterUpdateWithoutServiceQuotationLaboursInput, Prisma.LabourMasterUncheckedUpdateWithoutServiceQuotationLaboursInput>
+}
+
+export type LabourMasterUpdateWithoutServiceQuotationLaboursInput = {
+  labourCode?: Prisma.StringFieldUpdateOperationsInput | string
+  labourName?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutLabourNestedInput
+  hsn?: Prisma.HSNMasterUpdateOneWithoutLabourNestedInput
+  actionToBeTaken?: Prisma.JobCardCustomerVoiceUpdateManyWithoutLabourNestedInput
+}
+
+export type LabourMasterUncheckedUpdateWithoutServiceQuotationLaboursInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  labourCode?: Prisma.StringFieldUpdateOperationsInput | string
+  labourName?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actionToBeTaken?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutLabourNestedInput
 }
 
 export type LabourMasterCreateManyTenantInput = {
@@ -700,6 +935,7 @@ export type LabourMasterCreateManyTenantInput = {
   labourDescription: string
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -714,7 +950,9 @@ export type LabourMasterUpdateWithoutTenantInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hsn?: Prisma.HSNMasterUpdateOneWithoutLabourNestedInput
   actionToBeTaken?: Prisma.JobCardCustomerVoiceUpdateManyWithoutLabourNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutLaboursNestedInput
 }
 
 export type LabourMasterUncheckedUpdateWithoutTenantInput = {
@@ -724,14 +962,72 @@ export type LabourMasterUncheckedUpdateWithoutTenantInput = {
   labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   actionToBeTaken?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutLabourNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutLaboursNestedInput
 }
 
 export type LabourMasterUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  labourCode?: Prisma.StringFieldUpdateOperationsInput | string
+  labourName?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LabourMasterCreateManyHsnInput = {
+  id?: number
+  tenantId: number
+  labourCode: string
+  labourName: string
+  labourDescription: string
+  standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LabourMasterUpdateWithoutHsnInput = {
+  labourCode?: Prisma.StringFieldUpdateOperationsInput | string
+  labourName?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutLabourNestedInput
+  actionToBeTaken?: Prisma.JobCardCustomerVoiceUpdateManyWithoutLabourNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutLaboursNestedInput
+}
+
+export type LabourMasterUncheckedUpdateWithoutHsnInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  labourCode?: Prisma.StringFieldUpdateOperationsInput | string
+  labourName?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actionToBeTaken?: Prisma.JobCardCustomerVoiceUncheckedUpdateManyWithoutLabourNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutLaboursNestedInput
+}
+
+export type LabourMasterUncheckedUpdateManyWithoutHsnInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
   labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -749,10 +1045,12 @@ export type LabourMasterUncheckedUpdateManyWithoutTenantInput = {
 
 export type LabourMasterCountOutputType = {
   actionToBeTaken: number
+  serviceQuotationLabours: number
 }
 
 export type LabourMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   actionToBeTaken?: boolean | LabourMasterCountOutputTypeCountActionToBeTakenArgs
+  serviceQuotationLabours?: boolean | LabourMasterCountOutputTypeCountServiceQuotationLaboursArgs
 }
 
 /**
@@ -772,6 +1070,13 @@ export type LabourMasterCountOutputTypeCountActionToBeTakenArgs<ExtArgs extends 
   where?: Prisma.JobCardCustomerVoiceWhereInput
 }
 
+/**
+ * LabourMasterCountOutputType without action
+ */
+export type LabourMasterCountOutputTypeCountServiceQuotationLaboursArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceQuotationLabourWhereInput
+}
+
 
 export type LabourMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -781,11 +1086,14 @@ export type LabourMasterSelect<ExtArgs extends runtime.Types.Extensions.Internal
   labourDescription?: boolean
   standardHours?: boolean
   rate?: boolean
+  hsnId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  hsn?: boolean | Prisma.LabourMaster$hsnArgs<ExtArgs>
   actionToBeTaken?: boolean | Prisma.LabourMaster$actionToBeTakenArgs<ExtArgs>
+  serviceQuotationLabours?: boolean | Prisma.LabourMaster$serviceQuotationLaboursArgs<ExtArgs>
   _count?: boolean | Prisma.LabourMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["labourMaster"]>
 
@@ -797,10 +1105,12 @@ export type LabourMasterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   labourDescription?: boolean
   standardHours?: boolean
   rate?: boolean
+  hsnId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  hsn?: boolean | Prisma.LabourMaster$hsnArgs<ExtArgs>
 }, ExtArgs["result"]["labourMaster"]>
 
 export type LabourMasterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -811,10 +1121,12 @@ export type LabourMasterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   labourDescription?: boolean
   standardHours?: boolean
   rate?: boolean
+  hsnId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  hsn?: boolean | Prisma.LabourMaster$hsnArgs<ExtArgs>
 }, ExtArgs["result"]["labourMaster"]>
 
 export type LabourMasterSelectScalar = {
@@ -825,29 +1137,36 @@ export type LabourMasterSelectScalar = {
   labourDescription?: boolean
   standardHours?: boolean
   rate?: boolean
+  hsnId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LabourMasterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "labourCode" | "labourName" | "labourDescription" | "standardHours" | "rate" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["labourMaster"]>
+export type LabourMasterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "labourCode" | "labourName" | "labourDescription" | "standardHours" | "rate" | "hsnId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["labourMaster"]>
 export type LabourMasterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  hsn?: boolean | Prisma.LabourMaster$hsnArgs<ExtArgs>
   actionToBeTaken?: boolean | Prisma.LabourMaster$actionToBeTakenArgs<ExtArgs>
+  serviceQuotationLabours?: boolean | Prisma.LabourMaster$serviceQuotationLaboursArgs<ExtArgs>
   _count?: boolean | Prisma.LabourMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LabourMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  hsn?: boolean | Prisma.LabourMaster$hsnArgs<ExtArgs>
 }
 export type LabourMasterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+  hsn?: boolean | Prisma.LabourMaster$hsnArgs<ExtArgs>
 }
 
 export type $LabourMasterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LabourMaster"
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
+    hsn: Prisma.$HSNMasterPayload<ExtArgs> | null
     actionToBeTaken: Prisma.$JobCardCustomerVoicePayload<ExtArgs>[]
+    serviceQuotationLabours: Prisma.$ServiceQuotationLabourPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -857,6 +1176,7 @@ export type $LabourMasterPayload<ExtArgs extends runtime.Types.Extensions.Intern
     labourDescription: string
     standardHours: runtime.Decimal
     rate: runtime.Decimal
+    hsnId: number | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1255,7 +1575,9 @@ readonly fields: LabourMasterFieldRefs;
 export interface Prisma__LabourMasterClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  hsn<T extends Prisma.LabourMaster$hsnArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LabourMaster$hsnArgs<ExtArgs>>): Prisma.Prisma__HSNMasterClient<runtime.Types.Result.GetResult<Prisma.$HSNMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   actionToBeTaken<T extends Prisma.LabourMaster$actionToBeTakenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LabourMaster$actionToBeTakenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardCustomerVoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceQuotationLabours<T extends Prisma.LabourMaster$serviceQuotationLaboursArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LabourMaster$serviceQuotationLaboursArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationLabourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1292,6 +1614,7 @@ export interface LabourMasterFieldRefs {
   readonly labourDescription: Prisma.FieldRef<"LabourMaster", 'String'>
   readonly standardHours: Prisma.FieldRef<"LabourMaster", 'Decimal'>
   readonly rate: Prisma.FieldRef<"LabourMaster", 'Decimal'>
+  readonly hsnId: Prisma.FieldRef<"LabourMaster", 'Int'>
   readonly isActive: Prisma.FieldRef<"LabourMaster", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"LabourMaster", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LabourMaster", 'DateTime'>
@@ -1696,6 +2019,25 @@ export type LabourMasterDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
+ * LabourMaster.hsn
+ */
+export type LabourMaster$hsnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HSNMaster
+   */
+  select?: Prisma.HSNMasterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HSNMaster
+   */
+  omit?: Prisma.HSNMasterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HSNMasterInclude<ExtArgs> | null
+  where?: Prisma.HSNMasterWhereInput
+}
+
+/**
  * LabourMaster.actionToBeTaken
  */
 export type LabourMaster$actionToBeTakenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1717,6 +2059,30 @@ export type LabourMaster$actionToBeTakenArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.JobCardCustomerVoiceScalarFieldEnum | Prisma.JobCardCustomerVoiceScalarFieldEnum[]
+}
+
+/**
+ * LabourMaster.serviceQuotationLabours
+ */
+export type LabourMaster$serviceQuotationLaboursArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceQuotationLabour
+   */
+  select?: Prisma.ServiceQuotationLabourSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceQuotationLabour
+   */
+  omit?: Prisma.ServiceQuotationLabourOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceQuotationLabourInclude<ExtArgs> | null
+  where?: Prisma.ServiceQuotationLabourWhereInput
+  orderBy?: Prisma.ServiceQuotationLabourOrderByWithRelationInput | Prisma.ServiceQuotationLabourOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceQuotationLabourWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceQuotationLabourScalarFieldEnum | Prisma.ServiceQuotationLabourScalarFieldEnum[]
 }
 
 /**

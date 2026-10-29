@@ -534,7 +534,7 @@ export const activateCustomer = async (custId: number) => {
 }
 
 export const findCustomer = async(custName : string)=>{
-    const response = await api.get(`/api/tenant/customer/find?custName=${custName}`)
+    const response = await api.get(`/api/tenant/customer/find?query=${custName}`)
     return await response.data
 }
 
