@@ -60,6 +60,7 @@ model BrandMaster {
 
   @@map("BrandMaster")
 }
+
 enum CarBodyType {
   HATCHBACK
   MICRO_HATCHBACK
@@ -103,17 +104,18 @@ enum CarBodyType {
 
   OTHER
 }
+
 model VehicleModelMaster {
-  id        Int    @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   brandId   Int
-  modelCode String @unique
+  modelCode String      @unique
   modelName String
   bodyType  CarBodyType
-  brand BrandMaster @relation(fields: [brandId], references: [id])
+  brand     BrandMaster @relation(fields: [brandId], references: [id])
 
   variants VehicleVariantMaster[]
   vehicles Vehicle[]
-  fitment   PartFitment[]
+  fitment  PartFitment[]
 
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
@@ -127,7 +129,7 @@ model VehicleModelMaster {
 model VehicleVariantMaster {
   id          Int    @id @default(autoincrement())
   modelId     Int
-  variantCode String 
+  variantCode String
   variantName String
 
   model VehicleModelMaster @relation(fields: [modelId], references: [id])
@@ -137,13 +139,14 @@ model VehicleVariantMaster {
   productionFrom   DateTime?
   productionTo     DateTime?
 
-  isActive  Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  isActive  Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
   vehicles  Vehicle[]
   fitment   PartFitment[]
-  @@index([modelId])
+
   @@unique([modelId, fuelType, variantCode])
+  @@index([modelId])
   @@map("VehicleVariantMaster")
 }
 
@@ -170,22 +173,26 @@ model Tenant {
   // Relations
   createdByUser PlatformUser @relation(fields: [createdBy], references: [id])
 
-  users                  Users[]
-  roles                  Role[]
-  employeeDesignations   EmployeeDesignation[]
-  branches               Branch[]
-  serviceCategoryMasters ServiceCategoryMaster[]
-  serviceTypes           ServiceTypeMaster[]
-  repairOrderType        RepairOrderTypeMaster[]
-  customers              Customer[]
-  vehicles               Vehicle[]
-  jobCards               JobCard[]
-  labour                 LabourMaster[]
-  dealerBayMasters       DealerBayMaster[]
-  hsnMasters             HSNMaster[]
-  partCategory            PartCategoryMaster[]
-  parts              PartMaster[]
-  fitment                PartFitment[]
+  users                          Users[]
+  roles                          Role[]
+  employeeDesignations           EmployeeDesignation[]
+  branches                       Branch[]
+  serviceCategoryMasters         ServiceCategoryMaster[]
+  serviceTypes                   ServiceTypeMaster[]
+  repairOrderType                RepairOrderTypeMaster[]
+  customers                      Customer[]
+  vehicles                       Vehicle[]
+  jobCards                       JobCard[]
+  labour                         LabourMaster[]
+  dealerBayMasters               DealerBayMaster[]
+  hsnMasters                     HSNMaster[]
+  partCategory                   PartCategoryMaster[]
+  parts                          PartMaster[]
+  fitment                        PartFitment[]
+  serviceQuotation               ServiceQuotationMaster[]
+  serviceQuotationParts          ServiceQuotationPart[]
+  serviceQuotationLabours        ServiceQuotationLabour[]
+  serviceQuotationCustomerVoices ServiceQuotationCustomerVoice[]
 
   @@index([createdBy])
 }
@@ -212,10 +219,11 @@ model Branch {
   updatedAt DateTime @updatedAt
 
   // Relations
-  tenant           Tenant            @relation(fields: [tenantId], references: [id])
+  tenant           Tenant                   @relation(fields: [tenantId], references: [id])
   users            Users[]
   jobCards         JobCard[]
   dealerBayMasters DealerBayMaster[]
+  serviceQuotation ServiceQuotationMaster[]
 
   @@unique([tenantId, branchCode])
   @@index([tenantId])
@@ -247,10 +255,11 @@ model Users {
 
   authorizedCustomers Customer[]
 
-  supervisedJobCards JobCard[]           @relation("JobCardSupervisor")
-  technicianJobCards JobCard[]           @relation("JobCardTechnician")
-  createdJobCards    JobCard[]           @relation("JobCardCreatedBy")
-  jobCardAllocations JobCardAllocation[] @relation("JobCardAllocationMechanic")
+  supervisedJobCards JobCard[]                @relation("JobCardSupervisor")
+  technicianJobCards JobCard[]                @relation("JobCardTechnician")
+  createdJobCards    JobCard[]                @relation("JobCardCreatedBy")
+  jobCardAllocations JobCardAllocation[]      @relation("JobCardAllocationMechanic")
+  serviceQuotation   ServiceQuotationMaster[]
 
   @@unique([tenantId, employeeCode])
   @@unique([tenantId, email])
@@ -345,9 +354,10 @@ model ServiceCategoryMaster {
   createdAt   DateTime                  @default(now())
   updatedAt   DateTime                  @updatedAt
 
-  tenant       Tenant              @relation(fields: [tenantId], references: [id])
-  serviceTypes ServiceTypeMaster[]
-  jobCards     JobCard[]
+  tenant           Tenant                   @relation(fields: [tenantId], references: [id])
+  serviceTypes     ServiceTypeMaster[]
+  jobCards         JobCard[]
+  serviceQuotation ServiceQuotationMaster[]
 
   @@map("ServiceCategoryMaster")
 }
@@ -367,9 +377,10 @@ model ServiceTypeMaster {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tenant                Tenant                @relation(fields: [tenantId], references: [id])
-  serviceCategoryMaster ServiceCategoryMaster @relation(fields: [serviceCategoryMasterId], references: [id])
+  tenant                Tenant                   @relation(fields: [tenantId], references: [id])
+  serviceCategoryMaster ServiceCategoryMaster    @relation(fields: [serviceCategoryMasterId], references: [id])
   jobCards              JobCard[]
+  serviceQuotation      ServiceQuotationMaster[]
 
   @@unique([tenantId, code])
   @@map("ServiceTypeMaster")
@@ -398,8 +409,9 @@ model RepairOrderTypeMaster {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tenant   Tenant    @relation(fields: [tenantId], references: [id])
-  jobCards JobCard[]
+  tenant           Tenant                   @relation(fields: [tenantId], references: [id])
+  jobCards         JobCard[]
+  serviceQuotation ServiceQuotationMaster[]
 
   @@unique([tenantId, code])
   @@map("RepairOrderTypeMaster")
@@ -441,10 +453,11 @@ model Customer {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tenant           Tenant    @relation(fields: [tenantId], references: [id])
-  authorizedByUser Users     @relation(fields: [authorizedBy], references: [id])
+  tenant           Tenant                   @relation(fields: [tenantId], references: [id])
+  authorizedByUser Users                    @relation(fields: [authorizedBy], references: [id])
   vehicles         Vehicle[]
   jobCards         JobCard[]
+  serviceQuotation ServiceQuotationMaster[]
 
   @@unique([tenantId, customerCode])
   @@map("Customer")
@@ -469,7 +482,7 @@ model Vehicle {
   purchaseDate      DateTime? @db.Date
 
   currentOdometerReading Int
-  vehicleInTime   DateTime?
+  vehicleInTime          DateTime?
 
   isActive Boolean @default(true)
 
@@ -482,7 +495,8 @@ model Vehicle {
   model    VehicleModelMaster   @relation(fields: [modelId], references: [id])
   variant  VehicleVariantMaster @relation(fields: [variantId], references: [id])
 
-  jobCards JobCard[]
+  jobCards         JobCard[]
+  serviceQuotation ServiceQuotationMaster[]
 
   @@unique([tenantId, chassisNumber])
   @@unique([tenantId, engineNumber])
@@ -509,9 +523,9 @@ model JobCard {
 
   jobCardNo String
 
-  vehicleId  Int
-  customerId Int
-  vehicleInTime   DateTime?
+  vehicleId         Int
+  customerId        Int
+  vehicleInTime     DateTime?
   currentKmReading  Int
   previousKmReading Int?
 
@@ -596,14 +610,16 @@ model LabourMaster {
   labourDescription String
   standardHours     Decimal @db.Decimal(6, 2)
   rate              Decimal @db.Decimal(10, 2)
-
+  hsnId   Int?
   isActive Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tenant          Tenant                 @relation(fields: [tenantId], references: [id])
-  actionToBeTaken JobCardCustomerVoice[]
+  tenant                  Tenant                   @relation(fields: [tenantId], references: [id])
+  hsn HSNMaster? @relation(fields: [hsnId], references: [id])
+  actionToBeTaken         JobCardCustomerVoice[]
+  serviceQuotationLabours ServiceQuotationLabour[]
 
   @@unique([tenantId, labourCode])
   @@map("LabourMaster")
@@ -668,38 +684,38 @@ model HSNMaster {
 
   isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  parts  PartMaster[]
-  tenant Tenant @relation(fields: [tenantId], references: [id])
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  parts     PartMaster[]
+  tenant    Tenant       @relation(fields: [tenantId], references: [id])
+  labour    LabourMaster[]
 
   @@unique([tenantId, hsnCode])
   @@map("HSNMaster")
 }
 
-
 model PartCategoryMaster {
-  id          Int      @id @default(autoincrement())
-  tenantId    Int
-  code        String
-  name        String
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  tenantId  Int
+  code      String
+  name      String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tenant      Tenant             @relation(fields: [tenantId], references: [id])
-  parts       PartMaster[]
+  tenant Tenant       @relation(fields: [tenantId], references: [id])
+  parts  PartMaster[]
 
   @@unique([tenantId, code])
   @@map("PartCategoryMaster")
 }
-
 
 enum PartStatus {
   ACTIVE
   SUPERSEDED
   INACTIVE
 }
+
 enum UnitOfMeasure {
   EA
   PCS
@@ -714,6 +730,7 @@ enum UnitOfMeasure {
   PACK
   KIT
 }
+
 model PartMaster {
   id       Int    @id @default(autoincrement())
   tenantId Int
@@ -724,30 +741,30 @@ model PartMaster {
   partCategoryId Int?
   hsnId          Int
 
-  sellingPrice   Decimal @db.Decimal(12, 2)
-  landingPrice   Decimal? @db.Decimal(12, 2)
-  taxRate        Decimal @db.Decimal(5, 2)
-  unitOfMeasure  UnitOfMeasure
+  sellingPrice  Decimal       @db.Decimal(12, 2)
+  landingPrice  Decimal?      @db.Decimal(12, 2)
+  taxRate       Decimal       @db.Decimal(5, 2)
+  unitOfMeasure UnitOfMeasure
 
-  reorderLevel  Int?
-  isFastMoving  Boolean @default(false)
+  reorderLevel Int?
+  isFastMoving Boolean @default(false)
 
-  status        PartStatus @default(ACTIVE)
+  status         PartStatus @default(ACTIVE)
   supersededById Int?
 
-  validFrom DateTime @default(now())
+  validFrom DateTime  @default(now())
   validTo   DateTime?
 
-  tenant    Tenant             @relation(fields: [tenantId], references: [id])
-  category  PartCategoryMaster? @relation(fields: [partCategoryId], references: [id])
-  hsn       HSNMaster          @relation(fields: [hsnId], references: [id])
-  supersededBy PartMaster?     @relation("PartSupersession", fields: [supersededById], references: [id])
-  supersedes   PartMaster[]    @relation("PartSupersession")
+  tenant       Tenant              @relation(fields: [tenantId], references: [id])
+  category     PartCategoryMaster? @relation(fields: [partCategoryId], references: [id])
+  hsn          HSNMaster           @relation(fields: [hsnId], references: [id])
+  supersededBy PartMaster?         @relation("PartSupersession", fields: [supersededById], references: [id])
+  supersedes   PartMaster[]        @relation("PartSupersession")
 
-  fitments       PartFitment[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  fitments             PartFitment[]
+  serviceQuotationPart ServiceQuotationPart[]
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
 
   @@unique([tenantId, partNo])
   @@index([tenantId, status])
@@ -756,30 +773,195 @@ model PartMaster {
 }
 
 model PartFitment {
-  id        Int      @id @default(autoincrement())
-  tenantId  Int
-  partId    Int
+  id       Int @id @default(autoincrement())
+  tenantId Int
+  partId   Int
 
   modelId   Int
   variantId Int
   brandId   Int
 
-  quantity  Decimal  @default(1) @db.Decimal(10, 2)
-  position  String?
+  quantity Decimal @default(1) @db.Decimal(10, 2)
+  position String?
 
-  isOem     Boolean  @default(true)
-  validFrom DateTime @default(now())
+  isOem     Boolean   @default(true)
+  validFrom DateTime  @default(now())
   validTo   DateTime?
 
   tenant    Tenant               @relation(fields: [tenantId], references: [id])
   part      PartMaster           @relation(fields: [partId], references: [id])
-  model     VehicleModelMaster  @relation(fields: [modelId], references: [id])
+  model     VehicleModelMaster   @relation(fields: [modelId], references: [id])
   variant   VehicleVariantMaster @relation(fields: [variantId], references: [id])
   brand     BrandMaster          @relation(fields: [brandId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
 
   @@index([tenantId, variantId])
   @@index([tenantId, modelId])
   @@map("PartFitment")
+}
+
+enum Action {
+  NEW
+  SUPPLEMENT
+}
+
+enum serviceQuotationStatus {
+  DRAFT
+  INPROGRESS
+  APPROVED
+  COMPLETED
+  GENERATED
+  REJECTED
+}
+
+model ServiceQuotationMaster {
+  id                   Int                      @id @default(autoincrement())
+  tenantId             Int
+  branchId             Int
+  quotationNo          String
+  originalQuotationId  Int?
+  action               Action
+  status               serviceQuotationStatus
+  vehicleId            Int
+  customerId           Int
+  currentReading       Decimal                  @db.Decimal(8, 2)
+  serviceCategoryId    Int
+  serviceTypeId        Int
+  repairOrderTypeId    Int
+  insurancePartyName   String?
+  partsBasicAmount     Decimal                  @db.Decimal(12, 2)
+  partsDiscountAmount  Decimal                  @db.Decimal(12, 2)
+  partsTaxAmount       Decimal                  @db.Decimal(12, 2)
+  partsTotalAmount     Decimal                  @db.Decimal(12, 2)
+  labourBasicAmount    Decimal                  @db.Decimal(12, 2)
+  labourDiscountAmount Decimal                  @db.Decimal(12, 2)
+  labourTaxAmount      Decimal                  @db.Decimal(12, 2)
+  labourTotalAmount    Decimal                  @db.Decimal(12, 2)
+  grandTotal           Decimal                  @db.Decimal(12, 2)
+  closeAt              DateTime?
+  createdBy            Int
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+  tenant               Tenant                   @relation(fields: [tenantId], references: [id])
+  branch               Branch                   @relation(fields: [branchId], references: [id])
+  originalQuotation    ServiceQuotationMaster?  @relation("QuotationSupplement", fields: [originalQuotationId], references: [id])
+  supplementQuotations ServiceQuotationMaster[] @relation("QuotationSupplement")
+  vehicle              Vehicle                  @relation(fields: [vehicleId], references: [id])
+  customer             Customer                 @relation(fields: [customerId], references: [id])
+  serviceCategory      ServiceCategoryMaster    @relation(fields: [serviceCategoryId], references: [id])
+  serviceType          ServiceTypeMaster        @relation(fields: [serviceTypeId], references: [id])
+  repairOrderType      RepairOrderTypeMaster    @relation(fields: [repairOrderTypeId], references: [id])
+  createdByEmployee    Users                    @relation(fields: [createdBy], references: [id])
+
+  serviceQuotationParts          ServiceQuotationPart[]
+  serviceQuotationLabours        ServiceQuotationLabour[]
+  serviceQuotationCustomerVoices ServiceQuotationCustomerVoice[]
+
+  @@unique([tenantId, quotationNo])
+  @@index([tenantId, quotationNo])
+  @@map("ServiceQuotation")
+}
+
+enum DiscountType {
+  PERCENTAGE
+  AMOUNT
+}
+
+model ServiceQuotationPart {
+  id                 Int          @id @default(autoincrement())
+  tenantId           Int
+  serviceQuotationId Int
+  //Part details Snapshot
+  partId             Int
+  partNo             String?
+  partDescription    String?
+  //Quantity and price
+  quantity           Int
+  rate               Decimal      @db.Decimal(12, 2)
+  basicAmount        Decimal      @db.Decimal(12, 2)
+  //Discount
+  discountType       DiscountType
+  discountRate       Decimal      @default(0) @db.Decimal(12, 2)
+  discountAmount     Decimal      @db.Decimal(12, 2)
+
+  //Tax Snapshot
+  hsnCode       String?
+  taxRate       Decimal @db.Decimal(5, 2)
+  taxableAmount Decimal @db.Decimal(12, 2)
+  taxAmount     Decimal @default(0) @db.Decimal(12, 2)
+
+  // Final line amount
+  totalAmount Decimal @db.Decimal(12, 2)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant           Tenant                 @relation(fields: [tenantId], references: [id])
+  serviceQuotation ServiceQuotationMaster @relation(fields: [serviceQuotationId], references: [id])
+  parts            PartMaster             @relation(fields: [partId], references: [id])
+
+  @@index([tenantId, serviceQuotationId])
+  @@index([tenantId, partId])
+  @@map("ServiceQuotationPart")
+}
+
+model ServiceQuotationLabour {
+  id                 Int          @id @default(autoincrement())
+  tenantId           Int
+  serviceQuotationId Int
+  //Part details Snapshot
+  labourId           Int
+  labourName         String?
+  labourCode         String?
+  labourDescription  String?
+  //Quantity and price
+  rate               Decimal      @db.Decimal(12, 2)
+  basicAmount        Decimal      @db.Decimal(12, 2)
+  //Discount
+  discountType       DiscountType
+  discountRate       Decimal      @default(0) @db.Decimal(12, 2)
+  discountAmount     Decimal      @db.Decimal(12, 2)
+
+  //Tax Snapshot
+  taxRate       Decimal @db.Decimal(5, 2)
+  taxableAmount Decimal @db.Decimal(12, 2)
+  taxAmount     Decimal @default(0) @db.Decimal(12, 2)
+
+  // Final line amount
+  totalAmount Decimal @db.Decimal(12, 2)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant           Tenant                 @relation(fields: [tenantId], references: [id])
+  serviceQuotation ServiceQuotationMaster @relation(fields: [serviceQuotationId], references: [id])
+  labours          LabourMaster           @relation(fields: [labourId], references: [id])
+
+  @@index([tenantId, serviceQuotationId])
+  @@index([tenantId, labourId])
+  @@map("ServiceQuotationLabour")
+}
+
+enum Sources {
+  CUSTOMER
+  SERVICE_SUPERVISOR
+  FORM_PREVIOUS_JOB_CARD
+  TEST_DRIVE
+}
+
+model ServiceQuotationCustomerVoice {
+  id                 Int      @id @default(autoincrement())
+  tenantId           Int
+  serviceQuotationId Int
+  customerVoice      String
+  source             Sources
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  tenant           Tenant                 @relation(fields: [tenantId], references: [id])
+  serviceQuotation ServiceQuotationMaster @relation(fields: [serviceQuotationId], references: [id])
+
+  @@index([tenantId, serviceQuotationId])
+  @@map("ServiceQuotationCustomerVoice")
 }

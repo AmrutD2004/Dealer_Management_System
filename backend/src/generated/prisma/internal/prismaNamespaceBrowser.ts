@@ -75,7 +75,11 @@ export const ModelName = {
   HSNMaster: 'HSNMaster',
   PartCategoryMaster: 'PartCategoryMaster',
   PartMaster: 'PartMaster',
-  PartFitment: 'PartFitment'
+  PartFitment: 'PartFitment',
+  ServiceQuotationMaster: 'ServiceQuotationMaster',
+  ServiceQuotationPart: 'ServiceQuotationPart',
+  ServiceQuotationLabour: 'ServiceQuotationLabour',
+  ServiceQuotationCustomerVoice: 'ServiceQuotationCustomerVoice'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -426,6 +430,7 @@ export const LabourMasterScalarFieldEnum = {
   labourDescription: 'labourDescription',
   standardHours: 'standardHours',
   rate: 'rate',
+  hsnId: 'hsnId',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -531,6 +536,101 @@ export const PartFitmentScalarFieldEnum = {
 } as const
 
 export type PartFitmentScalarFieldEnum = (typeof PartFitmentScalarFieldEnum)[keyof typeof PartFitmentScalarFieldEnum]
+
+
+export const ServiceQuotationMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  quotationNo: 'quotationNo',
+  originalQuotationId: 'originalQuotationId',
+  action: 'action',
+  status: 'status',
+  vehicleId: 'vehicleId',
+  customerId: 'customerId',
+  currentReading: 'currentReading',
+  serviceCategoryId: 'serviceCategoryId',
+  serviceTypeId: 'serviceTypeId',
+  repairOrderTypeId: 'repairOrderTypeId',
+  insurancePartyName: 'insurancePartyName',
+  partsBasicAmount: 'partsBasicAmount',
+  partsDiscountAmount: 'partsDiscountAmount',
+  partsTaxAmount: 'partsTaxAmount',
+  partsTotalAmount: 'partsTotalAmount',
+  labourBasicAmount: 'labourBasicAmount',
+  labourDiscountAmount: 'labourDiscountAmount',
+  labourTaxAmount: 'labourTaxAmount',
+  labourTotalAmount: 'labourTotalAmount',
+  grandTotal: 'grandTotal',
+  closeAt: 'closeAt',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceQuotationMasterScalarFieldEnum = (typeof ServiceQuotationMasterScalarFieldEnum)[keyof typeof ServiceQuotationMasterScalarFieldEnum]
+
+
+export const ServiceQuotationPartScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceQuotationId: 'serviceQuotationId',
+  partId: 'partId',
+  partNo: 'partNo',
+  partDescription: 'partDescription',
+  quantity: 'quantity',
+  rate: 'rate',
+  basicAmount: 'basicAmount',
+  discountType: 'discountType',
+  discountRate: 'discountRate',
+  discountAmount: 'discountAmount',
+  hsnCode: 'hsnCode',
+  taxRate: 'taxRate',
+  taxableAmount: 'taxableAmount',
+  taxAmount: 'taxAmount',
+  totalAmount: 'totalAmount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceQuotationPartScalarFieldEnum = (typeof ServiceQuotationPartScalarFieldEnum)[keyof typeof ServiceQuotationPartScalarFieldEnum]
+
+
+export const ServiceQuotationLabourScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceQuotationId: 'serviceQuotationId',
+  labourId: 'labourId',
+  labourName: 'labourName',
+  labourCode: 'labourCode',
+  labourDescription: 'labourDescription',
+  rate: 'rate',
+  basicAmount: 'basicAmount',
+  discountType: 'discountType',
+  discountRate: 'discountRate',
+  discountAmount: 'discountAmount',
+  taxRate: 'taxRate',
+  taxableAmount: 'taxableAmount',
+  taxAmount: 'taxAmount',
+  totalAmount: 'totalAmount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceQuotationLabourScalarFieldEnum = (typeof ServiceQuotationLabourScalarFieldEnum)[keyof typeof ServiceQuotationLabourScalarFieldEnum]
+
+
+export const ServiceQuotationCustomerVoiceScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceQuotationId: 'serviceQuotationId',
+  customerVoice: 'customerVoice',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceQuotationCustomerVoiceScalarFieldEnum = (typeof ServiceQuotationCustomerVoiceScalarFieldEnum)[keyof typeof ServiceQuotationCustomerVoiceScalarFieldEnum]
 
 
 export const SortOrder = {

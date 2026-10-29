@@ -143,3 +143,41 @@ export const UnitOfMeasure = {
 } as const
 
 export type UnitOfMeasure = (typeof UnitOfMeasure)[keyof typeof UnitOfMeasure]
+
+
+export const Action = {
+  NEW: 'NEW',
+  SUPPLEMENT: 'SUPPLEMENT'
+} as const
+
+export type Action = (typeof Action)[keyof typeof Action]
+
+
+export const serviceQuotationStatus = {
+  DRAFT: 'DRAFT',
+  INPROGRESS: 'INPROGRESS',
+  APPROVED: 'APPROVED',
+  COMPLETED: 'COMPLETED',
+  GENERATED: 'GENERATED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type serviceQuotationStatus = (typeof serviceQuotationStatus)[keyof typeof serviceQuotationStatus]
+
+
+export const DiscountType = {
+  PERCENTAGE: 'PERCENTAGE',
+  AMOUNT: 'AMOUNT'
+} as const
+
+export type DiscountType = (typeof DiscountType)[keyof typeof DiscountType]
+
+
+export const Sources = {
+  CUSTOMER: 'CUSTOMER',
+  SERVICE_SUPERVISOR: 'SERVICE_SUPERVISOR',
+  FORM_PREVIOUS_JOB_CARD: 'FORM_PREVIOUS_JOB_CARD',
+  TEST_DRIVE: 'TEST_DRIVE'
+} as const
+
+export type Sources = (typeof Sources)[keyof typeof Sources]

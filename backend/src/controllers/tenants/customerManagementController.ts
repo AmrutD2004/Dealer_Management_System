@@ -433,7 +433,7 @@ export const activateCustomer = async (req: Request, res: Response) => {
 
 export const findCustomer = async (req : Request, res : Response)=>{
      const { id, tenantId } = req.user!;
-    const { custName } = req.query;
+    const { query } = req.query;
     if (!id || !tenantId) {
         return res.status(404).json({
             success: false,
@@ -443,10 +443,31 @@ export const findCustomer = async (req : Request, res : Response)=>{
     try {
         const findedCust = await prisma.customer.findMany({
             where : {
-                firstName : {
-                    contains : String(custName),
-                    mode : 'insensitive'
-                },
+                OR: [
+      {
+        firstName: {
+          contains: String(query || ""),
+          mode: "insensitive",
+        },
+      },
+      {
+        lastName: {
+          contains: String(query || ""),
+          mode: "insensitive",
+        },
+      },
+      {
+        mobileNo: {
+          contains: String(query || ""),
+        },
+      },
+      {
+        customerCode: {
+          contains: String(query || ""),
+          mode: "insensitive",
+        },
+      },
+    ],
                 tenantId : Number(tenantId)
             },
             include: {

@@ -354,6 +354,7 @@ export type VehicleWhereInput = {
   model?: Prisma.XOR<Prisma.VehicleModelMasterScalarRelationFilter, Prisma.VehicleModelMasterWhereInput>
   variant?: Prisma.XOR<Prisma.VehicleVariantMasterScalarRelationFilter, Prisma.VehicleVariantMasterWhereInput>
   jobCards?: Prisma.JobCardListRelationFilter
+  serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
 }
 
 export type VehicleOrderByWithRelationInput = {
@@ -381,6 +382,7 @@ export type VehicleOrderByWithRelationInput = {
   model?: Prisma.VehicleModelMasterOrderByWithRelationInput
   variant?: Prisma.VehicleVariantMasterOrderByWithRelationInput
   jobCards?: Prisma.JobCardOrderByRelationAggregateInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterOrderByRelationAggregateInput
 }
 
 export type VehicleWhereUniqueInput = Prisma.AtLeast<{
@@ -413,6 +415,7 @@ export type VehicleWhereUniqueInput = Prisma.AtLeast<{
   model?: Prisma.XOR<Prisma.VehicleModelMasterScalarRelationFilter, Prisma.VehicleModelMasterWhereInput>
   variant?: Prisma.XOR<Prisma.VehicleVariantMasterScalarRelationFilter, Prisma.VehicleVariantMasterWhereInput>
   jobCards?: Prisma.JobCardListRelationFilter
+  serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
 }, "id" | "tenantId_chassisNumber" | "tenantId_engineNumber">
 
 export type VehicleOrderByWithAggregationInput = {
@@ -484,6 +487,7 @@ export type VehicleCreateInput = {
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
   variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateInput = {
@@ -506,6 +510,7 @@ export type VehicleUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUpdateInput = {
@@ -527,6 +532,7 @@ export type VehicleUpdateInput = {
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
   variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateInput = {
@@ -549,6 +555,7 @@ export type VehicleUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleCreateManyInput = {
@@ -950,6 +957,20 @@ export type VehicleUpdateOneRequiredWithoutJobCardsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.VehicleUpdateToOneWithWhereWithoutJobCardsInput, Prisma.VehicleUpdateWithoutJobCardsInput>, Prisma.VehicleUncheckedUpdateWithoutJobCardsInput>
 }
 
+export type VehicleCreateNestedOneWithoutServiceQuotationInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutServiceQuotationInput, Prisma.VehicleUncheckedCreateWithoutServiceQuotationInput>
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutServiceQuotationInput
+  connect?: Prisma.VehicleWhereUniqueInput
+}
+
+export type VehicleUpdateOneRequiredWithoutServiceQuotationNestedInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutServiceQuotationInput, Prisma.VehicleUncheckedCreateWithoutServiceQuotationInput>
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutServiceQuotationInput
+  upsert?: Prisma.VehicleUpsertWithoutServiceQuotationInput
+  connect?: Prisma.VehicleWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.VehicleUpdateToOneWithWhereWithoutServiceQuotationInput, Prisma.VehicleUpdateWithoutServiceQuotationInput>, Prisma.VehicleUncheckedUpdateWithoutServiceQuotationInput>
+}
+
 export type VehicleCreateWithoutBrandInput = {
   vehicleNumber?: string | null
   chassisNumber: string
@@ -968,6 +989,7 @@ export type VehicleCreateWithoutBrandInput = {
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
   variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutBrandInput = {
@@ -989,6 +1011,7 @@ export type VehicleUncheckedCreateWithoutBrandInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleCreateOrConnectWithoutBrandInput = {
@@ -1059,6 +1082,7 @@ export type VehicleCreateWithoutModelInput = {
   brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
   variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutModelInput = {
@@ -1080,6 +1104,7 @@ export type VehicleUncheckedCreateWithoutModelInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleCreateOrConnectWithoutModelInput = {
@@ -1126,6 +1151,7 @@ export type VehicleCreateWithoutVariantInput = {
   brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutVariantInput = {
@@ -1147,6 +1173,7 @@ export type VehicleUncheckedCreateWithoutVariantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleCreateOrConnectWithoutVariantInput = {
@@ -1193,6 +1220,7 @@ export type VehicleCreateWithoutTenantInput = {
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
   variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutTenantInput = {
@@ -1214,6 +1242,7 @@ export type VehicleUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleCreateOrConnectWithoutTenantInput = {
@@ -1260,6 +1289,7 @@ export type VehicleCreateWithoutCustomerInput = {
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
   variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutCustomerInput = {
@@ -1281,6 +1311,7 @@ export type VehicleUncheckedCreateWithoutCustomerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleCreateOrConnectWithoutCustomerInput = {
@@ -1327,6 +1358,7 @@ export type VehicleCreateWithoutJobCardsInput = {
   brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
   variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutJobCardsInput = {
@@ -1348,6 +1380,7 @@ export type VehicleUncheckedCreateWithoutJobCardsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleCreateOrConnectWithoutJobCardsInput = {
@@ -1384,6 +1417,7 @@ export type VehicleUpdateWithoutJobCardsInput = {
   brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
   variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutJobCardsInput = {
@@ -1405,6 +1439,109 @@ export type VehicleUncheckedUpdateWithoutJobCardsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutVehicleNestedInput
+}
+
+export type VehicleCreateWithoutServiceQuotationInput = {
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  vehicleInTime?: Date | string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutVehiclesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutVehiclesInput
+  brand: Prisma.BrandMasterCreateNestedOneWithoutVehiclesInput
+  model: Prisma.VehicleModelMasterCreateNestedOneWithoutVehiclesInput
+  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutVehiclesInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutVehicleInput
+}
+
+export type VehicleUncheckedCreateWithoutServiceQuotationInput = {
+  id?: number
+  tenantId: number
+  customerId: number
+  brandId: number
+  modelId: number
+  variantId: number
+  vehicleNumber?: string | null
+  chassisNumber: string
+  engineNumber: string
+  color?: string | null
+  manufacturingYear?: number | null
+  registrationDate?: Date | string | null
+  purchaseDate?: Date | string | null
+  currentOdometerReading: number
+  vehicleInTime?: Date | string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutVehicleInput
+}
+
+export type VehicleCreateOrConnectWithoutServiceQuotationInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutServiceQuotationInput, Prisma.VehicleUncheckedCreateWithoutServiceQuotationInput>
+}
+
+export type VehicleUpsertWithoutServiceQuotationInput = {
+  update: Prisma.XOR<Prisma.VehicleUpdateWithoutServiceQuotationInput, Prisma.VehicleUncheckedUpdateWithoutServiceQuotationInput>
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutServiceQuotationInput, Prisma.VehicleUncheckedCreateWithoutServiceQuotationInput>
+  where?: Prisma.VehicleWhereInput
+}
+
+export type VehicleUpdateToOneWithWhereWithoutServiceQuotationInput = {
+  where?: Prisma.VehicleWhereInput
+  data: Prisma.XOR<Prisma.VehicleUpdateWithoutServiceQuotationInput, Prisma.VehicleUncheckedUpdateWithoutServiceQuotationInput>
+}
+
+export type VehicleUpdateWithoutServiceQuotationInput = {
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutVehiclesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutVehiclesNestedInput
+  brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+}
+
+export type VehicleUncheckedUpdateWithoutServiceQuotationInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chassisNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  engineNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  registrationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentOdometerReading?: Prisma.IntFieldUpdateOperationsInput | number
+  vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleCreateManyBrandInput = {
@@ -1445,6 +1582,7 @@ export type VehicleUpdateWithoutBrandInput = {
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
   variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutBrandInput = {
@@ -1466,6 +1604,7 @@ export type VehicleUncheckedUpdateWithoutBrandInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateManyWithoutBrandInput = {
@@ -1526,6 +1665,7 @@ export type VehicleUpdateWithoutModelInput = {
   brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
   variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutModelInput = {
@@ -1547,6 +1687,7 @@ export type VehicleUncheckedUpdateWithoutModelInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateManyWithoutModelInput = {
@@ -1607,6 +1748,7 @@ export type VehicleUpdateWithoutVariantInput = {
   brand?: Prisma.BrandMasterUpdateOneRequiredWithoutVehiclesNestedInput
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutVariantInput = {
@@ -1628,6 +1770,7 @@ export type VehicleUncheckedUpdateWithoutVariantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateManyWithoutVariantInput = {
@@ -1688,6 +1831,7 @@ export type VehicleUpdateWithoutTenantInput = {
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
   variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutTenantInput = {
@@ -1709,6 +1853,7 @@ export type VehicleUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateManyWithoutTenantInput = {
@@ -1769,6 +1914,7 @@ export type VehicleUpdateWithoutCustomerInput = {
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutVehiclesNestedInput
   variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutVehiclesNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutCustomerInput = {
@@ -1790,6 +1936,7 @@ export type VehicleUncheckedUpdateWithoutCustomerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutVehicleNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateManyWithoutCustomerInput = {
@@ -1819,10 +1966,12 @@ export type VehicleUncheckedUpdateManyWithoutCustomerInput = {
 
 export type VehicleCountOutputType = {
   jobCards: number
+  serviceQuotation: number
 }
 
 export type VehicleCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobCards?: boolean | VehicleCountOutputTypeCountJobCardsArgs
+  serviceQuotation?: boolean | VehicleCountOutputTypeCountServiceQuotationArgs
 }
 
 /**
@@ -1840,6 +1989,13 @@ export type VehicleCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
  */
 export type VehicleCountOutputTypeCountJobCardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.JobCardWhereInput
+}
+
+/**
+ * VehicleCountOutputType without action
+ */
+export type VehicleCountOutputTypeCountServiceQuotationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceQuotationMasterWhereInput
 }
 
 
@@ -1868,6 +2024,7 @@ export type VehicleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
   variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
   jobCards?: boolean | Prisma.Vehicle$jobCardsArgs<ExtArgs>
+  serviceQuotation?: boolean | Prisma.Vehicle$serviceQuotationArgs<ExtArgs>
   _count?: boolean | Prisma.VehicleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vehicle"]>
 
@@ -1952,6 +2109,7 @@ export type VehicleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
   variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
   jobCards?: boolean | Prisma.Vehicle$jobCardsArgs<ExtArgs>
+  serviceQuotation?: boolean | Prisma.Vehicle$serviceQuotationArgs<ExtArgs>
   _count?: boolean | Prisma.VehicleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type VehicleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1978,6 +2136,7 @@ export type $VehiclePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     model: Prisma.$VehicleModelMasterPayload<ExtArgs>
     variant: Prisma.$VehicleVariantMasterPayload<ExtArgs>
     jobCards: Prisma.$JobCardPayload<ExtArgs>[]
+    serviceQuotation: Prisma.$ServiceQuotationMasterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2398,6 +2557,7 @@ export interface Prisma__VehicleClient<T, Null = never, ExtArgs extends runtime.
   model<T extends Prisma.VehicleModelMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleModelMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleModelMasterClient<runtime.Types.Result.GetResult<Prisma.$VehicleModelMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   variant<T extends Prisma.VehicleVariantMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleVariantMasterClient<runtime.Types.Result.GetResult<Prisma.$VehicleVariantMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   jobCards<T extends Prisma.Vehicle$jobCardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vehicle$jobCardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceQuotation<T extends Prisma.Vehicle$serviceQuotationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vehicle$serviceQuotationArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2867,6 +3027,30 @@ export type Vehicle$jobCardsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.JobCardScalarFieldEnum | Prisma.JobCardScalarFieldEnum[]
+}
+
+/**
+ * Vehicle.serviceQuotation
+ */
+export type Vehicle$serviceQuotationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceQuotationMaster
+   */
+  select?: Prisma.ServiceQuotationMasterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceQuotationMaster
+   */
+  omit?: Prisma.ServiceQuotationMasterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceQuotationMasterInclude<ExtArgs> | null
+  where?: Prisma.ServiceQuotationMasterWhereInput
+  orderBy?: Prisma.ServiceQuotationMasterOrderByWithRelationInput | Prisma.ServiceQuotationMasterOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceQuotationMasterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceQuotationMasterScalarFieldEnum | Prisma.ServiceQuotationMasterScalarFieldEnum[]
 }
 
 /**
