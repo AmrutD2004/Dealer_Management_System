@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { getPartCategoryList } from '@/api/endpoints'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,7 +10,17 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination'
 import { toast } from '@/components/ui/toast'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import type { PartCategoryConfirmActionType, PartCategoryListType } from '@/Types/partCategoryType'
 import dayjs from 'dayjs'
 import { Check, Eye, MoreHorizontal, Package, Pencil, Trash2 } from 'lucide-react'
@@ -22,8 +33,11 @@ interface PartCategoryListTableProps {
     refreshKey?: number
 }
 
+const TAKE = 10
+
 const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) => {
     const [categoryList, setCategoryList] = useState<PartCategoryListType[]>([])
+    const [skip, setSkip] = useState(0)
     const [selectedCategory, setSelectedCategory] = useState<PartCategoryListType | null>(null)
     const [confirmAction, setConfirmAction] = useState<PartCategoryConfirmActionType | null>(null)
     const [viewOpen, setViewOpen] = useState(false)
@@ -48,6 +62,14 @@ const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) =
         }
         load()
     }, [refreshKey, localRefresh])
+
+    const totalCategories = categoryList.length
+    const noOfPages = Math.ceil(totalCategories / TAKE)
+    const pageCount = Math.max(noOfPages, 1)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(categoryList, {
+        parentName: (category) => category.parent ? `${category.parent.code} - ${category.parent.name}` : category.parentId ? `#${category.parentId}` : '',
+    })
+    const pagedCategories = sortedData.slice(skip, skip + TAKE)
 
     const getParentName = (category: PartCategoryListType) => {
         if (category.parent) {
@@ -90,12 +112,12 @@ const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) =
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Category Code</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Category Name</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Parent Category</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Created</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Updated</TableHead>
+                        <SortableTableHead label="Category Code" sortKey="code" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Category Name" sortKey="name" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Parent Category" sortKey="parentName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Created" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Updated" sortKey="updatedAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -108,9 +130,9 @@ const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) =
                             </TableCell>
                         </TableRow>
                     ) : (
-                        categoryList.map((category: PartCategoryListType, idx: number) => (
+                        pagedCategories.map((category: PartCategoryListType, idx: number) => (
                             <TableRow key={category.id}>
-                                <TableCell className='text-left font-medium'>{idx + 1}</TableCell>
+                                <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium font-mono'>{category.code}</TableCell>
                                 <TableCell className='text-left flex items-center gap-3'>
                                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
@@ -168,6 +190,43 @@ const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) =
                     )}
                 </TableBody>
             </Table>
+            {pageCount > 0 && (
+                <div className="w-full flex items-center justify-center gap-4 mt-10">
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip === 0}
+                                    onClick={() => setSkip((prev) => Math.max(prev - TAKE, 0))}
+                                >
+                                    <PaginationPrevious />
+                                </Button>
+                            </PaginationItem>
+                            {getVisiblePageIndices(skip, TAKE, pageCount).map((i) => {
+                                const pageNext = i * TAKE
+                                return (
+                                    <PaginationItem key={i}>
+                                        <Button onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'}>{i + 1}</Button>
+                                    </PaginationItem>
+                                )
+                            })}
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip + TAKE >= totalCategories}
+                                    onClick={() => setSkip((prev) => prev + TAKE)}
+                                >
+                                    <PaginationNext />
+                                </Button>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
+            )}
 
             <ViewPartCategoryModal category={selectedCategory} open={viewOpen} onClose={closeModals} />
             <EditPartCategoryModal

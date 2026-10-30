@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { PasswordInput } from "@/components/ui/password-input"
 import {
     Select,
     SelectContent,
@@ -177,7 +178,7 @@ export function CreateEmployeeModal({ open, setOpen }: CreateEmployeeModalProps)
                                 <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                     <FieldLabel className="text-xs font-medium">Password <span className="text-red-500">*</span></FieldLabel>
                                     <div className="min-w-0">
-                                        <Input name='passwordHash' type='password' placeholder="Set a login password" required onChange={handleChange} value={formData.passwordHash} className="h-7 rounded-none px-2 text-xs" />
+                                        <PasswordInput name='passwordHash' placeholder="Set a login password" required onChange={handleChange} value={formData.passwordHash} className="h-7 rounded-none px-2 text-xs" />
                                     </div>
                                 </div>
                             </div>

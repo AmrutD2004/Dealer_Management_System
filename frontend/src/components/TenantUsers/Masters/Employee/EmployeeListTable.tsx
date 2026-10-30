@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { activateEmployee, deactivateEmployee } from "@/api/endpoints"
 import {
   Table,
@@ -8,6 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import SortableTableHead from "@/components/ui/sortable-table-head"
+import { useTableSort } from "@/hooks/useTableSort"
 import { toast } from "@/components/ui/toast"
 import { type employeeListType } from "@/Types/tenantCreateType"
 import { useContext, useEffect } from "react"
@@ -55,6 +58,11 @@ const EmployeeListTable = () => {
   }, [employeeSkip, employeeTake, fetchEmployeeList])
 
   const noOfPages = Math.ceil(totalEmployees / employeeTake)
+  const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<employeeListType>(employeeList, {
+    fullName: (employee) => [employee.firstName, employee.middleName, employee.lastName].filter(Boolean).join(' '),
+    branchName: (employee) => employee.branch?.branchName ?? '',
+    designationName: (employee) => employee.designation?.name ?? '',
+  })
 
   const handleDeactive = async (id: number) => {
     try {
@@ -111,28 +119,14 @@ const EmployeeListTable = () => {
             <TableHead className="text-left text-muted-foreground">
               Sr No.
             </TableHead>
-            <TableHead className="text-left text-muted-foreground">
-              Employee Code
-            </TableHead>
-            <TableHead className="text-left text-muted-foreground">
-              Name
-            </TableHead>
-            <TableHead className="text-left text-muted-foreground">
-              Email
-            </TableHead>
-            <TableHead className="text-left text-muted-foreground">
-              Mobile No
-            </TableHead>
-            <TableHead className="text-left text-muted-foreground">
-              Branch
-            </TableHead>
+            <SortableTableHead label="Employee Code" sortKey="employeeCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+            <SortableTableHead label="Name" sortKey="fullName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+            <SortableTableHead label="Email" sortKey="email" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+            <SortableTableHead label="Mobile No" sortKey="mobileNo" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+            <SortableTableHead label="Branch" sortKey="branchName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
 
-            <TableHead className="text-left text-muted-foreground">
-              Designation
-            </TableHead>
-            <TableHead className="text-center text-muted-foreground">
-              Status
-            </TableHead>
+            <SortableTableHead label="Designation" sortKey="designationName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+            <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
             <TableHead className="text-right text-muted-foreground">
               Action
             </TableHead>
@@ -150,7 +144,7 @@ const EmployeeListTable = () => {
               </TableCell>
             </TableRow>
           ) : (
-            employeeList.map((employee: employeeListType, idx: number) => {
+            sortedData.map((employee: employeeListType, idx: number) => {
               const fullName = [
                 employee.firstName,
                 employee.middleName,
@@ -256,7 +250,7 @@ const EmployeeListTable = () => {
                 <PaginationPrevious />
               </Button>
             </PaginationItem>
-            {[...Array(noOfPages).keys()].map((i) => {
+            {getVisiblePageIndices(employeeSkip, employeeTake, noOfPages).map((i) => {
               const pageNext = i * employeeTake
               return (
                 <PaginationItem key={i}>

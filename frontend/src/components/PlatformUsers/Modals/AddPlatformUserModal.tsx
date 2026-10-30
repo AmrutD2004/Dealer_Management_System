@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { PasswordInput } from "@/components/ui/password-input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/components/ui/toast"
 import { PlatformUserContext } from "@/Contexts/PlatformUserContext.tsx/PlatformUserContext"
@@ -165,8 +166,7 @@ export function AddPlatformUserModal() {
                                 <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
                                     <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
                                         <FieldLabel className="text-xs font-medium">Initial Password <span className="text-red-500">*</span></FieldLabel>
-                                        <Input
-                                            type="password"
+                                        <PasswordInput
                                             required
                                             name='passwordHash'
                                             placeholder="Set a temporary password"

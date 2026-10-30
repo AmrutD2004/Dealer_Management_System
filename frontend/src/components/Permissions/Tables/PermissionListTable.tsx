@@ -1,4 +1,7 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import {
   Pagination,
   PaginationContent,
@@ -39,6 +42,7 @@ const PermissionListTable = () => {
     } = useContext(PlatformUserContext)
 
     const noOfPages = Math.ceil(totalPermissionCount / permissionTake)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<PermissionListType>(permissionsList)
 
     const handlePrevious = () => {
         setPermissionSkip((prev: number) =>
@@ -58,17 +62,17 @@ const PermissionListTable = () => {
                 <TableCaption>A list of all permissions registered on the platform.</TableCaption>
                 <TableHeader>
                     <TableRow className='w-full'>
-                        <TableHead className="text-left">Permission</TableHead>
-                        <TableHead className='text-left font-medium'>Code</TableHead>
-                        <TableHead className='text-left'>Description</TableHead>
-                        <TableHead className="text-center">Status</TableHead>
-                        <TableHead className="text-center">Created</TableHead>
+                        <SortableTableHead label="Permission" sortKey="permissionName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-left" />
+                        <SortableTableHead label="Code" sortKey="permissionCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-left font-medium" />
+                        <SortableTableHead label="Description" sortKey="description" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-left" />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Created" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                    {permissionsList.map((permission: PermissionListType) => (
+                    {sortedData.map((permission: PermissionListType) => (
                         <TableRow key={permission.id}>
                             <TableCell className='text-left flex items-center gap-3'>
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
@@ -139,7 +143,7 @@ const PermissionListTable = () => {
                             <PaginationPrevious />
                         </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => {
+                        {getVisiblePageIndices(permissionSkip, permissionTake, noOfPages).map((i) => {
                             const pageNext = i * permissionTake
                             return (
                                 <PaginationItem key={i}>
