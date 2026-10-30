@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { getBrandListWithoutPagination, getModelListWithoutPagination } from '@/api/endpoints'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -17,6 +18,8 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
 import type { BrandListType } from '@/Types/brandMasterType'
 import type { ModelConfirmActionType, ModelListType } from '@/Types/modelMasterType'
@@ -72,7 +75,10 @@ const ModelMasterListTable = ({ refreshKey = 0 }: ModelMasterListTableProps) => 
 
     const totalModels = modelList.length
     const noOfPages = Math.ceil(totalModels / PAGE_SIZE)
-    const paginatedModels = modelList.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(modelList, {
+        brandName: (model) => brands.find(brand => brand.id === model.brandId)?.brandName ?? '',
+    })
+    const paginatedModels = sortedData.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
 
     const getBrandName = (brandId: number) => {
         return brands.find(brand => brand.id === brandId)?.brandName ?? `#${brandId}`
@@ -112,12 +118,12 @@ const ModelMasterListTable = ({ refreshKey = 0 }: ModelMasterListTableProps) => 
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Model Name</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Model Code</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Brand</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Body Type</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Created</TableHead>
+                        <SortableTableHead label="Model Name" sortKey="modelName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Model Code" sortKey="modelCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Brand" sortKey="brandName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Body Type" sortKey="bodyType" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Created" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -203,7 +209,7 @@ const ModelMasterListTable = ({ refreshKey = 0 }: ModelMasterListTableProps) => 
                                 <PaginationPrevious />
                             </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => (
+                        {getVisiblePageIndices(page * PAGE_SIZE, PAGE_SIZE, noOfPages).map((i) => (
                             <PaginationItem key={i}>
                                 <Button
                                     

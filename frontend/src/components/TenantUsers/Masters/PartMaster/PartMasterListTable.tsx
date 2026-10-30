@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { getPartMasterList } from '@/api/endpoints'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,6 +10,16 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination'
 import { toast } from '@/components/ui/toast'
 import type { PartMasterConfirmActionType, PartMasterListType } from '@/Types/partMasterType'
 import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
@@ -22,8 +33,11 @@ interface PartMasterListTableProps {
     refreshKey?: number
 }
 
+const TAKE = 10
+
 const PartMasterListTable = ({ refreshKey = 0 }: PartMasterListTableProps) => {
     const [partList, setPartList] = useState<PartMasterListType[]>([])
+    const [skip, setSkip] = useState(0)
     const [selectedPart, setSelectedPart] = useState<PartMasterListType | null>(null)
     const [confirmAction, setConfirmAction] = useState<PartMasterConfirmActionType | null>(null)
     const [viewOpen, setViewOpen] = useState(false)
@@ -48,6 +62,15 @@ const PartMasterListTable = ({ refreshKey = 0 }: PartMasterListTableProps) => {
         }
         load()
     }, [refreshKey, localRefresh])
+
+    const totalParts = partList.length
+    const noOfPages = Math.ceil(totalParts / TAKE)
+    const pageCount = Math.max(noOfPages, 1)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(partList, {
+        categoryName: (part) => part.category ? `${part.category.code} - ${part.category.name}` : part.partCategoryId ? `#${part.partCategoryId}` : '',
+        hsnCode: (part) => part.hsn?.hsnCode ?? (part.hsnId ? `#${part.hsnId}` : ''),
+    })
+    const pagedParts = sortedData.slice(skip, skip + TAKE)
 
     const getCategoryName = (part: PartMasterListType) => {
         if (part.category) {
@@ -96,14 +119,14 @@ const PartMasterListTable = ({ refreshKey = 0 }: PartMasterListTableProps) => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Part No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Category</TableHead>
-                        <TableHead className="text-left text-muted-foreground">HSN</TableHead>
-                        <TableHead className="text-right text-muted-foreground">Selling Price</TableHead>
-                        <TableHead className="text-right text-muted-foreground">Tax</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Unit</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Fast Moving</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
+                        <SortableTableHead label="Part No." sortKey="partNo" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Category" sortKey="categoryName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="HSN" sortKey="hsnCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Selling Price" sortKey="sellingPrice" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-right" />
+                        <SortableTableHead label="Tax" sortKey="taxRate" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-right" />
+                        <SortableTableHead label="Unit" sortKey="unitOfMeasure" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Fast Moving" sortKey="isFastMoving" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Status" sortKey="status" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -116,9 +139,9 @@ const PartMasterListTable = ({ refreshKey = 0 }: PartMasterListTableProps) => {
                             </TableCell>
                         </TableRow>
                     ) : (
-                        partList.map((part: PartMasterListType, idx: number) => (
+                        pagedParts.map((part: PartMasterListType, idx: number) => (
                             <TableRow key={part.id}>
-                                <TableCell className='text-left font-medium'>{idx + 1}</TableCell>
+                                <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium font-mono whitespace-nowrap'>{part.partNo}</TableCell>
                                 <TableCell className='text-left font-medium max-w-[220px] truncate' title={getCategoryName(part)}>{getCategoryName(part)}</TableCell>
                                 <TableCell className='text-left font-medium font-mono'>{getHSNCode(part)}</TableCell>
@@ -177,6 +200,43 @@ const PartMasterListTable = ({ refreshKey = 0 }: PartMasterListTableProps) => {
                     )}
                 </TableBody>
             </Table>
+            {pageCount > 0 && (
+                <div className="w-full flex items-center justify-center gap-4 mt-10">
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip === 0}
+                                    onClick={() => setSkip((prev) => Math.max(prev - TAKE, 0))}
+                                >
+                                    <PaginationPrevious />
+                                </Button>
+                            </PaginationItem>
+                            {getVisiblePageIndices(skip, TAKE, pageCount).map((i) => {
+                                const pageNext = i * TAKE
+                                return (
+                                    <PaginationItem key={i}>
+                                        <Button onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'}>{i + 1}</Button>
+                                    </PaginationItem>
+                                )
+                            })}
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip + TAKE >= totalParts}
+                                    onClick={() => setSkip((prev) => prev + TAKE)}
+                                >
+                                    <PaginationNext />
+                                </Button>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
+            )}
 
             <ViewPartMasterModal part={selectedPart} open={viewOpen} onClose={closeModals} />
             <EditPartMasterModal

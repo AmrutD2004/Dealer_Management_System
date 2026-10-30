@@ -1,4 +1,7 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import {
   Pagination,
   PaginationContent,
@@ -40,6 +43,7 @@ const TenantListTable = () => {
     } = useContext(PlatformUserContext)
 
     const noOfPages = Math.ceil(totalTenantCount / tenantTake)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<tenantType>(tenantList)
 
     const handlePrevious = () => {
         setTenantSkip((prev: number) =>
@@ -75,18 +79,18 @@ const TenantListTable = () => {
                 <TableCaption>A list of your platform tenants.</TableCaption>
                 <TableHeader>
                     <TableRow className='w-full'>
-                        <TableHead className="text-left">Tenants</TableHead>
-                        <TableHead className='text-left font-medium'>Code</TableHead>
-                        <TableHead className='text-center'>Contact</TableHead>
-                        <TableHead className='text-center'>Plan</TableHead>
-                        <TableHead className="text-center">Status</TableHead>
-                        <TableHead className="text-center">Created</TableHead>
+                        <SortableTableHead label="Tenants" sortKey="tenantName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-left" />
+                        <SortableTableHead label="Code" sortKey="tenantCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-left font-medium" />
+                        <SortableTableHead label="Contact" sortKey="phone" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Plan" sortKey="subscriptionPlan" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Status" sortKey="subscriptionStatus" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Created" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                    {tenantList.map((tenant: tenantType) => (
+                    {sortedData.map((tenant: tenantType) => (
                         <TableRow key={tenant.id}>
                             <TableCell className='text-left flex items-center gap-3'><Avatar className="h-9 w-9">
                                 <AvatarFallback className="bg-muted text-xs font-semibold text-muted-foreground">
@@ -161,7 +165,7 @@ const TenantListTable = () => {
                             <PaginationPrevious />
                         </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => {
+                        {getVisiblePageIndices(tenantSkip, tenantTake, noOfPages).map((i) => {
                             const pageNext = i * tenantTake
                             return (
                                 <PaginationItem>

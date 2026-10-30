@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Boxes, Briefcase, Building, CalendarClock, Car, ChevronDown, ClipboardList, HardHat, Key, Layers, LayoutDashboard, Link2, Package, PackageSearch, Percent, ShieldCheck, Tags, Users, UserRound, Warehouse, Wrench } from "lucide-react"
+import { Boxes, Briefcase, Building, CalendarClock, Car, ChevronDown, ClipboardList, FileText, HardHat, Key, Layers, LayoutDashboard, Link2, Package, PackageSearch, Percent, ShieldCheck, Tags, Users, UserRound, Warehouse, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -55,6 +55,10 @@ export function AppSidebar() {
   const vehicleActive =
     pathname === `/tenant/${id}/vehicle` ||
     pathname.startsWith(`/tenant/${id}/vehicle/`)
+
+  const serviceQuotationActive =
+    pathname === `/tenant/${id}/service-quotation` ||
+    pathname.startsWith(`/tenant/${id}/service-quotation/`)
 
   const jobCardAllocationActive =
     pathname === `/tenant/${id}/job-card/allocation` ||
@@ -369,6 +373,39 @@ export function AppSidebar() {
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
                 )}
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={serviceQuotationActive}
+                  tooltip="Service Quotation"
+                  onClick={handleNavigate}
+                  render={
+                    <Link
+                      to={`/tenant/${id}/service-quotation`}
+                      aria-current={serviceQuotationActive ? "page" : undefined}
+                    />
+                  }
+                  className={menuButtonClass}
+                >
+                  <FileText
+                    size={18}
+                    strokeWidth={1.8}
+                    className={
+                      serviceQuotationActive
+                        ? "text-sidebar-ring"
+                        : "text-sidebar-foreground/55"
+                    }
+                  />
+
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Service Quotation
+                  </span>
+
+                  {serviceQuotationActive && (
+                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
+                  )}
+                </SidebarMenuButton>
               </SidebarMenuItem>
 
               <SidebarMenuItem>

@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { activateCustomer, deactivateCustomer, getCustomerList } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { toast } from '@/components/ui/toast'
@@ -18,8 +19,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
 import { type customerListType } from '@/Types/tenantCreateType'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { ViewCustomerModal } from './Modals/ViewCustomerModal'
@@ -41,6 +43,10 @@ const CustomerListTable = ({ refreshKey = 0 }: CustomerListTableProps) => {
     const [reloadKey, setReloadKey] = useState(0)
 
     const noOfPages = Math.ceil(totalCustomers / TAKE)
+    const pageCount = Math.max(noOfPages, 1)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(customerList, {
+        customerName: (customer) => `${customer.title ? `${customer.title} ` : ''}${customer.firstName} ${customer.lastName}`,
+    })
 
     useEffect(() => {
         const load = async () => {
@@ -130,12 +136,12 @@ const CustomerListTable = ({ refreshKey = 0 }: CustomerListTableProps) => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Customer Code</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Name</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Mobile No</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Email</TableHead>
-                        <TableHead className="text-center text-muted-foreground">City</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
+                        <SortableTableHead label="Customer Code" sortKey="customerCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Name" sortKey="customerName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Mobile No" sortKey="mobileNo" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Email" sortKey="email" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="City" sortKey="city" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -148,7 +154,7 @@ const CustomerListTable = ({ refreshKey = 0 }: CustomerListTableProps) => {
                             </TableCell>
                         </TableRow>
                     ) : (
-                        customerList.map((customer: customerListType, idx: number) => (
+                        sortedData.map((customer: customerListType, idx: number) => (
                             <TableRow key={customer.id}>
                                 <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium'>{customer.customerCode}</TableCell>
@@ -201,7 +207,7 @@ const CustomerListTable = ({ refreshKey = 0 }: CustomerListTableProps) => {
                     )}
                 </TableBody>
             </Table>
-            {noOfPages > 1 && (
+            {pageCount > 0 && (
                 <div className="w-full flex items-center justify-center gap-4 mt-10">
                     <Pagination>
                         <PaginationContent>
@@ -214,7 +220,7 @@ const CustomerListTable = ({ refreshKey = 0 }: CustomerListTableProps) => {
                                     <PaginationPrevious />
                                 </Button>
                             </PaginationItem>
-                            {[...Array(noOfPages).keys()].map((i) => {
+                            {getVisiblePageIndices(skip, TAKE, pageCount).map((i) => {
                                 const pageNext = i * TAKE
                                 return (
                                     <PaginationItem key={i}>

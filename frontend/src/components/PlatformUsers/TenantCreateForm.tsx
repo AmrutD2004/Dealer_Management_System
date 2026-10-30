@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import {
   Select,
   SelectContent,
@@ -10,6 +11,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import { FieldLabel } from "@/components/ui/field";
+import { Checkbox } from "@/components/ui/checkbox";
 import { FormSection } from "./FormSection";
 import { useState } from "react";
 import { type userCreateType, type tenantCreateType, type branchCreateType } from "@/Types/tenantCreateType";
@@ -58,9 +60,27 @@ export function TenantCreateForm({ onCancel }: props) {
     passwordHash: ''
   })
 
+  const [copyTenantAddress, setCopyTenantAddress] = useState(false)
+
+  const syncBranchAddress = (tenant: tenantCreateType) => {
+    setInitialBranchData(prev => ({
+      ...prev,
+      address1: tenant.address,
+      locality: tenant.city,
+      city: tenant.city,
+      state: tenant.state,
+      country: tenant.country,
+      pincode: tenant.pincode,
+    }))
+  }
+
   const handleTenantChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setTenantData(prev => ({ ...prev, [name]: value }))
+    const nextTenant = { ...tenantData, [name]: value }
+    setTenantData(nextTenant)
+    if (copyTenantAddress && ['address', 'city', 'state', 'country', 'pincode'].includes(name)) {
+      syncBranchAddress(nextTenant)
+    }
   }
   const handleBranchChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -150,6 +170,7 @@ export function TenantCreateForm({ onCancel }: props) {
           mobileNo: '',
           passwordHash: ''
         })
+        setCopyTenantAddress(false)
       }
       if (!data?.success) {
         toast.add({
@@ -275,7 +296,26 @@ export function TenantCreateForm({ onCancel }: props) {
       </FormSection>
 
       {/* Initial Branch */}
-      <FormSection title="Initial Branch">
+      <FormSection
+        title={
+          <span className="flex items-center gap-2">
+            <span>Initial Branch</span>
+            <span className="flex items-center gap-1.5 normal-case tracking-normal font-normal text-muted-foreground">
+              <Checkbox
+                id="copyTenantAddress"
+                checked={copyTenantAddress}
+                onCheckedChange={(checked) => {
+                  setCopyTenantAddress(checked)
+                  if (checked) syncBranchAddress(tenantData)
+                }}
+              />
+              <label htmlFor="copyTenantAddress" className="cursor-pointer select-none">
+                Same as tenant address
+              </label>
+            </span>
+          </span>
+        }
+      >
 
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">Branch Name <span className="text-red-500">*</span></FieldLabel>
@@ -389,7 +429,7 @@ export function TenantCreateForm({ onCancel }: props) {
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">Password <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
-            <Input name="passwordHash" value={initialUserData.passwordHash} type="password" required placeholder="••••••••••" onChange={handleUserChange} className="h-7 rounded-none px-2 text-xs" />
+            <PasswordInput name="passwordHash" value={initialUserData.passwordHash} required placeholder="••••••••••" onChange={handleUserChange} className="h-7 rounded-none px-2 text-xs" />
           </div>
         </div>
       </FormSection>

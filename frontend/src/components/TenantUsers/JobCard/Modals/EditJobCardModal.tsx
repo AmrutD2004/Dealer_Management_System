@@ -614,7 +614,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                 </Button>
                             </div>
                             <div className="rounded border">
-                                <Table className="[&_th]:border-r [&_th]:border-slate-200 [&_th:last-child]:border-r-0 [&_td]:border-r [&_td]:border-slate-200 [&_td:last-child]:border-r-0">
+                                <Table className="table-fixed [&_th]:border-r [&_th]:border-slate-200 [&_th:last-child]:border-r-0 [&_td]:border-r [&_td]:border-slate-200 [&_td:last-child]:border-r-0">
                                     <TableHeader>
                                         <TableRow>
                                             <TableHead className="w-[220px]">Action To Be Taken <span className="text-red-500">*</span></TableHead>
@@ -649,6 +649,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                                         placeholder="Describe what the customer reported"
                                                         value={voice.customerVoiceDescription}
                                                         onChange={(e) => handleCustomerVoiceChange(index, "customerVoiceDescription", e.target.value)}
+                                                        className="h-[48px] min-h-[48px] resize-none field-sizing-fixed"
                                                     />
                                                 </TableCell>
                                                 <TableCell className="align-top">
@@ -656,6 +657,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                                         placeholder="Observation noted"
                                                         value={voice.observation}
                                                         onChange={(e) => handleCustomerVoiceChange(index, "observation", e.target.value)}
+                                                        className="h-[48px] min-h-[48px] resize-none field-sizing-fixed"
                                                     />
                                                 </TableCell>
                                                 <TableCell className="align-top text-right">

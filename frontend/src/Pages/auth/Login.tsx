@@ -5,6 +5,7 @@ import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { AuthContext } from "@/Contexts/AuthContext";
@@ -121,10 +122,9 @@ export function Login() {
                                 <div className="flex items-center">
                                     <Label htmlFor="password">Password</Label>
                                 </div>
-                                <Input
+                                <PasswordInput
                                     id="password"
                                     name="passwordHash"
-                                    type="password"
                                     required
                                     placeholder="••••••••••"
                                     onChange={handleChange}

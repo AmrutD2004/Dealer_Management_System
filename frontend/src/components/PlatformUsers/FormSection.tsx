@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Separator } from "@/components/ui/separator";
 
 interface FormSectionProps {
-  title: string;
+  title: ReactNode;
   children: ReactNode;
   withSeparator?: boolean;
 }

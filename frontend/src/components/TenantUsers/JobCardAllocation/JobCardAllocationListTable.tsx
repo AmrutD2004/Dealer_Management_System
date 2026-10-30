@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { getJobCardAllocationList } from '@/api/endpoints'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -8,6 +9,16 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination'
 import { toast } from '@/components/ui/toast'
 import type { JobCardAllocationType } from '@/Types/jobCardAllocationType'
 import dayjs from 'dayjs'
@@ -20,12 +31,15 @@ interface JobCardAllocationListTableProps {
     refreshKey?: number
 }
 
+const TAKE = 10
+
 const formatDateTime = (value: string | null | undefined) => {
     return value ? dayjs(value).format('DD MMM YYYY, hh:mm A') : '—'
 }
 
 const JobCardAllocationListTable = ({ refreshKey = 0 }: JobCardAllocationListTableProps) => {
     const [allocationList, setAllocationList] = useState<JobCardAllocationType[]>([])
+    const [skip, setSkip] = useState(0)
     const [selectedAllocation, setSelectedAllocation] = useState<JobCardAllocationType | null>(null)
     const [viewOpen, setViewOpen] = useState(false)
     const [editOpen, setEditOpen] = useState(false)
@@ -48,6 +62,18 @@ const JobCardAllocationListTable = ({ refreshKey = 0 }: JobCardAllocationListTab
         }
         load()
     }, [refreshKey, localRefresh])
+
+    const totalAllocations = allocationList.length
+    const noOfPages = Math.ceil(totalAllocations / TAKE)
+    const pageCount = Math.max(noOfPages, 1)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(allocationList, {
+        jobCardNo: (allocation) => allocation.jobCard?.jobCardNo ?? '',
+        bayName: (allocation) => allocation.bay?.bayName ?? '',
+        mechanicName: (allocation) => allocation.mechanic ? `${allocation.mechanic.firstName} ${allocation.mechanic.lastName ?? ''}`.trim() : '',
+        jobCardStatus: (allocation) => allocation.jobCard?.status ?? '',
+        allocationStatus: (allocation) => allocation.bayOutTime ? 'Released' : 'In Bay',
+    })
+    const pagedAllocations = sortedData.slice(skip, skip + TAKE)
 
     const getMechanicName = (allocation: JobCardAllocationType) => {
         if (!allocation.mechanic) return `#${allocation.mechanicId}`
@@ -77,13 +103,13 @@ const JobCardAllocationListTable = ({ refreshKey = 0 }: JobCardAllocationListTab
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Job Card No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Bay</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Mechanic</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Bay In</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Bay Out</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Job Card Status</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Allocation Status</TableHead>
+                        <SortableTableHead label="Job Card No." sortKey="jobCardNo" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Bay" sortKey="bayName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Mechanic" sortKey="mechanicName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Bay In" sortKey="bayInDateTime" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Bay Out" sortKey="bayOutTime" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Job Card Status" sortKey="jobCardStatus" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Allocation Status" sortKey="allocationStatus" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -96,9 +122,9 @@ const JobCardAllocationListTable = ({ refreshKey = 0 }: JobCardAllocationListTab
                             </TableCell>
                         </TableRow>
                     ) : (
-                        allocationList.map((allocation: JobCardAllocationType, idx: number) => (
+                        pagedAllocations.map((allocation: JobCardAllocationType, idx: number) => (
                             <TableRow key={allocation.id}>
-                                <TableCell className='text-left font-medium'>{idx + 1}</TableCell>
+                                <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-semibold font-mono whitespace-nowrap'>
                                     {allocation.jobCard?.jobCardNo ?? `#${allocation.jobCardId}`}
                                 </TableCell>
@@ -152,6 +178,43 @@ const JobCardAllocationListTable = ({ refreshKey = 0 }: JobCardAllocationListTab
                     )}
                 </TableBody>
             </Table>
+            {pageCount > 0 && (
+                <div className="w-full flex items-center justify-center gap-4 mt-10">
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip === 0}
+                                    onClick={() => setSkip((prev) => Math.max(prev - TAKE, 0))}
+                                >
+                                    <PaginationPrevious />
+                                </Button>
+                            </PaginationItem>
+                            {getVisiblePageIndices(skip, TAKE, pageCount).map((i) => {
+                                const pageNext = i * TAKE
+                                return (
+                                    <PaginationItem key={i}>
+                                        <Button onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'}>{i + 1}</Button>
+                                    </PaginationItem>
+                                )
+                            })}
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip + TAKE >= totalAllocations}
+                                    onClick={() => setSkip((prev) => prev + TAKE)}
+                                >
+                                    <PaginationNext />
+                                </Button>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
+            )}
 
             <ViewJobCardAllocationModal allocation={selectedAllocation} open={viewOpen} onClose={closeModals} />
             <EditJobCardAllocationModal

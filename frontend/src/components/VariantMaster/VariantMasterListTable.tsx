@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { getBrandListWithoutPagination, getModelListWithoutPagination, getVariantListWithoutPagination } from '@/api/endpoints'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -17,6 +18,8 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
 import type { BrandListType } from '@/Types/brandMasterType'
 import type { ModelListType } from '@/Types/modelMasterType'
@@ -77,7 +80,16 @@ const VariantMasterListTable = ({ refreshKey = 0 }: VariantMasterListTableProps)
 
     const totalVariants = variantList.length
     const noOfPages = Math.ceil(totalVariants / PAGE_SIZE)
-    const paginatedVariants = variantList.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(variantList, {
+        modelName: (variant) => {
+            const model = models.find(item => item.id === variant.modelId)
+            if (!model) return ''
+            const brandName = brands.find(brand => brand.id === model.brandId)?.brandName ?? ''
+            return `${brandName} ${model.modelName} - ${model.modelCode}`
+        },
+        production: (variant) => variant.productionFrom ?? '',
+    })
+    const paginatedVariants = sortedData.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
 
     const getBrandName = (brandId: number) => {
         return brands.find(brand => brand.id === brandId)?.brandName ?? `#${brandId}`
@@ -133,14 +145,14 @@ const VariantMasterListTable = ({ refreshKey = 0 }: VariantMasterListTableProps)
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Variant Name</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Variant Code</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Model</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Fuel Type</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Transmission</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Production</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Created</TableHead>
+                        <SortableTableHead label="Variant Name" sortKey="variantName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Variant Code" sortKey="variantCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Model" sortKey="modelName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Fuel Type" sortKey="fuelType" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Transmission" sortKey="transmissionType" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Production" sortKey="production" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Created" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -228,7 +240,7 @@ const VariantMasterListTable = ({ refreshKey = 0 }: VariantMasterListTableProps)
                                 <PaginationPrevious />
                             </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => (
+                        {getVisiblePageIndices(page * PAGE_SIZE, PAGE_SIZE, noOfPages).map((i) => (
                             <PaginationItem key={i}>
                                 <Button
                                     

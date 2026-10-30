@@ -17,7 +17,7 @@ import { activateHSN, createHSN, deactivateHSN, getHSNDetails, getListOfHSN, upd
 import { activatePartCategory, addPartCategory, deactivatePartCategory, getListOfPartCategories, getPartCategoryDetails, updatePartCategory } from "../../controllers/tenants/Parts/partCategoryManagementController";
 import { activatePart, addPartMaster, deactivatePart, getListOfParts, getPartDetails, updatePartMaster } from "../../controllers/tenants/Parts/partMasterManagementController";
 import { getListOfPartFitment, getPartFitmentDetails, updatePartFitment } from "../../controllers/tenants/Parts/partFitmentManagementController";
-import { createQuotation } from "../../controllers/tenants/ServiceQuotation/createServiceQuotaion";
+import { createQuotation, getListOfServiceQuotation, getServiceQuotationDetails, updateQuotation } from "../../controllers/tenants/ServiceQuotation/serviceQuotaionManagent";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -176,4 +176,7 @@ tenantRoute.get('/tenant/part/fitment/get/:fitmentId', authenticate, requireTena
 
 //Service Quotation Management
 tenantRoute.post('/tenant/service/quotation/create', authenticate, requireTenantUser, createQuotation)
+tenantRoute.get('/tenant/service/quotation/get/all', authenticate, requireTenantUser, getListOfServiceQuotation)
+tenantRoute.get('/tenant/service/quotation/get/:serviceQuotationId', authenticate, requireTenantUser, getServiceQuotationDetails)
+tenantRoute.put('/tenant/service/quotation/:serviceQuotationId/update', authenticate, requireTenantUser, updateQuotation)
 export default tenantRoute;

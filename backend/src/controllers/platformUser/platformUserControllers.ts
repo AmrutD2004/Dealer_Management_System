@@ -3,20 +3,20 @@ import { prisma } from "../../prisma/lib/prisma";
 import bcrypt from 'bcrypt'
 
 export const addPlatformUsers = async (req: Request, res: Response) => {
-    const { id, role, userType } = req.user!;
+    // const { id, role, userType } = req.user!;
     const { email, passwordHash, userRole } = req.body;
-    if (!id && !role && !userType) {
-        return res.status(401).json({
-            success: false,
-            message: 'Not Authorized'
-        })
-    }
-    if (role !== 'SUPER_ADMIN' && userType !== 'PLATFORM_USER') {
-        return res.status(401).json({
-            success: false,
-            message: 'Not authorized to perform operation'
-        })
-    }
+    // if (!id && !role && !userType) {
+    //     return res.status(401).json({
+    //         success: false,
+    //         message: 'Not Authorized'
+    //     })
+    // }
+    // if (role !== 'SUPER_ADMIN' && userType !== 'PLATFORM_USER') {
+    //     return res.status(401).json({
+    //         success: false,
+    //         message: 'Not authorized to perform operation'
+    //     })
+    // }
     if (!email || !passwordHash) {
         return res.status(400).json({
             success: false,

@@ -617,6 +617,28 @@ export const updateJobCardAllocation = async (payload: Record<string, unknown>, 
 }
 
 
+//Service Quotation management
+export const createServiceQuotation = async (payload: Record<string, unknown>) => {
+    const response = await api.post(`/api/tenant/service/quotation/create`, payload)
+    return await response.data;
+}
+
+export const getServiceQuotationList = async () => {
+    const response = await api.get(`/api/tenant/service/quotation/get/all`, { timeout: 20000 })
+    return await response.data;
+}
+
+export const getServiceQuotationById = async (serviceQuotationId: number) => {
+    const response = await api.get(`/api/tenant/service/quotation/get/${serviceQuotationId}`)
+    return await response.data;
+}
+
+export const updateServiceQuotation = async (payload: Record<string, unknown>, serviceQuotationId: number) => {
+    const response = await api.put(`/api/tenant/service/quotation/${serviceQuotationId}/update`, payload)
+    return await response.data;
+}
+
+
 //Vehicle Brand Routes
 export const createBrand = async (payload: object) => {
     const response = await api.post(`/api/platform/brand/create`, payload)
