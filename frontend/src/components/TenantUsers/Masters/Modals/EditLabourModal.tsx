@@ -73,7 +73,7 @@ export function EditLabourModal({ labour, open, onClose, onUpdated }: EditLabour
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

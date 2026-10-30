@@ -109,7 +109,7 @@ const EditAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
                 fetchPermissionMappingList(permissionMappingSkip, permissionMappingTake)
                 setTimeout(() => {
                     handleCancel()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

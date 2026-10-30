@@ -76,7 +76,7 @@ export function ConfirmPermissionActionModal({ confirmAction, open, onClose }: P
         setTimeout(() => {
           closeAllPermissionModals()
           onClose()
-        }, 2000)
+        }, 10)
       } else {
         toast.add({
           type: 'error',

@@ -28,7 +28,9 @@ export const createServiceCategory = async (req: Request, res: Response) => {
     }
     try {
         const checkCodeExists = await prisma.serviceCategoryMaster.findUnique({
-            where: { code: code, tenantId: Number(tenantId) }
+            where: {
+                code_tenantId : { code: code, tenantId: Number(tenantId) }
+            }
         })
         if (checkCodeExists) {
             return res.status(403).json({
@@ -89,7 +91,9 @@ export const updateServiceCategory = async (req: Request, res: Response) => {
     }
     try {
         const checkCodeExists = await prisma.serviceCategoryMaster.findUnique({
-            where: { id: Number(serviceCategoryId), tenantId: Number(tenantId) }
+            where: { 
+                code_tenantId : { code: code, tenantId: Number(tenantId) }
+            }
         })
         if (!checkCodeExists) {
             return res.status(403).json({

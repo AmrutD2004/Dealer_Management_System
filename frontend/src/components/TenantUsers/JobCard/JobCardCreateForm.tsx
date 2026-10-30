@@ -43,7 +43,8 @@ import { toast } from "@/components/ui/toast"
 import { type customerListType, type labourListType } from "@/Types/tenantCreateType"
 import dayjs from "dayjs"
 import { Loader2, Plus, Trash2 } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "@/Contexts/AuthContext"
 
 const toISO = (value: string) => (value ? dayjs(value).toISOString() : null)
 
@@ -82,7 +83,7 @@ const initialFormData = {
     currentKmReading: "",
     previousKmReading: "",
     estimateCloseJobcardAt: "",
-    supervisorId: "",
+    serviceAdvisorId: "",
     technicianId: "",
     driverName: "",
     driverMobileNo: "",
@@ -97,6 +98,7 @@ const initialFormData = {
 }
 
 export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProps) {
+    const {userInfo} = useContext(AuthContext)
     const [loading, setLoading] = useState<boolean>(false)
     const [formData, setFormData] = useState(initialFormData)
     const [branches, setBranches] = useState<any[]>([])
@@ -111,6 +113,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
     const [customerOpen, setCustomerOpen] = useState<boolean>(false)
     const [findedCustomers, setFindedCustomers] = useState<customerListType[]>([])
     const [searchingCustomers, setSearchingCustomers] = useState(false);
+    const [selectedCustomer, setSelectedCustomer] = useState<customerListType | null>(null)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -196,7 +199,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                 currentKmReading: Number(formData.currentKmReading),
                 previousKmReading: formData.previousKmReading ? Number(formData.previousKmReading) : null,
                 estimateCloseJobcardAt: toISO(formData.estimateCloseJobcardAt),
-                supervisorId: formData.supervisorId ? Number(formData.supervisorId) : null,
+                serviceAdvisorId: formData.serviceAdvisorId ? Number(formData.serviceAdvisorId) : null,
                 technicianId: formData.technicianId ? Number(formData.technicianId) : null,
                 driverName: formData.driverName || null,
                 driverMobileNo: formData.driverMobileNo || null,
@@ -254,31 +257,31 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
         ? serviceTypes.filter((s) => String(s.serviceCategoryMasterId) === formData.serviceCategoryId)
         : serviceTypes
 
-   const handleSearch = async (query: string) => {
-    const searchTerm = query.trim();
+    const handleSearch = async (query: string) => {
+        const searchTerm = query.trim();
 
-    if (!searchTerm) {
-        setFindedCustomers([]);
-        setSearchingCustomers(false);
-        return;
-    }
-
-    setSearchingCustomers(true);
-
-    try {
-        const response = await findCustomer(searchTerm);
-
-        if (response?.success) {
-            setFindedCustomers(response.data ?? []);
-        } else {
+        if (!searchTerm) {
             setFindedCustomers([]);
+            setSearchingCustomers(false);
+            return;
         }
-    } catch (err: any) {
-        setFindedCustomers([]);
-    } finally {
-        setSearchingCustomers(false);
-    }
-};
+
+        setSearchingCustomers(true);
+
+        try {
+            const response = await findCustomer(searchTerm);
+
+            if (response?.success) {
+                setFindedCustomers(response.data ?? []);
+            } else {
+                setFindedCustomers([]);
+            }
+        } catch (err: any) {
+            setFindedCustomers([]);
+        } finally {
+            setSearchingCustomers(false);
+        }
+    };
     useEffect(() => {
         const timer = setTimeout(() => {
             handleSearch(searchCustomer);
@@ -286,6 +289,16 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
 
         return () => clearTimeout(timer);
     }, [searchCustomer])
+
+    const isServiceAdvisor = userInfo.role.roleCode
+    useEffect(() => {
+    if (userInfo?.role?.roleCode === "SERVICE_ADVISOR") {
+        setFormData(prev => ({
+            ...prev,
+            serviceAdvisorId: String(userInfo.id),
+        }))
+    }
+}, [userInfo])
     return (
         <form id="job-card-form" onSubmit={handleSubmit}>
             <div className="space-y-4 py-3">
@@ -335,8 +348,10 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                                 const c = findedCustomers.find(
                                                     (c) => String(c.id) === formData.customerId
                                                 )!;
-                                                return `${c.firstName} ${c.lastName} - ${c.mobileNo}`;
                                             })()
+                                            : ""}
+                                        {selectedCustomer
+                                            ? `${selectedCustomer.firstName} ${selectedCustomer.lastName} - ${selectedCustomer.mobileNo}`
                                             : "Select customer"}
 
                                         <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
@@ -371,6 +386,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                                                     ...prev,
                                                                     customerId: String(c.id),
                                                                 }));
+                                                                setSelectedCustomer(c);
                                                                 setCustomerOpen(false);
                                                                 setSearchCustomer("");
                                                             }}
@@ -512,36 +528,29 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                     </div>
                     <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
                         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                            <FieldLabel className="text-xs font-medium">Supervisor</FieldLabel>
+                            <FieldLabel className="text-xs font-medium">Service Advisor</FieldLabel>
                             <Select
-                                items={employees.map((e) => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
-                                value={formData.supervisorId || null}
-                                onValueChange={(value) => setFormData((prev) => ({ ...prev, supervisorId: value ?? "" }))}
-                            >
+    disabled={userInfo?.role?.roleCode === "SERVICE_ADVISOR"}
+    items={employees
+        .filter(e => e.role.roleCode === "SERVICE_ADVISOR")
+        .map(e => ({
+            value: String(e.id),
+            label: `${e.firstName} ${e.lastName}`,
+        }))
+    }
+    value={formData.serviceAdvisorId || null}
+    onValueChange={(value) =>
+        setFormData(prev => ({
+            ...prev,
+            serviceAdvisorId: value ?? "",
+        }))
+    }
+>
                                 <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                     <SelectValue placeholder="Select" />
                                 </SelectTrigger>
                                 <SelectContent align="start" alignItemWithTrigger={false}>
-                                    {employees.filter((f) => f.role.roleCode === 'SUPERVISOR').map((e) => (
-                                        <SelectItem key={e.id} value={String(e.id)}>
-                                            {e.firstName} {e.lastName}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                            <FieldLabel className="text-xs font-medium">Technician</FieldLabel>
-                            <Select
-                                items={employees.map((e) => ({ value: String(e.id), label: `${e.firstName} ${e.lastName}` }))}
-                                value={formData.technicianId || null}
-                                onValueChange={(value) => setFormData((prev) => ({ ...prev, technicianId: value ?? "" }))}
-                            >
-                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                                    <SelectValue placeholder="Select" />
-                                </SelectTrigger>
-                                <SelectContent align="start" alignItemWithTrigger={false}>
-                                    {employees.filter((f) => f.role.roleCode === 'TECHNICIAN').map((e) => (
+                                    {employees.filter((f) => f.role.roleCode === 'SERVICE_ADVISOR').map((e) => (
                                         <SelectItem key={e.id} value={String(e.id)}>
                                             {e.firstName} {e.lastName}
                                         </SelectItem>

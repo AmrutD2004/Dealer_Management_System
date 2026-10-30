@@ -91,7 +91,7 @@ export function CreateDealerBayModal({ open, setOpen, onCreated }: CreateDealerB
                 onCreated?.()
                 setTimeout(() => {
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

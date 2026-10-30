@@ -157,7 +157,7 @@ export function EditPartFitmentModal({ fitment, open, onClose, onUpdated }: Edit
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

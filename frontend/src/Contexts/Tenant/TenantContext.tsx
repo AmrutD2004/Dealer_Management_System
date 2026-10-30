@@ -38,7 +38,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
 
     const [permissionMappingList, setPermissionMappingList] = useState<rolePermissionMappingType[]>([])
     const [permissionMappingSkip, setPermissionMappingSkip] = useState<number>(0)
-    const [permissionMappingTake, setPermissionMappingTake] = useState<number>(3)
+    const [permissionMappingTake, setPermissionMappingTake] = useState<number>(9)
     const [totalPermissionMappings, setTotalPermissionMappings] = useState<number>(0)
 
     const [selectedPermissionMapping, setSelectedPermissionMapping] = useState<rolePermissionMappingType | null>(null)

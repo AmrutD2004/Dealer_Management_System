@@ -54,7 +54,7 @@ export function Login() {
                      if(hashTenantId){
                         setTimeout(() => {
                     navigate(`/tenant/${hashTenantId}/dashboard`)
-                }, 2000)
+                }, 10)
                      }
 
                 }

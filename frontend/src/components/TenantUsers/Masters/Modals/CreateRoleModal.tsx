@@ -117,7 +117,7 @@ export function CreateRoleModal({ open, setOpen }: CreateRoleModalProps) {
                 fetchRoleList(roleSkip, roleTake)
                 setTimeout(() => {
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

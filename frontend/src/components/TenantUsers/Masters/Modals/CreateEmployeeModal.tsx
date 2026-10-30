@@ -100,7 +100,7 @@ export function CreateEmployeeModal({ open, setOpen }: CreateEmployeeModalProps)
                 fetchEmployeeList(employeeSkip, employeeTake)
                 setTimeout(() => {
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

@@ -64,7 +64,7 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
                 fetchPlatformUsersList(platformUserSkip, platformUserTake)
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

@@ -115,7 +115,7 @@ export function EditVariantModal({ variant, open, onClose, onUpdated }: EditVari
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

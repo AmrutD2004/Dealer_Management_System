@@ -16,7 +16,7 @@ export const createJobCard = async (req: Request, res: Response) => {
             message: 'Not Authorized'
         })
     }
-    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, customerVoices, vehicleInTime } = req.body
+    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, serviceAdvisorId, technicianId, vehicleId, vehicleStatus, customerVoices, vehicleInTime } = req.body
 
     if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus || customerVoices == null || !vehicleInTime) {
         return res.status(400).json({
@@ -108,7 +108,7 @@ export const createJobCard = async (req: Request, res: Response) => {
                     serviceCategoryId: Number(serviceCategoryId),
                     serviceTypeId: Number(serviceTypeId),
                     status: 'OPEN',
-                    supervisorId: Number(supervisorId) || null,
+                    serviceAdvisorId: Number(serviceAdvisorId) || null,
                     technicianId: Number(technicianId) || null,
                     tenantId: Number(tenantId),
                     vehicleId: Number(vehicleId),
@@ -158,7 +158,7 @@ export const updateJobCard = async (req: Request, res: Response) => {
             message: 'job card is required'
         })
     }
-    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, supervisorId, technicianId, vehicleId, vehicleStatus, revisedEstimateCloseAt, customerVoices, vehicleInTime } = req.body
+    const { branchId, breakdownDateTime, breakdownEndDateTime, breakdownPersonAttended, breakdownStartDateTime, closedAt, currentKmReading, customerId, dealerVanEndKm, dealerVanStartKm, driverMobileNo, driverName, estimateCloseJobcardAt, isBreakDown, isRevisit, previousKmReading, repairOrderTypeId, serviceCategoryId, serviceTypeId, serviceAdvisorId, technicianId, vehicleId, vehicleStatus, revisedEstimateCloseAt, customerVoices, vehicleInTime } = req.body
 
     if (!branchId || !currentKmReading || !customerId || !estimateCloseJobcardAt || !repairOrderTypeId || !serviceCategoryId || !serviceTypeId || !vehicleId || !vehicleStatus || customerVoices == null || !vehicleInTime) {
         return res.status(400).json({
@@ -205,7 +205,7 @@ export const updateJobCard = async (req: Request, res: Response) => {
                     serviceCategoryId: Number(serviceCategoryId),
                     serviceTypeId: Number(serviceTypeId),
                     status: 'OPEN',
-                    supervisorId: Number(supervisorId) || null,
+                    serviceAdvisorId: Number(serviceAdvisorId) || null,
                     technicianId: Number(technicianId) || null,
                     tenantId: Number(tenantId),
                     vehicleId: Number(vehicleId),
@@ -289,7 +289,7 @@ export const getJobcardDetails = async (req: Request, res: Response) => {
                 serviceType: true,
                 serviceCategory: true,
                 repairOrderType: true,
-                supervisor: true,
+                serviceAdvisor: true,
                 technician: true,
                 createdByUser: true,
                 branch: true,
@@ -363,7 +363,7 @@ export const getListOfJobCard = async (req: Request, res: Response) => {
                     serviceType: true,
                     serviceCategory: true,
                     repairOrderType: true,
-                    supervisor: true,
+                    serviceAdvisor: true,
                     technician: true,
                     createdByUser: true,
                     branch: true,
@@ -398,7 +398,7 @@ export const getListOfJobCard = async (req: Request, res: Response) => {
                     serviceType: true,
                     serviceCategory: true,
                     repairOrderType: true,
-                    supervisor: true,
+                    serviceAdvisor: true,
                     technician: true,
                     createdByUser: true,
                     branch: true,

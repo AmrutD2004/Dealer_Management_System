@@ -91,7 +91,7 @@ export function EditModelModal({ model, open, onClose, onUpdated }: EditModelMod
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

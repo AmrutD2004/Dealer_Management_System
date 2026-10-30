@@ -74,7 +74,7 @@ export function ConfirmPartCategoryActionModal({ confirmAction, open, onClose, o
                 onDone?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             } else {
                 toast.add({
                     type: 'error',

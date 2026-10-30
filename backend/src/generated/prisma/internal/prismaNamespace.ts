@@ -2914,7 +2914,7 @@ export const JobCardScalarFieldEnum = {
   currentKmReading: 'currentKmReading',
   previousKmReading: 'previousKmReading',
   vehicleStatus: 'vehicleStatus',
-  supervisorId: 'supervisorId',
+  serviceAdvisorId: 'serviceAdvisorId',
   technicianId: 'technicianId',
   serviceCategoryId: 'serviceCategoryId',
   serviceTypeId: 'serviceTypeId',

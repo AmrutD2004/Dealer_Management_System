@@ -59,7 +59,7 @@ export function CreateDesignationModal({ open, setOpen }: CreateDesignationModal
                 fetchDesignationList(designationSkip, designationTake)
                 setTimeout(() => {
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

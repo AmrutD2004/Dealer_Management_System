@@ -136,7 +136,7 @@ export function EditPartMasterModal({ part, open, onClose, onUpdated }: EditPart
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

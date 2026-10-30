@@ -93,7 +93,7 @@ export function EditBranchModal({ branch, open, onClose }: EditBranchModalProps)
                 fetchTenantBranchList(skip, take)
                 setTimeout(() => {
                     handleCancel()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

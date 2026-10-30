@@ -127,7 +127,7 @@ export function EditRoleModal({ role, open, onClose }: EditRoleModalProps) {
                 fetchRoleList(roleSkip, roleTake)
                 setTimeout(() => {
                     handleCancel()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

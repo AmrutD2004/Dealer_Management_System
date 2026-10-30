@@ -84,7 +84,7 @@ export function ConfirmActionModal({ confirmAction, open, onClose }: Props) {
         setTimeout(() => {
           closeAllModals()
           onClose()
-        }, 2000)
+        }, 10)
       } else {
         toast.add({
           type: 'error',

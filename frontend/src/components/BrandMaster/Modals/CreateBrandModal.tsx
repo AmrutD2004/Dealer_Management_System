@@ -53,7 +53,7 @@ export function CreateBrandModal({ onCreated }: CreateBrandModalProps) {
                 onCreated?.()
                 setTimeout(() => {
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

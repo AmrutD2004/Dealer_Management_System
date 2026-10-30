@@ -100,7 +100,7 @@ export function EditCustomerModal({ customer, open, onClose, onUpdated }: EditCu
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

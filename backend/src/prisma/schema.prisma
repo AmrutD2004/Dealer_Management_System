@@ -347,7 +347,7 @@ enum ServiceCategoryMasterCode {
 model ServiceCategoryMaster {
   id          Int                       @id @default(autoincrement())
   tenantId    Int
-  code        ServiceCategoryMasterCode @unique
+  code        ServiceCategoryMasterCode 
   name        String
   description String?
   isActive    Boolean                   @default(true)
@@ -359,6 +359,7 @@ model ServiceCategoryMaster {
   jobCards         JobCard[]
   serviceQuotation ServiceQuotationMaster[]
 
+  @@unique([code, tenantId])
   @@map("ServiceCategoryMaster")
 }
 
@@ -531,7 +532,7 @@ model JobCard {
 
   vehicleStatus JobCardVehicleStatus
 
-  supervisorId Int?
+  serviceAdvisorId Int?
   technicianId Int?
 
   serviceCategoryId Int
@@ -566,7 +567,7 @@ model JobCard {
   vehicle  Vehicle  @relation(fields: [vehicleId], references: [id])
   customer Customer @relation(fields: [customerId], references: [id])
 
-  supervisor    Users? @relation("JobCardSupervisor", fields: [supervisorId], references: [id])
+  serviceAdvisor    Users? @relation("JobCardSupervisor", fields: [serviceAdvisorId], references: [id])
   technician    Users? @relation("JobCardTechnician", fields: [technicianId], references: [id])
   createdByUser Users  @relation("JobCardCreatedBy", fields: [createdBy], references: [id])
 
@@ -607,7 +608,7 @@ model LabourMaster {
 
   labourCode        String
   labourName        String
-  labourDescription String
+  labourDescription String?
   standardHours     Decimal @db.Decimal(6, 2)
   rate              Decimal @db.Decimal(10, 2)
   hsnId   Int?
