@@ -1,6 +1,7 @@
 import TenantDashboardLayout from '@/components/layout/TenantLayout/DashboardLayout'
 import { ServiceQuotationCreateForm } from '@/components/TenantUsers/ServiceQuotation/ServiceQuotationCreateForm'
 import { Button } from '@/components/ui/button'
+import type { serviceQuotationListType } from '@/Types/serviceQuotationType'
 import { ArrowLeft, FileText } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -9,6 +10,13 @@ const ServiceQuotationCreate = () => {
     const { id } = useParams()
 
     const goBack = () => navigate(`/tenant/${id}/service-quotation`)
+    const handleCreated = (quotation?: serviceQuotationListType) => {
+        if (quotation?.id) {
+            navigate(`/tenant/${id}/service-quotation/view/${quotation.id}`)
+            return
+        }
+        goBack()
+    }
 
     return (
         <TenantDashboardLayout>
@@ -29,7 +37,7 @@ const ServiceQuotationCreate = () => {
                     </div>
 
                     <div className='rounded-2xl border px-6 shadow-sm mx-5 mb-5'>
-                        <ServiceQuotationCreateForm onCancel={goBack} onCreated={goBack} />
+                        <ServiceQuotationCreateForm onCancel={goBack} onCreated={handleCreated} />
                     </div>
                 </div>
             </div>
