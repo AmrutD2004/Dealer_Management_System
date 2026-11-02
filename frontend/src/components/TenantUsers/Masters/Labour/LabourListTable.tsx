@@ -1,8 +1,19 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { activateLabour, deactivateLabour, getLabourList } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination'
 import { toast } from '@/components/ui/toast'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,8 +31,12 @@ interface LabourListTableProps {
     refreshKey?: number
 }
 
+const TAKE = 10
+
 const LabourListTable = ({ refreshKey = 0 }: LabourListTableProps) => {
     const [labourList, setLabourList] = useState<labourListType[]>([])
+    const [totalLabours, setTotalLabours] = useState(0)
+    const [skip, setSkip] = useState(0)
     const [selectedLabour, setSelectedLabour] = useState<labourListType | null>(null)
     const [viewOpen, setViewOpen] = useState(false)
     const [editOpen, setEditOpen] = useState(false)
@@ -30,9 +45,10 @@ const LabourListTable = ({ refreshKey = 0 }: LabourListTableProps) => {
     useEffect(() => {
         const load = async () => {
             try {
-                const data = await getLabourList(0, 100)
+                const data = await getLabourList(skip, TAKE)
                 if (data?.success) {
                     setLabourList(data?.data)
+                    setTotalLabours(data?.count ?? 0)
                 }
             } catch (err: unknown) {
                 const message = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
@@ -43,7 +59,11 @@ const LabourListTable = ({ refreshKey = 0 }: LabourListTableProps) => {
             }
         }
         load()
-    }, [refreshKey, localRefresh])
+    }, [refreshKey, localRefresh, skip])
+
+    const noOfPages = Math.ceil(totalLabours / TAKE)
+    const pageCount = Math.max(noOfPages, 1)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(labourList)
 
     const handleDeactive = async (id: number) => {
         try {
@@ -98,12 +118,12 @@ const LabourListTable = ({ refreshKey = 0 }: LabourListTableProps) => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Labour Code</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Labour Name</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Rate</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Standard Hours</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Description</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
+                        <SortableTableHead label="Labour Code" sortKey="labourCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Labour Name" sortKey="labourName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Rate" sortKey="rate" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Standard Hours" sortKey="standardHours" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Description" sortKey="labourDescription" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -116,9 +136,9 @@ const LabourListTable = ({ refreshKey = 0 }: LabourListTableProps) => {
                             </TableCell>
                         </TableRow>
                     ) : (
-                        labourList.map((labour: labourListType, idx: number) => (
+                        sortedData.map((labour: labourListType, idx: number) => (
                             <TableRow key={labour.id}>
-                                <TableCell className='text-left font-medium'>{idx + 1}</TableCell>
+                                <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium'>{labour.labourCode}</TableCell>
                                 <TableCell className='text-left font-medium'>{labour.labourName}</TableCell>
                                 <TableCell className='text-left font-medium'>{String(labour.rate ?? '-')}</TableCell>
@@ -167,6 +187,43 @@ const LabourListTable = ({ refreshKey = 0 }: LabourListTableProps) => {
                     )}
                 </TableBody>
             </Table>
+            {pageCount > 0 && (
+                <div className="w-full flex items-center justify-center gap-4 mt-10">
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip === 0}
+                                    onClick={() => setSkip((prev) => Math.max(prev - TAKE, 0))}
+                                >
+                                    <PaginationPrevious />
+                                </Button>
+                            </PaginationItem>
+                            {getVisiblePageIndices(skip, TAKE, pageCount).map((i) => {
+                                const pageNext = i * TAKE
+                                return (
+                                    <PaginationItem key={i}>
+                                        <Button onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'}>{i + 1}</Button>
+                                    </PaginationItem>
+                                )
+                            })}
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip + TAKE >= totalLabours}
+                                    onClick={() => setSkip((prev) => prev + TAKE)}
+                                >
+                                    <PaginationNext />
+                                </Button>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
+            )}
 
             <ViewLabourModal labour={selectedLabour} open={viewOpen} onClose={closeModals} />
             <EditLabourModal labour={selectedLabour} open={editOpen} onClose={closeModals} onUpdated={() => setLocalRefresh(key => key + 1)} />

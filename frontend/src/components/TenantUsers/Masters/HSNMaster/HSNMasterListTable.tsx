@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { getHSNList } from '@/api/endpoints'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,7 +10,17 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination'
 import { toast } from '@/components/ui/toast'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import type { HSNConfirmActionType, HSNMasterType } from '@/Types/hsnMasterType'
 import dayjs from 'dayjs'
 import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
@@ -22,8 +33,11 @@ interface HSNMasterListTableProps {
     refreshKey?: number
 }
 
+const TAKE = 10
+
 const HSNMasterListTable = ({ refreshKey = 0 }: HSNMasterListTableProps) => {
     const [hsnList, setHsnList] = useState<HSNMasterType[]>([])
+    const [skip, setSkip] = useState(0)
     const [selectedHSN, setSelectedHSN] = useState<HSNMasterType | null>(null)
     const [confirmAction, setConfirmAction] = useState<HSNConfirmActionType | null>(null)
     const [viewOpen, setViewOpen] = useState(false)
@@ -48,6 +62,14 @@ const HSNMasterListTable = ({ refreshKey = 0 }: HSNMasterListTableProps) => {
         }
         load()
     }, [refreshKey, localRefresh])
+
+    const totalHSN = hsnList.length
+    const noOfPages = Math.ceil(totalHSN / TAKE)
+    const pageCount = Math.max(noOfPages, 1)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(hsnList, {
+        taxRate: (hsn) => hsn.taxRate !== null ? Number(hsn.taxRate) : null,
+    })
+    const pagedHSN = sortedData.slice(skip, skip + TAKE)
 
     const openView = (hsn: HSNMasterType) => {
         setSelectedHSN(hsn)
@@ -83,12 +105,12 @@ const HSNMasterListTable = ({ refreshKey = 0 }: HSNMasterListTableProps) => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">HSN Code</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Description</TableHead>
-                        <TableHead className="text-right text-muted-foreground">Tax Rate</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Created</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Updated</TableHead>
+                        <SortableTableHead label="HSN Code" sortKey="hsnCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Description" sortKey="description" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Tax Rate" sortKey="taxRate" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-right" />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Created" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Updated" sortKey="updatedAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -101,9 +123,9 @@ const HSNMasterListTable = ({ refreshKey = 0 }: HSNMasterListTableProps) => {
                             </TableCell>
                         </TableRow>
                     ) : (
-                        hsnList.map((hsn: HSNMasterType, idx: number) => (
+                        pagedHSN.map((hsn: HSNMasterType, idx: number) => (
                             <TableRow key={hsn.id}>
-                                <TableCell className='text-left font-medium'>{idx + 1}</TableCell>
+                                <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium font-mono whitespace-nowrap'>{hsn.hsnCode}</TableCell>
                                 <TableCell className='text-left font-medium max-w-[320px] truncate' title={hsn.description ?? undefined}>
                                     {hsn.description ?? "—"}
@@ -160,6 +182,43 @@ const HSNMasterListTable = ({ refreshKey = 0 }: HSNMasterListTableProps) => {
                     )}
                 </TableBody>
             </Table>
+            {pageCount > 0 && (
+                <div className="w-full flex items-center justify-center gap-4 mt-10">
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip === 0}
+                                    onClick={() => setSkip((prev) => Math.max(prev - TAKE, 0))}
+                                >
+                                    <PaginationPrevious />
+                                </Button>
+                            </PaginationItem>
+                            {getVisiblePageIndices(skip, TAKE, pageCount).map((i) => {
+                                const pageNext = i * TAKE
+                                return (
+                                    <PaginationItem key={i}>
+                                        <Button onClick={() => setSkip(pageNext)} variant={skip === pageNext ? 'default' : 'outline'}>{i + 1}</Button>
+                                    </PaginationItem>
+                                )
+                            })}
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <Button
+                                    variant="outline"
+                                    disabled={skip + TAKE >= totalHSN}
+                                    onClick={() => setSkip((prev) => prev + TAKE)}
+                                >
+                                    <PaginationNext />
+                                </Button>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
+            )}
 
             <ViewHSNModal hsn={selectedHSN} open={viewOpen} onClose={closeModals} />
             <EditHSNModal

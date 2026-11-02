@@ -1,4 +1,7 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import {
   Pagination,
   PaginationContent,
@@ -32,6 +35,7 @@ const PlatformUsersListTable = () => {
 
   const userCount = viewAllUser ? platformUserCount : activePlatformUserCount
   const noOfPages = Math.ceil(userCount / platformUserTake)
+  const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<PlatformUsersListType>(platformUsersList)
   const handlePrevious = () => {
     setPlatformUserSkip((prev: number) =>
       Math.max(prev - platformUserTake, 0)
@@ -89,17 +93,17 @@ const PlatformUsersListTable = () => {
         <TableHeader>
           <TableRow className='w-full'>
             <TableHead className="text-left w-[20px]">Sr no.</TableHead>
-            <TableHead className='text-left font-medium'>Email</TableHead>
-            <TableHead className='text-center'>Role</TableHead>
-            <TableHead className='text-center'>Status</TableHead>
-            <TableHead className="text-right">Created At</TableHead>
-            <TableHead className="text-right">Updated At</TableHead>
+            <SortableTableHead label="Email" sortKey="email" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-left font-medium" />
+            <SortableTableHead label="Role" sortKey="role" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+            <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+            <SortableTableHead label="Created At" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-right" />
+            <SortableTableHead label="Updated At" sortKey="updatedAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-right" />
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         {!viewAllUser ? (
           <TableBody>
-            {platformUsersList.filter((user: PlatformUsersListType) => user.isActive).map((user: PlatformUsersListType, idx: number) => (
+            {sortedData.filter((user: PlatformUsersListType) => user.isActive).map((user: PlatformUsersListType, idx: number) => (
               <TableRow key={user.id}>
                 <TableCell className="font-medium">{idx + 1}</TableCell>
                 <TableCell className='text-left flex items-center gap-3'><Avatar className="h-9 w-9">
@@ -159,7 +163,7 @@ const PlatformUsersListTable = () => {
           </TableBody>
         ) : (
           <TableBody>
-            {platformUsersList.map((user: PlatformUsersListType, idx: number) => (
+            {sortedData.map((user: PlatformUsersListType, idx: number) => (
               <TableRow key={user.id}>
                 <TableCell className="font-medium">{idx + 1}</TableCell>
                 <TableCell className='text-left flex items-center gap-3'><Avatar className="h-9 w-9">
@@ -230,7 +234,7 @@ const PlatformUsersListTable = () => {
               <PaginationPrevious />
             </Button>
             </PaginationItem>
-            {[...Array(noOfPages).keys()].map((i) => {
+            {getVisiblePageIndices(platformUserSkip, platformUserTake, noOfPages).map((i) => {
               const pageNext = i * platformUserTake
               return (
                 <PaginationItem>

@@ -1,5 +1,8 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { activateRole, deactivateRole } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
 import { type roleListType } from '@/Types/tenantCreateType'
 import { useContext, useEffect } from 'react'
@@ -28,6 +31,7 @@ const RoleListTable = () => {
     }, [roleSkip, roleTake, fetchRoleList])
 
     const noOfPages = Math.ceil(totalRoles / roleTake)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<roleListType>(roleList)
 
     const handleDeactive = async (id: number) => {
         try {
@@ -84,11 +88,11 @@ const RoleListTable = () => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Role Code</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Role Name</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Description</TableHead>
-                        <TableHead className="text-center text-muted-foreground">System Role</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
+                        <SortableTableHead label="Role Code" sortKey="roleCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Role Name" sortKey="roleName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Description" sortKey="description" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="System Role" sortKey="isSystemRole" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -99,7 +103,7 @@ const RoleListTable = () => {
                             <TableCell colSpan={7} className='text-center text-muted-foreground'>No roles is created</TableCell>
                         </TableRow>
                     ) : (
-                        roleList.map((role: roleListType, idx: number) => (
+                        sortedData.map((role: roleListType, idx: number) => (
                             <TableRow key={role.id}>
                                 <TableCell className='text-left font-medium'>{roleSkip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium font-mono'>{role.roleCode}</TableCell>
@@ -166,7 +170,7 @@ const RoleListTable = () => {
                             <PaginationPrevious />
                         </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => {
+                        {getVisiblePageIndices(roleSkip, roleTake, noOfPages).map((i) => {
                             const pageNext = i * roleTake
                             return (
                                 <PaginationItem key={i}>

@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { getBrandListWithoutPagination } from '@/api/endpoints'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -17,6 +18,8 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
 import type { BrandConfirmActionType, BrandListType } from '@/Types/brandMasterType'
 import { cn } from 'cn'
@@ -63,7 +66,8 @@ const BrandListTable = ({ refreshKey = 0 }: BrandListTableProps) => {
 
     const totalBrands = brandList.length
     const noOfPages = Math.ceil(totalBrands / PAGE_SIZE)
-    const paginatedBrands = brandList.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(brandList)
+    const paginatedBrands = sortedData.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
 
     const openView = (brand: BrandListType) => {
         setSelectedBrand(brand)
@@ -99,10 +103,10 @@ const BrandListTable = ({ refreshKey = 0 }: BrandListTableProps) => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Brand Name</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Brand Code</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Created</TableHead>
+                        <SortableTableHead label="Brand Name" sortKey="brandName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Brand Code" sortKey="brandCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Created" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -186,7 +190,7 @@ const BrandListTable = ({ refreshKey = 0 }: BrandListTableProps) => {
                                 <PaginationPrevious />
                             </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => (
+                        {getVisiblePageIndices(page * PAGE_SIZE, PAGE_SIZE, noOfPages).map((i) => (
                             <PaginationItem key={i}>
                                 <Button
                                     

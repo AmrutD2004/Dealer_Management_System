@@ -1,5 +1,8 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { activateVehicle, deactivateVehicle, getVehicleList } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -18,7 +21,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
 import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { ViewVehicleModal } from './Modals/ViewVehicleModal'
@@ -40,6 +42,13 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
     const [reloadKey, setReloadKey] = useState(0)
 
     const noOfPages = Math.ceil(totalVehicles / TAKE)
+    const pageCount = Math.max(noOfPages, 1)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(vehicleList, {
+        customerName: (vehicle) => vehicle.customer ? `${vehicle.customer.firstName} ${vehicle.customer.lastName}` : '',
+        makeModelVariant: (vehicle) => `${vehicle.brand?.brandName ?? ''} - ${vehicle.model?.modelName ?? ''} - ${vehicle.variant?.variantName ?? ''}`,
+        chassisEngine: (vehicle) => `${vehicle.chassisNumber ?? ''} ${vehicle.engineNumber ?? ''}`,
+        fuelTransmission: (vehicle) => `${vehicle.variant?.fuelType ?? ''} / ${vehicle.variant?.transmissionType ?? ''}`,
+    })
     
 
     useEffect(() => {
@@ -132,12 +141,12 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Vehicle No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Customer</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Make/Model/Variant</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Chassis/Engine</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Fuel/Trans</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
+                        <SortableTableHead label="Vehicle No." sortKey="vehicleNumber" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Customer" sortKey="customerName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Make/Model/Variant" sortKey="makeModelVariant" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Chassis/Engine" sortKey="chassisEngine" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Fuel/Trans" sortKey="fuelTransmission" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -150,7 +159,7 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
                             </TableCell>
                         </TableRow>
                     ) : (
-                        vehicleList.map((vehicle: any, idx: number) => (
+                        sortedData.map((vehicle: any, idx: number) => (
                             <TableRow key={vehicle.id}>
                                 <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium'>{vehicle.vehicleNumber}</TableCell>
@@ -207,7 +216,7 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
                     )}
                 </TableBody>
             </Table>
-            {noOfPages > 1 && (
+            {pageCount > 0 && (
                 <div className="w-full flex items-center justify-center gap-4 mt-10">
                     <Pagination>
                         <PaginationContent>
@@ -220,7 +229,7 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
                                     <PaginationPrevious />
                                 </Button>
                             </PaginationItem>
-                            {[...Array(noOfPages).keys()].map((i) => {
+                            {getVisiblePageIndices(skip, TAKE, pageCount).map((i) => {
                                 const pageNext = i * TAKE
                                 return (
                                     <PaginationItem key={i}>

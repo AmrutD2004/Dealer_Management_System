@@ -1,3 +1,4 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { useContext, useEffect } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import {
@@ -11,6 +12,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { cn } from 'cn'
 import { Badge } from '@/components/ui/badge'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import dayjs from 'dayjs'
 import { Eye, MoreHorizontal, Pencil } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -39,6 +42,15 @@ const AssignPermissionListTable = () => {
         fetchPermissionMappingList(permissionMappingSkip, permissionMappingTake)
     }, [permissionMappingSkip, permissionMappingTake, fetchPermissionMappingList])
 
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<rolePermissionMappingType>(permissionMappingList, {
+        roleCode: (row) => row.role?.roleCode ?? '',
+        roleName: (row) => row.role?.roleName ?? '',
+        permissionCode: (row) => row.permission?.permissionCode ?? '',
+        permissionName: (row) => row.permission?.permissionName ?? '',
+        permissionStatus: (row) => row.permission?.isActive ?? false,
+        assignedOn: (row) => (row.createdAt ? new Date(row.createdAt) : null)
+    })
+
     const noOfPages = Math.ceil(totalPermissionMappings / permissionMappingTake)
 
     const handlePrevious = () => {
@@ -60,12 +72,12 @@ const AssignPermissionListTable = () => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Role Code</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Role Name</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Permission Code</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Permission Name</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Assigned On</TableHead>
+                        <SortableTableHead label="Role Code" sortKey="roleCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Role Name" sortKey="roleName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Permission Code" sortKey="permissionCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Permission Name" sortKey="permissionName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Status" sortKey="permissionStatus" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Assigned On" sortKey="assignedOn" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -76,7 +88,7 @@ const AssignPermissionListTable = () => {
                             <TableCell colSpan={8} className='text-center text-muted-foreground'>No permission is assigned</TableCell>
                         </TableRow>
                     ) : (
-                        permissionMappingList.map((mapping: rolePermissionMappingType, idx: number) => (
+                        sortedData.map((mapping: rolePermissionMappingType, idx: number) => (
                             <TableRow key={mapping.id}>
                                 <TableCell className='text-left font-medium'>{permissionMappingSkip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium font-mono'>{mapping?.role?.roleCode}</TableCell>
@@ -136,7 +148,7 @@ const AssignPermissionListTable = () => {
                             <PaginationPrevious />
                         </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => {
+                        {getVisiblePageIndices(permissionMappingSkip, permissionMappingTake, noOfPages).map((i) => {
                             const pageNext = i * permissionMappingTake
                             return (
                                 <PaginationItem key={i}>

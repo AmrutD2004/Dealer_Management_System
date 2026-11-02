@@ -1,5 +1,8 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { activateTenantBranch, getTenantBranchList, deactivateTenantBranch } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
 import { AuthContext } from '@/Contexts/AuthContext'
 import { type branchListType } from '@/Types/tenantCreateType'
@@ -24,6 +27,7 @@ import { EditBranchModal } from '../Modals/EditBranchModal'
 const BranchListTable = () => {
     const { branchList, skip, take, setSkip, totalBranches, selectedBranch, viewBranchModalOpen, editBranchModalOpen, openViewBranch, openEditBranch, closeAllModals, fetchTenantBranchList } = useContext(TenantContext)
     const noOfPages = Math.ceil(totalBranches / take)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<branchListType>(branchList)
     const handleDeactive = async (id: number) => {
         try {
             const data = await deactivateTenantBranch(Number(id))
@@ -76,11 +80,11 @@ const BranchListTable = () => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className="text-left text-muted-foreground">Branch Name</TableHead>
-                        <TableHead className='text-left font-medium text-muted-foreground'>Branch Code</TableHead>
-                        <TableHead className='text-center text-muted-foreground'>Contact</TableHead>
-                        <TableHead className="text-center text-muted-foreground">City</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
+                        <SortableTableHead label="Branch Name" sortKey="branchName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Branch Code" sortKey="branchCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Contact" sortKey="phone" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="City" sortKey="city" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -91,7 +95,7 @@ const BranchListTable = () => {
                             No branches is created
                         </TableRow>
                     ) : (
-                        branchList.map((branch: branchListType, idx: number) => (
+                        sortedData.map((branch: branchListType, idx: number) => (
                             <TableRow key={branch.id}>
                                 <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium'>{branch.branchName}</TableCell>
@@ -157,7 +161,7 @@ const BranchListTable = () => {
                             <PaginationPrevious />
                         </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => {
+                        {getVisiblePageIndices(skip, take, noOfPages).map((i) => {
                             const pageNext = i * take
                             return (
                                 <PaginationItem>

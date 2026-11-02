@@ -1,5 +1,8 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { activateDesignation, deactivateDesignation } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
 import { type designationListType } from '@/Types/tenantCreateType'
 import { useContext, useEffect } from 'react'
@@ -28,6 +31,7 @@ const DesignationListTable = () => {
     }, [designationSkip, designationTake, fetchDesignationList])
 
     const noOfPages = Math.ceil(totalDesignations / designationTake)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<designationListType>(designationList)
 
     const handleDeactive = async (id: number) => {
         try {
@@ -84,11 +88,11 @@ const DesignationListTable = () => {
                 <TableHeader>
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Designation Code</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Designation Name</TableHead>
-                        <TableHead className='text-left text-muted-foreground'>Description</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Mechanic</TableHead>
-                        <TableHead className="text-center text-muted-foreground">Status</TableHead>
+                        <SortableTableHead label="Designation Code" sortKey="code" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Designation Name" sortKey="name" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Description" sortKey="description" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Mechanic" sortKey="isMechanic" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                        <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -99,7 +103,7 @@ const DesignationListTable = () => {
                             <TableCell colSpan={7} className='text-center text-muted-foreground'>No designations is created</TableCell>
                         </TableRow>
                     ) : (
-                        designationList.map((designation: designationListType, idx: number) => (
+                        sortedData.map((designation: designationListType, idx: number) => (
                             <TableRow key={designation.id}>
                                 <TableCell className='text-left font-medium'>{designationSkip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium'>{designation.code}</TableCell>
@@ -166,7 +170,7 @@ const DesignationListTable = () => {
                             <PaginationPrevious />
                         </Button>
                         </PaginationItem>
-                        {[...Array(noOfPages).keys()].map((i) => {
+                        {getVisiblePageIndices(designationSkip, designationTake, noOfPages).map((i) => {
                             const pageNext = i * designationTake
                             return (
                                 <PaginationItem key={i}>

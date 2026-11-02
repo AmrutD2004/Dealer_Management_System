@@ -1,6 +1,9 @@
+import { getVisiblePageIndices } from '@/lib/pagination'
 import { getJobCardList } from '@/api/endpoints'
 import type { jobCardListType } from '@/Types/tenantCreateType'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import SortableTableHead from '@/components/ui/sortable-table-head'
+import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -18,8 +21,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
-import dayjs from 'dayjs'
 import { Eye, MoreHorizontal, Pencil } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { ViewJobCardModal } from './Modals/ViewJobCardModal'
@@ -41,6 +42,13 @@ const JobCardListTable = ({ refreshKey = 0 }: JobCardListTableProps) => {
     const [reloadKey, setReloadKey] = useState(0)
 
     const noOfPages = Math.ceil(totalJobCards / TAKE)
+    const pageCount = Math.max(noOfPages, 1)
+    const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort(jobCardList, {
+        customerName: (jobCard) => jobCard.customer ? `${jobCard.customer.firstName} ${jobCard.customer.lastName}` : '',
+        vehicleName: (jobCard) => jobCard.vehicle?.vehicleNumber || jobCard.vehicle?.chassisNumber || '',
+        serviceName: (jobCard) => `${jobCard.serviceCategory?.name ?? ''} ${jobCard.serviceType?.name ?? ''}`,
+        repairOrderName: (jobCard) => jobCard.repairOrderType?.name ?? '',
+    })
 
     useEffect(() => {
         const load = async () => {
@@ -94,13 +102,13 @@ const JobCardListTable = ({ refreshKey = 0 }: JobCardListTableProps) => {
                     <TableHeader>
                         <TableRow className='border-b bg-muted/40 hover:bg-muted/40'>
                             <TableHead className='w-16 text-center text-muted-foreground'>Sr No.</TableHead>
-                            <TableHead className='text-muted-foreground'>Job Card No.</TableHead>
-                            <TableHead className='text-muted-foreground'>Customer</TableHead>
-                            <TableHead className='text-muted-foreground'>Vehicle</TableHead>
-                            <TableHead className='text-muted-foreground'>Service</TableHead>
-                            <TableHead className='text-muted-foreground'>Repair Order</TableHead>
-                            <TableHead className='text-center text-muted-foreground'>Vehicle Status</TableHead>
-                            <TableHead className='text-center text-muted-foreground'>Status</TableHead>
+                            <SortableTableHead label="Job Card No." sortKey="jobCardNo" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                            <SortableTableHead label="Customer" sortKey="customerName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                            <SortableTableHead label="Vehicle" sortKey="vehicleName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                            <SortableTableHead label="Service" sortKey="serviceName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                            <SortableTableHead label="Repair Order" sortKey="repairOrderName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                            <SortableTableHead label="Vehicle Status" sortKey="vehicleStatus" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
+                            <SortableTableHead label="Status" sortKey="status" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                             {/* <TableHead className='text-muted-foreground'>Est. Close</TableHead> */}
                             <TableHead className='w-20 text-right text-muted-foreground'>Action</TableHead>
                         </TableRow>
@@ -114,7 +122,7 @@ const JobCardListTable = ({ refreshKey = 0 }: JobCardListTableProps) => {
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            jobCardList.map((jobCard, idx) => (
+                            sortedData.map((jobCard, idx) => (
                                 <TableRow key={jobCard.id} className='hover:bg-muted/40'>
                                     <TableCell className='text-center font-medium text-muted-foreground'>{skip + idx + 1}</TableCell>
                                     <TableCell className='font-semibold text-foreground'>{jobCard.jobCardNo}</TableCell>
@@ -186,7 +194,7 @@ const JobCardListTable = ({ refreshKey = 0 }: JobCardListTableProps) => {
                     <TableCaption className='pb-4'>A list of job cards.</TableCaption>
                 </Table>
             </div>
-            {noOfPages > 1 && (
+            {pageCount > 0 && (
                 <div className="mt-6 flex w-full items-center justify-center gap-4">
                     <Pagination>
                         <PaginationContent>
@@ -199,7 +207,7 @@ const JobCardListTable = ({ refreshKey = 0 }: JobCardListTableProps) => {
                                     <PaginationPrevious />
                                 </Button>
                             </PaginationItem>
-                            {[...Array(noOfPages).keys()].map((i) => {
+                            {getVisiblePageIndices(skip, TAKE, pageCount).map((i) => {
                                 const pageNext = i * TAKE
                                 return (
                                     <PaginationItem key={i}>

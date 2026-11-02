@@ -629,7 +629,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                         </Button>
                     </div>
                     <div className="rounded border">
-                        <Table className="[&_th]:border-r [&_th]:border-slate-200 [&_th]:h-7 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0 [&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0">
+                        <Table className="table-fixed [&_th]:border-r [&_th]:border-slate-200 [&_th]:h-7 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0 [&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0">
                             <TableHeader>
                                 <TableRow>
                                     <TableHead className="w-[200px]">Action To Be Taken <span className="text-red-500">*</span></TableHead>
@@ -664,7 +664,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                                 placeholder="Describe what the customer reported"
                                                 value={voice.customerVoiceDescription}
                                                 onChange={(e) => handleCustomerVoiceChange(index, "customerVoiceDescription", e.target.value)}
-                                                className="min-h-[48px] rounded-none px-2 py-1 text-xs"
+                                                className="h-[48px] min-h-[48px] resize-none field-sizing-fixed rounded-none px-2 py-1 text-xs"
                                             />
                                         </TableCell>
                                         <TableCell className="align-top">
@@ -672,7 +672,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                                 placeholder="Observation noted"
                                                 value={voice.observation}
                                                 onChange={(e) => handleCustomerVoiceChange(index, "observation", e.target.value)}
-                                                className="min-h-[48px] rounded-none px-2 py-1 text-xs"
+                                                className="h-[48px] min-h-[48px] resize-none field-sizing-fixed rounded-none px-2 py-1 text-xs"
                                             />
                                         </TableCell>
                                         <TableCell className="align-top text-right">
