@@ -5,8 +5,10 @@ import {
   getPartMasterList,
   getRepairOrderList,
   getServiceCategoryList,
+  getServiceQuotationById,
   getServiceTypeList,
   getVehicleList,
+  searchedServiceQuotation,
   updateServiceQuotation,
 } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
@@ -51,8 +53,10 @@ import type {
 import type { repairOrderListType } from "@/Types/tenantCreateType"
 import type { customerListType } from "@/Types/tenantCreateType"
 import type { serviceQuotationListType } from "@/Types/serviceQuotationType"
-import { ChevronsUpDown, Loader2, Plus, Trash2 } from "lucide-react"
+import { ChevronsUpDown, Loader2, Plus, Trash2, X } from "lucide-react"
 import { useEffect, useState } from "react"
+import { ViewServiceQuotationModal } from "./Modals/ViewServiceQuotationModal"
+import { cn } from "cn"
 
 interface VehicleOption {
   id: number
@@ -93,10 +97,7 @@ const actionOptions = [
 
 const statusOptions = [
   { value: "DRAFT", label: "Draft" },
-  { value: "INPROGRESS", label: "In Progress" },
   { value: "APPROVED", label: "Approved" },
-  { value: "COMPLETED", label: "Completed" },
-  { value: "GENERATED", label: "Generated" },
   { value: "REJECTED", label: "Rejected" },
 ]
 
@@ -149,38 +150,38 @@ interface ServiceQuotationCreateFormProps {
 const getInitialFormData = (quotation?: serviceQuotationListType | null) =>
   quotation
     ? {
-        action: quotation.action,
-        status: quotation.status,
-        customerId: String(quotation.customerId),
-        vehicleId: String(quotation.vehicleId),
-        currentReading: String(quotation.currentReading),
-        serviceCategoryId: String(quotation.serviceCategoryId),
-        serviceTypeId: String(quotation.serviceTypeId),
-        repairOrderTypeId: String(quotation.repairOrderTypeId),
-        insurancePartyName: quotation.insurancePartyName ?? "",
-        originalQuotationId: quotation.originalQuotationId
-          ? String(quotation.originalQuotationId)
-          : "",
-      }
+      action: quotation.action,
+      status: quotation.status,
+      customerId: String(quotation.customerId),
+      vehicleId: String(quotation.vehicleId),
+      currentReading: String(quotation.currentReading),
+      serviceCategoryId: String(quotation.serviceCategoryId),
+      serviceTypeId: String(quotation.serviceTypeId),
+      repairOrderTypeId: String(quotation.repairOrderTypeId),
+      insurancePartyName: quotation.insurancePartyName ?? "",
+      originalQuotationId: quotation.originalQuotationId
+        ? String(quotation.originalQuotationId)
+        : "",
+    }
     : initialFormData
 
 const getInitialParts = (quotation?: serviceQuotationListType | null) =>
   quotation?.serviceQuotationParts?.length
     ? quotation.serviceQuotationParts.map((part) => ({
-        partId: String(part.partId),
-        quantity: String(part.quantity),
-        discountType: part.discountType,
-        discountRate: String(part.discountRate),
-      }))
+      partId: String(part.partId),
+      quantity: String(part.quantity),
+      discountType: part.discountType,
+      discountRate: String(part.discountRate),
+    }))
     : [{ ...emptyPartLine }]
 
 const getInitialLabours = (quotation?: serviceQuotationListType | null) =>
   quotation?.serviceQuotationLabours?.length
     ? quotation.serviceQuotationLabours.map((labour) => ({
-        labourId: String(labour.labourId),
-        discountType: labour.discountType,
-        discountRate: String(labour.discountRate),
-      }))
+      labourId: String(labour.labourId),
+      discountType: labour.discountType,
+      discountRate: String(labour.discountRate),
+    }))
     : [{ ...emptyLabourLine }]
 
 const getInitialCustomerVoices = (
@@ -188,9 +189,9 @@ const getInitialCustomerVoices = (
 ) =>
   quotation?.serviceQuotationCustomerVoices?.length
     ? quotation.serviceQuotationCustomerVoices.map((voice) => ({
-        customerVoice: voice.customerVoice,
-        source: voice.source,
-      }))
+      customerVoice: voice.customerVoice,
+      source: voice.source,
+    }))
     : [{ ...emptyVoiceLine }]
 
 export function ServiceQuotationCreateForm({
@@ -227,7 +228,16 @@ export function ServiceQuotationCreateForm({
   const [findedCustomers, setFindedCustomers] = useState<customerListType[]>([])
   const [selectedCustomer, setSelectedCustomer] =
     useState<customerListType | null>(quotation?.customer ?? null)
-
+  const [openView, setOpenView] = useState<boolean>(false)
+  const [createdQuotation, setCreatedQuotation] = useState<serviceQuotationListType | null>(null)
+  const [supplementOpen, setSupplementOpen] = useState<boolean>(false)
+  const [findedQuotation, setFindedQuotation] = useState<serviceQuotationListType[]>([])
+  const [searchQuotation, setSearchQuotation] = useState<string>("")
+const [selectedQuotation, setSelectedQuotation] =
+  useState<serviceQuotationListType | null>(
+    quotation?.originalQuotation ?? null
+  );
+  
   useEffect(() => {
     const load = async () => {
       try {
@@ -316,17 +326,39 @@ export function ServiceQuotationCreateForm({
     return () => clearTimeout(timer)
   }, [searchCustomer])
 
+  useEffect(() => {
+    const handleSearch = async (query: string) => {
+      const searchTerm = query.trim()
+      if (!searchTerm) {
+        setFindedQuotation([])
+        return
+      }
+      try {
+        const response = await searchedServiceQuotation(searchTerm)
+        setFindedQuotation(response?.success ? (response.data ?? []) : [])
+      } catch {
+        setFindedQuotation([])
+      }
+    }
+
+    const timer = setTimeout(() => {
+      handleSearch(searchQuotation)
+    }, 800)
+
+    return () => clearTimeout(timer)
+  }, [searchQuotation])
+
   const filteredVehicles = formData.customerId
     ? vehicles.filter(
-        (v) =>
-          String(v.customerId) === formData.customerId && v.isActive === true
-      )
+      (v) =>
+        String(v.customerId) === formData.customerId && v.isActive === true
+    )
     : vehicles.filter((v) => v.isActive === true)
 
   const filteredServiceTypes = formData.serviceCategoryId
     ? serviceTypes.filter(
-        (s) => String(s.serviceCategoryMasterId) === formData.serviceCategoryId
-      )
+      (s) => String(s.serviceCategoryMasterId) === formData.serviceCategoryId
+    )
     : serviceTypes
 
   const activeParts = partsMaster.filter((p) => p.status === "ACTIVE")
@@ -338,7 +370,6 @@ export function ServiceQuotationCreateForm({
     if (
       !formData.customerId ||
       !formData.vehicleId ||
-      !formData.currentReading ||
       !formData.serviceCategoryId ||
       !formData.serviceTypeId ||
       !formData.repairOrderTypeId
@@ -437,17 +468,14 @@ export function ServiceQuotationCreateForm({
           description: data?.message,
         })
         if (quotation) {
-          setTimeout(() => {
-            onUpdated?.()
-          }, 1000)
+          onUpdated?.()
         } else {
+          setCreatedQuotation(data?.result)
+          setOpenView(true)
           setFormData(initialFormData)
           setParts([{ ...emptyPartLine }])
           setLabours([{ ...emptyLabourLine }])
           setCustomerVoices([{ ...emptyVoiceLine }])
-          setTimeout(() => {
-            onCreated?.()
-          }, 1500)
         }
       }
       if (!data?.success) {
@@ -466,680 +494,819 @@ export function ServiceQuotationCreateForm({
       setLoading(false)
     }
   }
+  const handleSelectOriginalQuotation = async (quotationId: number) => {
+  try {
+    setLoading(true)
+
+    const response = await getServiceQuotationById(quotationId)
+
+    if (!response?.success || !response?.data) {
+      toast.add({
+        type: "error",
+        description: "Unable to fetch original quotation details",
+      })
+      return
+    }
+
+    const original = response.data
+
+    // Populate quotation details
+    setFormData((prev) => ({
+      ...prev,
+
+      // Keep the new quotation as a supplement
+      action: "SUPPLEMENT",
+      status: "DRAFT",
+
+      originalQuotationId: String(original.id),
+
+      customerId: String(original.customerId),
+      vehicleId: String(original.vehicleId),
+      currentReading: String(original.currentReading ?? ""),
+
+      serviceCategoryId: String(original.serviceCategoryId),
+      serviceTypeId: String(original.serviceTypeId),
+      repairOrderTypeId: String(original.repairOrderTypeId),
+
+      insurancePartyName: original.insurancePartyName ?? "",
+    }))
+
+    // Populate customer
+    setSelectedCustomer(original.customer ?? null)
+
+    // Populate parts
+    setParts(getInitialParts(original))
+
+    // Populate labours
+    setLabours(getInitialLabours(original))
+
+    // Populate customer voices
+    setCustomerVoices(getInitialCustomerVoices(original))
+
+    // Update selected quotation display
+    setSelectedQuotation(original)
+
+    setSupplementOpen(false)
+    setSearchQuotation("")
+
+  } catch (error) {
+    console.error("Error loading original quotation:", error)
+
+    toast.add({
+      type: "error",
+      description: "Failed to load original quotation details",
+    })
+  } finally {
+    setLoading(false)
+  }
+}
 
   return (
-    <form id="service-quotation-form" onSubmit={handleSubmit}>
-      <div className="space-y-4 py-3">
-        <div>
-          <div className="mb-2 bg-muted/40 px-2 py-1">
-            <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-              Quotation Details
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-              <FieldLabel className="text-xs font-medium">
-                Action <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Select
-                items={actionOptions}
-                value={formData.action || null}
-                onValueChange={(value) =>
-                  setFormData((prev) => ({ ...prev, action: value ?? "NEW" }))
-                }
-                required
-              >
-                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                  <SelectValue placeholder="Select action" />
-                </SelectTrigger>
-                <SelectContent align="start" alignItemWithTrigger={false}>
-                  {actionOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+    <>
+
+      <form id="service-quotation-form" onSubmit={handleSubmit}>
+        <div className="space-y-4 py-3">
+          <div>
+            <div className="mb-2 bg-muted/40 px-2 py-1">
+              <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+                Quotation Details
+              </h3>
             </div>
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-              <FieldLabel className="text-xs font-medium">
-                Status <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Select
-                items={statusOptions}
-                value={formData.status || null}
-                onValueChange={(value) =>
-                  setFormData((prev) => ({ ...prev, status: value ?? "DRAFT" }))
-                }
-                required
-              >
-                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent align="start" alignItemWithTrigger={false}>
-                  {statusOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            {formData.action === "SUPPLEMENT" && (
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
               <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                 <FieldLabel className="text-xs font-medium">
-                  Original Quotation <span className="text-red-500">*</span>
+                  Action <span className="text-red-500">*</span>
+                </FieldLabel>
+                <Select
+                  items={actionOptions}
+                  value={formData.action || null}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, action: value ?? "NEW" }))
+                  }
+                  required
+                >
+                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                    <SelectValue placeholder="Select action" />
+                  </SelectTrigger>
+                  <SelectContent align="start" alignItemWithTrigger={false}>
+                    {actionOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                <FieldLabel className="text-xs font-medium">
+                  Status <span className="text-red-500">*</span>
+                </FieldLabel>
+                <Select
+                  items={statusOptions}
+                  value={formData.status || null}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, status: value ?? "DRAFT" }))
+                  }
+                  required
+                >
+                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent align="start" alignItemWithTrigger={false}>
+                    {statusOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {formData.action === "SUPPLEMENT" && (
+                <div>
+                  <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                    <FieldLabel className="text-xs font-medium">
+                      Original Quotation <span className="text-red-500">*</span>
+                    </FieldLabel>
+
+                    <Popover
+                      open={supplementOpen}
+                      onOpenChange={setSupplementOpen}
+                    >
+                      <div className="w-full relative">
+                        <PopoverTrigger className={cn('w-full')}>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={supplementOpen}
+                          className="h-7 w-full justify-between rounded-none px-2 text-xs font-normal "
+                        >
+                          {selectedQuotation ? selectedQuotation?.quotationNo : "Select Quotation"}
+                        </Button>
+                        {selectedQuotation?.quotationNo && <Button variant={'ghost'} size={'icon-sm'} className={cn('absolute rounded-full right-0')} onClick={() => setSelectedQuotation(null)}><X className="text-muted-foreground"/></Button>}
+                      </PopoverTrigger>
+                      </div>
+
+                      <PopoverContent align="center" className="p-0 w-full">
+                        <Command shouldFilter={false} className="w-full">
+                          <CommandInput
+                            placeholder="Enter Quotation No..."
+                            value={searchQuotation}
+                            onValueChange={setSearchQuotation}
+                            className="h-8 text-xs w-full"
+                          />
+
+                          <CommandList>
+                            {findedQuotation.length === 0 ? (
+                              <CommandEmpty className="py-3 text-xs">
+                                No Quotation found.
+                              </CommandEmpty>
+                            ) : (
+                              <CommandGroup>
+                                {findedQuotation.map((c) => (
+                                  <CommandItem
+                                    key={c.id}
+                                    value={String(c.id)}
+                                    onSelect={() => handleSelectOriginalQuotation(c.id)}
+                                    className="text-xs"
+                                  >
+                                    {c.quotationNo}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            )}
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  {selectedQuotation && (
+                    <div className="mt-2 text-xs text-muted-foreground">
+                      The quotation was created on:{" "}
+                      {new Date(selectedQuotation.createdAt).toLocaleDateString("en-IN")}
+                    </div>
+                  )}
+                </div>
+              )}
+
+
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
+                <FieldLabel className="text-xs font-medium">
+                  Insurance Party
                 </FieldLabel>
                 <Input
-                  name="originalQuotationId"
-                  type="number"
-                  placeholder="Original quotation id"
-                  required
-                  value={formData.originalQuotationId}
+                  name="insurancePartyName"
+                  placeholder="Insurance party name"
+                  value={formData.insurancePartyName}
                   onChange={handleChange}
                   className="h-7 rounded-none px-2 text-xs"
                 />
               </div>
-            )}
-            
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
-              <FieldLabel className="text-xs font-medium">
-                Insurance Party
-              </FieldLabel>
-              <Input
-                name="insurancePartyName"
-                placeholder="Insurance party name"
-                value={formData.insurancePartyName}
-                onChange={handleChange}
-                className="h-7 rounded-none px-2 text-xs"
-              />
             </div>
           </div>
-        </div>
 
-        <div>
-          <div className="mb-2 bg-muted/40 px-2 py-1">
-            <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-              Customer & Vehicle
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-              <FieldLabel className="text-xs font-medium">
-                Customer <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Popover open={customerOpen} onOpenChange={setCustomerOpen}>
-                <PopoverTrigger>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={customerOpen}
-                    className="h-7 w-full justify-between rounded-none px-2 text-xs font-normal"
-                  >
-                    {selectedCustomer
-                      ? `${selectedCustomer.firstName} ${selectedCustomer.lastName} - ${selectedCustomer.mobileNo}`
-                      : "Select customer"}
-                    <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent align="center" className="p-0 md:w-md lg:w-117">
-                  <Command shouldFilter={false}>
-                    <CommandInput
-                      placeholder="Enter customer name or mobile..."
-                      value={searchCustomer}
-                      onValueChange={setSearchCustomer}
-                      className="h-8 text-xs"
-                    />
-                    <CommandList>
-                      {findedCustomers.length === 0 ? (
-                        <CommandEmpty className="py-3 text-xs">
-                          No customers found.
-                        </CommandEmpty>
-                      ) : (
-                        <CommandGroup>
-                          {findedCustomers.map((c) => (
-                            <CommandItem
-                              key={c.id}
-                              value={String(c.id)}
-                              onSelect={() => {
-                                setFormData((prev) => ({
-                                  ...prev,
-                                  customerId: String(c.id),
-                                  vehicleId: "",
-                                  currentReading: "",
-                                }))
-                                setCustomerOpen(false)
-                                setSearchCustomer("")
-                                setSelectedCustomer(c);
-                              }}
-                              className="text-xs"
-                            >
-                              {c.firstName} {c.lastName} - {c.mobileNo}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      )}
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-              <FieldLabel className="text-xs font-medium">
-                Vehicle <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Select
-                disabled={!formData.customerId}
-                items={filteredVehicles.map((v) => ({
-                  value: String(v.id),
-                  label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName ?? ""} ${v.model?.modelName ?? ""} ${v.variant?.variantName ?? ""}`,
-                }))}
-                value={formData.vehicleId || null}
-                onValueChange={(value) => {
-                  const selectedVehicle = filteredVehicles.find(
-                    (v) => String(v.id) === value
-                  )
-                  setFormData((prev) => ({
-                    ...prev,
-                    vehicleId: value ?? "",
-                    currentReading: selectedVehicle
-                      ? String(selectedVehicle.currentOdometerReading)
-                      : "",
-                  }))
-                }}
-                required
-              >
-                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                  <SelectValue placeholder="Select vehicle" />
-                </SelectTrigger>
-                <SelectContent align="start" alignItemWithTrigger={false}>
-                  {filteredVehicles.map((v) => (
-                    <SelectItem key={v.id} value={String(v.id)}>
-                      {v.vehicleNumber || v.chassisNumber} -{" "}
-                      {v.brand?.brandName} {v.model?.modelName}{" "}
-                      {v.variant?.variantName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-              <FieldLabel className="text-xs font-medium">
-                Current Reading <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Input
-                name="currentReading"
-                type="number"
-                placeholder="Current KM reading"
-                required
-                value={formData.currentReading}
-                onChange={handleChange}
-                className="h-7 rounded-none px-2 text-xs"
-              />
-            </div>
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-              <FieldLabel className="text-xs font-medium">
-                Service Category <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Select
-                items={serviceCategories.map((s) => ({
-                  value: String(s.id),
-                  label: s.name,
-                }))}
-                value={formData.serviceCategoryId || null}
-                onValueChange={(value) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    serviceCategoryId: value ?? "",
-                    serviceTypeId: "",
-                  }))
-                }
-                required
-              >
-                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent align="start" alignItemWithTrigger={false}>
-                  {serviceCategories.map((s) => (
-                    <SelectItem key={s.id} value={String(s.id)}>
-                      {s.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-              <FieldLabel className="text-xs font-medium">
-                Service Type <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Select
-                disabled={!formData.serviceCategoryId}
-                items={filteredServiceTypes.map((s) => ({
-                  value: String(s.id),
-                  label: s.name,
-                }))}
-                value={formData.serviceTypeId || null}
-                onValueChange={(value) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    serviceTypeId: value ?? "",
-                  }))
-                }
-                required
-              >
-                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent align="start" alignItemWithTrigger={false}>
-                  {filteredServiceTypes.map((s) => (
-                    <SelectItem key={s.id} value={String(s.id)}>
-                      {s.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-              <FieldLabel className="text-xs font-medium">
-                Repair Order Type <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Select
-                items={repairOrders.map((r) => ({
-                  value: String(r.id),
-                  label: r.name,
-                }))}
-                value={formData.repairOrderTypeId || null}
-                onValueChange={(value) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    repairOrderTypeId: value ?? "",
-                  }))
-                }
-                required
-              >
-                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent align="start" alignItemWithTrigger={false}>
-                  {repairOrders.map((r) => (
-                    <SelectItem key={r.id} value={String(r.id)}>
-                      {r.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
-            <div>
+          <div>
+            <div className="mb-2 bg-muted/40 px-2 py-1">
               <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                Parts
+                Customer & Vehicle
               </h3>
-              <p className="text-[11px] text-muted-foreground">
-                Rates and taxes are resolved from the part master.
-              </p>
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="h-6 gap-1 px-2 text-xs"
-              onClick={() =>
-                setParts((prev) => [...prev, { ...emptyPartLine }])
-              }
-            >
-              <Plus className="h-3 w-3" />
-              Add Part
-            </Button>
+            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                <FieldLabel className="text-xs font-medium">
+                  Customer <span className="text-red-500">*</span>
+                </FieldLabel>
+                <Popover open={customerOpen} onOpenChange={setCustomerOpen}>
+                  <PopoverTrigger>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={customerOpen}
+                      className="h-7 w-full justify-between rounded-none px-2 text-xs font-normal"
+                    >
+                      {selectedCustomer
+                        ? `${selectedCustomer.firstName} ${selectedCustomer.lastName} - ${selectedCustomer.mobileNo}`
+                        : "Select customer"}
+                      <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent align="center" className="p-0 md:w-md lg:w-117">
+                    <Command shouldFilter={false}>
+                      <CommandInput
+                        placeholder="Enter customer name or mobile..."
+                        value={searchCustomer}
+                        onValueChange={setSearchCustomer}
+                        className="h-8 text-xs"
+                      />
+                      <CommandList>
+                        {findedCustomers.length === 0 ? (
+                          <CommandEmpty className="py-3 text-xs">
+                            No customers found.
+                          </CommandEmpty>
+                        ) : (
+                          <CommandGroup>
+                            {findedCustomers.map((c) => (
+                              <CommandItem
+                                key={c.id}
+                                value={String(c.id)}
+                                onSelect={() => {
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    customerId: String(c.id),
+                                    vehicleId: "",
+                                    currentReading: "",
+                                  }))
+
+                                  setParts((prev) =>
+                                    prev.map((line) => ({
+                                      ...line,
+                                      discountRate: String(c.partDiscountPercent ?? 0),
+                                    }))
+                                  )
+
+                                  setLabours((prev) =>
+                                    prev.map((line) => ({
+                                      ...line,
+                                      discountRate: String(c.laborDiscountPercent ?? 0),
+                                    }))
+                                  )
+
+                                  setCustomerOpen(false)
+                                  setSearchCustomer("")
+                                  setSelectedCustomer(c)
+                                }}
+                                className="text-xs"
+                              >
+                                {c.firstName} {c.lastName} - {c.mobileNo}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        )}
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                <FieldLabel className="text-xs font-medium">
+                  Vehicle <span className="text-red-500">*</span>
+                </FieldLabel>
+                <Select
+                  disabled={!formData.customerId}
+                  items={filteredVehicles.map((v) => ({
+                    value: String(v.id),
+                    label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName ?? ""} ${v.model?.modelName ?? ""} ${v.variant?.variantName ?? ""}`,
+                  }))}
+                  value={formData.vehicleId || null}
+                  onValueChange={(value) => {
+                    const selectedVehicle = filteredVehicles.find(
+                      (v) => String(v.id) === value
+                    )
+                    setFormData((prev) => ({
+                      ...prev,
+                      vehicleId: value ?? "",
+                    }))
+                  }}
+                  required
+                >
+                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                    <SelectValue placeholder="Select vehicle" />
+                  </SelectTrigger>
+                  <SelectContent align="start" alignItemWithTrigger={false}>
+                    {filteredVehicles.map((v) => (
+                      <SelectItem key={v.id} value={String(v.id)}>
+                        {v.vehicleNumber || v.chassisNumber} -{" "}
+                        {v.brand?.brandName} {v.model?.modelName}{" "}
+                        {v.variant?.variantName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                <FieldLabel className="text-xs font-medium">
+                  Current Reading
+                </FieldLabel>
+                <Input
+                  name="currentReading"
+                  type="text"
+                  placeholder="Current KM reading"
+                  value={formData.currentReading}
+                  onChange={handleChange}
+                  className="h-7 rounded-none px-2 text-xs"
+                />
+              </div>
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                <FieldLabel className="text-xs font-medium">
+                  Service Category <span className="text-red-500">*</span>
+                </FieldLabel>
+                <Select
+                  items={serviceCategories.map((s) => ({
+                    value: String(s.id),
+                    label: s.name,
+                  }))}
+                  value={formData.serviceCategoryId || null}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      serviceCategoryId: value ?? "",
+                      serviceTypeId: "",
+                    }))
+                  }
+                  required
+                >
+                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent align="start" alignItemWithTrigger={false}>
+                    {serviceCategories.map((s) => (
+                      <SelectItem key={s.id} value={String(s.id)}>
+                        {s.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                <FieldLabel className="text-xs font-medium">
+                  Service Type <span className="text-red-500">*</span>
+                </FieldLabel>
+                <Select
+                  disabled={!formData.serviceCategoryId}
+                  items={filteredServiceTypes.map((s) => ({
+                    value: String(s.id),
+                    label: s.name,
+                  }))}
+                  value={formData.serviceTypeId || null}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      serviceTypeId: value ?? "",
+                    }))
+                  }
+                  required
+                >
+                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent align="start" alignItemWithTrigger={false}>
+                    {filteredServiceTypes.map((s) => (
+                      <SelectItem key={s.id} value={String(s.id)}>
+                        {s.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                <FieldLabel className="text-xs font-medium">
+                  Repair Order Type <span className="text-red-500">*</span>
+                </FieldLabel>
+                <Select
+                  items={repairOrders.map((r) => ({
+                    value: String(r.id),
+                    label: r.name,
+                  }))}
+                  value={formData.repairOrderTypeId || null}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      repairOrderTypeId: value ?? "",
+                    }))
+                  }
+                  required
+                >
+                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent align="start" alignItemWithTrigger={false}>
+                    {repairOrders.map((r) => (
+                      <SelectItem key={r.id} value={String(r.id)}>
+                        {r.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
-          <div className="rounded border">
-            <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Part</TableHead>
-                  <TableHead className="w-[200px]">Quantity</TableHead>
-                  <TableHead className="w-[200px]">Discount Type</TableHead>
-                  <TableHead className="w-[200px]">Discount</TableHead>
-                  <TableHead className="w-[60px] text-right">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {parts.map((line, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="align-top">
-                      <Select
-                        items={activeParts.map((p) => ({
-                          value: String(p.id),
-                          label: `${p.partNo} - ${p.partDescription}`,
-                        }))}
-                        value={line.partId || null}
-                        onValueChange={(value) =>
-                          updatePart(index, "partId", value ?? "")
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select part" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
+
+          <div>
+            <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
+              <div>
+                <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+                  Parts
+                </h3>
+                <p className="text-[11px] text-muted-foreground">
+                  Rates and taxes are resolved from the part master.
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-6 gap-1 px-2 text-xs"
+                onClick={() =>
+                  setParts((prev) => [...prev, { ...emptyPartLine }])
+                }
+              >
+                <Plus className="h-3 w-3" />
+                Add Part
+              </Button>
+            </div>
+            <div className="rounded border">
+              <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Part</TableHead>
+                    <TableHead className="w-[200px]">Quantity</TableHead>
+                    <TableHead className="w-[200px]">Discount Type</TableHead>
+                    <TableHead className="w-[200px]">Discount</TableHead>
+                    <TableHead className="w-[60px] text-right">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {parts.map((line, index) => (
+                    <TableRow key={index}>
+                      <TableCell className="align-top">
+                        <Select
+                          items={activeParts.map((p) => ({
+                            value: String(p.id),
+                            label: `${p.partNo} - ${p.partDescription}`,
+                          }))}
+                          value={line.partId || null}
+                          onValueChange={(value) =>
+                            updatePart(index, "partId", value ?? "")
+                          }
                         >
-                          {activeParts.map((p) => (
-                            <SelectItem key={p.id} value={String(p.id)}>
-                              {p.partNo} - {p.partDescription}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Input
-                        type="number"
-                        min={1}
-                        value={line.quantity}
-                        onChange={(e) =>
-                          updatePart(index, "quantity", e.target.value)
-                        }
-                        className="h-7 rounded-none px-2 text-xs"
-                      />
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Select
-                        items={discountTypeOptions}
-                        value={line.discountType || null}
-                        onValueChange={(value) =>
-                          updatePart(
-                            index,
-                            "discountType",
-                            value ?? "PERCENTAGE"
-                          )
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
-                        >
-                          {discountTypeOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Input
-                        type="number"
-                        min={0}
-                        value={line.discountRate}
-                        onChange={(e) =>
-                          updatePart(index, "discountRate", e.target.value)
-                        }
-                        className="h-7 rounded-none px-2 text-xs"
-                      />
-                    </TableCell>
-                    <TableCell className="text-right align-top">
-                      {parts.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive"
-                          aria-label={`Remove part ${index + 1}`}
-                          onClick={() =>
-                            setParts((prev) =>
-                              prev.filter((_, i) => i !== index)
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select part" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {activeParts.map((p) => (
+                              <SelectItem key={p.id} value={String(p.id)}>
+                                {p.partNo} - {p.partDescription}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Input
+                          type="text"
+                          min={1}
+                          value={line.quantity}
+                          onChange={(e) =>
+                            updatePart(index, "quantity", e.target.value)
+                          }
+                          className="h-7 rounded-none px-2 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Select
+                          items={discountTypeOptions}
+                          value={line.discountType || null}
+                          onValueChange={(value) =>
+                            updatePart(
+                              index,
+                              "discountType",
+                              value ?? "PERCENTAGE"
                             )
                           }
                         >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-
-        <div>
-          <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
-            <div>
-              <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                Labours
-              </h3>
-              <p className="text-[11px] text-muted-foreground">
-                Hours and rates are resolved from the labour master.
-              </p>
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {discountTypeOptions.map((option) => (
+                              <SelectItem key={option.value} value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Input
+                          type="text"
+                          min={0}
+                          value={line.discountRate}
+                          onChange={(e) =>
+                            updatePart(index, "discountRate", e.target.value)
+                          }
+                          className="h-7 rounded-none px-2 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="text-right align-top">
+                        {parts.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-destructive"
+                            aria-label={`Remove part ${index + 1}`}
+                            onClick={() =>
+                              setParts((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="h-6 gap-1 px-2 text-xs"
-              onClick={() =>
-                setLabours((prev) => [...prev, { ...emptyLabourLine }])
-              }
-            >
-              <Plus className="h-3 w-3" />
-              Add Labour
-            </Button>
           </div>
-          <div className="rounded border">
-            <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Labour</TableHead>
-                  <TableHead className="w-[400px]">Discount Type</TableHead>
-                  <TableHead className="w-[200px]">Discount</TableHead>
-                  <TableHead className="w-[60px] text-right">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {labours.map((line, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="align-top">
-                      <Select
-                        items={activeLabours.map((l) => ({
-                          value: String(l.id),
-                          label: `${l.labourCode} - ${l.labourName}`,
-                        }))}
-                        value={line.labourId || null}
-                        onValueChange={(value) =>
-                          updateLabour(index, "labourId", value ?? "")
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select labour" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
+
+          <div>
+            <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
+              <div>
+                <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+                  Labours
+                </h3>
+                <p className="text-[11px] text-muted-foreground">
+                  Hours and rates are resolved from the labour master.
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-6 gap-1 px-2 text-xs"
+                onClick={() =>
+                  setLabours((prev) => [...prev, { ...emptyLabourLine }])
+                }
+              >
+                <Plus className="h-3 w-3" />
+                Add Labour
+              </Button>
+            </div>
+            <div className="rounded border">
+              <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Labour</TableHead>
+                    <TableHead className="w-[400px]">Discount Type</TableHead>
+                    <TableHead className="w-[200px]">Discount</TableHead>
+                    <TableHead className="w-[60px] text-right">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {labours.map((line, index) => (
+                    <TableRow key={index}>
+                      <TableCell className="align-top">
+                        <Select
+                          items={activeLabours.map((l) => ({
+                            value: String(l.id),
+                            label: `${l.labourCode} - ${l.labourName}`,
+                          }))}
+                          value={line.labourId || null}
+                          onValueChange={(value) =>
+                            updateLabour(index, "labourId", value ?? "")
+                          }
                         >
-                          {activeLabours.map((l) => (
-                            <SelectItem key={l.id} value={String(l.id)}>
-                              {l.labourCode} - {l.labourName}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Select
-                        items={discountTypeOptions}
-                        value={line.discountType || null}
-                        onValueChange={(value) =>
-                          updateLabour(
-                            index,
-                            "discountType",
-                            value ?? "PERCENTAGE"
-                          )
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
-                        >
-                          {discountTypeOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Input
-                        type="number"
-                        min={0}
-                        value={line.discountRate}
-                        onChange={(e) =>
-                          updateLabour(index, "discountRate", e.target.value)
-                        }
-                        className="h-7 rounded-none px-2 text-xs"
-                      />
-                    </TableCell>
-                    <TableCell className="text-right align-top">
-                      {labours.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive"
-                          aria-label={`Remove labour ${index + 1}`}
-                          onClick={() =>
-                            setLabours((prev) =>
-                              prev.filter((_, i) => i !== index)
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select labour" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {activeLabours.map((l) => (
+                              <SelectItem key={l.id} value={String(l.id)}>
+                                {l.labourCode} - {l.labourName}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Select
+                          items={discountTypeOptions}
+                          value={line.discountType || null}
+                          onValueChange={(value) =>
+                            updateLabour(
+                              index,
+                              "discountType",
+                              value ?? "PERCENTAGE"
                             )
                           }
                         >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-
-        <div>
-          <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
-            <div>
-              <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                Customer Voice
-              </h3>
-              <p className="text-[11px] text-muted-foreground">
-                Record the customer reported issues and their source.
-              </p>
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {discountTypeOptions.map((option) => (
+                              <SelectItem key={option.value} value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Input
+                          type="text"
+                          min={0}
+                          value={line.discountRate}
+                          onChange={(e) =>
+                            updateLabour(index, "discountRate", e.target.value)
+                          }
+                          className="h-7 rounded-none px-2 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="text-right align-top">
+                        {labours.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-destructive"
+                            aria-label={`Remove labour ${index + 1}`}
+                            onClick={() =>
+                              setLabours((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="h-6 gap-1 px-2 text-xs"
-              onClick={() =>
-                setCustomerVoices((prev) => [...prev, { ...emptyVoiceLine }])
-              }
-            >
-              <Plus className="h-3 w-3" />
-              Add Voice
-            </Button>
           </div>
-          <div className="rounded border">
-            <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Customer Voice</TableHead>
-                  <TableHead className="w-[200px]">Source</TableHead>
-                  <TableHead className="w-[60px] text-right">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {customerVoices.map((line, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="align-top">
-                      <Textarea
-                        placeholder="Describe what the customer reported"
-                        value={line.customerVoice}
-                        onChange={(e) =>
-                          updateVoice(index, "customerVoice", e.target.value)
-                        }
-                        className="min-h-[48px] rounded-none px-2 py-1 text-xs"
-                      />
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Select
-                        items={sourceOptions}
-                        value={line.source || null}
-                        onValueChange={(value) =>
-                          updateVoice(index, "source", value ?? "CUSTOMER")
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
-                        >
-                          {sourceOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="text-right align-top">
-                      {customerVoices.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive"
-                          aria-label={`Remove voice ${index + 1}`}
-                          onClick={() =>
-                            setCustomerVoices((prev) =>
-                              prev.filter((_, i) => i !== index)
-                            )
+
+          <div>
+            <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
+              <div>
+                <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+                  Customer Voice
+                </h3>
+                <p className="text-[11px] text-muted-foreground">
+                  Record the customer reported issues and their source.
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-6 gap-1 px-2 text-xs"
+                onClick={() =>
+                  setCustomerVoices((prev) => [...prev, { ...emptyVoiceLine }])
+                }
+              >
+                <Plus className="h-3 w-3" />
+                Add Voice
+              </Button>
+            </div>
+            <div className="rounded border">
+              <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Customer Voice</TableHead>
+                    <TableHead className="w-[200px]">Source</TableHead>
+                    <TableHead className="w-[60px] text-right">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {customerVoices.map((line, index) => (
+                    <TableRow key={index}>
+                      <TableCell className="align-top">
+                        <Textarea
+                          placeholder="Describe what the customer reported"
+                          value={line.customerVoice}
+                          onChange={(e) =>
+                            updateVoice(index, "customerVoice", e.target.value)
+                          }
+                          className="min-h-[48px] rounded-none px-2 py-1 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Select
+                          items={sourceOptions}
+                          value={line.source || null}
+                          onValueChange={(value) =>
+                            updateVoice(index, "source", value ?? "CUSTOMER")
                           }
                         >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {sourceOptions.map((option) => (
+                              <SelectItem key={option.value} value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="text-right align-top">
+                        {customerVoices.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-destructive"
+                            aria-label={`Remove voice ${index + 1}`}
+                            onClick={() =>
+                              setCustomerVoices((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="m-5 flex justify-end gap-2 border-t border-slate-200 pt-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onCancel}
-          disabled={loading}
-        >
-          Cancel
-        </Button>
-        <Button type="submit" disabled={loading}>
-          {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
-          {quotation ? "Update Service Quotation" : "Create Service Quotation"}
-        </Button>
-      </div>
-    </form>
+        <div className="m-5 flex justify-end gap-2 border-t border-slate-200 pt-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={loading}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
+            {quotation ? "Update Service Quotation" : "Create Service Quotation"}
+          </Button>
+        </div>
+      </form>
+      <ViewServiceQuotationModal
+        quotation={createdQuotation}
+        open={openView}
+        onClose={() => setOpenView(false)} />
+    </>
+
   )
 }

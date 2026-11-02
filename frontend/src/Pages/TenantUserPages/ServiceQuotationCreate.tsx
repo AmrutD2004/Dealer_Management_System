@@ -28,7 +28,7 @@ const ServiceQuotationCreate = () => {
                         </Button>
                     </div>
 
-                    <div className='rounded-2xl border px-6 shadow-sm mx-5 mb-5'>
+                    <div className='rounded-2xl border px-6 shadow-sm mb-5 w-full'>
                         <ServiceQuotationCreateForm onCancel={goBack} onCreated={goBack} />
                     </div>
                 </div>

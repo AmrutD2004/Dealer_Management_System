@@ -113,6 +113,7 @@ export interface serviceQuotationMasterType {
 
 export interface serviceQuotationListType extends serviceQuotationMasterType {
     customer: customerListType | null
+    originalQuotation : serviceQuotationListType | null
     vehicle: serviceQuotationVehicleType | null
     serviceCategory: { id: number; name: string } | null
     serviceType: { id: number; name: string } | null

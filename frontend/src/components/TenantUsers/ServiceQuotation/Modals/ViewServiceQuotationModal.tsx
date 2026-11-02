@@ -28,7 +28,7 @@ import { useEffect, useState } from "react"
 
 interface ViewServiceQuotationModalProps {
   quotation: serviceQuotationListType | null
-  open: boolean
+  open: boolean | null
   onClose: () => void
 }
 
@@ -119,7 +119,8 @@ export function ViewServiceQuotationModal({
     : "-"
 
   return (
-    <Dialog open={open}>
+    <Dialog open={!!open} onOpenChange={(isOpen) => {
+  if (!isOpen) onClose()}}>
       <DialogContent
         showCloseButton={false}
         className="scrollbarHide max-h-[90vh] w-full max-w-sm overflow-y-auto py-5 md:max-w-4xl lg:max-w-5xl"

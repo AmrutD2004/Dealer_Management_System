@@ -13,7 +13,7 @@ const PORT = Number(process.env.PORT) || 8081;
 
 app.use(express.json())
 app.use(cookieParser())
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174']
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'https://cj8nmmf0-5173.inc1.devtunnels.ms']
 app.use(cors({ origin: allowedOrigins, credentials: true }))
 
 app.use('/api', platformUserRoute)
