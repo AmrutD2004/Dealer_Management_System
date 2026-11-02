@@ -50,9 +50,14 @@ import type {
 } from "@/Types/tenantCreateType"
 import type { repairOrderListType } from "@/Types/tenantCreateType"
 import type { customerListType } from "@/Types/tenantCreateType"
-import type { serviceQuotationListType } from "@/Types/serviceQuotationType"
+import type {
+  serviceQuotationLabourType,
+  serviceQuotationListType,
+  serviceQuotationPartType,
+} from "@/Types/serviceQuotationType"
 import { ChevronsUpDown, Loader2, Plus, Trash2 } from "lucide-react"
 import { useEffect, useState } from "react"
+import { formatCurrency } from "./serviceQuotationUtils"
 
 interface VehicleOption {
   id: number
@@ -112,7 +117,6 @@ const sourceOptions = [
   { value: "TEST_DRIVE", label: "Test Drive" },
 ]
 
-
 const emptyPartLine: PartLine = {
   partId: "",
   quantity: "1",
@@ -125,6 +129,59 @@ const emptyLabourLine: LabourLine = {
   discountRate: "0",
 }
 const emptyVoiceLine: VoiceLine = { customerVoice: "", source: "CUSTOMER" }
+
+const roundAmount = (value: number) =>
+  Math.round((value + Number.EPSILON) * 100) / 100
+
+const getDiscountAmount = (
+  basicAmount: number,
+  discountType: DiscountType,
+  discountRate: string
+) =>
+  discountType === "PERCENTAGE"
+    ? roundAmount(basicAmount * (Number(discountRate || 0) / 100))
+    : Number(discountRate || 0)
+
+const getPartPricing = (
+  line: PartLine,
+  part?: PartMasterListType,
+  savedPart?: serviceQuotationPartType
+) => {
+  const rate = part
+    ? Number(part.sellingPrice || 0)
+    : Number(savedPart?.rate || 0)
+  const quantity = Number(line.quantity || 0)
+  const basicAmount = part
+    ? roundAmount(rate * quantity)
+    : Number(savedPart?.basicAmount || 0)
+  const discountAmount = getDiscountAmount(
+    basicAmount,
+    line.discountType,
+    line.discountRate
+  )
+  const totalAmount = Math.max(basicAmount - discountAmount, 0)
+  return { rate, basicAmount, discountAmount, totalAmount }
+}
+
+const getLabourPricing = (
+  line: LabourLine,
+  labour?: labourListType,
+  savedLabour?: serviceQuotationLabourType
+) => {
+  const rate = labour
+    ? Number(labour.rate || 0)
+    : Number(savedLabour?.rate || 0)
+  const basicAmount = labour
+    ? roundAmount(rate * Number(labour.standardHours || 0))
+    : Number(savedLabour?.basicAmount || 0)
+  const discountAmount = getDiscountAmount(
+    basicAmount,
+    line.discountType,
+    line.discountRate
+  )
+  const totalAmount = Math.max(basicAmount - discountAmount, 0)
+  return { rate, basicAmount, discountAmount, totalAmount }
+}
 
 const initialFormData = {
   action: "NEW",
@@ -141,7 +198,7 @@ const initialFormData = {
 
 interface ServiceQuotationCreateFormProps {
   onCancel: () => void
-  onCreated?: () => void
+  onCreated?: (quotation?: serviceQuotationListType) => void
   onUpdated?: () => void
   quotation?: serviceQuotationListType | null
 }
@@ -200,9 +257,7 @@ export function ServiceQuotationCreateForm({
   quotation,
 }: ServiceQuotationCreateFormProps) {
   const [loading, setLoading] = useState<boolean>(false)
-  const [formData, setFormData] = useState(() =>
-    getInitialFormData(quotation)
-  )
+  const [formData, setFormData] = useState(() => getInitialFormData(quotation))
   const [parts, setParts] = useState<PartLine[]>(() =>
     getInitialParts(quotation)
   )
@@ -332,6 +387,17 @@ export function ServiceQuotationCreateForm({
   const activeParts = partsMaster.filter((p) => p.status === "ACTIVE")
   const activeLabours = laboursMaster.filter((l) => l.isActive)
 
+  const findPartMaster = (partId: string) =>
+    partsMaster.find((p) => String(p.id) === partId)
+  const findLabourMaster = (labourId: string) =>
+    laboursMaster.find((l) => String(l.id) === labourId)
+  const findSavedPart = (partId: string) =>
+    quotation?.serviceQuotationParts?.find((p) => String(p.partId) === partId)
+  const findSavedLabour = (labourId: string) =>
+    quotation?.serviceQuotationLabours?.find(
+      (l) => String(l.labourId) === labourId
+    )
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -441,12 +507,15 @@ export function ServiceQuotationCreateForm({
             onUpdated?.()
           }, 1000)
         } else {
+          const createdQuotation =
+            (data?.data as serviceQuotationListType | undefined) ??
+            (data?.quotation as serviceQuotationListType | undefined)
           setFormData(initialFormData)
           setParts([{ ...emptyPartLine }])
           setLabours([{ ...emptyLabourLine }])
           setCustomerVoices([{ ...emptyVoiceLine }])
           setTimeout(() => {
-            onCreated?.()
+            onCreated?.(createdQuotation)
           }, 1500)
         }
       }
@@ -541,7 +610,7 @@ export function ServiceQuotationCreateForm({
                 />
               </div>
             )}
-            
+
             <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
               <FieldLabel className="text-xs font-medium">
                 Insurance Party
@@ -611,7 +680,7 @@ export function ServiceQuotationCreateForm({
                                 }))
                                 setCustomerOpen(false)
                                 setSearchCustomer("")
-                                setSelectedCustomer(c);
+                                setSelectedCustomer(c)
                               }}
                               className="text-xs"
                             >
@@ -800,110 +869,132 @@ export function ServiceQuotationCreateForm({
               <TableHeader>
                 <TableRow>
                   <TableHead>Part</TableHead>
+                  <TableHead className="w-[130px] text-right">Price</TableHead>
                   <TableHead className="w-[200px]">Quantity</TableHead>
                   <TableHead className="w-[200px]">Discount Type</TableHead>
                   <TableHead className="w-[200px]">Discount</TableHead>
+                  <TableHead className="w-[150px] text-right">
+                    Total Price
+                  </TableHead>
                   <TableHead className="w-[60px] text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {parts.map((line, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="align-top">
-                      <Select
-                        items={activeParts.map((p) => ({
-                          value: String(p.id),
-                          label: `${p.partNo} - ${p.partDescription}`,
-                        }))}
-                        value={line.partId || null}
-                        onValueChange={(value) =>
-                          updatePart(index, "partId", value ?? "")
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select part" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
+                {parts.map((line, index) => {
+                  const pricing = getPartPricing(
+                    line,
+                    findPartMaster(line.partId),
+                    findSavedPart(line.partId)
+                  )
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="align-top">
+                        <Select
+                          items={activeParts.map((p) => ({
+                            value: String(p.id),
+                            label: `${p.partNo} - ${p.partDescription}`,
+                          }))}
+                          value={line.partId || null}
+                          onValueChange={(value) =>
+                            updatePart(index, "partId", value ?? "")
+                          }
                         >
-                          {activeParts.map((p) => (
-                            <SelectItem key={p.id} value={String(p.id)}>
-                              {p.partNo} - {p.partDescription}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Input
-                        type="number"
-                        min={1}
-                        value={line.quantity}
-                        onChange={(e) =>
-                          updatePart(index, "quantity", e.target.value)
-                        }
-                        className="h-7 rounded-none px-2 text-xs"
-                      />
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Select
-                        items={discountTypeOptions}
-                        value={line.discountType || null}
-                        onValueChange={(value) =>
-                          updatePart(
-                            index,
-                            "discountType",
-                            value ?? "PERCENTAGE"
-                          )
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
-                        >
-                          {discountTypeOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Input
-                        type="number"
-                        min={0}
-                        value={line.discountRate}
-                        onChange={(e) =>
-                          updatePart(index, "discountRate", e.target.value)
-                        }
-                        className="h-7 rounded-none px-2 text-xs"
-                      />
-                    </TableCell>
-                    <TableCell className="text-right align-top">
-                      {parts.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive"
-                          aria-label={`Remove part ${index + 1}`}
-                          onClick={() =>
-                            setParts((prev) =>
-                              prev.filter((_, i) => i !== index)
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select part" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {activeParts.map((p) => (
+                              <SelectItem key={p.id} value={String(p.id)}>
+                                {p.partNo} - {p.partDescription}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="text-right align-top tabular-nums">
+                        {line.partId ? formatCurrency(pricing.rate) : "-"}
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Input
+                          type="number"
+                          min={1}
+                          value={line.quantity}
+                          onChange={(e) =>
+                            updatePart(index, "quantity", e.target.value)
+                          }
+                          className="h-7 rounded-none px-2 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Select
+                          items={discountTypeOptions}
+                          value={line.discountType || null}
+                          onValueChange={(value) =>
+                            updatePart(
+                              index,
+                              "discountType",
+                              value ?? "PERCENTAGE"
                             )
                           }
                         >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {discountTypeOptions.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Input
+                          type="number"
+                          min={0}
+                          value={line.discountRate}
+                          onChange={(e) =>
+                            updatePart(index, "discountRate", e.target.value)
+                          }
+                          className="h-7 rounded-none px-2 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="text-right align-top font-medium tabular-nums">
+                        {line.partId
+                          ? formatCurrency(pricing.totalAmount)
+                          : "-"}
+                      </TableCell>
+                      <TableCell className="text-right align-top">
+                        {parts.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-destructive"
+                            aria-label={`Remove part ${index + 1}`}
+                            onClick={() =>
+                              setParts((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
               </TableBody>
             </Table>
           </div>
@@ -936,98 +1027,120 @@ export function ServiceQuotationCreateForm({
               <TableHeader>
                 <TableRow>
                   <TableHead>Labour</TableHead>
+                  <TableHead className="w-[130px] text-right">Price</TableHead>
                   <TableHead className="w-[400px]">Discount Type</TableHead>
                   <TableHead className="w-[200px]">Discount</TableHead>
+                  <TableHead className="w-[150px] text-right">
+                    Total Price
+                  </TableHead>
                   <TableHead className="w-[60px] text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {labours.map((line, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="align-top">
-                      <Select
-                        items={activeLabours.map((l) => ({
-                          value: String(l.id),
-                          label: `${l.labourCode} - ${l.labourName}`,
-                        }))}
-                        value={line.labourId || null}
-                        onValueChange={(value) =>
-                          updateLabour(index, "labourId", value ?? "")
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select labour" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
+                {labours.map((line, index) => {
+                  const pricing = getLabourPricing(
+                    line,
+                    findLabourMaster(line.labourId),
+                    findSavedLabour(line.labourId)
+                  )
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="align-top">
+                        <Select
+                          items={activeLabours.map((l) => ({
+                            value: String(l.id),
+                            label: `${l.labourCode} - ${l.labourName}`,
+                          }))}
+                          value={line.labourId || null}
+                          onValueChange={(value) =>
+                            updateLabour(index, "labourId", value ?? "")
+                          }
                         >
-                          {activeLabours.map((l) => (
-                            <SelectItem key={l.id} value={String(l.id)}>
-                              {l.labourCode} - {l.labourName}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Select
-                        items={discountTypeOptions}
-                        value={line.discountType || null}
-                        onValueChange={(value) =>
-                          updateLabour(
-                            index,
-                            "discountType",
-                            value ?? "PERCENTAGE"
-                          )
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
-                        >
-                          {discountTypeOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Input
-                        type="number"
-                        min={0}
-                        value={line.discountRate}
-                        onChange={(e) =>
-                          updateLabour(index, "discountRate", e.target.value)
-                        }
-                        className="h-7 rounded-none px-2 text-xs"
-                      />
-                    </TableCell>
-                    <TableCell className="text-right align-top">
-                      {labours.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive"
-                          aria-label={`Remove labour ${index + 1}`}
-                          onClick={() =>
-                            setLabours((prev) =>
-                              prev.filter((_, i) => i !== index)
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select labour" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {activeLabours.map((l) => (
+                              <SelectItem key={l.id} value={String(l.id)}>
+                                {l.labourCode} - {l.labourName}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="text-right align-top tabular-nums">
+                        {line.labourId ? formatCurrency(pricing.rate) : "-"}
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Select
+                          items={discountTypeOptions}
+                          value={line.discountType || null}
+                          onValueChange={(value) =>
+                            updateLabour(
+                              index,
+                              "discountType",
+                              value ?? "PERCENTAGE"
                             )
                           }
                         >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {discountTypeOptions.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Input
+                          type="number"
+                          min={0}
+                          value={line.discountRate}
+                          onChange={(e) =>
+                            updateLabour(index, "discountRate", e.target.value)
+                          }
+                          className="h-7 rounded-none px-2 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="text-right align-top font-medium tabular-nums">
+                        {line.labourId
+                          ? formatCurrency(pricing.totalAmount)
+                          : "-"}
+                      </TableCell>
+                      <TableCell className="text-right align-top">
+                        {labours.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-destructive"
+                            aria-label={`Remove labour ${index + 1}`}
+                            onClick={() =>
+                              setLabours((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
               </TableBody>
             </Table>
           </div>
