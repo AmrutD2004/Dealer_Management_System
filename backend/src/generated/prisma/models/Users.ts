@@ -458,7 +458,7 @@ export type UsersCreateInput = {
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
@@ -483,7 +483,7 @@ export type UsersUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
@@ -507,7 +507,7 @@ export type UsersUpdateInput = {
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
@@ -532,7 +532,7 @@ export type UsersUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput
@@ -966,7 +966,7 @@ export type UsersCreateWithoutTenantInput = {
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
@@ -990,7 +990,7 @@ export type UsersUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
@@ -1061,7 +1061,7 @@ export type UsersCreateWithoutBranchInput = {
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
@@ -1085,7 +1085,7 @@ export type UsersUncheckedCreateWithoutBranchInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
@@ -1134,7 +1134,7 @@ export type UsersCreateWithoutDesignationInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
@@ -1158,7 +1158,7 @@ export type UsersUncheckedCreateWithoutDesignationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
@@ -1207,7 +1207,7 @@ export type UsersCreateWithoutRoleInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
@@ -1231,7 +1231,7 @@ export type UsersUncheckedCreateWithoutRoleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
@@ -1280,7 +1280,7 @@ export type UsersCreateWithoutAuthorizedCustomersInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
@@ -1304,7 +1304,7 @@ export type UsersUncheckedCreateWithoutAuthorizedCustomersInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
@@ -1343,7 +1343,7 @@ export type UsersUpdateWithoutAuthorizedCustomersInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
@@ -1367,7 +1367,7 @@ export type UsersUncheckedUpdateWithoutAuthorizedCustomersInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput
@@ -1443,7 +1443,7 @@ export type UsersCreateWithoutTechnicianJobCardsInput = {
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCreatedByEmployeeInput
@@ -1467,7 +1467,7 @@ export type UsersUncheckedCreateWithoutTechnicianJobCardsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCreatedByEmployeeInput
@@ -1495,7 +1495,7 @@ export type UsersCreateWithoutCreatedJobCardsInput = {
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCreatedByEmployeeInput
@@ -1519,7 +1519,7 @@ export type UsersUncheckedCreateWithoutCreatedJobCardsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCreatedByEmployeeInput
@@ -1616,7 +1616,7 @@ export type UsersUpdateWithoutTechnicianJobCardsInput = {
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCreatedByEmployeeNestedInput
@@ -1640,7 +1640,7 @@ export type UsersUncheckedUpdateWithoutTechnicianJobCardsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCreatedByEmployeeNestedInput
@@ -1674,7 +1674,7 @@ export type UsersUpdateWithoutCreatedJobCardsInput = {
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCreatedByEmployeeNestedInput
@@ -1698,7 +1698,7 @@ export type UsersUncheckedUpdateWithoutCreatedJobCardsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCreatedByEmployeeNestedInput
@@ -1721,7 +1721,7 @@ export type UsersCreateWithoutJobCardAllocationsInput = {
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCreatedByEmployeeInput
@@ -1745,7 +1745,7 @@ export type UsersUncheckedCreateWithoutJobCardAllocationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCreatedByEmployeeInput
@@ -1784,7 +1784,7 @@ export type UsersUpdateWithoutJobCardAllocationsInput = {
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCreatedByEmployeeNestedInput
@@ -1808,7 +1808,7 @@ export type UsersUncheckedUpdateWithoutJobCardAllocationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCreatedByEmployeeNestedInput
@@ -1831,7 +1831,7 @@ export type UsersCreateWithoutServiceQuotationInput = {
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   designation: Prisma.EmployeeDesignationCreateNestedOneWithoutUsersInput
   authorizedCustomers?: Prisma.CustomerCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationCreateNestedManyWithoutMechanicInput
@@ -1855,7 +1855,7 @@ export type UsersUncheckedCreateWithoutServiceQuotationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAuthorizedByUserInput
-  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutSupervisorInput
+  supervisedJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput
   technicianJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTechnicianInput
   createdJobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutMechanicInput
@@ -1894,7 +1894,7 @@ export type UsersUpdateWithoutServiceQuotationInput = {
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
@@ -1918,7 +1918,7 @@ export type UsersUncheckedUpdateWithoutServiceQuotationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput
@@ -1958,7 +1958,7 @@ export type UsersUpdateWithoutTenantInput = {
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
@@ -1982,7 +1982,7 @@ export type UsersUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput
@@ -2041,7 +2041,7 @@ export type UsersUpdateWithoutBranchInput = {
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
@@ -2065,7 +2065,7 @@ export type UsersUncheckedUpdateWithoutBranchInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput
@@ -2124,7 +2124,7 @@ export type UsersUpdateWithoutDesignationInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
@@ -2148,7 +2148,7 @@ export type UsersUncheckedUpdateWithoutDesignationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput
@@ -2207,7 +2207,7 @@ export type UsersUpdateWithoutRoleInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   designation?: Prisma.EmployeeDesignationUpdateOneRequiredWithoutUsersNestedInput
   authorizedCustomers?: Prisma.CustomerUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUpdateManyWithoutMechanicNestedInput
@@ -2231,7 +2231,7 @@ export type UsersUncheckedUpdateWithoutRoleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorizedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAuthorizedByUserNestedInput
-  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutSupervisorNestedInput
+  supervisedJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput
   technicianJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTechnicianNestedInput
   createdJobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCreatedByUserNestedInput
   jobCardAllocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutMechanicNestedInput

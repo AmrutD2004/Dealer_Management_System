@@ -78,7 +78,7 @@ export function CreateBranchModal({ open, setOpen }: CreateBranchModalProps) {
                 fetchTenantBranchList(skip, take)
                 setTimeout(()=>{
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

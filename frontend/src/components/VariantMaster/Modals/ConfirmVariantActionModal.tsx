@@ -74,7 +74,7 @@ export function ConfirmVariantActionModal({ confirmAction, open, onClose, onDone
                 onDone?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             } else {
                 toast.add({
                     type: 'error',

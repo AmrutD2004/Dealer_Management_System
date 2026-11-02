@@ -34,7 +34,7 @@ export type JobCardAvgAggregateOutputType = {
   customerId: number | null
   currentKmReading: number | null
   previousKmReading: number | null
-  supervisorId: number | null
+  serviceAdvisorId: number | null
   technicianId: number | null
   serviceCategoryId: number | null
   serviceTypeId: number | null
@@ -52,7 +52,7 @@ export type JobCardSumAggregateOutputType = {
   customerId: number | null
   currentKmReading: number | null
   previousKmReading: number | null
-  supervisorId: number | null
+  serviceAdvisorId: number | null
   technicianId: number | null
   serviceCategoryId: number | null
   serviceTypeId: number | null
@@ -73,7 +73,7 @@ export type JobCardMinAggregateOutputType = {
   currentKmReading: number | null
   previousKmReading: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus | null
-  supervisorId: number | null
+  serviceAdvisorId: number | null
   technicianId: number | null
   serviceCategoryId: number | null
   serviceTypeId: number | null
@@ -108,7 +108,7 @@ export type JobCardMaxAggregateOutputType = {
   currentKmReading: number | null
   previousKmReading: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus | null
-  supervisorId: number | null
+  serviceAdvisorId: number | null
   technicianId: number | null
   serviceCategoryId: number | null
   serviceTypeId: number | null
@@ -143,7 +143,7 @@ export type JobCardCountAggregateOutputType = {
   currentKmReading: number
   previousKmReading: number
   vehicleStatus: number
-  supervisorId: number
+  serviceAdvisorId: number
   technicianId: number
   serviceCategoryId: number
   serviceTypeId: number
@@ -177,7 +177,7 @@ export type JobCardAvgAggregateInputType = {
   customerId?: true
   currentKmReading?: true
   previousKmReading?: true
-  supervisorId?: true
+  serviceAdvisorId?: true
   technicianId?: true
   serviceCategoryId?: true
   serviceTypeId?: true
@@ -195,7 +195,7 @@ export type JobCardSumAggregateInputType = {
   customerId?: true
   currentKmReading?: true
   previousKmReading?: true
-  supervisorId?: true
+  serviceAdvisorId?: true
   technicianId?: true
   serviceCategoryId?: true
   serviceTypeId?: true
@@ -216,7 +216,7 @@ export type JobCardMinAggregateInputType = {
   currentKmReading?: true
   previousKmReading?: true
   vehicleStatus?: true
-  supervisorId?: true
+  serviceAdvisorId?: true
   technicianId?: true
   serviceCategoryId?: true
   serviceTypeId?: true
@@ -251,7 +251,7 @@ export type JobCardMaxAggregateInputType = {
   currentKmReading?: true
   previousKmReading?: true
   vehicleStatus?: true
-  supervisorId?: true
+  serviceAdvisorId?: true
   technicianId?: true
   serviceCategoryId?: true
   serviceTypeId?: true
@@ -286,7 +286,7 @@ export type JobCardCountAggregateInputType = {
   currentKmReading?: true
   previousKmReading?: true
   vehicleStatus?: true
-  supervisorId?: true
+  serviceAdvisorId?: true
   technicianId?: true
   serviceCategoryId?: true
   serviceTypeId?: true
@@ -408,7 +408,7 @@ export type JobCardGroupByOutputType = {
   currentKmReading: number
   previousKmReading: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId: number | null
+  serviceAdvisorId: number | null
   technicianId: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -466,7 +466,7 @@ export type JobCardWhereInput = {
   currentKmReading?: Prisma.IntFilter<"JobCard"> | number
   previousKmReading?: Prisma.IntNullableFilter<"JobCard"> | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFilter<"JobCard"> | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.IntNullableFilter<"JobCard"> | number | null
+  serviceAdvisorId?: Prisma.IntNullableFilter<"JobCard"> | number | null
   technicianId?: Prisma.IntNullableFilter<"JobCard"> | number | null
   serviceCategoryId?: Prisma.IntFilter<"JobCard"> | number
   serviceTypeId?: Prisma.IntFilter<"JobCard"> | number
@@ -492,7 +492,7 @@ export type JobCardWhereInput = {
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   vehicle?: Prisma.XOR<Prisma.VehicleScalarRelationFilter, Prisma.VehicleWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
-  supervisor?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
+  serviceAdvisor?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   technician?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   createdByUser?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   serviceCategory?: Prisma.XOR<Prisma.ServiceCategoryMasterScalarRelationFilter, Prisma.ServiceCategoryMasterWhereInput>
@@ -513,7 +513,7 @@ export type JobCardOrderByWithRelationInput = {
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrderInput | Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
-  supervisorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceAdvisorId?: Prisma.SortOrderInput | Prisma.SortOrder
   technicianId?: Prisma.SortOrderInput | Prisma.SortOrder
   serviceCategoryId?: Prisma.SortOrder
   serviceTypeId?: Prisma.SortOrder
@@ -539,7 +539,7 @@ export type JobCardOrderByWithRelationInput = {
   branch?: Prisma.BranchOrderByWithRelationInput
   vehicle?: Prisma.VehicleOrderByWithRelationInput
   customer?: Prisma.CustomerOrderByWithRelationInput
-  supervisor?: Prisma.UsersOrderByWithRelationInput
+  serviceAdvisor?: Prisma.UsersOrderByWithRelationInput
   technician?: Prisma.UsersOrderByWithRelationInput
   createdByUser?: Prisma.UsersOrderByWithRelationInput
   serviceCategory?: Prisma.ServiceCategoryMasterOrderByWithRelationInput
@@ -564,7 +564,7 @@ export type JobCardWhereUniqueInput = Prisma.AtLeast<{
   currentKmReading?: Prisma.IntFilter<"JobCard"> | number
   previousKmReading?: Prisma.IntNullableFilter<"JobCard"> | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFilter<"JobCard"> | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.IntNullableFilter<"JobCard"> | number | null
+  serviceAdvisorId?: Prisma.IntNullableFilter<"JobCard"> | number | null
   technicianId?: Prisma.IntNullableFilter<"JobCard"> | number | null
   serviceCategoryId?: Prisma.IntFilter<"JobCard"> | number
   serviceTypeId?: Prisma.IntFilter<"JobCard"> | number
@@ -590,7 +590,7 @@ export type JobCardWhereUniqueInput = Prisma.AtLeast<{
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   vehicle?: Prisma.XOR<Prisma.VehicleScalarRelationFilter, Prisma.VehicleWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
-  supervisor?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
+  serviceAdvisor?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   technician?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   createdByUser?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   serviceCategory?: Prisma.XOR<Prisma.ServiceCategoryMasterScalarRelationFilter, Prisma.ServiceCategoryMasterWhereInput>
@@ -611,7 +611,7 @@ export type JobCardOrderByWithAggregationInput = {
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrderInput | Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
-  supervisorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceAdvisorId?: Prisma.SortOrderInput | Prisma.SortOrder
   technicianId?: Prisma.SortOrderInput | Prisma.SortOrder
   serviceCategoryId?: Prisma.SortOrder
   serviceTypeId?: Prisma.SortOrder
@@ -654,7 +654,7 @@ export type JobCardScalarWhereWithAggregatesInput = {
   currentKmReading?: Prisma.IntWithAggregatesFilter<"JobCard"> | number
   previousKmReading?: Prisma.IntNullableWithAggregatesFilter<"JobCard"> | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusWithAggregatesFilter<"JobCard"> | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.IntNullableWithAggregatesFilter<"JobCard"> | number | null
+  serviceAdvisorId?: Prisma.IntNullableWithAggregatesFilter<"JobCard"> | number | null
   technicianId?: Prisma.IntNullableWithAggregatesFilter<"JobCard"> | number | null
   serviceCategoryId?: Prisma.IntWithAggregatesFilter<"JobCard"> | number
   serviceTypeId?: Prisma.IntWithAggregatesFilter<"JobCard"> | number
@@ -704,7 +704,7 @@ export type JobCardCreateInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -725,7 +725,7 @@ export type JobCardUncheckedCreateInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -777,7 +777,7 @@ export type JobCardUpdateInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -798,7 +798,7 @@ export type JobCardUncheckedUpdateInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -835,7 +835,7 @@ export type JobCardCreateManyInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -894,7 +894,7 @@ export type JobCardUncheckedUpdateManyInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -944,7 +944,7 @@ export type JobCardCountOrderByAggregateInput = {
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
-  supervisorId?: Prisma.SortOrder
+  serviceAdvisorId?: Prisma.SortOrder
   technicianId?: Prisma.SortOrder
   serviceCategoryId?: Prisma.SortOrder
   serviceTypeId?: Prisma.SortOrder
@@ -976,7 +976,7 @@ export type JobCardAvgOrderByAggregateInput = {
   customerId?: Prisma.SortOrder
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrder
-  supervisorId?: Prisma.SortOrder
+  serviceAdvisorId?: Prisma.SortOrder
   technicianId?: Prisma.SortOrder
   serviceCategoryId?: Prisma.SortOrder
   serviceTypeId?: Prisma.SortOrder
@@ -997,7 +997,7 @@ export type JobCardMaxOrderByAggregateInput = {
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
-  supervisorId?: Prisma.SortOrder
+  serviceAdvisorId?: Prisma.SortOrder
   technicianId?: Prisma.SortOrder
   serviceCategoryId?: Prisma.SortOrder
   serviceTypeId?: Prisma.SortOrder
@@ -1032,7 +1032,7 @@ export type JobCardMinOrderByAggregateInput = {
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrder
   vehicleStatus?: Prisma.SortOrder
-  supervisorId?: Prisma.SortOrder
+  serviceAdvisorId?: Prisma.SortOrder
   technicianId?: Prisma.SortOrder
   serviceCategoryId?: Prisma.SortOrder
   serviceTypeId?: Prisma.SortOrder
@@ -1064,7 +1064,7 @@ export type JobCardSumOrderByAggregateInput = {
   customerId?: Prisma.SortOrder
   currentKmReading?: Prisma.SortOrder
   previousKmReading?: Prisma.SortOrder
-  supervisorId?: Prisma.SortOrder
+  serviceAdvisorId?: Prisma.SortOrder
   technicianId?: Prisma.SortOrder
   serviceCategoryId?: Prisma.SortOrder
   serviceTypeId?: Prisma.SortOrder
@@ -1163,10 +1163,10 @@ export type JobCardUncheckedUpdateManyWithoutBranchNestedInput = {
   deleteMany?: Prisma.JobCardScalarWhereInput | Prisma.JobCardScalarWhereInput[]
 }
 
-export type JobCardCreateNestedManyWithoutSupervisorInput = {
-  create?: Prisma.XOR<Prisma.JobCardCreateWithoutSupervisorInput, Prisma.JobCardUncheckedCreateWithoutSupervisorInput> | Prisma.JobCardCreateWithoutSupervisorInput[] | Prisma.JobCardUncheckedCreateWithoutSupervisorInput[]
-  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutSupervisorInput | Prisma.JobCardCreateOrConnectWithoutSupervisorInput[]
-  createMany?: Prisma.JobCardCreateManySupervisorInputEnvelope
+export type JobCardCreateNestedManyWithoutServiceAdvisorInput = {
+  create?: Prisma.XOR<Prisma.JobCardCreateWithoutServiceAdvisorInput, Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput> | Prisma.JobCardCreateWithoutServiceAdvisorInput[] | Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput[]
+  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutServiceAdvisorInput | Prisma.JobCardCreateOrConnectWithoutServiceAdvisorInput[]
+  createMany?: Prisma.JobCardCreateManyServiceAdvisorInputEnvelope
   connect?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
 }
 
@@ -1184,10 +1184,10 @@ export type JobCardCreateNestedManyWithoutCreatedByUserInput = {
   connect?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
 }
 
-export type JobCardUncheckedCreateNestedManyWithoutSupervisorInput = {
-  create?: Prisma.XOR<Prisma.JobCardCreateWithoutSupervisorInput, Prisma.JobCardUncheckedCreateWithoutSupervisorInput> | Prisma.JobCardCreateWithoutSupervisorInput[] | Prisma.JobCardUncheckedCreateWithoutSupervisorInput[]
-  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutSupervisorInput | Prisma.JobCardCreateOrConnectWithoutSupervisorInput[]
-  createMany?: Prisma.JobCardCreateManySupervisorInputEnvelope
+export type JobCardUncheckedCreateNestedManyWithoutServiceAdvisorInput = {
+  create?: Prisma.XOR<Prisma.JobCardCreateWithoutServiceAdvisorInput, Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput> | Prisma.JobCardCreateWithoutServiceAdvisorInput[] | Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput[]
+  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutServiceAdvisorInput | Prisma.JobCardCreateOrConnectWithoutServiceAdvisorInput[]
+  createMany?: Prisma.JobCardCreateManyServiceAdvisorInputEnvelope
   connect?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
 }
 
@@ -1205,17 +1205,17 @@ export type JobCardUncheckedCreateNestedManyWithoutCreatedByUserInput = {
   connect?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
 }
 
-export type JobCardUpdateManyWithoutSupervisorNestedInput = {
-  create?: Prisma.XOR<Prisma.JobCardCreateWithoutSupervisorInput, Prisma.JobCardUncheckedCreateWithoutSupervisorInput> | Prisma.JobCardCreateWithoutSupervisorInput[] | Prisma.JobCardUncheckedCreateWithoutSupervisorInput[]
-  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutSupervisorInput | Prisma.JobCardCreateOrConnectWithoutSupervisorInput[]
-  upsert?: Prisma.JobCardUpsertWithWhereUniqueWithoutSupervisorInput | Prisma.JobCardUpsertWithWhereUniqueWithoutSupervisorInput[]
-  createMany?: Prisma.JobCardCreateManySupervisorInputEnvelope
+export type JobCardUpdateManyWithoutServiceAdvisorNestedInput = {
+  create?: Prisma.XOR<Prisma.JobCardCreateWithoutServiceAdvisorInput, Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput> | Prisma.JobCardCreateWithoutServiceAdvisorInput[] | Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput[]
+  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutServiceAdvisorInput | Prisma.JobCardCreateOrConnectWithoutServiceAdvisorInput[]
+  upsert?: Prisma.JobCardUpsertWithWhereUniqueWithoutServiceAdvisorInput | Prisma.JobCardUpsertWithWhereUniqueWithoutServiceAdvisorInput[]
+  createMany?: Prisma.JobCardCreateManyServiceAdvisorInputEnvelope
   set?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
   disconnect?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
   delete?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
   connect?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
-  update?: Prisma.JobCardUpdateWithWhereUniqueWithoutSupervisorInput | Prisma.JobCardUpdateWithWhereUniqueWithoutSupervisorInput[]
-  updateMany?: Prisma.JobCardUpdateManyWithWhereWithoutSupervisorInput | Prisma.JobCardUpdateManyWithWhereWithoutSupervisorInput[]
+  update?: Prisma.JobCardUpdateWithWhereUniqueWithoutServiceAdvisorInput | Prisma.JobCardUpdateWithWhereUniqueWithoutServiceAdvisorInput[]
+  updateMany?: Prisma.JobCardUpdateManyWithWhereWithoutServiceAdvisorInput | Prisma.JobCardUpdateManyWithWhereWithoutServiceAdvisorInput[]
   deleteMany?: Prisma.JobCardScalarWhereInput | Prisma.JobCardScalarWhereInput[]
 }
 
@@ -1247,17 +1247,17 @@ export type JobCardUpdateManyWithoutCreatedByUserNestedInput = {
   deleteMany?: Prisma.JobCardScalarWhereInput | Prisma.JobCardScalarWhereInput[]
 }
 
-export type JobCardUncheckedUpdateManyWithoutSupervisorNestedInput = {
-  create?: Prisma.XOR<Prisma.JobCardCreateWithoutSupervisorInput, Prisma.JobCardUncheckedCreateWithoutSupervisorInput> | Prisma.JobCardCreateWithoutSupervisorInput[] | Prisma.JobCardUncheckedCreateWithoutSupervisorInput[]
-  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutSupervisorInput | Prisma.JobCardCreateOrConnectWithoutSupervisorInput[]
-  upsert?: Prisma.JobCardUpsertWithWhereUniqueWithoutSupervisorInput | Prisma.JobCardUpsertWithWhereUniqueWithoutSupervisorInput[]
-  createMany?: Prisma.JobCardCreateManySupervisorInputEnvelope
+export type JobCardUncheckedUpdateManyWithoutServiceAdvisorNestedInput = {
+  create?: Prisma.XOR<Prisma.JobCardCreateWithoutServiceAdvisorInput, Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput> | Prisma.JobCardCreateWithoutServiceAdvisorInput[] | Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput[]
+  connectOrCreate?: Prisma.JobCardCreateOrConnectWithoutServiceAdvisorInput | Prisma.JobCardCreateOrConnectWithoutServiceAdvisorInput[]
+  upsert?: Prisma.JobCardUpsertWithWhereUniqueWithoutServiceAdvisorInput | Prisma.JobCardUpsertWithWhereUniqueWithoutServiceAdvisorInput[]
+  createMany?: Prisma.JobCardCreateManyServiceAdvisorInputEnvelope
   set?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
   disconnect?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
   delete?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
   connect?: Prisma.JobCardWhereUniqueInput | Prisma.JobCardWhereUniqueInput[]
-  update?: Prisma.JobCardUpdateWithWhereUniqueWithoutSupervisorInput | Prisma.JobCardUpdateWithWhereUniqueWithoutSupervisorInput[]
-  updateMany?: Prisma.JobCardUpdateManyWithWhereWithoutSupervisorInput | Prisma.JobCardUpdateManyWithWhereWithoutSupervisorInput[]
+  update?: Prisma.JobCardUpdateWithWhereUniqueWithoutServiceAdvisorInput | Prisma.JobCardUpdateWithWhereUniqueWithoutServiceAdvisorInput[]
+  updateMany?: Prisma.JobCardUpdateManyWithWhereWithoutServiceAdvisorInput | Prisma.JobCardUpdateManyWithWhereWithoutServiceAdvisorInput[]
   deleteMany?: Prisma.JobCardScalarWhereInput | Prisma.JobCardScalarWhereInput[]
 }
 
@@ -1560,7 +1560,7 @@ export type JobCardCreateWithoutTenantInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -1580,7 +1580,7 @@ export type JobCardUncheckedCreateWithoutTenantInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -1646,7 +1646,7 @@ export type JobCardScalarWhereInput = {
   currentKmReading?: Prisma.IntFilter<"JobCard"> | number
   previousKmReading?: Prisma.IntNullableFilter<"JobCard"> | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFilter<"JobCard"> | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.IntNullableFilter<"JobCard"> | number | null
+  serviceAdvisorId?: Prisma.IntNullableFilter<"JobCard"> | number | null
   technicianId?: Prisma.IntNullableFilter<"JobCard"> | number | null
   serviceCategoryId?: Prisma.IntFilter<"JobCard"> | number
   serviceTypeId?: Prisma.IntFilter<"JobCard"> | number
@@ -1695,7 +1695,7 @@ export type JobCardCreateWithoutBranchInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -1715,7 +1715,7 @@ export type JobCardUncheckedCreateWithoutBranchInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -1767,7 +1767,7 @@ export type JobCardUpdateManyWithWhereWithoutBranchInput = {
   data: Prisma.XOR<Prisma.JobCardUpdateManyMutationInput, Prisma.JobCardUncheckedUpdateManyWithoutBranchInput>
 }
 
-export type JobCardCreateWithoutSupervisorInput = {
+export type JobCardCreateWithoutServiceAdvisorInput = {
   jobCardNo: string
   vehicleInTime?: Date | string | null
   currentKmReading: number
@@ -1802,7 +1802,7 @@ export type JobCardCreateWithoutSupervisorInput = {
   allocations?: Prisma.JobCardAllocationCreateNestedManyWithoutJobCardInput
 }
 
-export type JobCardUncheckedCreateWithoutSupervisorInput = {
+export type JobCardUncheckedCreateWithoutServiceAdvisorInput = {
   id?: number
   tenantId: number
   branchId: number
@@ -1838,13 +1838,13 @@ export type JobCardUncheckedCreateWithoutSupervisorInput = {
   allocations?: Prisma.JobCardAllocationUncheckedCreateNestedManyWithoutJobCardInput
 }
 
-export type JobCardCreateOrConnectWithoutSupervisorInput = {
+export type JobCardCreateOrConnectWithoutServiceAdvisorInput = {
   where: Prisma.JobCardWhereUniqueInput
-  create: Prisma.XOR<Prisma.JobCardCreateWithoutSupervisorInput, Prisma.JobCardUncheckedCreateWithoutSupervisorInput>
+  create: Prisma.XOR<Prisma.JobCardCreateWithoutServiceAdvisorInput, Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput>
 }
 
-export type JobCardCreateManySupervisorInputEnvelope = {
-  data: Prisma.JobCardCreateManySupervisorInput | Prisma.JobCardCreateManySupervisorInput[]
+export type JobCardCreateManyServiceAdvisorInputEnvelope = {
+  data: Prisma.JobCardCreateManyServiceAdvisorInput | Prisma.JobCardCreateManyServiceAdvisorInput[]
   skipDuplicates?: boolean
 }
 
@@ -1874,7 +1874,7 @@ export type JobCardCreateWithoutTechnicianInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
@@ -1894,7 +1894,7 @@ export type JobCardUncheckedCreateWithoutTechnicianInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
   repairOrderTypeId: number
@@ -1955,7 +1955,7 @@ export type JobCardCreateWithoutCreatedByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
@@ -1975,7 +1975,7 @@ export type JobCardUncheckedCreateWithoutCreatedByUserInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -2010,20 +2010,20 @@ export type JobCardCreateManyCreatedByUserInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type JobCardUpsertWithWhereUniqueWithoutSupervisorInput = {
+export type JobCardUpsertWithWhereUniqueWithoutServiceAdvisorInput = {
   where: Prisma.JobCardWhereUniqueInput
-  update: Prisma.XOR<Prisma.JobCardUpdateWithoutSupervisorInput, Prisma.JobCardUncheckedUpdateWithoutSupervisorInput>
-  create: Prisma.XOR<Prisma.JobCardCreateWithoutSupervisorInput, Prisma.JobCardUncheckedCreateWithoutSupervisorInput>
+  update: Prisma.XOR<Prisma.JobCardUpdateWithoutServiceAdvisorInput, Prisma.JobCardUncheckedUpdateWithoutServiceAdvisorInput>
+  create: Prisma.XOR<Prisma.JobCardCreateWithoutServiceAdvisorInput, Prisma.JobCardUncheckedCreateWithoutServiceAdvisorInput>
 }
 
-export type JobCardUpdateWithWhereUniqueWithoutSupervisorInput = {
+export type JobCardUpdateWithWhereUniqueWithoutServiceAdvisorInput = {
   where: Prisma.JobCardWhereUniqueInput
-  data: Prisma.XOR<Prisma.JobCardUpdateWithoutSupervisorInput, Prisma.JobCardUncheckedUpdateWithoutSupervisorInput>
+  data: Prisma.XOR<Prisma.JobCardUpdateWithoutServiceAdvisorInput, Prisma.JobCardUncheckedUpdateWithoutServiceAdvisorInput>
 }
 
-export type JobCardUpdateManyWithWhereWithoutSupervisorInput = {
+export type JobCardUpdateManyWithWhereWithoutServiceAdvisorInput = {
   where: Prisma.JobCardScalarWhereInput
-  data: Prisma.XOR<Prisma.JobCardUpdateManyMutationInput, Prisma.JobCardUncheckedUpdateManyWithoutSupervisorInput>
+  data: Prisma.XOR<Prisma.JobCardUpdateManyMutationInput, Prisma.JobCardUncheckedUpdateManyWithoutServiceAdvisorInput>
 }
 
 export type JobCardUpsertWithWhereUniqueWithoutTechnicianInput = {
@@ -2084,7 +2084,7 @@ export type JobCardCreateWithoutServiceCategoryInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceType: Prisma.ServiceTypeMasterCreateNestedOneWithoutJobCardsInput
@@ -2104,7 +2104,7 @@ export type JobCardUncheckedCreateWithoutServiceCategoryInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceTypeId: number
   repairOrderTypeId: number
@@ -2181,7 +2181,7 @@ export type JobCardCreateWithoutServiceTypeInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -2201,7 +2201,7 @@ export type JobCardUncheckedCreateWithoutServiceTypeInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   repairOrderTypeId: number
@@ -2278,7 +2278,7 @@ export type JobCardCreateWithoutRepairOrderTypeInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -2298,7 +2298,7 @@ export type JobCardUncheckedCreateWithoutRepairOrderTypeInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -2374,7 +2374,7 @@ export type JobCardCreateWithoutCustomerInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutJobCardsInput
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -2394,7 +2394,7 @@ export type JobCardUncheckedCreateWithoutCustomerInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -2471,7 +2471,7 @@ export type JobCardCreateWithoutVehicleInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutJobCardsInput
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -2491,7 +2491,7 @@ export type JobCardUncheckedCreateWithoutVehicleInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -2569,7 +2569,7 @@ export type JobCardCreateWithoutJobCardCustomerVoicesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -2589,7 +2589,7 @@ export type JobCardUncheckedCreateWithoutJobCardCustomerVoicesInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -2656,7 +2656,7 @@ export type JobCardUpdateWithoutJobCardCustomerVoicesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -2676,7 +2676,7 @@ export type JobCardUncheckedUpdateWithoutJobCardCustomerVoicesInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2727,7 +2727,7 @@ export type JobCardCreateWithoutAllocationsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutJobCardsInput
   vehicle: Prisma.VehicleCreateNestedOneWithoutJobCardsInput
   customer: Prisma.CustomerCreateNestedOneWithoutJobCardsInput
-  supervisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
+  serviceAdvisor?: Prisma.UsersCreateNestedOneWithoutSupervisedJobCardsInput
   technician?: Prisma.UsersCreateNestedOneWithoutTechnicianJobCardsInput
   createdByUser: Prisma.UsersCreateNestedOneWithoutCreatedJobCardsInput
   serviceCategory: Prisma.ServiceCategoryMasterCreateNestedOneWithoutJobCardsInput
@@ -2747,7 +2747,7 @@ export type JobCardUncheckedCreateWithoutAllocationsInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -2814,7 +2814,7 @@ export type JobCardUpdateWithoutAllocationsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -2834,7 +2834,7 @@ export type JobCardUncheckedUpdateWithoutAllocationsInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2869,7 +2869,7 @@ export type JobCardCreateManyTenantInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -2918,7 +2918,7 @@ export type JobCardUpdateWithoutTenantInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -2938,7 +2938,7 @@ export type JobCardUncheckedUpdateWithoutTenantInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2974,7 +2974,7 @@ export type JobCardUncheckedUpdateManyWithoutTenantInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3008,7 +3008,7 @@ export type JobCardCreateManyBranchInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -3057,7 +3057,7 @@ export type JobCardUpdateWithoutBranchInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -3077,7 +3077,7 @@ export type JobCardUncheckedUpdateWithoutBranchInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3113,7 +3113,7 @@ export type JobCardUncheckedUpdateManyWithoutBranchInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3137,7 +3137,7 @@ export type JobCardUncheckedUpdateManyWithoutBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type JobCardCreateManySupervisorInput = {
+export type JobCardCreateManyServiceAdvisorInput = {
   id?: number
   tenantId: number
   branchId: number
@@ -3182,7 +3182,7 @@ export type JobCardCreateManyTechnicianInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
   repairOrderTypeId: number
@@ -3216,7 +3216,7 @@ export type JobCardCreateManyCreatedByUserInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -3239,7 +3239,7 @@ export type JobCardCreateManyCreatedByUserInput = {
   updatedAt?: Date | string
 }
 
-export type JobCardUpdateWithoutSupervisorInput = {
+export type JobCardUpdateWithoutServiceAdvisorInput = {
   jobCardNo?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleInTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3274,7 +3274,7 @@ export type JobCardUpdateWithoutSupervisorInput = {
   allocations?: Prisma.JobCardAllocationUpdateManyWithoutJobCardNestedInput
 }
 
-export type JobCardUncheckedUpdateWithoutSupervisorInput = {
+export type JobCardUncheckedUpdateWithoutServiceAdvisorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   branchId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3310,7 +3310,7 @@ export type JobCardUncheckedUpdateWithoutSupervisorInput = {
   allocations?: Prisma.JobCardAllocationUncheckedUpdateManyWithoutJobCardNestedInput
 }
 
-export type JobCardUncheckedUpdateManyWithoutSupervisorInput = {
+export type JobCardUncheckedUpdateManyWithoutServiceAdvisorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   branchId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3370,7 +3370,7 @@ export type JobCardUpdateWithoutTechnicianInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -3390,7 +3390,7 @@ export type JobCardUncheckedUpdateWithoutTechnicianInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
   repairOrderTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3426,7 +3426,7 @@ export type JobCardUncheckedUpdateManyWithoutTechnicianInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
   repairOrderTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3475,7 +3475,7 @@ export type JobCardUpdateWithoutCreatedByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -3495,7 +3495,7 @@ export type JobCardUncheckedUpdateWithoutCreatedByUserInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3531,7 +3531,7 @@ export type JobCardUncheckedUpdateManyWithoutCreatedByUserInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3565,7 +3565,7 @@ export type JobCardCreateManyServiceCategoryInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceTypeId: number
   repairOrderTypeId: number
@@ -3614,7 +3614,7 @@ export type JobCardUpdateWithoutServiceCategoryInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceType?: Prisma.ServiceTypeMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -3634,7 +3634,7 @@ export type JobCardUncheckedUpdateWithoutServiceCategoryInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
   repairOrderTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3670,7 +3670,7 @@ export type JobCardUncheckedUpdateManyWithoutServiceCategoryInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
   repairOrderTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3704,7 +3704,7 @@ export type JobCardCreateManyServiceTypeInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   repairOrderTypeId: number
@@ -3753,7 +3753,7 @@ export type JobCardUpdateWithoutServiceTypeInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -3773,7 +3773,7 @@ export type JobCardUncheckedUpdateWithoutServiceTypeInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   repairOrderTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3809,7 +3809,7 @@ export type JobCardUncheckedUpdateManyWithoutServiceTypeInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   repairOrderTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3843,7 +3843,7 @@ export type JobCardCreateManyRepairOrderTypeInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -3892,7 +3892,7 @@ export type JobCardUpdateWithoutRepairOrderTypeInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -3912,7 +3912,7 @@ export type JobCardUncheckedUpdateWithoutRepairOrderTypeInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3948,7 +3948,7 @@ export type JobCardUncheckedUpdateManyWithoutRepairOrderTypeInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3981,7 +3981,7 @@ export type JobCardCreateManyCustomerInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -4030,7 +4030,7 @@ export type JobCardUpdateWithoutCustomerInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutJobCardsNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -4050,7 +4050,7 @@ export type JobCardUncheckedUpdateWithoutCustomerInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4086,7 +4086,7 @@ export type JobCardUncheckedUpdateManyWithoutCustomerInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4120,7 +4120,7 @@ export type JobCardCreateManyVehicleInput = {
   currentKmReading: number
   previousKmReading?: number | null
   vehicleStatus: $Enums.JobCardVehicleStatus
-  supervisorId?: number | null
+  serviceAdvisorId?: number | null
   technicianId?: number | null
   serviceCategoryId: number
   serviceTypeId: number
@@ -4169,7 +4169,7 @@ export type JobCardUpdateWithoutVehicleInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutJobCardsNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutJobCardsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutJobCardsNestedInput
-  supervisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
+  serviceAdvisor?: Prisma.UsersUpdateOneWithoutSupervisedJobCardsNestedInput
   technician?: Prisma.UsersUpdateOneWithoutTechnicianJobCardsNestedInput
   createdByUser?: Prisma.UsersUpdateOneRequiredWithoutCreatedJobCardsNestedInput
   serviceCategory?: Prisma.ServiceCategoryMasterUpdateOneRequiredWithoutJobCardsNestedInput
@@ -4189,7 +4189,7 @@ export type JobCardUncheckedUpdateWithoutVehicleInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4225,7 +4225,7 @@ export type JobCardUncheckedUpdateManyWithoutVehicleInput = {
   currentKmReading?: Prisma.IntFieldUpdateOperationsInput | number
   previousKmReading?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   vehicleStatus?: Prisma.EnumJobCardVehicleStatusFieldUpdateOperationsInput | $Enums.JobCardVehicleStatus
-  supervisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  serviceAdvisorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   technicianId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   serviceCategoryId?: Prisma.IntFieldUpdateOperationsInput | number
   serviceTypeId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4300,7 +4300,7 @@ export type JobCardSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   currentKmReading?: boolean
   previousKmReading?: boolean
   vehicleStatus?: boolean
-  supervisorId?: boolean
+  serviceAdvisorId?: boolean
   technicianId?: boolean
   serviceCategoryId?: boolean
   serviceTypeId?: boolean
@@ -4326,7 +4326,7 @@ export type JobCardSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  supervisor?: boolean | Prisma.JobCard$supervisorArgs<ExtArgs>
+  serviceAdvisor?: boolean | Prisma.JobCard$serviceAdvisorArgs<ExtArgs>
   technician?: boolean | Prisma.JobCard$technicianArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   serviceCategory?: boolean | Prisma.ServiceCategoryMasterDefaultArgs<ExtArgs>
@@ -4348,7 +4348,7 @@ export type JobCardSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   currentKmReading?: boolean
   previousKmReading?: boolean
   vehicleStatus?: boolean
-  supervisorId?: boolean
+  serviceAdvisorId?: boolean
   technicianId?: boolean
   serviceCategoryId?: boolean
   serviceTypeId?: boolean
@@ -4374,7 +4374,7 @@ export type JobCardSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  supervisor?: boolean | Prisma.JobCard$supervisorArgs<ExtArgs>
+  serviceAdvisor?: boolean | Prisma.JobCard$serviceAdvisorArgs<ExtArgs>
   technician?: boolean | Prisma.JobCard$technicianArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   serviceCategory?: boolean | Prisma.ServiceCategoryMasterDefaultArgs<ExtArgs>
@@ -4393,7 +4393,7 @@ export type JobCardSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   currentKmReading?: boolean
   previousKmReading?: boolean
   vehicleStatus?: boolean
-  supervisorId?: boolean
+  serviceAdvisorId?: boolean
   technicianId?: boolean
   serviceCategoryId?: boolean
   serviceTypeId?: boolean
@@ -4419,7 +4419,7 @@ export type JobCardSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  supervisor?: boolean | Prisma.JobCard$supervisorArgs<ExtArgs>
+  serviceAdvisor?: boolean | Prisma.JobCard$serviceAdvisorArgs<ExtArgs>
   technician?: boolean | Prisma.JobCard$technicianArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   serviceCategory?: boolean | Prisma.ServiceCategoryMasterDefaultArgs<ExtArgs>
@@ -4438,7 +4438,7 @@ export type JobCardSelectScalar = {
   currentKmReading?: boolean
   previousKmReading?: boolean
   vehicleStatus?: boolean
-  supervisorId?: boolean
+  serviceAdvisorId?: boolean
   technicianId?: boolean
   serviceCategoryId?: boolean
   serviceTypeId?: boolean
@@ -4462,13 +4462,13 @@ export type JobCardSelectScalar = {
   updatedAt?: boolean
 }
 
-export type JobCardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "branchId" | "jobCardNo" | "vehicleId" | "customerId" | "vehicleInTime" | "currentKmReading" | "previousKmReading" | "vehicleStatus" | "supervisorId" | "technicianId" | "serviceCategoryId" | "serviceTypeId" | "repairOrderTypeId" | "isRevisit" | "estimateCloseAt" | "revisedEstimateCloseAt" | "closedAt" | "status" | "driverName" | "driverMobileNo" | "isBreakdown" | "breakdownPersonAttended" | "breakdownDateTime" | "breakdownStartDateTime" | "breakdownEndDateTime" | "dealerVanStartKm" | "dealerVanEndKm" | "createdBy" | "createdAt" | "updatedAt", ExtArgs["result"]["jobCard"]>
+export type JobCardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "branchId" | "jobCardNo" | "vehicleId" | "customerId" | "vehicleInTime" | "currentKmReading" | "previousKmReading" | "vehicleStatus" | "serviceAdvisorId" | "technicianId" | "serviceCategoryId" | "serviceTypeId" | "repairOrderTypeId" | "isRevisit" | "estimateCloseAt" | "revisedEstimateCloseAt" | "closedAt" | "status" | "driverName" | "driverMobileNo" | "isBreakdown" | "breakdownPersonAttended" | "breakdownDateTime" | "breakdownStartDateTime" | "breakdownEndDateTime" | "dealerVanStartKm" | "dealerVanEndKm" | "createdBy" | "createdAt" | "updatedAt", ExtArgs["result"]["jobCard"]>
 export type JobCardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  supervisor?: boolean | Prisma.JobCard$supervisorArgs<ExtArgs>
+  serviceAdvisor?: boolean | Prisma.JobCard$serviceAdvisorArgs<ExtArgs>
   technician?: boolean | Prisma.JobCard$technicianArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   serviceCategory?: boolean | Prisma.ServiceCategoryMasterDefaultArgs<ExtArgs>
@@ -4483,7 +4483,7 @@ export type JobCardIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  supervisor?: boolean | Prisma.JobCard$supervisorArgs<ExtArgs>
+  serviceAdvisor?: boolean | Prisma.JobCard$serviceAdvisorArgs<ExtArgs>
   technician?: boolean | Prisma.JobCard$technicianArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   serviceCategory?: boolean | Prisma.ServiceCategoryMasterDefaultArgs<ExtArgs>
@@ -4495,7 +4495,7 @@ export type JobCardIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  supervisor?: boolean | Prisma.JobCard$supervisorArgs<ExtArgs>
+  serviceAdvisor?: boolean | Prisma.JobCard$serviceAdvisorArgs<ExtArgs>
   technician?: boolean | Prisma.JobCard$technicianArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   serviceCategory?: boolean | Prisma.ServiceCategoryMasterDefaultArgs<ExtArgs>
@@ -4510,7 +4510,7 @@ export type $JobCardPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     branch: Prisma.$BranchPayload<ExtArgs>
     vehicle: Prisma.$VehiclePayload<ExtArgs>
     customer: Prisma.$CustomerPayload<ExtArgs>
-    supervisor: Prisma.$UsersPayload<ExtArgs> | null
+    serviceAdvisor: Prisma.$UsersPayload<ExtArgs> | null
     technician: Prisma.$UsersPayload<ExtArgs> | null
     createdByUser: Prisma.$UsersPayload<ExtArgs>
     serviceCategory: Prisma.$ServiceCategoryMasterPayload<ExtArgs>
@@ -4530,7 +4530,7 @@ export type $JobCardPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     currentKmReading: number
     previousKmReading: number | null
     vehicleStatus: $Enums.JobCardVehicleStatus
-    supervisorId: number | null
+    serviceAdvisorId: number | null
     technicianId: number | null
     serviceCategoryId: number
     serviceTypeId: number
@@ -4950,7 +4950,7 @@ export interface Prisma__JobCardClient<T, Null = never, ExtArgs extends runtime.
   branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   vehicle<T extends Prisma.VehicleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleClient<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  supervisor<T extends Prisma.JobCard$supervisorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobCard$supervisorArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  serviceAdvisor<T extends Prisma.JobCard$serviceAdvisorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobCard$serviceAdvisorArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   technician<T extends Prisma.JobCard$technicianArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobCard$technicianArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdByUser<T extends Prisma.UsersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsersDefaultArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   serviceCategory<T extends Prisma.ServiceCategoryMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceCategoryMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceCategoryMasterClient<runtime.Types.Result.GetResult<Prisma.$ServiceCategoryMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -4997,7 +4997,7 @@ export interface JobCardFieldRefs {
   readonly currentKmReading: Prisma.FieldRef<"JobCard", 'Int'>
   readonly previousKmReading: Prisma.FieldRef<"JobCard", 'Int'>
   readonly vehicleStatus: Prisma.FieldRef<"JobCard", 'JobCardVehicleStatus'>
-  readonly supervisorId: Prisma.FieldRef<"JobCard", 'Int'>
+  readonly serviceAdvisorId: Prisma.FieldRef<"JobCard", 'Int'>
   readonly technicianId: Prisma.FieldRef<"JobCard", 'Int'>
   readonly serviceCategoryId: Prisma.FieldRef<"JobCard", 'Int'>
   readonly serviceTypeId: Prisma.FieldRef<"JobCard", 'Int'>
@@ -5420,9 +5420,9 @@ export type JobCardDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * JobCard.supervisor
+ * JobCard.serviceAdvisor
  */
-export type JobCard$supervisorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type JobCard$serviceAdvisorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Users
    */

@@ -123,7 +123,7 @@ export function EditEmployeeModal({ employee, open, onClose }: EditEmployeeModal
                 fetchEmployeeList(employeeSkip, employeeTake)
                 setTimeout(() => {
                     handleCancel()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

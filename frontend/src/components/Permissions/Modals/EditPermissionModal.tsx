@@ -71,7 +71,7 @@ const EditPermissionModal = ({ permission, open, onClose }: props) => {
                 setTimeout(() => {
                     closeAllPermissionModals()
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

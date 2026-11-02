@@ -111,7 +111,7 @@ export function EditPartCategoryModal({ category, open, onClose, onUpdated }: Ed
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

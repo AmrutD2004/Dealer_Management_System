@@ -158,7 +158,7 @@ export function CreatePartFitmentModal({ open, setOpen, onCreated }: CreatePartF
                 onCreated?.()
                 setTimeout(() => {
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

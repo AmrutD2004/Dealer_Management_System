@@ -267,11 +267,12 @@ export type ServiceCategoryMasterOrderByWithRelationInput = {
 
 export type ServiceCategoryMasterWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  code?: $Enums.ServiceCategoryMasterCode
+  code_tenantId?: Prisma.ServiceCategoryMasterCodeTenantIdCompoundUniqueInput
   AND?: Prisma.ServiceCategoryMasterWhereInput | Prisma.ServiceCategoryMasterWhereInput[]
   OR?: Prisma.ServiceCategoryMasterWhereInput[]
   NOT?: Prisma.ServiceCategoryMasterWhereInput | Prisma.ServiceCategoryMasterWhereInput[]
   tenantId?: Prisma.IntFilter<"ServiceCategoryMaster"> | number
+  code?: Prisma.EnumServiceCategoryMasterCodeFilter<"ServiceCategoryMaster"> | $Enums.ServiceCategoryMasterCode
   name?: Prisma.StringFilter<"ServiceCategoryMaster"> | string
   description?: Prisma.StringNullableFilter<"ServiceCategoryMaster"> | string | null
   isActive?: Prisma.BoolFilter<"ServiceCategoryMaster"> | boolean
@@ -281,7 +282,7 @@ export type ServiceCategoryMasterWhereUniqueInput = Prisma.AtLeast<{
   serviceTypes?: Prisma.ServiceTypeMasterListRelationFilter
   jobCards?: Prisma.JobCardListRelationFilter
   serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
-}, "id" | "code">
+}, "id" | "code_tenantId">
 
 export type ServiceCategoryMasterOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -406,6 +407,11 @@ export type ServiceCategoryMasterListRelationFilter = {
 
 export type ServiceCategoryMasterOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ServiceCategoryMasterCodeTenantIdCompoundUniqueInput = {
+  code: $Enums.ServiceCategoryMasterCode
+  tenantId: number
 }
 
 export type ServiceCategoryMasterCountOrderByAggregateInput = {

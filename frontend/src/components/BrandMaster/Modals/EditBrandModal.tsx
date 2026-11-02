@@ -52,7 +52,7 @@ export function EditBrandModal({ brand, open, onClose, onUpdated }: EditBrandMod
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

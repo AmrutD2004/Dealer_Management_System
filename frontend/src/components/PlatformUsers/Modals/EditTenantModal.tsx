@@ -94,7 +94,7 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
                 setTimeout(() => {
                     closeAllModals()
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

@@ -148,7 +148,7 @@ export function EditJobCardAllocationModal({ allocation, open, onClose, onUpdate
                 onUpdated?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({
@@ -170,7 +170,7 @@ export function EditJobCardAllocationModal({ allocation, open, onClose, onUpdate
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-4xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Edit Job Card Allocation</DialogTitle>
                     <DialogDescription>Update the bay, mechanic or bay in time for this allocation.</DialogDescription>

@@ -198,7 +198,7 @@ export function CreatePartMasterModal({ open, setOpen, onCreated }: CreatePartMa
                 onCreated?.()
                 setTimeout(() => {
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

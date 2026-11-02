@@ -77,7 +77,7 @@ export function EditDesignationModal({ designation, open, onClose }: EditDesigna
                 fetchDesignationList(designationSkip, designationTake)
                 setTimeout(() => {
                     handleCancel()
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

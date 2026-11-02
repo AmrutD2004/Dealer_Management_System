@@ -115,7 +115,7 @@ export function CreateVariantModal({ onCreated }: CreateVariantModalProps) {
                 onCreated?.()
                 setTimeout(() => {
                     setOpen(false)
-                }, 2000)
+                }, 10)
             }
             if (!data?.success) {
                 toast.add({

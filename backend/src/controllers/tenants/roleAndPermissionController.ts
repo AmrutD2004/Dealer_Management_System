@@ -22,7 +22,8 @@ export const createRole = async (req: Request, res: Response) => {
         const isRoleExists = await prisma.role.findFirst({
             where: {
                 roleCode: roleCode,
-                roleName: roleName
+                roleName: roleName,
+                tenantId : Number(tenantId)
             }
         })
         if (isRoleExists) {

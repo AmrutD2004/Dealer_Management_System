@@ -75,7 +75,7 @@ export function ConfirmDealerBayActionModal({ confirmAction, open, onClose, onDo
                 onDone?.()
                 setTimeout(() => {
                     onClose()
-                }, 2000)
+                }, 10)
             } else {
                 toast.add({
                     type: 'error',

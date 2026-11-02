@@ -236,7 +236,7 @@ export type LabourMasterGroupByOutputType = {
   tenantId: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription: string | null
   standardHours: runtime.Decimal
   rate: runtime.Decimal
   hsnId: number | null
@@ -273,7 +273,7 @@ export type LabourMasterWhereInput = {
   tenantId?: Prisma.IntFilter<"LabourMaster"> | number
   labourCode?: Prisma.StringFilter<"LabourMaster"> | string
   labourName?: Prisma.StringFilter<"LabourMaster"> | string
-  labourDescription?: Prisma.StringFilter<"LabourMaster"> | string
+  labourDescription?: Prisma.StringNullableFilter<"LabourMaster"> | string | null
   standardHours?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.IntNullableFilter<"LabourMaster"> | number | null
@@ -291,7 +291,7 @@ export type LabourMasterOrderByWithRelationInput = {
   tenantId?: Prisma.SortOrder
   labourCode?: Prisma.SortOrder
   labourName?: Prisma.SortOrder
-  labourDescription?: Prisma.SortOrder
+  labourDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
   hsnId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -313,7 +313,7 @@ export type LabourMasterWhereUniqueInput = Prisma.AtLeast<{
   tenantId?: Prisma.IntFilter<"LabourMaster"> | number
   labourCode?: Prisma.StringFilter<"LabourMaster"> | string
   labourName?: Prisma.StringFilter<"LabourMaster"> | string
-  labourDescription?: Prisma.StringFilter<"LabourMaster"> | string
+  labourDescription?: Prisma.StringNullableFilter<"LabourMaster"> | string | null
   standardHours?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.IntNullableFilter<"LabourMaster"> | number | null
@@ -331,7 +331,7 @@ export type LabourMasterOrderByWithAggregationInput = {
   tenantId?: Prisma.SortOrder
   labourCode?: Prisma.SortOrder
   labourName?: Prisma.SortOrder
-  labourDescription?: Prisma.SortOrder
+  labourDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   standardHours?: Prisma.SortOrder
   rate?: Prisma.SortOrder
   hsnId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -353,7 +353,7 @@ export type LabourMasterScalarWhereWithAggregatesInput = {
   tenantId?: Prisma.IntWithAggregatesFilter<"LabourMaster"> | number
   labourCode?: Prisma.StringWithAggregatesFilter<"LabourMaster"> | string
   labourName?: Prisma.StringWithAggregatesFilter<"LabourMaster"> | string
-  labourDescription?: Prisma.StringWithAggregatesFilter<"LabourMaster"> | string
+  labourDescription?: Prisma.StringNullableWithAggregatesFilter<"LabourMaster"> | string | null
   standardHours?: Prisma.DecimalWithAggregatesFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalWithAggregatesFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.IntNullableWithAggregatesFilter<"LabourMaster"> | number | null
@@ -365,7 +365,7 @@ export type LabourMasterScalarWhereWithAggregatesInput = {
 export type LabourMasterCreateInput = {
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
@@ -382,7 +382,7 @@ export type LabourMasterUncheckedCreateInput = {
   tenantId: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: number | null
@@ -396,7 +396,7 @@ export type LabourMasterUncheckedCreateInput = {
 export type LabourMasterUpdateInput = {
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -413,7 +413,7 @@ export type LabourMasterUncheckedUpdateInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -429,7 +429,7 @@ export type LabourMasterCreateManyInput = {
   tenantId: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: number | null
@@ -441,7 +441,7 @@ export type LabourMasterCreateManyInput = {
 export type LabourMasterUpdateManyMutationInput = {
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -454,7 +454,7 @@ export type LabourMasterUncheckedUpdateManyInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -656,7 +656,7 @@ export type LabourMasterUpdateOneRequiredWithoutServiceQuotationLaboursNestedInp
 export type LabourMasterCreateWithoutTenantInput = {
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
@@ -671,7 +671,7 @@ export type LabourMasterUncheckedCreateWithoutTenantInput = {
   id?: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: number | null
@@ -716,7 +716,7 @@ export type LabourMasterScalarWhereInput = {
   tenantId?: Prisma.IntFilter<"LabourMaster"> | number
   labourCode?: Prisma.StringFilter<"LabourMaster"> | string
   labourName?: Prisma.StringFilter<"LabourMaster"> | string
-  labourDescription?: Prisma.StringFilter<"LabourMaster"> | string
+  labourDescription?: Prisma.StringNullableFilter<"LabourMaster"> | string | null
   standardHours?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFilter<"LabourMaster"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.IntNullableFilter<"LabourMaster"> | number | null
@@ -728,7 +728,7 @@ export type LabourMasterScalarWhereInput = {
 export type LabourMasterCreateWithoutActionToBeTakenInput = {
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
@@ -744,7 +744,7 @@ export type LabourMasterUncheckedCreateWithoutActionToBeTakenInput = {
   tenantId: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: number | null
@@ -773,7 +773,7 @@ export type LabourMasterUpdateToOneWithWhereWithoutActionToBeTakenInput = {
 export type LabourMasterUpdateWithoutActionToBeTakenInput = {
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -789,7 +789,7 @@ export type LabourMasterUncheckedUpdateWithoutActionToBeTakenInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -802,7 +802,7 @@ export type LabourMasterUncheckedUpdateWithoutActionToBeTakenInput = {
 export type LabourMasterCreateWithoutHsnInput = {
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
@@ -818,7 +818,7 @@ export type LabourMasterUncheckedCreateWithoutHsnInput = {
   tenantId: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
@@ -857,7 +857,7 @@ export type LabourMasterUpdateManyWithWhereWithoutHsnInput = {
 export type LabourMasterCreateWithoutServiceQuotationLaboursInput = {
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
@@ -873,7 +873,7 @@ export type LabourMasterUncheckedCreateWithoutServiceQuotationLaboursInput = {
   tenantId: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: number | null
@@ -902,7 +902,7 @@ export type LabourMasterUpdateToOneWithWhereWithoutServiceQuotationLaboursInput 
 export type LabourMasterUpdateWithoutServiceQuotationLaboursInput = {
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -918,7 +918,7 @@ export type LabourMasterUncheckedUpdateWithoutServiceQuotationLaboursInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -932,7 +932,7 @@ export type LabourMasterCreateManyTenantInput = {
   id?: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: number | null
@@ -944,7 +944,7 @@ export type LabourMasterCreateManyTenantInput = {
 export type LabourMasterUpdateWithoutTenantInput = {
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -959,7 +959,7 @@ export type LabourMasterUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -974,7 +974,7 @@ export type LabourMasterUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hsnId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -988,7 +988,7 @@ export type LabourMasterCreateManyHsnInput = {
   tenantId: number
   labourCode: string
   labourName: string
-  labourDescription: string
+  labourDescription?: string | null
   standardHours: runtime.Decimal | runtime.DecimalJsLike | number | string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: boolean
@@ -999,7 +999,7 @@ export type LabourMasterCreateManyHsnInput = {
 export type LabourMasterUpdateWithoutHsnInput = {
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1015,7 +1015,7 @@ export type LabourMasterUncheckedUpdateWithoutHsnInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1030,7 +1030,7 @@ export type LabourMasterUncheckedUpdateManyWithoutHsnInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   labourCode?: Prisma.StringFieldUpdateOperationsInput | string
   labourName?: Prisma.StringFieldUpdateOperationsInput | string
-  labourDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  labourDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   standardHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1173,7 +1173,7 @@ export type $LabourMasterPayload<ExtArgs extends runtime.Types.Extensions.Intern
     tenantId: number
     labourCode: string
     labourName: string
-    labourDescription: string
+    labourDescription: string | null
     standardHours: runtime.Decimal
     rate: runtime.Decimal
     hsnId: number | null
