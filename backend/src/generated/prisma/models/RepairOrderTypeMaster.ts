@@ -247,6 +247,7 @@ export type RepairOrderTypeMasterWhereInput = {
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   jobCards?: Prisma.JobCardListRelationFilter
   serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
+  serviceAppointment?: Prisma.ServiceAppointmentListRelationFilter
 }
 
 export type RepairOrderTypeMasterOrderByWithRelationInput = {
@@ -261,6 +262,7 @@ export type RepairOrderTypeMasterOrderByWithRelationInput = {
   tenant?: Prisma.TenantOrderByWithRelationInput
   jobCards?: Prisma.JobCardOrderByRelationAggregateInput
   serviceQuotation?: Prisma.ServiceQuotationMasterOrderByRelationAggregateInput
+  serviceAppointment?: Prisma.ServiceAppointmentOrderByRelationAggregateInput
 }
 
 export type RepairOrderTypeMasterWhereUniqueInput = Prisma.AtLeast<{
@@ -279,6 +281,7 @@ export type RepairOrderTypeMasterWhereUniqueInput = Prisma.AtLeast<{
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   jobCards?: Prisma.JobCardListRelationFilter
   serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
+  serviceAppointment?: Prisma.ServiceAppointmentListRelationFilter
 }, "id" | "tenantId_code">
 
 export type RepairOrderTypeMasterOrderByWithAggregationInput = {
@@ -321,6 +324,7 @@ export type RepairOrderTypeMasterCreateInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutRepairOrderTypeInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutRepairOrderTypeInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutRepairOrderTypeInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutRepairOrderTypeInput
 }
 
 export type RepairOrderTypeMasterUncheckedCreateInput = {
@@ -334,6 +338,7 @@ export type RepairOrderTypeMasterUncheckedCreateInput = {
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutRepairOrderTypeInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutRepairOrderTypeInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutRepairOrderTypeInput
 }
 
 export type RepairOrderTypeMasterUpdateInput = {
@@ -346,6 +351,7 @@ export type RepairOrderTypeMasterUpdateInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutRepairOrderTypeNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutRepairOrderTypeNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutRepairOrderTypeNestedInput
 }
 
 export type RepairOrderTypeMasterUncheckedUpdateInput = {
@@ -359,6 +365,7 @@ export type RepairOrderTypeMasterUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
 }
 
 export type RepairOrderTypeMasterCreateManyInput = {
@@ -529,6 +536,20 @@ export type RepairOrderTypeMasterUpdateOneRequiredWithoutServiceQuotationNestedI
   update?: Prisma.XOR<Prisma.XOR<Prisma.RepairOrderTypeMasterUpdateToOneWithWhereWithoutServiceQuotationInput, Prisma.RepairOrderTypeMasterUpdateWithoutServiceQuotationInput>, Prisma.RepairOrderTypeMasterUncheckedUpdateWithoutServiceQuotationInput>
 }
 
+export type RepairOrderTypeMasterCreateNestedOneWithoutServiceAppointmentInput = {
+  create?: Prisma.XOR<Prisma.RepairOrderTypeMasterCreateWithoutServiceAppointmentInput, Prisma.RepairOrderTypeMasterUncheckedCreateWithoutServiceAppointmentInput>
+  connectOrCreate?: Prisma.RepairOrderTypeMasterCreateOrConnectWithoutServiceAppointmentInput
+  connect?: Prisma.RepairOrderTypeMasterWhereUniqueInput
+}
+
+export type RepairOrderTypeMasterUpdateOneRequiredWithoutServiceAppointmentNestedInput = {
+  create?: Prisma.XOR<Prisma.RepairOrderTypeMasterCreateWithoutServiceAppointmentInput, Prisma.RepairOrderTypeMasterUncheckedCreateWithoutServiceAppointmentInput>
+  connectOrCreate?: Prisma.RepairOrderTypeMasterCreateOrConnectWithoutServiceAppointmentInput
+  upsert?: Prisma.RepairOrderTypeMasterUpsertWithoutServiceAppointmentInput
+  connect?: Prisma.RepairOrderTypeMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RepairOrderTypeMasterUpdateToOneWithWhereWithoutServiceAppointmentInput, Prisma.RepairOrderTypeMasterUpdateWithoutServiceAppointmentInput>, Prisma.RepairOrderTypeMasterUncheckedUpdateWithoutServiceAppointmentInput>
+}
+
 export type RepairOrderTypeMasterCreateWithoutTenantInput = {
   code: $Enums.RepairType
   name: string
@@ -538,6 +559,7 @@ export type RepairOrderTypeMasterCreateWithoutTenantInput = {
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardCreateNestedManyWithoutRepairOrderTypeInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutRepairOrderTypeInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutRepairOrderTypeInput
 }
 
 export type RepairOrderTypeMasterUncheckedCreateWithoutTenantInput = {
@@ -550,6 +572,7 @@ export type RepairOrderTypeMasterUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutRepairOrderTypeInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutRepairOrderTypeInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutRepairOrderTypeInput
 }
 
 export type RepairOrderTypeMasterCreateOrConnectWithoutTenantInput = {
@@ -601,6 +624,7 @@ export type RepairOrderTypeMasterCreateWithoutJobCardsInput = {
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutRepairOrderTypeInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutRepairOrderTypeInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutRepairOrderTypeInput
 }
 
 export type RepairOrderTypeMasterUncheckedCreateWithoutJobCardsInput = {
@@ -613,6 +637,7 @@ export type RepairOrderTypeMasterUncheckedCreateWithoutJobCardsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutRepairOrderTypeInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutRepairOrderTypeInput
 }
 
 export type RepairOrderTypeMasterCreateOrConnectWithoutJobCardsInput = {
@@ -640,6 +665,7 @@ export type RepairOrderTypeMasterUpdateWithoutJobCardsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutRepairOrderTypeNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutRepairOrderTypeNestedInput
 }
 
 export type RepairOrderTypeMasterUncheckedUpdateWithoutJobCardsInput = {
@@ -652,6 +678,7 @@ export type RepairOrderTypeMasterUncheckedUpdateWithoutJobCardsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
 }
 
 export type RepairOrderTypeMasterCreateWithoutServiceQuotationInput = {
@@ -663,6 +690,7 @@ export type RepairOrderTypeMasterCreateWithoutServiceQuotationInput = {
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutRepairOrderTypeInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutRepairOrderTypeInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutRepairOrderTypeInput
 }
 
 export type RepairOrderTypeMasterUncheckedCreateWithoutServiceQuotationInput = {
@@ -675,6 +703,7 @@ export type RepairOrderTypeMasterUncheckedCreateWithoutServiceQuotationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutRepairOrderTypeInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutRepairOrderTypeInput
 }
 
 export type RepairOrderTypeMasterCreateOrConnectWithoutServiceQuotationInput = {
@@ -702,6 +731,7 @@ export type RepairOrderTypeMasterUpdateWithoutServiceQuotationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutRepairOrderTypeNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutRepairOrderTypeNestedInput
 }
 
 export type RepairOrderTypeMasterUncheckedUpdateWithoutServiceQuotationInput = {
@@ -714,6 +744,73 @@ export type RepairOrderTypeMasterUncheckedUpdateWithoutServiceQuotationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
+}
+
+export type RepairOrderTypeMasterCreateWithoutServiceAppointmentInput = {
+  code: $Enums.RepairType
+  name: string
+  description?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutRepairOrderTypeInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutRepairOrderTypeInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutRepairOrderTypeInput
+}
+
+export type RepairOrderTypeMasterUncheckedCreateWithoutServiceAppointmentInput = {
+  id?: number
+  tenantId: number
+  code: $Enums.RepairType
+  name: string
+  description?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutRepairOrderTypeInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutRepairOrderTypeInput
+}
+
+export type RepairOrderTypeMasterCreateOrConnectWithoutServiceAppointmentInput = {
+  where: Prisma.RepairOrderTypeMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.RepairOrderTypeMasterCreateWithoutServiceAppointmentInput, Prisma.RepairOrderTypeMasterUncheckedCreateWithoutServiceAppointmentInput>
+}
+
+export type RepairOrderTypeMasterUpsertWithoutServiceAppointmentInput = {
+  update: Prisma.XOR<Prisma.RepairOrderTypeMasterUpdateWithoutServiceAppointmentInput, Prisma.RepairOrderTypeMasterUncheckedUpdateWithoutServiceAppointmentInput>
+  create: Prisma.XOR<Prisma.RepairOrderTypeMasterCreateWithoutServiceAppointmentInput, Prisma.RepairOrderTypeMasterUncheckedCreateWithoutServiceAppointmentInput>
+  where?: Prisma.RepairOrderTypeMasterWhereInput
+}
+
+export type RepairOrderTypeMasterUpdateToOneWithWhereWithoutServiceAppointmentInput = {
+  where?: Prisma.RepairOrderTypeMasterWhereInput
+  data: Prisma.XOR<Prisma.RepairOrderTypeMasterUpdateWithoutServiceAppointmentInput, Prisma.RepairOrderTypeMasterUncheckedUpdateWithoutServiceAppointmentInput>
+}
+
+export type RepairOrderTypeMasterUpdateWithoutServiceAppointmentInput = {
+  code?: Prisma.EnumRepairTypeFieldUpdateOperationsInput | $Enums.RepairType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutRepairOrderTypeNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutRepairOrderTypeNestedInput
+}
+
+export type RepairOrderTypeMasterUncheckedUpdateWithoutServiceAppointmentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.EnumRepairTypeFieldUpdateOperationsInput | $Enums.RepairType
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
 }
 
 export type RepairOrderTypeMasterCreateManyTenantInput = {
@@ -735,6 +832,7 @@ export type RepairOrderTypeMasterUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUpdateManyWithoutRepairOrderTypeNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutRepairOrderTypeNestedInput
 }
 
 export type RepairOrderTypeMasterUncheckedUpdateWithoutTenantInput = {
@@ -747,6 +845,7 @@ export type RepairOrderTypeMasterUncheckedUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutRepairOrderTypeNestedInput
 }
 
 export type RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantInput = {
@@ -767,11 +866,13 @@ export type RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantInput = {
 export type RepairOrderTypeMasterCountOutputType = {
   jobCards: number
   serviceQuotation: number
+  serviceAppointment: number
 }
 
 export type RepairOrderTypeMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobCards?: boolean | RepairOrderTypeMasterCountOutputTypeCountJobCardsArgs
   serviceQuotation?: boolean | RepairOrderTypeMasterCountOutputTypeCountServiceQuotationArgs
+  serviceAppointment?: boolean | RepairOrderTypeMasterCountOutputTypeCountServiceAppointmentArgs
 }
 
 /**
@@ -798,6 +899,13 @@ export type RepairOrderTypeMasterCountOutputTypeCountServiceQuotationArgs<ExtArg
   where?: Prisma.ServiceQuotationMasterWhereInput
 }
 
+/**
+ * RepairOrderTypeMasterCountOutputType without action
+ */
+export type RepairOrderTypeMasterCountOutputTypeCountServiceAppointmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceAppointmentWhereInput
+}
+
 
 export type RepairOrderTypeMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -811,6 +919,7 @@ export type RepairOrderTypeMasterSelect<ExtArgs extends runtime.Types.Extensions
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   jobCards?: boolean | Prisma.RepairOrderTypeMaster$jobCardsArgs<ExtArgs>
   serviceQuotation?: boolean | Prisma.RepairOrderTypeMaster$serviceQuotationArgs<ExtArgs>
+  serviceAppointment?: boolean | Prisma.RepairOrderTypeMaster$serviceAppointmentArgs<ExtArgs>
   _count?: boolean | Prisma.RepairOrderTypeMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["repairOrderTypeMaster"]>
 
@@ -854,6 +963,7 @@ export type RepairOrderTypeMasterInclude<ExtArgs extends runtime.Types.Extension
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   jobCards?: boolean | Prisma.RepairOrderTypeMaster$jobCardsArgs<ExtArgs>
   serviceQuotation?: boolean | Prisma.RepairOrderTypeMaster$serviceQuotationArgs<ExtArgs>
+  serviceAppointment?: boolean | Prisma.RepairOrderTypeMaster$serviceAppointmentArgs<ExtArgs>
   _count?: boolean | Prisma.RepairOrderTypeMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RepairOrderTypeMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -869,6 +979,7 @@ export type $RepairOrderTypeMasterPayload<ExtArgs extends runtime.Types.Extensio
     tenant: Prisma.$TenantPayload<ExtArgs>
     jobCards: Prisma.$JobCardPayload<ExtArgs>[]
     serviceQuotation: Prisma.$ServiceQuotationMasterPayload<ExtArgs>[]
+    serviceAppointment: Prisma.$ServiceAppointmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1276,6 +1387,7 @@ export interface Prisma__RepairOrderTypeMasterClient<T, Null = never, ExtArgs ex
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   jobCards<T extends Prisma.RepairOrderTypeMaster$jobCardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RepairOrderTypeMaster$jobCardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceQuotation<T extends Prisma.RepairOrderTypeMaster$serviceQuotationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RepairOrderTypeMaster$serviceQuotationArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceAppointment<T extends Prisma.RepairOrderTypeMaster$serviceAppointmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RepairOrderTypeMaster$serviceAppointmentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1759,6 +1871,30 @@ export type RepairOrderTypeMaster$serviceQuotationArgs<ExtArgs extends runtime.T
   take?: number
   skip?: number
   distinct?: Prisma.ServiceQuotationMasterScalarFieldEnum | Prisma.ServiceQuotationMasterScalarFieldEnum[]
+}
+
+/**
+ * RepairOrderTypeMaster.serviceAppointment
+ */
+export type RepairOrderTypeMaster$serviceAppointmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceAppointment
+   */
+  select?: Prisma.ServiceAppointmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceAppointment
+   */
+  omit?: Prisma.ServiceAppointmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceAppointmentInclude<ExtArgs> | null
+  where?: Prisma.ServiceAppointmentWhereInput
+  orderBy?: Prisma.ServiceAppointmentOrderByWithRelationInput | Prisma.ServiceAppointmentOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceAppointmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceAppointmentScalarFieldEnum | Prisma.ServiceAppointmentScalarFieldEnum[]
 }
 
 /**

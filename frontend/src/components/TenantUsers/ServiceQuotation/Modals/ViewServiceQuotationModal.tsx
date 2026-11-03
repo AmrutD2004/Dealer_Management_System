@@ -49,7 +49,11 @@ export function ViewServiceQuotationModal({
   }, [open, quotation])
 
   if (!detail) return null
-
+  window.addEventListener("keydown", (e)=>{
+    if(e.key === 'Esc'){
+      onClose()
+    }
+  })
   return (
     <Dialog open={!!open} onOpenChange={(isOpen) => {
   if (!isOpen) onClose()}}>

@@ -381,6 +381,7 @@ export type CustomerWhereInput = {
   vehicles?: Prisma.VehicleListRelationFilter
   jobCards?: Prisma.JobCardListRelationFilter
   serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
+  serviceAppointment?: Prisma.ServiceAppointmentListRelationFilter
 }
 
 export type CustomerOrderByWithRelationInput = {
@@ -412,6 +413,7 @@ export type CustomerOrderByWithRelationInput = {
   vehicles?: Prisma.VehicleOrderByRelationAggregateInput
   jobCards?: Prisma.JobCardOrderByRelationAggregateInput
   serviceQuotation?: Prisma.ServiceQuotationMasterOrderByRelationAggregateInput
+  serviceAppointment?: Prisma.ServiceAppointmentOrderByRelationAggregateInput
 }
 
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
@@ -447,6 +449,7 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   vehicles?: Prisma.VehicleListRelationFilter
   jobCards?: Prisma.JobCardListRelationFilter
   serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
+  serviceAppointment?: Prisma.ServiceAppointmentListRelationFilter
 }, "id" | "tenantId_customerCode">
 
 export type CustomerOrderByWithAggregationInput = {
@@ -535,6 +538,7 @@ export type CustomerCreateInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutCustomerInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateInput = {
@@ -564,6 +568,7 @@ export type CustomerUncheckedCreateInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutCustomerInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
@@ -592,6 +597,7 @@ export type CustomerUpdateInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutCustomerNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateInput = {
@@ -621,6 +627,7 @@ export type CustomerUncheckedUpdateInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutCustomerNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyInput = {
@@ -946,6 +953,20 @@ export type CustomerUpdateOneRequiredWithoutServiceQuotationNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutServiceQuotationInput, Prisma.CustomerUpdateWithoutServiceQuotationInput>, Prisma.CustomerUncheckedUpdateWithoutServiceQuotationInput>
 }
 
+export type CustomerCreateNestedOneWithoutServiceAppointmentInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutServiceAppointmentInput, Prisma.CustomerUncheckedCreateWithoutServiceAppointmentInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutServiceAppointmentInput
+  connect?: Prisma.CustomerWhereUniqueInput
+}
+
+export type CustomerUpdateOneRequiredWithoutServiceAppointmentNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutServiceAppointmentInput, Prisma.CustomerUncheckedCreateWithoutServiceAppointmentInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutServiceAppointmentInput
+  upsert?: Prisma.CustomerUpsertWithoutServiceAppointmentInput
+  connect?: Prisma.CustomerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutServiceAppointmentInput, Prisma.CustomerUpdateWithoutServiceAppointmentInput>, Prisma.CustomerUncheckedUpdateWithoutServiceAppointmentInput>
+}
+
 export type CustomerCreateWithoutTenantInput = {
   customerCode: string
   title?: string | null
@@ -971,6 +992,7 @@ export type CustomerCreateWithoutTenantInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutCustomerInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutTenantInput = {
@@ -999,6 +1021,7 @@ export type CustomerUncheckedCreateWithoutTenantInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutCustomerInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutTenantInput = {
@@ -1081,6 +1104,7 @@ export type CustomerCreateWithoutAuthorizedByUserInput = {
   vehicles?: Prisma.VehicleCreateNestedManyWithoutCustomerInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutAuthorizedByUserInput = {
@@ -1109,6 +1133,7 @@ export type CustomerUncheckedCreateWithoutAuthorizedByUserInput = {
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutCustomerInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutAuthorizedByUserInput = {
@@ -1162,6 +1187,7 @@ export type CustomerCreateWithoutVehiclesInput = {
   authorizedByUser: Prisma.UsersCreateNestedOneWithoutAuthorizedCustomersInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutVehiclesInput = {
@@ -1190,6 +1216,7 @@ export type CustomerUncheckedCreateWithoutVehiclesInput = {
   updatedAt?: Date | string
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutVehiclesInput = {
@@ -1233,6 +1260,7 @@ export type CustomerUpdateWithoutVehiclesInput = {
   authorizedByUser?: Prisma.UsersUpdateOneRequiredWithoutAuthorizedCustomersNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutVehiclesInput = {
@@ -1261,6 +1289,7 @@ export type CustomerUncheckedUpdateWithoutVehiclesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutJobCardsInput = {
@@ -1288,6 +1317,7 @@ export type CustomerCreateWithoutJobCardsInput = {
   authorizedByUser: Prisma.UsersCreateNestedOneWithoutAuthorizedCustomersInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutJobCardsInput = {
@@ -1316,6 +1346,7 @@ export type CustomerUncheckedCreateWithoutJobCardsInput = {
   updatedAt?: Date | string
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutCustomerInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutJobCardsInput = {
@@ -1359,6 +1390,7 @@ export type CustomerUpdateWithoutJobCardsInput = {
   authorizedByUser?: Prisma.UsersUpdateOneRequiredWithoutAuthorizedCustomersNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutJobCardsInput = {
@@ -1387,6 +1419,7 @@ export type CustomerUncheckedUpdateWithoutJobCardsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutServiceQuotationInput = {
@@ -1414,6 +1447,7 @@ export type CustomerCreateWithoutServiceQuotationInput = {
   authorizedByUser: Prisma.UsersCreateNestedOneWithoutAuthorizedCustomersInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutCustomerInput
   jobCards?: Prisma.JobCardCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutServiceQuotationInput = {
@@ -1442,6 +1476,7 @@ export type CustomerUncheckedCreateWithoutServiceQuotationInput = {
   updatedAt?: Date | string
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutCustomerInput
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCustomerInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutServiceQuotationInput = {
@@ -1485,6 +1520,7 @@ export type CustomerUpdateWithoutServiceQuotationInput = {
   authorizedByUser?: Prisma.UsersUpdateOneRequiredWithoutAuthorizedCustomersNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutCustomerNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutServiceQuotationInput = {
@@ -1513,6 +1549,137 @@ export type CustomerUncheckedUpdateWithoutServiceQuotationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutCustomerNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerCreateWithoutServiceAppointmentInput = {
+  customerCode: string
+  title?: string | null
+  firstName: string
+  middleName?: string | null
+  lastName: string
+  email?: string | null
+  mobileNo: string
+  alternateMobileNo?: string | null
+  dateOfBirth?: Date | string | null
+  address1?: string | null
+  address2?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  laborDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  partDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutCustomersInput
+  authorizedByUser: Prisma.UsersCreateNestedOneWithoutAuthorizedCustomersInput
+  vehicles?: Prisma.VehicleCreateNestedManyWithoutCustomerInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutCustomerInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerUncheckedCreateWithoutServiceAppointmentInput = {
+  id?: number
+  tenantId: number
+  customerCode: string
+  title?: string | null
+  firstName: string
+  middleName?: string | null
+  lastName: string
+  email?: string | null
+  mobileNo: string
+  alternateMobileNo?: string | null
+  dateOfBirth?: Date | string | null
+  address1?: string | null
+  address2?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  laborDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  partDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  authorizedBy: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutCustomerInput
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutCustomerInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerCreateOrConnectWithoutServiceAppointmentInput = {
+  where: Prisma.CustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutServiceAppointmentInput, Prisma.CustomerUncheckedCreateWithoutServiceAppointmentInput>
+}
+
+export type CustomerUpsertWithoutServiceAppointmentInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutServiceAppointmentInput, Prisma.CustomerUncheckedUpdateWithoutServiceAppointmentInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutServiceAppointmentInput, Prisma.CustomerUncheckedCreateWithoutServiceAppointmentInput>
+  where?: Prisma.CustomerWhereInput
+}
+
+export type CustomerUpdateToOneWithWhereWithoutServiceAppointmentInput = {
+  where?: Prisma.CustomerWhereInput
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutServiceAppointmentInput, Prisma.CustomerUncheckedUpdateWithoutServiceAppointmentInput>
+}
+
+export type CustomerUpdateWithoutServiceAppointmentInput = {
+  customerCode?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobileNo?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateMobileNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  laborDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  partDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCustomersNestedInput
+  authorizedByUser?: Prisma.UsersUpdateOneRequiredWithoutAuthorizedCustomersNestedInput
+  vehicles?: Prisma.VehicleUpdateManyWithoutCustomerNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutCustomerNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerUncheckedUpdateWithoutServiceAppointmentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerCode?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobileNo?: Prisma.StringFieldUpdateOperationsInput | string
+  alternateMobileNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  laborDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  partDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  authorizedBy?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutCustomerNestedInput
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCustomerNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyTenantInput = {
@@ -1565,6 +1732,7 @@ export type CustomerUpdateWithoutTenantInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutCustomerNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutTenantInput = {
@@ -1593,6 +1761,7 @@ export type CustomerUncheckedUpdateWithoutTenantInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutCustomerNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateManyWithoutTenantInput = {
@@ -1670,6 +1839,7 @@ export type CustomerUpdateWithoutAuthorizedByUserInput = {
   vehicles?: Prisma.VehicleUpdateManyWithoutCustomerNestedInput
   jobCards?: Prisma.JobCardUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutAuthorizedByUserInput = {
@@ -1698,6 +1868,7 @@ export type CustomerUncheckedUpdateWithoutAuthorizedByUserInput = {
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutCustomerNestedInput
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutCustomerNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutCustomerNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateManyWithoutAuthorizedByUserInput = {
@@ -1734,12 +1905,14 @@ export type CustomerCountOutputType = {
   vehicles: number
   jobCards: number
   serviceQuotation: number
+  serviceAppointment: number
 }
 
 export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vehicles?: boolean | CustomerCountOutputTypeCountVehiclesArgs
   jobCards?: boolean | CustomerCountOutputTypeCountJobCardsArgs
   serviceQuotation?: boolean | CustomerCountOutputTypeCountServiceQuotationArgs
+  serviceAppointment?: boolean | CustomerCountOutputTypeCountServiceAppointmentArgs
 }
 
 /**
@@ -1773,6 +1946,13 @@ export type CustomerCountOutputTypeCountServiceQuotationArgs<ExtArgs extends run
   where?: Prisma.ServiceQuotationMasterWhereInput
 }
 
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeCountServiceAppointmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceAppointmentWhereInput
+}
+
 
 export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1803,6 +1983,7 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   vehicles?: boolean | Prisma.Customer$vehiclesArgs<ExtArgs>
   jobCards?: boolean | Prisma.Customer$jobCardsArgs<ExtArgs>
   serviceQuotation?: boolean | Prisma.Customer$serviceQuotationArgs<ExtArgs>
+  serviceAppointment?: boolean | Prisma.Customer$serviceAppointmentArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
@@ -1895,6 +2076,7 @@ export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   vehicles?: boolean | Prisma.Customer$vehiclesArgs<ExtArgs>
   jobCards?: boolean | Prisma.Customer$jobCardsArgs<ExtArgs>
   serviceQuotation?: boolean | Prisma.Customer$serviceQuotationArgs<ExtArgs>
+  serviceAppointment?: boolean | Prisma.Customer$serviceAppointmentArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CustomerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1914,6 +2096,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     vehicles: Prisma.$VehiclePayload<ExtArgs>[]
     jobCards: Prisma.$JobCardPayload<ExtArgs>[]
     serviceQuotation: Prisma.$ServiceQuotationMasterPayload<ExtArgs>[]
+    serviceAppointment: Prisma.$ServiceAppointmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2338,6 +2521,7 @@ export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime
   vehicles<T extends Prisma.Customer$vehiclesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$vehiclesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   jobCards<T extends Prisma.Customer$jobCardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$jobCardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceQuotation<T extends Prisma.Customer$serviceQuotationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$serviceQuotationArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceAppointment<T extends Prisma.Customer$serviceAppointmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$serviceAppointmentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2860,6 +3044,30 @@ export type Customer$serviceQuotationArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.ServiceQuotationMasterScalarFieldEnum | Prisma.ServiceQuotationMasterScalarFieldEnum[]
+}
+
+/**
+ * Customer.serviceAppointment
+ */
+export type Customer$serviceAppointmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceAppointment
+   */
+  select?: Prisma.ServiceAppointmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceAppointment
+   */
+  omit?: Prisma.ServiceAppointmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceAppointmentInclude<ExtArgs> | null
+  where?: Prisma.ServiceAppointmentWhereInput
+  orderBy?: Prisma.ServiceAppointmentOrderByWithRelationInput | Prisma.ServiceAppointmentOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceAppointmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceAppointmentScalarFieldEnum | Prisma.ServiceAppointmentScalarFieldEnum[]
 }
 
 /**

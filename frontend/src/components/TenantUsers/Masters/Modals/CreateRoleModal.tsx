@@ -84,6 +84,13 @@ export function CreateRoleModal({ open, setOpen }: CreateRoleModalProps) {
                     roleDescription : 'Perform vehicle servicing and repairs, follow assigned job cards, record repair activities, update job progress, and report completed work to the supervisor.'
                 }))
                 break;
+            case 'CUSTOMER_RELATIONSHIP_EXECUTIVE':
+                setFormData(prev => ({
+                    ...prev,
+                    roleName: 'Customer Relationship Executive',
+                    roleDescription : 'Manage customer relationships, coordinate service appointments, communicate service updates, follow up with customers, handle customer queries and feedback, explain service requirements and estimates, and ensure a positive customer service experience.'
+                }))
+                break;
         }
     }
 
@@ -137,7 +144,7 @@ export function CreateRoleModal({ open, setOpen }: CreateRoleModalProps) {
 
     return (
         <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
+            <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-4xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Create New Role</DialogTitle>
                     <DialogDescription>Add a new role to the tenant.</DialogDescription>
@@ -184,6 +191,9 @@ export function CreateRoleModal({ open, setOpen }: CreateRoleModalProps) {
                                                 </SelectItem>
                                                 <SelectItem value="TECHNICIAN">
                                                     TECHNICIAN
+                                                </SelectItem>
+                                                <SelectItem value="CUSTOMER_RELATIONSHIP_EXECUTIVE">
+                                                    CUSTOMER_RELATIONSHIP_EXECUTIVE
                                                 </SelectItem>
                                             </SelectContent>
                                         </Select>

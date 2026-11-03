@@ -494,6 +494,74 @@ export type EnumSourcesWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumSourcesFilter<$PrismaModel>
 }
 
+export type EnumappointActionFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointAction | Prisma.EnumappointActionFieldRefInput<$PrismaModel>
+  in?: $Enums.appointAction[] | Prisma.ListEnumappointActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointAction[] | Prisma.ListEnumappointActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointActionFilter<$PrismaModel> | $Enums.appointAction
+}
+
+export type EnumappointmentSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointmentSource | Prisma.EnumappointmentSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.appointmentSource[] | Prisma.ListEnumappointmentSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointmentSource[] | Prisma.ListEnumappointmentSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointmentSourceFilter<$PrismaModel> | $Enums.appointmentSource
+}
+
+export type EnumappointmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointmentStatus | Prisma.EnumappointmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.appointmentStatus[] | Prisma.ListEnumappointmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointmentStatus[] | Prisma.ListEnumappointmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointmentStatusFilter<$PrismaModel> | $Enums.appointmentStatus
+}
+
+export type EnumappointCancleReasonsNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointCancleReasons | Prisma.EnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  in?: $Enums.appointCancleReasons[] | Prisma.ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.appointCancleReasons[] | Prisma.ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumappointCancleReasonsNullableFilter<$PrismaModel> | $Enums.appointCancleReasons | null
+}
+
+export type EnumappointActionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointAction | Prisma.EnumappointActionFieldRefInput<$PrismaModel>
+  in?: $Enums.appointAction[] | Prisma.ListEnumappointActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointAction[] | Prisma.ListEnumappointActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointActionWithAggregatesFilter<$PrismaModel> | $Enums.appointAction
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumappointActionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumappointActionFilter<$PrismaModel>
+}
+
+export type EnumappointmentSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointmentSource | Prisma.EnumappointmentSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.appointmentSource[] | Prisma.ListEnumappointmentSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointmentSource[] | Prisma.ListEnumappointmentSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointmentSourceWithAggregatesFilter<$PrismaModel> | $Enums.appointmentSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumappointmentSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumappointmentSourceFilter<$PrismaModel>
+}
+
+export type EnumappointmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointmentStatus | Prisma.EnumappointmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.appointmentStatus[] | Prisma.ListEnumappointmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointmentStatus[] | Prisma.ListEnumappointmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.appointmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumappointmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumappointmentStatusFilter<$PrismaModel>
+}
+
+export type EnumappointCancleReasonsNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointCancleReasons | Prisma.EnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  in?: $Enums.appointCancleReasons[] | Prisma.ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.appointCancleReasons[] | Prisma.ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumappointCancleReasonsNullableWithAggregatesFilter<$PrismaModel> | $Enums.appointCancleReasons | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumappointCancleReasonsNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumappointCancleReasonsNullableFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -985,6 +1053,74 @@ export type NestedEnumSourcesWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSourcesFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSourcesFilter<$PrismaModel>
+}
+
+export type NestedEnumappointActionFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointAction | Prisma.EnumappointActionFieldRefInput<$PrismaModel>
+  in?: $Enums.appointAction[] | Prisma.ListEnumappointActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointAction[] | Prisma.ListEnumappointActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointActionFilter<$PrismaModel> | $Enums.appointAction
+}
+
+export type NestedEnumappointmentSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointmentSource | Prisma.EnumappointmentSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.appointmentSource[] | Prisma.ListEnumappointmentSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointmentSource[] | Prisma.ListEnumappointmentSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointmentSourceFilter<$PrismaModel> | $Enums.appointmentSource
+}
+
+export type NestedEnumappointmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointmentStatus | Prisma.EnumappointmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.appointmentStatus[] | Prisma.ListEnumappointmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointmentStatus[] | Prisma.ListEnumappointmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointmentStatusFilter<$PrismaModel> | $Enums.appointmentStatus
+}
+
+export type NestedEnumappointCancleReasonsNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointCancleReasons | Prisma.EnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  in?: $Enums.appointCancleReasons[] | Prisma.ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.appointCancleReasons[] | Prisma.ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumappointCancleReasonsNullableFilter<$PrismaModel> | $Enums.appointCancleReasons | null
+}
+
+export type NestedEnumappointActionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointAction | Prisma.EnumappointActionFieldRefInput<$PrismaModel>
+  in?: $Enums.appointAction[] | Prisma.ListEnumappointActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointAction[] | Prisma.ListEnumappointActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointActionWithAggregatesFilter<$PrismaModel> | $Enums.appointAction
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumappointActionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumappointActionFilter<$PrismaModel>
+}
+
+export type NestedEnumappointmentSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointmentSource | Prisma.EnumappointmentSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.appointmentSource[] | Prisma.ListEnumappointmentSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointmentSource[] | Prisma.ListEnumappointmentSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointmentSourceWithAggregatesFilter<$PrismaModel> | $Enums.appointmentSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumappointmentSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumappointmentSourceFilter<$PrismaModel>
+}
+
+export type NestedEnumappointmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointmentStatus | Prisma.EnumappointmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.appointmentStatus[] | Prisma.ListEnumappointmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.appointmentStatus[] | Prisma.ListEnumappointmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumappointmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.appointmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumappointmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumappointmentStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumappointCancleReasonsNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.appointCancleReasons | Prisma.EnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  in?: $Enums.appointCancleReasons[] | Prisma.ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.appointCancleReasons[] | Prisma.ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumappointCancleReasonsNullableWithAggregatesFilter<$PrismaModel> | $Enums.appointCancleReasons | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumappointCancleReasonsNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumappointCancleReasonsNullableFilter<$PrismaModel>
 }
 
 

@@ -337,6 +337,8 @@ export type TenantWhereInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartListRelationFilter
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourListRelationFilter
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceListRelationFilter
+  serviceAppointment?: Prisma.ServiceAppointmentListRelationFilter
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -378,6 +380,8 @@ export type TenantOrderByWithRelationInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartOrderByRelationAggregateInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourOrderByRelationAggregateInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceOrderByRelationAggregateInput
+  serviceAppointment?: Prisma.ServiceAppointmentOrderByRelationAggregateInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -422,6 +426,8 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   serviceQuotationParts?: Prisma.ServiceQuotationPartListRelationFilter
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourListRelationFilter
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceListRelationFilter
+  serviceAppointment?: Prisma.ServiceAppointmentListRelationFilter
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceListRelationFilter
 }, "id" | "tenantCode" | "email">
 
 export type TenantOrderByWithAggregationInput = {
@@ -509,6 +515,8 @@ export type TenantCreateInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
@@ -549,6 +557,8 @@ export type TenantUncheckedCreateInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -588,6 +598,8 @@ export type TenantUpdateInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -628,6 +640,8 @@ export type TenantUncheckedUpdateInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
@@ -1107,6 +1121,34 @@ export type TenantUpdateOneRequiredWithoutServiceQuotationCustomerVoicesNestedIn
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutServiceQuotationCustomerVoicesInput, Prisma.TenantUpdateWithoutServiceQuotationCustomerVoicesInput>, Prisma.TenantUncheckedUpdateWithoutServiceQuotationCustomerVoicesInput>
 }
 
+export type TenantCreateNestedOneWithoutServiceAppointmentInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutServiceAppointmentInput, Prisma.TenantUncheckedCreateWithoutServiceAppointmentInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutServiceAppointmentInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutServiceAppointmentNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutServiceAppointmentInput, Prisma.TenantUncheckedCreateWithoutServiceAppointmentInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutServiceAppointmentInput
+  upsert?: Prisma.TenantUpsertWithoutServiceAppointmentInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutServiceAppointmentInput, Prisma.TenantUpdateWithoutServiceAppointmentInput>, Prisma.TenantUncheckedUpdateWithoutServiceAppointmentInput>
+}
+
+export type TenantCreateNestedOneWithoutServiceAppointmentCustomerVoiceInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutServiceAppointmentCustomerVoiceInput, Prisma.TenantUncheckedCreateWithoutServiceAppointmentCustomerVoiceInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutServiceAppointmentCustomerVoiceInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutServiceAppointmentCustomerVoiceNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutServiceAppointmentCustomerVoiceInput, Prisma.TenantUncheckedCreateWithoutServiceAppointmentCustomerVoiceInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutServiceAppointmentCustomerVoiceInput
+  upsert?: Prisma.TenantUpsertWithoutServiceAppointmentCustomerVoiceInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutServiceAppointmentCustomerVoiceInput, Prisma.TenantUpdateWithoutServiceAppointmentCustomerVoiceInput>, Prisma.TenantUncheckedUpdateWithoutServiceAppointmentCustomerVoiceInput>
+}
+
 export type TenantCreateWithoutCreatedByUserInput = {
   tenantCode: string
   tenantName: string
@@ -1143,6 +1185,8 @@ export type TenantCreateWithoutCreatedByUserInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCreatedByUserInput = {
@@ -1182,6 +1226,8 @@ export type TenantUncheckedCreateWithoutCreatedByUserInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCreatedByUserInput = {
@@ -1269,6 +1315,8 @@ export type TenantCreateWithoutBranchesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutBranchesInput = {
@@ -1308,6 +1356,8 @@ export type TenantUncheckedCreateWithoutBranchesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutBranchesInput = {
@@ -1362,6 +1412,8 @@ export type TenantUpdateWithoutBranchesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutBranchesInput = {
@@ -1401,6 +1453,8 @@ export type TenantUncheckedUpdateWithoutBranchesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutUsersInput = {
@@ -1439,6 +1493,8 @@ export type TenantCreateWithoutUsersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsersInput = {
@@ -1478,6 +1534,8 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsersInput = {
@@ -1532,6 +1590,8 @@ export type TenantUpdateWithoutUsersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -1571,6 +1631,8 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutEmployeeDesignationsInput = {
@@ -1609,6 +1671,8 @@ export type TenantCreateWithoutEmployeeDesignationsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutEmployeeDesignationsInput = {
@@ -1648,6 +1712,8 @@ export type TenantUncheckedCreateWithoutEmployeeDesignationsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutEmployeeDesignationsInput = {
@@ -1702,6 +1768,8 @@ export type TenantUpdateWithoutEmployeeDesignationsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutEmployeeDesignationsInput = {
@@ -1741,6 +1809,8 @@ export type TenantUncheckedUpdateWithoutEmployeeDesignationsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutRolesInput = {
@@ -1779,6 +1849,8 @@ export type TenantCreateWithoutRolesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRolesInput = {
@@ -1818,6 +1890,8 @@ export type TenantUncheckedCreateWithoutRolesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRolesInput = {
@@ -1872,6 +1946,8 @@ export type TenantUpdateWithoutRolesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRolesInput = {
@@ -1911,6 +1987,8 @@ export type TenantUncheckedUpdateWithoutRolesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceCategoryMastersInput = {
@@ -1949,6 +2027,8 @@ export type TenantCreateWithoutServiceCategoryMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceCategoryMastersInput = {
@@ -1988,6 +2068,8 @@ export type TenantUncheckedCreateWithoutServiceCategoryMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceCategoryMastersInput = {
@@ -2042,6 +2124,8 @@ export type TenantUpdateWithoutServiceCategoryMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceCategoryMastersInput = {
@@ -2081,6 +2165,8 @@ export type TenantUncheckedUpdateWithoutServiceCategoryMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceTypesInput = {
@@ -2119,6 +2205,8 @@ export type TenantCreateWithoutServiceTypesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceTypesInput = {
@@ -2158,6 +2246,8 @@ export type TenantUncheckedCreateWithoutServiceTypesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceTypesInput = {
@@ -2212,6 +2302,8 @@ export type TenantUpdateWithoutServiceTypesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceTypesInput = {
@@ -2251,6 +2343,8 @@ export type TenantUncheckedUpdateWithoutServiceTypesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutRepairOrderTypeInput = {
@@ -2289,6 +2383,8 @@ export type TenantCreateWithoutRepairOrderTypeInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRepairOrderTypeInput = {
@@ -2328,6 +2424,8 @@ export type TenantUncheckedCreateWithoutRepairOrderTypeInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRepairOrderTypeInput = {
@@ -2382,6 +2480,8 @@ export type TenantUpdateWithoutRepairOrderTypeInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRepairOrderTypeInput = {
@@ -2421,6 +2521,8 @@ export type TenantUncheckedUpdateWithoutRepairOrderTypeInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutCustomersInput = {
@@ -2459,6 +2561,8 @@ export type TenantCreateWithoutCustomersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCustomersInput = {
@@ -2498,6 +2602,8 @@ export type TenantUncheckedCreateWithoutCustomersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCustomersInput = {
@@ -2552,6 +2658,8 @@ export type TenantUpdateWithoutCustomersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCustomersInput = {
@@ -2591,6 +2699,8 @@ export type TenantUncheckedUpdateWithoutCustomersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutVehiclesInput = {
@@ -2629,6 +2739,8 @@ export type TenantCreateWithoutVehiclesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutVehiclesInput = {
@@ -2668,6 +2780,8 @@ export type TenantUncheckedCreateWithoutVehiclesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutVehiclesInput = {
@@ -2722,6 +2836,8 @@ export type TenantUpdateWithoutVehiclesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutVehiclesInput = {
@@ -2761,6 +2877,8 @@ export type TenantUncheckedUpdateWithoutVehiclesInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutJobCardsInput = {
@@ -2799,6 +2917,8 @@ export type TenantCreateWithoutJobCardsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutJobCardsInput = {
@@ -2838,6 +2958,8 @@ export type TenantUncheckedCreateWithoutJobCardsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutJobCardsInput = {
@@ -2892,6 +3014,8 @@ export type TenantUpdateWithoutJobCardsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutJobCardsInput = {
@@ -2931,6 +3055,8 @@ export type TenantUncheckedUpdateWithoutJobCardsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutLabourInput = {
@@ -2969,6 +3095,8 @@ export type TenantCreateWithoutLabourInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutLabourInput = {
@@ -3008,6 +3136,8 @@ export type TenantUncheckedCreateWithoutLabourInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutLabourInput = {
@@ -3062,6 +3192,8 @@ export type TenantUpdateWithoutLabourInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutLabourInput = {
@@ -3101,6 +3233,8 @@ export type TenantUncheckedUpdateWithoutLabourInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutDealerBayMastersInput = {
@@ -3139,6 +3273,8 @@ export type TenantCreateWithoutDealerBayMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutDealerBayMastersInput = {
@@ -3178,6 +3314,8 @@ export type TenantUncheckedCreateWithoutDealerBayMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutDealerBayMastersInput = {
@@ -3232,6 +3370,8 @@ export type TenantUpdateWithoutDealerBayMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutDealerBayMastersInput = {
@@ -3271,6 +3411,8 @@ export type TenantUncheckedUpdateWithoutDealerBayMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutHsnMastersInput = {
@@ -3309,6 +3451,8 @@ export type TenantCreateWithoutHsnMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutHsnMastersInput = {
@@ -3348,6 +3492,8 @@ export type TenantUncheckedCreateWithoutHsnMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutHsnMastersInput = {
@@ -3402,6 +3548,8 @@ export type TenantUpdateWithoutHsnMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutHsnMastersInput = {
@@ -3441,6 +3589,8 @@ export type TenantUncheckedUpdateWithoutHsnMastersInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutPartCategoryInput = {
@@ -3479,6 +3629,8 @@ export type TenantCreateWithoutPartCategoryInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutPartCategoryInput = {
@@ -3518,6 +3670,8 @@ export type TenantUncheckedCreateWithoutPartCategoryInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutPartCategoryInput = {
@@ -3572,6 +3726,8 @@ export type TenantUpdateWithoutPartCategoryInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutPartCategoryInput = {
@@ -3611,6 +3767,8 @@ export type TenantUncheckedUpdateWithoutPartCategoryInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutPartsInput = {
@@ -3649,6 +3807,8 @@ export type TenantCreateWithoutPartsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutPartsInput = {
@@ -3688,6 +3848,8 @@ export type TenantUncheckedCreateWithoutPartsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutPartsInput = {
@@ -3742,6 +3904,8 @@ export type TenantUpdateWithoutPartsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutPartsInput = {
@@ -3781,6 +3945,8 @@ export type TenantUncheckedUpdateWithoutPartsInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutFitmentInput = {
@@ -3819,6 +3985,8 @@ export type TenantCreateWithoutFitmentInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutFitmentInput = {
@@ -3858,6 +4026,8 @@ export type TenantUncheckedCreateWithoutFitmentInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutFitmentInput = {
@@ -3912,6 +4082,8 @@ export type TenantUpdateWithoutFitmentInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutFitmentInput = {
@@ -3951,6 +4123,8 @@ export type TenantUncheckedUpdateWithoutFitmentInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceQuotationInput = {
@@ -3989,6 +4163,8 @@ export type TenantCreateWithoutServiceQuotationInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceQuotationInput = {
@@ -4028,6 +4204,8 @@ export type TenantUncheckedCreateWithoutServiceQuotationInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceQuotationInput = {
@@ -4082,6 +4260,8 @@ export type TenantUpdateWithoutServiceQuotationInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceQuotationInput = {
@@ -4121,6 +4301,8 @@ export type TenantUncheckedUpdateWithoutServiceQuotationInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceQuotationPartsInput = {
@@ -4159,6 +4341,8 @@ export type TenantCreateWithoutServiceQuotationPartsInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceQuotationPartsInput = {
@@ -4198,6 +4382,8 @@ export type TenantUncheckedCreateWithoutServiceQuotationPartsInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceQuotationPartsInput = {
@@ -4252,6 +4438,8 @@ export type TenantUpdateWithoutServiceQuotationPartsInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceQuotationPartsInput = {
@@ -4291,6 +4479,8 @@ export type TenantUncheckedUpdateWithoutServiceQuotationPartsInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceQuotationLaboursInput = {
@@ -4329,6 +4519,8 @@ export type TenantCreateWithoutServiceQuotationLaboursInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutTenantInput
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceQuotationLaboursInput = {
@@ -4368,6 +4560,8 @@ export type TenantUncheckedCreateWithoutServiceQuotationLaboursInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceQuotationLaboursInput = {
@@ -4422,6 +4616,8 @@ export type TenantUpdateWithoutServiceQuotationLaboursInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutTenantNestedInput
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceQuotationLaboursInput = {
@@ -4461,6 +4657,8 @@ export type TenantUncheckedUpdateWithoutServiceQuotationLaboursInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutServiceQuotationCustomerVoicesInput = {
@@ -4499,6 +4697,8 @@ export type TenantCreateWithoutServiceQuotationCustomerVoicesInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutTenantInput
   serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutServiceQuotationCustomerVoicesInput = {
@@ -4538,6 +4738,8 @@ export type TenantUncheckedCreateWithoutServiceQuotationCustomerVoicesInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutServiceQuotationCustomerVoicesInput = {
@@ -4592,6 +4794,8 @@ export type TenantUpdateWithoutServiceQuotationCustomerVoicesInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutTenantNestedInput
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutServiceQuotationCustomerVoicesInput = {
@@ -4631,6 +4835,364 @@ export type TenantUncheckedUpdateWithoutServiceQuotationCustomerVoicesInput = {
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutServiceAppointmentInput = {
+  tenantCode: string
+  tenantName: string
+  email: string
+  phone?: string | null
+  gstNumber?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  subscriptionPlan?: $Enums.SubscriptionPlan | null
+  subscriptionStatus?: $Enums.SubscriptionStatus | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdByUser: Prisma.PlatformUserCreateNestedOneWithoutCreatedTenantsInput
+  users?: Prisma.UsersCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  employeeDesignations?: Prisma.EmployeeDesignationCreateNestedManyWithoutTenantInput
+  branches?: Prisma.BranchCreateNestedManyWithoutTenantInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
+  serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
+  vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
+  labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
+  hsnMasters?: Prisma.HSNMasterCreateNestedManyWithoutTenantInput
+  partCategory?: Prisma.PartCategoryMasterCreateNestedManyWithoutTenantInput
+  parts?: Prisma.PartMasterCreateNestedManyWithoutTenantInput
+  fitment?: Prisma.PartFitmentCreateNestedManyWithoutTenantInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutTenantInput
+  serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
+  serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutServiceAppointmentInput = {
+  id?: number
+  tenantCode: string
+  tenantName: string
+  email: string
+  phone?: string | null
+  gstNumber?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  subscriptionPlan?: $Enums.SubscriptionPlan | null
+  subscriptionStatus?: $Enums.SubscriptionStatus | null
+  isActive?: boolean
+  createdBy: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UsersUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  employeeDesignations?: Prisma.EmployeeDesignationUncheckedCreateNestedManyWithoutTenantInput
+  branches?: Prisma.BranchUncheckedCreateNestedManyWithoutTenantInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
+  vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
+  labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
+  hsnMasters?: Prisma.HSNMasterUncheckedCreateNestedManyWithoutTenantInput
+  partCategory?: Prisma.PartCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
+  parts?: Prisma.PartMasterUncheckedCreateNestedManyWithoutTenantInput
+  fitment?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutTenantInput
+  serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
+  serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutServiceAppointmentInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutServiceAppointmentInput, Prisma.TenantUncheckedCreateWithoutServiceAppointmentInput>
+}
+
+export type TenantUpsertWithoutServiceAppointmentInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutServiceAppointmentInput, Prisma.TenantUncheckedUpdateWithoutServiceAppointmentInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutServiceAppointmentInput, Prisma.TenantUncheckedCreateWithoutServiceAppointmentInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutServiceAppointmentInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutServiceAppointmentInput, Prisma.TenantUncheckedUpdateWithoutServiceAppointmentInput>
+}
+
+export type TenantUpdateWithoutServiceAppointmentInput = {
+  tenantCode?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionPlan?: Prisma.NullableEnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan | null
+  subscriptionStatus?: Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdByUser?: Prisma.PlatformUserUpdateOneRequiredWithoutCreatedTenantsNestedInput
+  users?: Prisma.UsersUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  employeeDesignations?: Prisma.EmployeeDesignationUpdateManyWithoutTenantNestedInput
+  branches?: Prisma.BranchUpdateManyWithoutTenantNestedInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
+  vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
+  labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
+  hsnMasters?: Prisma.HSNMasterUpdateManyWithoutTenantNestedInput
+  partCategory?: Prisma.PartCategoryMasterUpdateManyWithoutTenantNestedInput
+  parts?: Prisma.PartMasterUpdateManyWithoutTenantNestedInput
+  fitment?: Prisma.PartFitmentUpdateManyWithoutTenantNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutTenantNestedInput
+  serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
+  serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutServiceAppointmentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantCode?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionPlan?: Prisma.NullableEnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan | null
+  subscriptionStatus?: Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UsersUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  employeeDesignations?: Prisma.EmployeeDesignationUncheckedUpdateManyWithoutTenantNestedInput
+  branches?: Prisma.BranchUncheckedUpdateManyWithoutTenantNestedInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
+  vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
+  labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
+  hsnMasters?: Prisma.HSNMasterUncheckedUpdateManyWithoutTenantNestedInput
+  partCategory?: Prisma.PartCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
+  parts?: Prisma.PartMasterUncheckedUpdateManyWithoutTenantNestedInput
+  fitment?: Prisma.PartFitmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutTenantNestedInput
+  serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
+  serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutServiceAppointmentCustomerVoiceInput = {
+  tenantCode: string
+  tenantName: string
+  email: string
+  phone?: string | null
+  gstNumber?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  subscriptionPlan?: $Enums.SubscriptionPlan | null
+  subscriptionStatus?: $Enums.SubscriptionStatus | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdByUser: Prisma.PlatformUserCreateNestedOneWithoutCreatedTenantsInput
+  users?: Prisma.UsersCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleCreateNestedManyWithoutTenantInput
+  employeeDesignations?: Prisma.EmployeeDesignationCreateNestedManyWithoutTenantInput
+  branches?: Prisma.BranchCreateNestedManyWithoutTenantInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterCreateNestedManyWithoutTenantInput
+  serviceTypes?: Prisma.ServiceTypeMasterCreateNestedManyWithoutTenantInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutTenantInput
+  vehicles?: Prisma.VehicleCreateNestedManyWithoutTenantInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutTenantInput
+  labour?: Prisma.LabourMasterCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutTenantInput
+  hsnMasters?: Prisma.HSNMasterCreateNestedManyWithoutTenantInput
+  partCategory?: Prisma.PartCategoryMasterCreateNestedManyWithoutTenantInput
+  parts?: Prisma.PartMasterCreateNestedManyWithoutTenantInput
+  fitment?: Prisma.PartFitmentCreateNestedManyWithoutTenantInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutTenantInput
+  serviceQuotationParts?: Prisma.ServiceQuotationPartCreateNestedManyWithoutTenantInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourCreateNestedManyWithoutTenantInput
+  serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutServiceAppointmentCustomerVoiceInput = {
+  id?: number
+  tenantCode: string
+  tenantName: string
+  email: string
+  phone?: string | null
+  gstNumber?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  subscriptionPlan?: $Enums.SubscriptionPlan | null
+  subscriptionStatus?: $Enums.SubscriptionStatus | null
+  isActive?: boolean
+  createdBy: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UsersUncheckedCreateNestedManyWithoutTenantInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutTenantInput
+  employeeDesignations?: Prisma.EmployeeDesignationUncheckedCreateNestedManyWithoutTenantInput
+  branches?: Prisma.BranchUncheckedCreateNestedManyWithoutTenantInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedCreateNestedManyWithoutTenantInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutTenantInput
+  vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutTenantInput
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutTenantInput
+  labour?: Prisma.LabourMasterUncheckedCreateNestedManyWithoutTenantInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutTenantInput
+  hsnMasters?: Prisma.HSNMasterUncheckedCreateNestedManyWithoutTenantInput
+  partCategory?: Prisma.PartCategoryMasterUncheckedCreateNestedManyWithoutTenantInput
+  parts?: Prisma.PartMasterUncheckedCreateNestedManyWithoutTenantInput
+  fitment?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutTenantInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutTenantInput
+  serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutTenantInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedCreateNestedManyWithoutTenantInput
+  serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedCreateNestedManyWithoutTenantInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutServiceAppointmentCustomerVoiceInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutServiceAppointmentCustomerVoiceInput, Prisma.TenantUncheckedCreateWithoutServiceAppointmentCustomerVoiceInput>
+}
+
+export type TenantUpsertWithoutServiceAppointmentCustomerVoiceInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutServiceAppointmentCustomerVoiceInput, Prisma.TenantUncheckedUpdateWithoutServiceAppointmentCustomerVoiceInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutServiceAppointmentCustomerVoiceInput, Prisma.TenantUncheckedCreateWithoutServiceAppointmentCustomerVoiceInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutServiceAppointmentCustomerVoiceInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutServiceAppointmentCustomerVoiceInput, Prisma.TenantUncheckedUpdateWithoutServiceAppointmentCustomerVoiceInput>
+}
+
+export type TenantUpdateWithoutServiceAppointmentCustomerVoiceInput = {
+  tenantCode?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionPlan?: Prisma.NullableEnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan | null
+  subscriptionStatus?: Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdByUser?: Prisma.PlatformUserUpdateOneRequiredWithoutCreatedTenantsNestedInput
+  users?: Prisma.UsersUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutTenantNestedInput
+  employeeDesignations?: Prisma.EmployeeDesignationUpdateManyWithoutTenantNestedInput
+  branches?: Prisma.BranchUpdateManyWithoutTenantNestedInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUpdateManyWithoutTenantNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUpdateManyWithoutTenantNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutTenantNestedInput
+  vehicles?: Prisma.VehicleUpdateManyWithoutTenantNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutTenantNestedInput
+  labour?: Prisma.LabourMasterUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutTenantNestedInput
+  hsnMasters?: Prisma.HSNMasterUpdateManyWithoutTenantNestedInput
+  partCategory?: Prisma.PartCategoryMasterUpdateManyWithoutTenantNestedInput
+  parts?: Prisma.PartMasterUpdateManyWithoutTenantNestedInput
+  fitment?: Prisma.PartFitmentUpdateManyWithoutTenantNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutTenantNestedInput
+  serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
+  serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutServiceAppointmentCustomerVoiceInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantCode?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionPlan?: Prisma.NullableEnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan | null
+  subscriptionStatus?: Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UsersUncheckedUpdateManyWithoutTenantNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutTenantNestedInput
+  employeeDesignations?: Prisma.EmployeeDesignationUncheckedUpdateManyWithoutTenantNestedInput
+  branches?: Prisma.BranchUncheckedUpdateManyWithoutTenantNestedInput
+  serviceCategoryMasters?: Prisma.ServiceCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
+  serviceTypes?: Prisma.ServiceTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  repairOrderType?: Prisma.RepairOrderTypeMasterUncheckedUpdateManyWithoutTenantNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutTenantNestedInput
+  vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutTenantNestedInput
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutTenantNestedInput
+  labour?: Prisma.LabourMasterUncheckedUpdateManyWithoutTenantNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutTenantNestedInput
+  hsnMasters?: Prisma.HSNMasterUncheckedUpdateManyWithoutTenantNestedInput
+  partCategory?: Prisma.PartCategoryMasterUncheckedUpdateManyWithoutTenantNestedInput
+  parts?: Prisma.PartMasterUncheckedUpdateManyWithoutTenantNestedInput
+  fitment?: Prisma.PartFitmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutTenantNestedInput
+  serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
+  serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
+  serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyCreatedByUserInput = {
@@ -4688,6 +5250,8 @@ export type TenantUpdateWithoutCreatedByUserInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCreatedByUserInput = {
@@ -4727,6 +5291,8 @@ export type TenantUncheckedUpdateWithoutCreatedByUserInput = {
   serviceQuotationParts?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationLabours?: Prisma.ServiceQuotationLabourUncheckedUpdateManyWithoutTenantNestedInput
   serviceQuotationCustomerVoices?: Prisma.ServiceQuotationCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutTenantNestedInput
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -4774,6 +5340,8 @@ export type TenantCountOutputType = {
   serviceQuotationParts: number
   serviceQuotationLabours: number
   serviceQuotationCustomerVoices: number
+  serviceAppointment: number
+  serviceAppointmentCustomerVoice: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4797,6 +5365,8 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   serviceQuotationParts?: boolean | TenantCountOutputTypeCountServiceQuotationPartsArgs
   serviceQuotationLabours?: boolean | TenantCountOutputTypeCountServiceQuotationLaboursArgs
   serviceQuotationCustomerVoices?: boolean | TenantCountOutputTypeCountServiceQuotationCustomerVoicesArgs
+  serviceAppointment?: boolean | TenantCountOutputTypeCountServiceAppointmentArgs
+  serviceAppointmentCustomerVoice?: boolean | TenantCountOutputTypeCountServiceAppointmentCustomerVoiceArgs
 }
 
 /**
@@ -4949,6 +5519,20 @@ export type TenantCountOutputTypeCountServiceQuotationCustomerVoicesArgs<ExtArgs
   where?: Prisma.ServiceQuotationCustomerVoiceWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountServiceAppointmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceAppointmentWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountServiceAppointmentCustomerVoiceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceAppointmentCustomerVoiceWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -4989,6 +5573,8 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   serviceQuotationParts?: boolean | Prisma.Tenant$serviceQuotationPartsArgs<ExtArgs>
   serviceQuotationLabours?: boolean | Prisma.Tenant$serviceQuotationLaboursArgs<ExtArgs>
   serviceQuotationCustomerVoices?: boolean | Prisma.Tenant$serviceQuotationCustomerVoicesArgs<ExtArgs>
+  serviceAppointment?: boolean | Prisma.Tenant$serviceAppointmentArgs<ExtArgs>
+  serviceAppointmentCustomerVoice?: boolean | Prisma.Tenant$serviceAppointmentCustomerVoiceArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -5077,6 +5663,8 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   serviceQuotationParts?: boolean | Prisma.Tenant$serviceQuotationPartsArgs<ExtArgs>
   serviceQuotationLabours?: boolean | Prisma.Tenant$serviceQuotationLaboursArgs<ExtArgs>
   serviceQuotationCustomerVoices?: boolean | Prisma.Tenant$serviceQuotationCustomerVoicesArgs<ExtArgs>
+  serviceAppointment?: boolean | Prisma.Tenant$serviceAppointmentArgs<ExtArgs>
+  serviceAppointmentCustomerVoice?: boolean | Prisma.Tenant$serviceAppointmentCustomerVoiceArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5110,6 +5698,8 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     serviceQuotationParts: Prisma.$ServiceQuotationPartPayload<ExtArgs>[]
     serviceQuotationLabours: Prisma.$ServiceQuotationLabourPayload<ExtArgs>[]
     serviceQuotationCustomerVoices: Prisma.$ServiceQuotationCustomerVoicePayload<ExtArgs>[]
+    serviceAppointment: Prisma.$ServiceAppointmentPayload<ExtArgs>[]
+    serviceAppointmentCustomerVoice: Prisma.$ServiceAppointmentCustomerVoicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -5544,6 +6134,8 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   serviceQuotationParts<T extends Prisma.Tenant$serviceQuotationPartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$serviceQuotationPartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationPartPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceQuotationLabours<T extends Prisma.Tenant$serviceQuotationLaboursArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$serviceQuotationLaboursArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationLabourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceQuotationCustomerVoices<T extends Prisma.Tenant$serviceQuotationCustomerVoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$serviceQuotationCustomerVoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationCustomerVoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceAppointment<T extends Prisma.Tenant$serviceAppointmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$serviceAppointmentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceAppointmentCustomerVoice<T extends Prisma.Tenant$serviceAppointmentCustomerVoiceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$serviceAppointmentCustomerVoiceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAppointmentCustomerVoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6468,6 +7060,54 @@ export type Tenant$serviceQuotationCustomerVoicesArgs<ExtArgs extends runtime.Ty
   take?: number
   skip?: number
   distinct?: Prisma.ServiceQuotationCustomerVoiceScalarFieldEnum | Prisma.ServiceQuotationCustomerVoiceScalarFieldEnum[]
+}
+
+/**
+ * Tenant.serviceAppointment
+ */
+export type Tenant$serviceAppointmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceAppointment
+   */
+  select?: Prisma.ServiceAppointmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceAppointment
+   */
+  omit?: Prisma.ServiceAppointmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceAppointmentInclude<ExtArgs> | null
+  where?: Prisma.ServiceAppointmentWhereInput
+  orderBy?: Prisma.ServiceAppointmentOrderByWithRelationInput | Prisma.ServiceAppointmentOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceAppointmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceAppointmentScalarFieldEnum | Prisma.ServiceAppointmentScalarFieldEnum[]
+}
+
+/**
+ * Tenant.serviceAppointmentCustomerVoice
+ */
+export type Tenant$serviceAppointmentCustomerVoiceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceAppointmentCustomerVoice
+   */
+  select?: Prisma.ServiceAppointmentCustomerVoiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceAppointmentCustomerVoice
+   */
+  omit?: Prisma.ServiceAppointmentCustomerVoiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceAppointmentCustomerVoiceInclude<ExtArgs> | null
+  where?: Prisma.ServiceAppointmentCustomerVoiceWhereInput
+  orderBy?: Prisma.ServiceAppointmentCustomerVoiceOrderByWithRelationInput | Prisma.ServiceAppointmentCustomerVoiceOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceAppointmentCustomerVoiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceAppointmentCustomerVoiceScalarFieldEnum | Prisma.ServiceAppointmentCustomerVoiceScalarFieldEnum[]
 }
 
 /**

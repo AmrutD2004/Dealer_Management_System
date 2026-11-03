@@ -171,8 +171,9 @@ const ServiceQuotationListTable = ({ refreshKey = 0 }: ServiceQuotationListTable
                                     <TableCell className='text-center font-medium text-muted-foreground'>
                                         {skip + idx + 1}
                                     </TableCell>
-                                    <TableCell className='font-semibold text-foreground'>
-                                        {quotation.quotationNo}
+                                    <TableCell className='font-semibold text-foreground flex items-center gap-1'>
+                                        <span>{quotation.quotationNo}</span>
+                                        {quotation.originalQuotation && <Badge variant={'outline'}>Supplemented</Badge>}
                                     </TableCell>
                                     <TableCell>
                                         <div className='flex flex-col'>
