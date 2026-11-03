@@ -13,7 +13,7 @@ export const createVehicle = async (req: Request, res: Response) => {
         })
     }
 
-    if (!modelId || !brandId || !engineNumber || !customerId || !currentOdometerReading || !chassisNumber || !variantId) {
+    if (!modelId || !brandId || !engineNumber || !customerId || currentOdometerReading === undefined || currentOdometerReading === null || currentOdometerReading === "" || !chassisNumber || !variantId) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -53,15 +53,15 @@ export const createVehicle = async (req: Request, res: Response) => {
             data: {
                 chassisNumber: chassisNumber,
                 color: color || null,
-                currentOdometerReading: currentOdometerReading,
+                currentOdometerReading: Number(currentOdometerReading),
                 customerId: Number(customerId),
                 engineNumber: engineNumber,
                 modelId: Number(modelId),
                 variantId: Number(variantId),
                 manufacturingYear: Number(manufacturingYear) || null,
                 brandId: Number(brandId),
-                purchaseDate: purchaseDate || null,
-                registrationDate: registrationDate || null,
+                purchaseDate: purchaseDate ? new Date(`${purchaseDate}T00:00:00.000Z`) : null,
+                registrationDate: registrationDate ? new Date(`${registrationDate}T00:00:00.000Z`) : null,
                 tenantId: Number(tenantId),
                 vehicleNumber: vehicleNumber,
                 isActive: true

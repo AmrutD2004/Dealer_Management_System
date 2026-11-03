@@ -52,10 +52,14 @@ import type {
 } from "@/Types/tenantCreateType"
 import type { repairOrderListType } from "@/Types/tenantCreateType"
 import type { customerListType } from "@/Types/tenantCreateType"
-import type { serviceQuotationListType } from "@/Types/serviceQuotationType"
+import type {
+  serviceQuotationLabourType,
+  serviceQuotationListType,
+  serviceQuotationPartType,
+} from "@/Types/serviceQuotationType"
 import { ChevronsUpDown, Loader2, Plus, Trash2, X } from "lucide-react"
 import { useEffect, useState } from "react"
-import { ViewServiceQuotationModal } from "./Modals/ViewServiceQuotationModal"
+import { formatCurrency } from "./serviceQuotationUtils"
 import { cn } from "cn"
 
 interface VehicleOption {
@@ -113,7 +117,6 @@ const sourceOptions = [
   { value: "TEST_DRIVE", label: "Test Drive" },
 ]
 
-
 const emptyPartLine: PartLine = {
   partId: "",
   quantity: "1",
@@ -126,6 +129,59 @@ const emptyLabourLine: LabourLine = {
   discountRate: "0",
 }
 const emptyVoiceLine: VoiceLine = { customerVoice: "", source: "CUSTOMER" }
+
+const roundAmount = (value: number) =>
+  Math.round((value + Number.EPSILON) * 100) / 100
+
+const getDiscountAmount = (
+  basicAmount: number,
+  discountType: DiscountType,
+  discountRate: string
+) =>
+  discountType === "PERCENTAGE"
+    ? roundAmount(basicAmount * (Number(discountRate || 0) / 100))
+    : Number(discountRate || 0)
+
+const getPartPricing = (
+  line: PartLine,
+  part?: PartMasterListType,
+  savedPart?: serviceQuotationPartType
+) => {
+  const rate = part
+    ? Number(part.sellingPrice || 0)
+    : Number(savedPart?.rate || 0)
+  const quantity = Number(line.quantity || 0)
+  const basicAmount = part
+    ? roundAmount(rate * quantity)
+    : Number(savedPart?.basicAmount || 0)
+  const discountAmount = getDiscountAmount(
+    basicAmount,
+    line.discountType,
+    line.discountRate
+  )
+  const totalAmount = Math.max(basicAmount - discountAmount, 0)
+  return { rate, basicAmount, discountAmount, totalAmount }
+}
+
+const getLabourPricing = (
+  line: LabourLine,
+  labour?: labourListType,
+  savedLabour?: serviceQuotationLabourType
+) => {
+  const rate = labour
+    ? Number(labour.rate || 0)
+    : Number(savedLabour?.rate || 0)
+  const basicAmount = labour
+    ? roundAmount(rate * Number(labour.standardHours || 0))
+    : Number(savedLabour?.basicAmount || 0)
+  const discountAmount = getDiscountAmount(
+    basicAmount,
+    line.discountType,
+    line.discountRate
+  )
+  const totalAmount = Math.max(basicAmount - discountAmount, 0)
+  return { rate, basicAmount, discountAmount, totalAmount }
+}
 
 const initialFormData = {
   action: "NEW",
@@ -142,7 +198,7 @@ const initialFormData = {
 
 interface ServiceQuotationCreateFormProps {
   onCancel: () => void
-  onCreated?: () => void
+  onCreated?: (quotation?: serviceQuotationListType) => void
   onUpdated?: () => void
   quotation?: serviceQuotationListType | null
 }
@@ -201,9 +257,7 @@ export function ServiceQuotationCreateForm({
   quotation,
 }: ServiceQuotationCreateFormProps) {
   const [loading, setLoading] = useState<boolean>(false)
-  const [formData, setFormData] = useState(() =>
-    getInitialFormData(quotation)
-  )
+  const [formData, setFormData] = useState(() => getInitialFormData(quotation))
   const [parts, setParts] = useState<PartLine[]>(() =>
     getInitialParts(quotation)
   )
@@ -272,6 +326,7 @@ const [selectedQuotation, setSelectedQuotation] =
     }
     load()
   }, [])
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -363,6 +418,17 @@ const [selectedQuotation, setSelectedQuotation] =
 
   const activeParts = partsMaster.filter((p) => p.status === "ACTIVE")
   const activeLabours = laboursMaster.filter((l) => l.isActive)
+
+  const findPartMaster = (partId: string) =>
+    partsMaster.find((p) => String(p.id) === partId)
+  const findLabourMaster = (labourId: string) =>
+    laboursMaster.find((l) => String(l.id) === labourId)
+  const findSavedPart = (partId: string) =>
+    quotation?.serviceQuotationParts?.find((p) => String(p.partId) === partId)
+  const findSavedLabour = (labourId: string) =>
+    quotation?.serviceQuotationLabours?.find(
+      (l) => String(l.labourId) === labourId
+    )
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -470,12 +536,16 @@ const [selectedQuotation, setSelectedQuotation] =
         if (quotation) {
           onUpdated?.()
         } else {
-          setCreatedQuotation(data?.result)
-          setOpenView(true)
+          const createdQuotation =
+            (data?.data as serviceQuotationListType | undefined) ??
+            (data?.quotation as serviceQuotationListType | undefined)
           setFormData(initialFormData)
           setParts([{ ...emptyPartLine }])
           setLabours([{ ...emptyLabourLine }])
           setCustomerVoices([{ ...emptyVoiceLine }])
+          setTimeout(() => {
+            onCreated?.(createdQuotation)
+          }, 1500)
         }
       }
       if (!data?.success) {
@@ -562,68 +632,65 @@ const [selectedQuotation, setSelectedQuotation] =
 }
 
   return (
-    <>
-
-      <form id="service-quotation-form" onSubmit={handleSubmit}>
-        <div className="space-y-4 py-3">
-          <div>
-            <div className="mb-2 bg-muted/40 px-2 py-1">
-              <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                Quotation Details
-              </h3>
+    <form id="service-quotation-form" onSubmit={handleSubmit}>
+      <div className="space-y-4 py-3">
+        <div>
+          <div className="mb-2 bg-muted/40 px-2 py-1">
+            <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+              Quotation Details
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <FieldLabel className="text-xs font-medium">
+                Action <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Select
+                items={actionOptions}
+                value={formData.action || null}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, action: value ?? "NEW" }))
+                }
+                required
+              >
+                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                  <SelectValue placeholder="Select action" />
+                </SelectTrigger>
+                <SelectContent align="start" alignItemWithTrigger={false}>
+                  {actionOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Action <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Select
-                  items={actionOptions}
-                  value={formData.action || null}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, action: value ?? "NEW" }))
-                  }
-                  required
-                >
-                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                    <SelectValue placeholder="Select action" />
-                  </SelectTrigger>
-                  <SelectContent align="start" alignItemWithTrigger={false}>
-                    {actionOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Status <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Select
-                  items={statusOptions}
-                  value={formData.status || null}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, status: value ?? "DRAFT" }))
-                  }
-                  required
-                >
-                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent align="start" alignItemWithTrigger={false}>
-                    {statusOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {formData.action === "SUPPLEMENT" && (
-                <div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <FieldLabel className="text-xs font-medium">
+                Status <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Select
+                items={statusOptions}
+                value={formData.status || null}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, status: value ?? "DRAFT" }))
+                }
+                required
+              >
+                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent align="start" alignItemWithTrigger={false}>
+                  {statusOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            {formData.action === "SUPPLEMENT" && (
+              <div>
                   <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                     <FieldLabel className="text-xs font-medium">
                       Original Quotation <span className="text-red-500">*</span>
@@ -689,286 +756,284 @@ const [selectedQuotation, setSelectedQuotation] =
                     </div>
                   )}
                 </div>
-              )}
+            )}
 
-
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
-                <FieldLabel className="text-xs font-medium">
-                  Insurance Party
-                </FieldLabel>
-                <Input
-                  name="insurancePartyName"
-                  placeholder="Insurance party name"
-                  value={formData.insurancePartyName}
-                  onChange={handleChange}
-                  className="h-7 rounded-none px-2 text-xs"
-                />
-              </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
+              <FieldLabel className="text-xs font-medium">
+                Insurance Party
+              </FieldLabel>
+              <Input
+                name="insurancePartyName"
+                placeholder="Insurance party name"
+                value={formData.insurancePartyName}
+                onChange={handleChange}
+                className="h-7 rounded-none px-2 text-xs"
+              />
             </div>
           </div>
+        </div>
 
-          <div>
-            <div className="mb-2 bg-muted/40 px-2 py-1">
-              <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                Customer & Vehicle
-              </h3>
-            </div>
-            <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Customer <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Popover open={customerOpen} onOpenChange={setCustomerOpen}>
-                  <PopoverTrigger>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={customerOpen}
-                      className="h-7 w-full justify-between rounded-none px-2 text-xs font-normal"
-                    >
-                      {selectedCustomer
-                        ? `${selectedCustomer.firstName} ${selectedCustomer.lastName} - ${selectedCustomer.mobileNo}`
-                        : "Select customer"}
-                      <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent align="center" className="p-0 md:w-md lg:w-117">
-                    <Command shouldFilter={false}>
-                      <CommandInput
-                        placeholder="Enter customer name or mobile..."
-                        value={searchCustomer}
-                        onValueChange={setSearchCustomer}
-                        className="h-8 text-xs"
-                      />
-                      <CommandList>
-                        {findedCustomers.length === 0 ? (
-                          <CommandEmpty className="py-3 text-xs">
-                            No customers found.
-                          </CommandEmpty>
-                        ) : (
-                          <CommandGroup>
-                            {findedCustomers.map((c) => (
-                              <CommandItem
-                                key={c.id}
-                                value={String(c.id)}
-                                onSelect={() => {
-                                  setFormData((prev) => ({
-                                    ...prev,
-                                    customerId: String(c.id),
-                                    vehicleId: "",
-                                    currentReading: "",
-                                  }))
-
-                                  setParts((prev) =>
-                                    prev.map((line) => ({
-                                      ...line,
-                                      discountRate: String(c.partDiscountPercent ?? 0),
-                                    }))
-                                  )
-
-                                  setLabours((prev) =>
-                                    prev.map((line) => ({
-                                      ...line,
-                                      discountRate: String(c.laborDiscountPercent ?? 0),
-                                    }))
-                                  )
-
-                                  setCustomerOpen(false)
-                                  setSearchCustomer("")
-                                  setSelectedCustomer(c)
-                                }}
-                                className="text-xs"
-                              >
-                                {c.firstName} {c.lastName} - {c.mobileNo}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        )}
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </div>
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Vehicle <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Select
-                  disabled={!formData.customerId}
-                  items={filteredVehicles.map((v) => ({
-                    value: String(v.id),
-                    label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName ?? ""} ${v.model?.modelName ?? ""} ${v.variant?.variantName ?? ""}`,
-                  }))}
-                  value={formData.vehicleId || null}
-                  onValueChange={(value) => {
-                    const selectedVehicle = filteredVehicles.find(
-                      (v) => String(v.id) === value
-                    )
-                    setFormData((prev) => ({
-                      ...prev,
-                      vehicleId: value ?? "",
-                    }))
-                  }}
-                  required
-                >
-                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                    <SelectValue placeholder="Select vehicle" />
-                  </SelectTrigger>
-                  <SelectContent align="start" alignItemWithTrigger={false}>
-                    {filteredVehicles.map((v) => (
-                      <SelectItem key={v.id} value={String(v.id)}>
-                        {v.vehicleNumber || v.chassisNumber} -{" "}
-                        {v.brand?.brandName} {v.model?.modelName}{" "}
-                        {v.variant?.variantName}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Current Reading
-                </FieldLabel>
-                <Input
-                  name="currentReading"
-                  type="text"
-                  placeholder="Current KM reading"
-                  value={formData.currentReading}
-                  onChange={handleChange}
-                  className="h-7 rounded-none px-2 text-xs"
-                />
-              </div>
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Service Category <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Select
-                  items={serviceCategories.map((s) => ({
-                    value: String(s.id),
-                    label: s.name,
-                  }))}
-                  value={formData.serviceCategoryId || null}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      serviceCategoryId: value ?? "",
-                      serviceTypeId: "",
-                    }))
-                  }
-                  required
-                >
-                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent align="start" alignItemWithTrigger={false}>
-                    {serviceCategories.map((s) => (
-                      <SelectItem key={s.id} value={String(s.id)}>
-                        {s.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Service Type <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Select
-                  disabled={!formData.serviceCategoryId}
-                  items={filteredServiceTypes.map((s) => ({
-                    value: String(s.id),
-                    label: s.name,
-                  }))}
-                  value={formData.serviceTypeId || null}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      serviceTypeId: value ?? "",
-                    }))
-                  }
-                  required
-                >
-                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent align="start" alignItemWithTrigger={false}>
-                    {filteredServiceTypes.map((s) => (
-                      <SelectItem key={s.id} value={String(s.id)}>
-                        {s.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Repair Order Type <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Select
-                  items={repairOrders.map((r) => ({
-                    value: String(r.id),
-                    label: r.name,
-                  }))}
-                  value={formData.repairOrderTypeId || null}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      repairOrderTypeId: value ?? "",
-                    }))
-                  }
-                  required
-                >
-                  <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent align="start" alignItemWithTrigger={false}>
-                    {repairOrders.map((r) => (
-                      <SelectItem key={r.id} value={String(r.id)}>
-                        {r.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+        <div>
+          <div className="mb-2 bg-muted/40 px-2 py-1">
+            <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+              Customer & Vehicle
+            </h3>
           </div>
-
-          <div>
-            <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
-              <div>
-                <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                  Parts
-                </h3>
-                <p className="text-[11px] text-muted-foreground">
-                  Rates and taxes are resolved from the part master.
-                </p>
-              </div>
-              <Button
-                type="button"
-                variant="outline"
-                className="h-6 gap-1 px-2 text-xs"
-                onClick={() =>
-                  setParts((prev) => [...prev, { ...emptyPartLine }])
-                }
+          <div className="grid grid-cols-1 gap-x-4 gap-y-1 lg:grid-cols-2">
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <FieldLabel className="text-xs font-medium">
+                Customer <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Popover open={customerOpen} onOpenChange={setCustomerOpen}>
+                <PopoverTrigger>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={customerOpen}
+                    className="h-7 w-full justify-between rounded-none px-2 text-xs font-normal"
+                  >
+                    {selectedCustomer
+                      ? `${selectedCustomer.firstName} ${selectedCustomer.lastName} - ${selectedCustomer.mobileNo}`
+                      : "Select customer"}
+                    <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="center" className="p-0 md:w-md lg:w-117">
+                  <Command shouldFilter={false}>
+                    <CommandInput
+                      placeholder="Enter customer name or mobile..."
+                      value={searchCustomer}
+                      onValueChange={setSearchCustomer}
+                      className="h-8 text-xs"
+                    />
+                    <CommandList>
+                      {findedCustomers.length === 0 ? (
+                        <CommandEmpty className="py-3 text-xs">
+                          No customers found.
+                        </CommandEmpty>
+                      ) : (
+                        <CommandGroup>
+                          {findedCustomers.map((c) => (
+                            <CommandItem
+                              key={c.id}
+                              value={String(c.id)}
+                              onSelect={() => {
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  customerId: String(c.id),
+                                  vehicleId: "",
+                                  currentReading: "",
+                                }))
+                                setCustomerOpen(false)
+                                setSearchCustomer("")
+                                setSelectedCustomer(c)
+                              }}
+                              className="text-xs"
+                            >
+                              {c.firstName} {c.lastName} - {c.mobileNo}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      )}
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <FieldLabel className="text-xs font-medium">
+                Vehicle <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Select
+                disabled={!formData.customerId}
+                items={filteredVehicles.map((v) => ({
+                  value: String(v.id),
+                  label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName ?? ""} ${v.model?.modelName ?? ""} ${v.variant?.variantName ?? ""}`,
+                }))}
+                value={formData.vehicleId || null}
+                onValueChange={(value) => {
+                  const selectedVehicle = filteredVehicles.find(
+                    (v) => String(v.id) === value
+                  )
+                  setFormData((prev) => ({
+                    ...prev,
+                    vehicleId: value ?? "",
+                    currentReading: selectedVehicle
+                      ? String(selectedVehicle.currentOdometerReading)
+                      : "",
+                  }))
+                }}
+                required
               >
-                <Plus className="h-3 w-3" />
-                Add Part
-              </Button>
+                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                  <SelectValue placeholder="Select vehicle" />
+                </SelectTrigger>
+                <SelectContent align="start" alignItemWithTrigger={false}>
+                  {filteredVehicles.map((v) => (
+                    <SelectItem key={v.id} value={String(v.id)}>
+                      {v.vehicleNumber || v.chassisNumber} -{" "}
+                      {v.brand?.brandName} {v.model?.modelName}{" "}
+                      {v.variant?.variantName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            <div className="rounded border">
-              <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Part</TableHead>
-                    <TableHead className="w-[200px]">Quantity</TableHead>
-                    <TableHead className="w-[200px]">Discount Type</TableHead>
-                    <TableHead className="w-[200px]">Discount</TableHead>
-                    <TableHead className="w-[60px] text-right">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {parts.map((line, index) => (
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <FieldLabel className="text-xs font-medium">
+                Current Reading <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Input
+                name="currentReading"
+                type="number"
+                placeholder="Current KM reading"
+                required
+                value={formData.currentReading}
+                onChange={handleChange}
+                className="h-7 rounded-none px-2 text-xs"
+              />
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <FieldLabel className="text-xs font-medium">
+                Service Category <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Select
+                items={serviceCategories.map((s) => ({
+                  value: String(s.id),
+                  label: s.name,
+                }))}
+                value={formData.serviceCategoryId || null}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    serviceCategoryId: value ?? "",
+                    serviceTypeId: "",
+                  }))
+                }
+                required
+              >
+                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent align="start" alignItemWithTrigger={false}>
+                  {serviceCategories.map((s) => (
+                    <SelectItem key={s.id} value={String(s.id)}>
+                      {s.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <FieldLabel className="text-xs font-medium">
+                Service Type <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Select
+                disabled={!formData.serviceCategoryId}
+                items={filteredServiceTypes.map((s) => ({
+                  value: String(s.id),
+                  label: s.name,
+                }))}
+                value={formData.serviceTypeId || null}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    serviceTypeId: value ?? "",
+                  }))
+                }
+                required
+              >
+                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent align="start" alignItemWithTrigger={false}>
+                  {filteredServiceTypes.map((s) => (
+                    <SelectItem key={s.id} value={String(s.id)}>
+                      {s.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <FieldLabel className="text-xs font-medium">
+                Repair Order Type <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Select
+                items={repairOrders.map((r) => ({
+                  value: String(r.id),
+                  label: r.name,
+                }))}
+                value={formData.repairOrderTypeId || null}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    repairOrderTypeId: value ?? "",
+                  }))
+                }
+                required
+              >
+                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent align="start" alignItemWithTrigger={false}>
+                  {repairOrders.map((r) => (
+                    <SelectItem key={r.id} value={String(r.id)}>
+                      {r.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
+            <div>
+              <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+                Parts
+              </h3>
+              <p className="text-[11px] text-muted-foreground">
+                Rates and taxes are resolved from the part master.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              className="h-6 gap-1 px-2 text-xs"
+              onClick={() =>
+                setParts((prev) => [...prev, { ...emptyPartLine }])
+              }
+            >
+              <Plus className="h-3 w-3" />
+              Add Part
+            </Button>
+          </div>
+          <div className="rounded border">
+            <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Part</TableHead>
+                  <TableHead className="w-[130px] text-right">Price</TableHead>
+                  <TableHead className="w-[200px]">Quantity</TableHead>
+                  <TableHead className="w-[200px]">Discount Type</TableHead>
+                  <TableHead className="w-[200px]">Discount</TableHead>
+                  <TableHead className="w-[150px] text-right">
+                    Total Price
+                  </TableHead>
+                  <TableHead className="w-[60px] text-right">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {parts.map((line, index) => {
+                  const pricing = getPartPricing(
+                    line,
+                    findPartMaster(line.partId),
+                    findSavedPart(line.partId)
+                  )
+                  return (
                     <TableRow key={index}>
                       <TableCell className="align-top">
                         <Select
@@ -996,9 +1061,12 @@ const [selectedQuotation, setSelectedQuotation] =
                           </SelectContent>
                         </Select>
                       </TableCell>
+                      <TableCell className="text-right align-top tabular-nums">
+                        {line.partId ? formatCurrency(pricing.rate) : "-"}
+                      </TableCell>
                       <TableCell className="align-top">
                         <Input
-                          type="text"
+                          type="number"
                           min={1}
                           value={line.quantity}
                           onChange={(e) =>
@@ -1027,7 +1095,10 @@ const [selectedQuotation, setSelectedQuotation] =
                             alignItemWithTrigger={false}
                           >
                             {discountTypeOptions.map((option) => (
-                              <SelectItem key={option.value} value={option.value}>
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
                                 {option.label}
                               </SelectItem>
                             ))}
@@ -1036,7 +1107,7 @@ const [selectedQuotation, setSelectedQuotation] =
                       </TableCell>
                       <TableCell className="align-top">
                         <Input
-                          type="text"
+                          type="number"
                           min={0}
                           value={line.discountRate}
                           onChange={(e) =>
@@ -1044,6 +1115,11 @@ const [selectedQuotation, setSelectedQuotation] =
                           }
                           className="h-7 rounded-none px-2 text-xs"
                         />
+                      </TableCell>
+                      <TableCell className="text-right align-top font-medium tabular-nums">
+                        {line.partId
+                          ? formatCurrency(pricing.totalAmount)
+                          : "-"}
                       </TableCell>
                       <TableCell className="text-right align-top">
                         {parts.length > 1 && (
@@ -1064,46 +1140,57 @@ const [selectedQuotation, setSelectedQuotation] =
                         )}
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                  )
+                })}
+              </TableBody>
+            </Table>
           </div>
+        </div>
 
-          <div>
-            <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
-              <div>
-                <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                  Labours
-                </h3>
-                <p className="text-[11px] text-muted-foreground">
-                  Hours and rates are resolved from the labour master.
-                </p>
-              </div>
-              <Button
-                type="button"
-                variant="outline"
-                className="h-6 gap-1 px-2 text-xs"
-                onClick={() =>
-                  setLabours((prev) => [...prev, { ...emptyLabourLine }])
-                }
-              >
-                <Plus className="h-3 w-3" />
-                Add Labour
-              </Button>
+        <div>
+          <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
+            <div>
+              <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+                Labours
+              </h3>
+              <p className="text-[11px] text-muted-foreground">
+                Hours and rates are resolved from the labour master.
+              </p>
             </div>
-            <div className="rounded border">
-              <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Labour</TableHead>
-                    <TableHead className="w-[400px]">Discount Type</TableHead>
-                    <TableHead className="w-[200px]">Discount</TableHead>
-                    <TableHead className="w-[60px] text-right">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {labours.map((line, index) => (
+            <Button
+              type="button"
+              variant="outline"
+              className="h-6 gap-1 px-2 text-xs"
+              onClick={() =>
+                setLabours((prev) => [...prev, { ...emptyLabourLine }])
+              }
+            >
+              <Plus className="h-3 w-3" />
+              Add Labour
+            </Button>
+          </div>
+          <div className="rounded border">
+            <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Labour</TableHead>
+                  <TableHead className="w-[130px] text-right">Price</TableHead>
+                  <TableHead className="w-[400px]">Discount Type</TableHead>
+                  <TableHead className="w-[200px]">Discount</TableHead>
+                  <TableHead className="w-[150px] text-right">
+                    Total Price
+                  </TableHead>
+                  <TableHead className="w-[60px] text-right">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {labours.map((line, index) => {
+                  const pricing = getLabourPricing(
+                    line,
+                    findLabourMaster(line.labourId),
+                    findSavedLabour(line.labourId)
+                  )
+                  return (
                     <TableRow key={index}>
                       <TableCell className="align-top">
                         <Select
@@ -1131,6 +1218,9 @@ const [selectedQuotation, setSelectedQuotation] =
                           </SelectContent>
                         </Select>
                       </TableCell>
+                      <TableCell className="text-right align-top tabular-nums">
+                        {line.labourId ? formatCurrency(pricing.rate) : "-"}
+                      </TableCell>
                       <TableCell className="align-top">
                         <Select
                           items={discountTypeOptions}
@@ -1151,7 +1241,10 @@ const [selectedQuotation, setSelectedQuotation] =
                             alignItemWithTrigger={false}
                           >
                             {discountTypeOptions.map((option) => (
-                              <SelectItem key={option.value} value={option.value}>
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
                                 {option.label}
                               </SelectItem>
                             ))}
@@ -1160,7 +1253,7 @@ const [selectedQuotation, setSelectedQuotation] =
                       </TableCell>
                       <TableCell className="align-top">
                         <Input
-                          type="text"
+                          type="number"
                           min={0}
                           value={line.discountRate}
                           onChange={(e) =>
@@ -1168,6 +1261,11 @@ const [selectedQuotation, setSelectedQuotation] =
                           }
                           className="h-7 rounded-none px-2 text-xs"
                         />
+                      </TableCell>
+                      <TableCell className="text-right align-top font-medium tabular-nums">
+                        {line.labourId
+                          ? formatCurrency(pricing.totalAmount)
+                          : "-"}
                       </TableCell>
                       <TableCell className="text-right align-top">
                         {labours.length > 1 && (
@@ -1188,11 +1286,12 @@ const [selectedQuotation, setSelectedQuotation] =
                         )}
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                  )
+                })}
+              </TableBody>
+            </Table>
           </div>
+        </div>
 
           <div>
             <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
@@ -1302,11 +1401,7 @@ const [selectedQuotation, setSelectedQuotation] =
           </Button>
         </div>
       </form>
-      <ViewServiceQuotationModal
-        quotation={createdQuotation}
-        open={openView}
-        onClose={() => setOpenView(false)} />
-    </>
+
 
   )
 }

@@ -21,6 +21,8 @@
     "cn": "^0.4.0",
     "dayjs": "^1.11.23",
     "hashids": "^2.3.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.9",
     "lucide-react": "^1.50.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
