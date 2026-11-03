@@ -3,6 +3,7 @@ import { prisma } from "../../../prisma/lib/prisma";
 import GetFiscalYear from "get-fiscal-year";
 import dayjs from "dayjs";
 import { Prisma } from "../../../generated/prisma/client";
+import { count } from "console";
 
 export const createQuotation = async (req: Request, res: Response) => {
     const { id, tenantId, branchId } = req.user!
@@ -14,7 +15,7 @@ export const createQuotation = async (req: Request, res: Response) => {
     }
     const { action, status, vehicleId, customerId, currentReading, serviceCategoryId, serviceTypeId, repairOrderTypeId, insurancePartyName, parts, labours, customerVoices, originalQuotationId } = req.body;
 
-    if (!action || !status || !vehicleId || !customerId || !currentReading || !serviceTypeId || !repairOrderTypeId || parts === null || labours === null || customerVoices === null || !serviceCategoryId) {
+    if (!action || !status || !vehicleId || !customerId || !serviceTypeId || !repairOrderTypeId || parts === null || labours === null || customerVoices === null || !serviceCategoryId) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -130,7 +131,7 @@ export const createQuotation = async (req: Request, res: Response) => {
                     status: status,
                     vehicleId: Number(vehicleId),
                     customerId: Number(customerId),
-                    currentReading: new Prisma.Decimal(currentReading),
+                    currentReading: currentReading ? new Prisma.Decimal(currentReading) : 0,
                     serviceCategoryId: Number(serviceCategoryId),
                     serviceTypeId: Number(serviceTypeId),
                     repairOrderTypeId: Number(repairOrderTypeId),
@@ -282,7 +283,7 @@ export const createQuotation = async (req: Request, res: Response) => {
                     id: {
                         in: labourIds
                     },
-                    status: 'ACTIVE'
+                    isActive: true
                 },
                 include: {
                     hsn: true
@@ -469,12 +470,29 @@ export const getListOfServiceQuotation = async (req: Request, res: Response) => 
                     tenantId: Number(tenantId)
                 },
                 include: {
+                    originalQuotation : true,
                     customer: {
                         include: {
-                            authorizedByUser: true
+                            authorizedByUser: {
+                                select: {
+                                    id: true,
+                                    employeeCode: true,
+                                    firstName: true,
+                                    middleName: true,
+                                    lastName: true,
+                                    email: true,
+                                    mobileNo: true
+                                }
+                            }
                         }
                     },
-                    vehicle: true,
+                    vehicle: {
+                        include: {
+                            model: true,
+                            brand: true,
+                            variant: true
+                        }
+                    },
                     serviceCategory: true,
                     serviceType: true,
                     repairOrderType: true,
@@ -491,12 +509,29 @@ export const getListOfServiceQuotation = async (req: Request, res: Response) => 
                     tenantId: Number(tenantId)
                 },
                 include: {
+                     originalQuotation : true,
                     customer: {
                         include: {
-                            authorizedByUser: true
+                            authorizedByUser: {
+                                select: {
+                                    id: true,
+                                    employeeCode: true,
+                                    firstName: true,
+                                    middleName: true,
+                                    lastName: true,
+                                    email: true,
+                                    mobileNo: true
+                                }
+                            }
                         }
                     },
-                    vehicle: true,
+                    vehicle: {
+                        include: {
+                            model: true,
+                            brand: true,
+                            variant: true
+                        }
+                    },
                     serviceCategory: true,
                     serviceType: true,
                     repairOrderType: true,
@@ -506,6 +541,11 @@ export const getListOfServiceQuotation = async (req: Request, res: Response) => 
                     branch: true,
                     createdByEmployee: true
                 }
+            })
+            return res.status(200).json({
+                success: true,
+                data: listOfServiceQuotation,
+                count: totalServiceQuotation
             })
         }
     } catch (err) {
@@ -536,7 +576,40 @@ export const getServiceQuotationDetails = async (req: Request, res: Response) =>
         const isServiceQuotationExists = await prisma.serviceQuotationMaster.findUnique({
             where: {
                 id: Number(serviceQuotationId)
-            }
+            },
+            include: {
+                     originalQuotation : true,
+                    customer: {
+                        include: {
+                            authorizedByUser: {
+                                select: {
+                                    id: true,
+                                    employeeCode: true,
+                                    firstName: true,
+                                    middleName: true,
+                                    lastName: true,
+                                    email: true,
+                                    mobileNo: true
+                                }
+                            }
+                        }
+                    },
+                    vehicle: {
+                        include: {
+                            model: true,
+                            brand: true,
+                            variant: true
+                        }
+                    },
+                    serviceCategory: true,
+                    serviceType: true,
+                    repairOrderType: true,
+                    serviceQuotationLabours: true,
+                    serviceQuotationParts: true,
+                    serviceQuotationCustomerVoices: true,
+                    branch: true,
+                    createdByEmployee: true
+                }
         })
         if (!isServiceQuotationExists) {
             return res.status(404).json({
@@ -545,7 +618,7 @@ export const getServiceQuotationDetails = async (req: Request, res: Response) =>
             })
         }
         return res.status(200).json({
-            success: false,
+            success: true,
             data: isServiceQuotationExists
         })
     } catch (err) {
@@ -567,7 +640,7 @@ export const updateQuotation = async (req: Request, res: Response) => {
     }
     const { action, status, vehicleId, customerId, currentReading, serviceCategoryId, serviceTypeId, repairOrderTypeId, insurancePartyName, parts, labours, customerVoices, originalQuotationId } = req.body;
 
-    if (!action || !status || !vehicleId || !customerId || !currentReading || !serviceTypeId || !repairOrderTypeId || parts === null || labours === null || customerVoices === null || !serviceCategoryId) {
+    if (!action || !status || !vehicleId || !customerId || !serviceTypeId || !repairOrderTypeId || parts === null || labours === null || customerVoices === null || !serviceCategoryId) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -666,7 +739,7 @@ export const updateQuotation = async (req: Request, res: Response) => {
                     status: status,
                     vehicleId: Number(vehicleId),
                     customerId: Number(customerId),
-                    currentReading: new Prisma.Decimal(currentReading),
+                    currentReading: currentReading ? new Prisma.Decimal(currentReading) : 0,
                     serviceCategoryId: Number(serviceCategoryId),
                     serviceTypeId: Number(serviceTypeId),
                     repairOrderTypeId: Number(repairOrderTypeId),
@@ -838,7 +911,7 @@ export const updateQuotation = async (req: Request, res: Response) => {
                     id: {
                         in: labourIds
                     },
-                    status: 'ACTIVE'
+                    isActive: true
                 },
                 include: {
                     hsn: true
@@ -1002,3 +1075,66 @@ export const updateQuotation = async (req: Request, res: Response) => {
 
 
 
+export const searchedServiceQuotation = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!
+    const { serviceQuotationNo } = req.query;
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+
+    try {
+        const data = await prisma.serviceQuotationMaster.findMany({
+            where: {
+                quotationNo: {
+                    contains: String(serviceQuotationNo),
+                    mode: 'insensitive'
+                },
+                tenantId: Number(tenantId)
+            },
+            include: {
+                repairOrderType: true,
+                serviceCategory: true,
+                serviceType: true,
+                vehicle: true,
+                customer: true,
+                serviceQuotationCustomerVoices: true,
+                serviceQuotationLabours: {
+                    include: {
+                        labours: {
+                            include: {
+                                hsn: true
+                            }
+                        }
+                    }
+                },
+                serviceQuotationParts: {
+                    include: {
+                        parts: {
+                            include: {
+                                hsn: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        if (!data) {
+            return res.status(404).json({
+                success: true,
+                message: 'Quotation not found'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            data: data
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${err}`
+        });
+    }
+}

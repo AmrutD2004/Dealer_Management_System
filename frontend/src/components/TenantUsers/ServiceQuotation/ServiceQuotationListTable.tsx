@@ -224,10 +224,12 @@ const ServiceQuotationListTable = ({ refreshKey = 0 }: ServiceQuotationListTable
                                                     <Eye className='mr-2 h-4 w-4' />
                                                     View
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => openEdit(quotation)}>
+                                               {quotation.status==='DRAFT' && (
+                                                 <DropdownMenuItem onClick={() => openEdit(quotation)}>
                                                     <Pencil className='mr-2 h-4 w-4' />
                                                     Edit
                                                 </DropdownMenuItem>
+                                               )}
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </TableCell>

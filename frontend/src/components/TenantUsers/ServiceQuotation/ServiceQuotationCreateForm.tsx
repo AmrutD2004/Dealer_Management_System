@@ -5,8 +5,10 @@ import {
   getPartMasterList,
   getRepairOrderList,
   getServiceCategoryList,
+  getServiceQuotationById,
   getServiceTypeList,
   getVehicleList,
+  searchedServiceQuotation,
   updateServiceQuotation,
 } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
@@ -55,9 +57,10 @@ import type {
   serviceQuotationListType,
   serviceQuotationPartType,
 } from "@/Types/serviceQuotationType"
-import { ChevronsUpDown, Loader2, Plus, Trash2 } from "lucide-react"
+import { ChevronsUpDown, Loader2, Plus, Trash2, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { formatCurrency } from "./serviceQuotationUtils"
+import { cn } from "cn"
 
 interface VehicleOption {
   id: number
@@ -98,10 +101,7 @@ const actionOptions = [
 
 const statusOptions = [
   { value: "DRAFT", label: "Draft" },
-  { value: "INPROGRESS", label: "In Progress" },
   { value: "APPROVED", label: "Approved" },
-  { value: "COMPLETED", label: "Completed" },
-  { value: "GENERATED", label: "Generated" },
   { value: "REJECTED", label: "Rejected" },
 ]
 
@@ -206,38 +206,38 @@ interface ServiceQuotationCreateFormProps {
 const getInitialFormData = (quotation?: serviceQuotationListType | null) =>
   quotation
     ? {
-        action: quotation.action,
-        status: quotation.status,
-        customerId: String(quotation.customerId),
-        vehicleId: String(quotation.vehicleId),
-        currentReading: String(quotation.currentReading),
-        serviceCategoryId: String(quotation.serviceCategoryId),
-        serviceTypeId: String(quotation.serviceTypeId),
-        repairOrderTypeId: String(quotation.repairOrderTypeId),
-        insurancePartyName: quotation.insurancePartyName ?? "",
-        originalQuotationId: quotation.originalQuotationId
-          ? String(quotation.originalQuotationId)
-          : "",
-      }
+      action: quotation.action,
+      status: quotation.status,
+      customerId: String(quotation.customerId),
+      vehicleId: String(quotation.vehicleId),
+      currentReading: String(quotation.currentReading),
+      serviceCategoryId: String(quotation.serviceCategoryId),
+      serviceTypeId: String(quotation.serviceTypeId),
+      repairOrderTypeId: String(quotation.repairOrderTypeId),
+      insurancePartyName: quotation.insurancePartyName ?? "",
+      originalQuotationId: quotation.originalQuotationId
+        ? String(quotation.originalQuotationId)
+        : "",
+    }
     : initialFormData
 
 const getInitialParts = (quotation?: serviceQuotationListType | null) =>
   quotation?.serviceQuotationParts?.length
     ? quotation.serviceQuotationParts.map((part) => ({
-        partId: String(part.partId),
-        quantity: String(part.quantity),
-        discountType: part.discountType,
-        discountRate: String(part.discountRate),
-      }))
+      partId: String(part.partId),
+      quantity: String(part.quantity),
+      discountType: part.discountType,
+      discountRate: String(part.discountRate),
+    }))
     : [{ ...emptyPartLine }]
 
 const getInitialLabours = (quotation?: serviceQuotationListType | null) =>
   quotation?.serviceQuotationLabours?.length
     ? quotation.serviceQuotationLabours.map((labour) => ({
-        labourId: String(labour.labourId),
-        discountType: labour.discountType,
-        discountRate: String(labour.discountRate),
-      }))
+      labourId: String(labour.labourId),
+      discountType: labour.discountType,
+      discountRate: String(labour.discountRate),
+    }))
     : [{ ...emptyLabourLine }]
 
 const getInitialCustomerVoices = (
@@ -245,9 +245,9 @@ const getInitialCustomerVoices = (
 ) =>
   quotation?.serviceQuotationCustomerVoices?.length
     ? quotation.serviceQuotationCustomerVoices.map((voice) => ({
-        customerVoice: voice.customerVoice,
-        source: voice.source,
-      }))
+      customerVoice: voice.customerVoice,
+      source: voice.source,
+    }))
     : [{ ...emptyVoiceLine }]
 
 export function ServiceQuotationCreateForm({
@@ -282,7 +282,16 @@ export function ServiceQuotationCreateForm({
   const [findedCustomers, setFindedCustomers] = useState<customerListType[]>([])
   const [selectedCustomer, setSelectedCustomer] =
     useState<customerListType | null>(quotation?.customer ?? null)
-
+  const [openView, setOpenView] = useState<boolean>(false)
+  const [createdQuotation, setCreatedQuotation] = useState<serviceQuotationListType | null>(null)
+  const [supplementOpen, setSupplementOpen] = useState<boolean>(false)
+  const [findedQuotation, setFindedQuotation] = useState<serviceQuotationListType[]>([])
+  const [searchQuotation, setSearchQuotation] = useState<string>("")
+const [selectedQuotation, setSelectedQuotation] =
+  useState<serviceQuotationListType | null>(
+    quotation?.originalQuotation ?? null
+  );
+  
   useEffect(() => {
     const load = async () => {
       try {
@@ -317,6 +326,7 @@ export function ServiceQuotationCreateForm({
     }
     load()
   }, [])
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -371,17 +381,39 @@ export function ServiceQuotationCreateForm({
     return () => clearTimeout(timer)
   }, [searchCustomer])
 
+  useEffect(() => {
+    const handleSearch = async (query: string) => {
+      const searchTerm = query.trim()
+      if (!searchTerm) {
+        setFindedQuotation([])
+        return
+      }
+      try {
+        const response = await searchedServiceQuotation(searchTerm)
+        setFindedQuotation(response?.success ? (response.data ?? []) : [])
+      } catch {
+        setFindedQuotation([])
+      }
+    }
+
+    const timer = setTimeout(() => {
+      handleSearch(searchQuotation)
+    }, 800)
+
+    return () => clearTimeout(timer)
+  }, [searchQuotation])
+
   const filteredVehicles = formData.customerId
     ? vehicles.filter(
-        (v) =>
-          String(v.customerId) === formData.customerId && v.isActive === true
-      )
+      (v) =>
+        String(v.customerId) === formData.customerId && v.isActive === true
+    )
     : vehicles.filter((v) => v.isActive === true)
 
   const filteredServiceTypes = formData.serviceCategoryId
     ? serviceTypes.filter(
-        (s) => String(s.serviceCategoryMasterId) === formData.serviceCategoryId
-      )
+      (s) => String(s.serviceCategoryMasterId) === formData.serviceCategoryId
+    )
     : serviceTypes
 
   const activeParts = partsMaster.filter((p) => p.status === "ACTIVE")
@@ -404,7 +436,6 @@ export function ServiceQuotationCreateForm({
     if (
       !formData.customerId ||
       !formData.vehicleId ||
-      !formData.currentReading ||
       !formData.serviceCategoryId ||
       !formData.serviceTypeId ||
       !formData.repairOrderTypeId
@@ -503,9 +534,7 @@ export function ServiceQuotationCreateForm({
           description: data?.message,
         })
         if (quotation) {
-          setTimeout(() => {
-            onUpdated?.()
-          }, 1000)
+          onUpdated?.()
         } else {
           const createdQuotation =
             (data?.data as serviceQuotationListType | undefined) ??
@@ -535,6 +564,72 @@ export function ServiceQuotationCreateForm({
       setLoading(false)
     }
   }
+  const handleSelectOriginalQuotation = async (quotationId: number) => {
+  try {
+    setLoading(true)
+
+    const response = await getServiceQuotationById(quotationId)
+
+    if (!response?.success || !response?.data) {
+      toast.add({
+        type: "error",
+        description: "Unable to fetch original quotation details",
+      })
+      return
+    }
+
+    const original = response.data
+
+    // Populate quotation details
+    setFormData((prev) => ({
+      ...prev,
+
+      // Keep the new quotation as a supplement
+      action: "SUPPLEMENT",
+      status: "DRAFT",
+
+      originalQuotationId: String(original.id),
+
+      customerId: String(original.customerId),
+      vehicleId: String(original.vehicleId),
+      currentReading: String(original.currentReading ?? ""),
+
+      serviceCategoryId: String(original.serviceCategoryId),
+      serviceTypeId: String(original.serviceTypeId),
+      repairOrderTypeId: String(original.repairOrderTypeId),
+
+      insurancePartyName: original.insurancePartyName ?? "",
+    }))
+
+    // Populate customer
+    setSelectedCustomer(original.customer ?? null)
+
+    // Populate parts
+    setParts(getInitialParts(original))
+
+    // Populate labours
+    setLabours(getInitialLabours(original))
+
+    // Populate customer voices
+    setCustomerVoices(getInitialCustomerVoices(original))
+
+    // Update selected quotation display
+    setSelectedQuotation(original)
+
+    setSupplementOpen(false)
+    setSearchQuotation("")
+
+  } catch (error) {
+    console.error("Error loading original quotation:", error)
+
+    toast.add({
+      type: "error",
+      description: "Failed to load original quotation details",
+    })
+  } finally {
+    setLoading(false)
+  }
+}
 
   return (
     <form id="service-quotation-form" onSubmit={handleSubmit}>
@@ -595,20 +690,72 @@ export function ServiceQuotationCreateForm({
               </Select>
             </div>
             {formData.action === "SUPPLEMENT" && (
-              <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                <FieldLabel className="text-xs font-medium">
-                  Original Quotation <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Input
-                  name="originalQuotationId"
-                  type="number"
-                  placeholder="Original quotation id"
-                  required
-                  value={formData.originalQuotationId}
-                  onChange={handleChange}
-                  className="h-7 rounded-none px-2 text-xs"
-                />
-              </div>
+              <div>
+                  <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+                    <FieldLabel className="text-xs font-medium">
+                      Original Quotation <span className="text-red-500">*</span>
+                    </FieldLabel>
+
+                    <Popover
+                      open={supplementOpen}
+                      onOpenChange={setSupplementOpen}
+                    >
+                      <div className="w-full relative">
+                        <PopoverTrigger className={cn('w-full')}>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={supplementOpen}
+                          className="h-7 w-full justify-between rounded-none px-2 text-xs font-normal "
+                        >
+                          {selectedQuotation ? selectedQuotation?.quotationNo : "Select Quotation"}
+                        </Button>
+                        {selectedQuotation?.quotationNo && <Button variant={'ghost'} size={'icon-sm'} className={cn('absolute rounded-full right-0')} onClick={() => setSelectedQuotation(null)}><X className="text-muted-foreground"/></Button>}
+                      </PopoverTrigger>
+                      </div>
+
+                      <PopoverContent align="center" className="p-0 w-full">
+                        <Command shouldFilter={false} className="w-full">
+                          <CommandInput
+                            placeholder="Enter Quotation No..."
+                            value={searchQuotation}
+                            onValueChange={setSearchQuotation}
+                            className="h-8 text-xs w-full"
+                          />
+
+                          <CommandList>
+                            {findedQuotation.length === 0 ? (
+                              <CommandEmpty className="py-3 text-xs">
+                                No Quotation found.
+                              </CommandEmpty>
+                            ) : (
+                              <CommandGroup>
+                                {findedQuotation.map((c) => (
+                                  <CommandItem
+                                    key={c.id}
+                                    value={String(c.id)}
+                                    onSelect={() => handleSelectOriginalQuotation(c.id)}
+                                    className="text-xs"
+                                  >
+                                    {c.quotationNo}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            )}
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  {selectedQuotation && (
+                    <div className="mt-2 text-xs text-muted-foreground">
+                      The quotation was created on:{" "}
+                      {new Date(selectedQuotation.createdAt).toLocaleDateString("en-IN")}
+                    </div>
+                  )}
+                </div>
             )}
 
             <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 lg:col-span-2">
@@ -1146,113 +1293,115 @@ export function ServiceQuotationCreateForm({
           </div>
         </div>
 
-        <div>
-          <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
-            <div>
-              <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
-                Customer Voice
-              </h3>
-              <p className="text-[11px] text-muted-foreground">
-                Record the customer reported issues and their source.
-              </p>
+          <div>
+            <div className="mb-2 flex items-center justify-between bg-muted/40 px-2 py-1">
+              <div>
+                <h3 className="text-xs font-semibold tracking-wide text-foreground uppercase">
+                  Customer Voice
+                </h3>
+                <p className="text-[11px] text-muted-foreground">
+                  Record the customer reported issues and their source.
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-6 gap-1 px-2 text-xs"
+                onClick={() =>
+                  setCustomerVoices((prev) => [...prev, { ...emptyVoiceLine }])
+                }
+              >
+                <Plus className="h-3 w-3" />
+                Add Voice
+              </Button>
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="h-6 gap-1 px-2 text-xs"
-              onClick={() =>
-                setCustomerVoices((prev) => [...prev, { ...emptyVoiceLine }])
-              }
-            >
-              <Plus className="h-3 w-3" />
-              Add Voice
-            </Button>
-          </div>
-          <div className="rounded border">
-            <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Customer Voice</TableHead>
-                  <TableHead className="w-[200px]">Source</TableHead>
-                  <TableHead className="w-[60px] text-right">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {customerVoices.map((line, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="align-top">
-                      <Textarea
-                        placeholder="Describe what the customer reported"
-                        value={line.customerVoice}
-                        onChange={(e) =>
-                          updateVoice(index, "customerVoice", e.target.value)
-                        }
-                        className="min-h-[48px] rounded-none px-2 py-1 text-xs"
-                      />
-                    </TableCell>
-                    <TableCell className="align-top">
-                      <Select
-                        items={sourceOptions}
-                        value={line.source || null}
-                        onValueChange={(value) =>
-                          updateVoice(index, "source", value ?? "CUSTOMER")
-                        }
-                      >
-                        <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent
-                          align="start"
-                          alignItemWithTrigger={false}
-                        >
-                          {sourceOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell className="text-right align-top">
-                      {customerVoices.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive"
-                          aria-label={`Remove voice ${index + 1}`}
-                          onClick={() =>
-                            setCustomerVoices((prev) =>
-                              prev.filter((_, i) => i !== index)
-                            )
+            <div className="rounded border">
+              <Table className="[&_td]:border-r [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_td:last-child]:border-r-0 [&_th]:h-7 [&_th]:border-r [&_th]:border-slate-200 [&_th]:px-2 [&_th]:text-xs [&_th:last-child]:border-r-0">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Customer Voice</TableHead>
+                    <TableHead className="w-[200px]">Source</TableHead>
+                    <TableHead className="w-[60px] text-right">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {customerVoices.map((line, index) => (
+                    <TableRow key={index}>
+                      <TableCell className="align-top">
+                        <Textarea
+                          placeholder="Describe what the customer reported"
+                          value={line.customerVoice}
+                          onChange={(e) =>
+                            updateVoice(index, "customerVoice", e.target.value)
+                          }
+                          className="min-h-[48px] rounded-none px-2 py-1 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="align-top">
+                        <Select
+                          items={sourceOptions}
+                          value={line.source || null}
+                          onValueChange={(value) =>
+                            updateVoice(index, "source", value ?? "CUSTOMER")
                           }
                         >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                          <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent
+                            align="start"
+                            alignItemWithTrigger={false}
+                          >
+                            {sourceOptions.map((option) => (
+                              <SelectItem key={option.value} value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="text-right align-top">
+                        {customerVoices.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-destructive"
+                            aria-label={`Remove voice ${index + 1}`}
+                            onClick={() =>
+                              setCustomerVoices((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="m-5 flex justify-end gap-2 border-t border-slate-200 pt-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onCancel}
-          disabled={loading}
-        >
-          Cancel
-        </Button>
-        <Button type="submit" disabled={loading}>
-          {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
-          {quotation ? "Update Service Quotation" : "Create Service Quotation"}
-        </Button>
-      </div>
-    </form>
+        <div className="m-5 flex justify-end gap-2 border-t border-slate-200 pt-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={loading}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
+            {quotation ? "Update Service Quotation" : "Create Service Quotation"}
+          </Button>
+        </div>
+      </form>
+
+
   )
 }

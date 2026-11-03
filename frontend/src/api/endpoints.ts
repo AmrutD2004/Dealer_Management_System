@@ -263,7 +263,7 @@ export const activatePermission = async (permissionId: number) => {
 
 
 //Assign Permission to roles
-export const assignPermission = async(payload : {})=>{
+export const assignPermission = async (payload: {}) => {
     const response = await api.post(`/api/tenant/role/permission/assign`, payload)
     return await response.data
 }
@@ -533,7 +533,7 @@ export const activateCustomer = async (custId: number) => {
     return await response.data
 }
 
-export const findCustomer = async(custName : string)=>{
+export const findCustomer = async (custName: string) => {
     const response = await api.get(`/api/tenant/customer/find?query=${custName}`)
     return await response.data
 }
@@ -745,5 +745,10 @@ export const deactivateVariant = async (variantId: number) => {
 
 export const activateVariant = async (variantId: number) => {
     const response = await api.patch(`/api/platform/vehicle/variant/${variantId}/activate`)
+    return await response.data;
+}
+
+export const searchedServiceQuotation = async (serviceQuotationNo: string) => {
+    const response = await api.get(`/api/tenant/service/quotation?serviceQuotationNo=${serviceQuotationNo}`)
     return await response.data;
 }
