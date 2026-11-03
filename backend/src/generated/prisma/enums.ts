@@ -181,3 +181,42 @@ export const Sources = {
 } as const
 
 export type Sources = (typeof Sources)[keyof typeof Sources]
+
+
+export const appointAction = {
+  NEW_REQUIREMENT: 'NEW_REQUIREMENT',
+  RE_SCHEDULE: 'RE_SCHEDULE',
+  CANCEL: 'CANCEL'
+} as const
+
+export type appointAction = (typeof appointAction)[keyof typeof appointAction]
+
+
+export const appointmentSource = {
+  INWARD_CALL: 'INWARD_CALL',
+  OUTWARD_CALL: 'OUTWARD_CALL',
+  WHATSAPP: 'WHATSAPP',
+  SMS: 'SMS',
+  WALK_IN: 'WALK_IN'
+} as const
+
+export type appointmentSource = (typeof appointmentSource)[keyof typeof appointmentSource]
+
+
+export const appointmentStatus = {
+  OPEN: 'OPEN',
+  RE_SCHEDULE: 'RE_SCHEDULE',
+  CANCEL: 'CANCEL'
+} as const
+
+export type appointmentStatus = (typeof appointmentStatus)[keyof typeof appointmentStatus]
+
+
+export const appointCancleReasons = {
+  CUSTOMER_IN_HURRY: 'CUSTOMER_IN_HURRY',
+  PARTS_NOT_AVAILABLE: 'PARTS_NOT_AVAILABLE',
+  CUSTOMER_BUSY: 'CUSTOMER_BUSY',
+  BAY_NOT_AVAILABLE: 'BAY_NOT_AVAILABLE'
+} as const
+
+export type appointCancleReasons = (typeof appointCancleReasons)[keyof typeof appointCancleReasons]

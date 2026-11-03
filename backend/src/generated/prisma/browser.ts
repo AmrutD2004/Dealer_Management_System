@@ -162,3 +162,13 @@ export type ServiceQuotationLabour = Prisma.ServiceQuotationLabourModel
  * 
  */
 export type ServiceQuotationCustomerVoice = Prisma.ServiceQuotationCustomerVoiceModel
+/**
+ * Model ServiceAppointment
+ * 
+ */
+export type ServiceAppointment = Prisma.ServiceAppointmentModel
+/**
+ * Model ServiceAppointmentCustomerVoice
+ * 
+ */
+export type ServiceAppointmentCustomerVoice = Prisma.ServiceAppointmentCustomerVoiceModel

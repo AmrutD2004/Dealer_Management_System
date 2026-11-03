@@ -425,7 +425,9 @@ export const ModelName = {
   ServiceQuotationMaster: 'ServiceQuotationMaster',
   ServiceQuotationPart: 'ServiceQuotationPart',
   ServiceQuotationLabour: 'ServiceQuotationLabour',
-  ServiceQuotationCustomerVoice: 'ServiceQuotationCustomerVoice'
+  ServiceQuotationCustomerVoice: 'ServiceQuotationCustomerVoice',
+  ServiceAppointment: 'ServiceAppointment',
+  ServiceAppointmentCustomerVoice: 'ServiceAppointmentCustomerVoice'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -441,7 +443,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment" | "serviceQuotationMaster" | "serviceQuotationPart" | "serviceQuotationLabour" | "serviceQuotationCustomerVoice"
+    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment" | "serviceQuotationMaster" | "serviceQuotationPart" | "serviceQuotationLabour" | "serviceQuotationCustomerVoice" | "serviceAppointment" | "serviceAppointmentCustomerVoice"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2591,6 +2593,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ServiceAppointment: {
+      payload: Prisma.$ServiceAppointmentPayload<ExtArgs>
+      fields: Prisma.ServiceAppointmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceAppointmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceAppointmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceAppointmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceAppointmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceAppointmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceAppointmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceAppointmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceAppointmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceAppointmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>
+        }
+        update: {
+          args: Prisma.ServiceAppointmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceAppointmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceAppointmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceAppointmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceAppointmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceAppointmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceAppointment>
+        }
+        groupBy: {
+          args: Prisma.ServiceAppointmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAppointmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceAppointmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAppointmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceAppointmentCustomerVoice: {
+      payload: Prisma.$ServiceAppointmentCustomerVoicePayload<ExtArgs>
+      fields: Prisma.ServiceAppointmentCustomerVoiceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceAppointmentCustomerVoiceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceAppointmentCustomerVoiceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceAppointmentCustomerVoiceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceAppointmentCustomerVoiceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>
+        }
+        findMany: {
+          args: Prisma.ServiceAppointmentCustomerVoiceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>[]
+        }
+        create: {
+          args: Prisma.ServiceAppointmentCustomerVoiceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>
+        }
+        createMany: {
+          args: Prisma.ServiceAppointmentCustomerVoiceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceAppointmentCustomerVoiceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceAppointmentCustomerVoiceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>
+        }
+        update: {
+          args: Prisma.ServiceAppointmentCustomerVoiceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceAppointmentCustomerVoiceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceAppointmentCustomerVoiceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceAppointmentCustomerVoiceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceAppointmentCustomerVoiceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAppointmentCustomerVoicePayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceAppointmentCustomerVoiceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceAppointmentCustomerVoice>
+        }
+        groupBy: {
+          args: Prisma.ServiceAppointmentCustomerVoiceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAppointmentCustomerVoiceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceAppointmentCustomerVoiceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAppointmentCustomerVoiceCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3165,6 +3315,43 @@ export const ServiceQuotationCustomerVoiceScalarFieldEnum = {
 export type ServiceQuotationCustomerVoiceScalarFieldEnum = (typeof ServiceQuotationCustomerVoiceScalarFieldEnum)[keyof typeof ServiceQuotationCustomerVoiceScalarFieldEnum]
 
 
+export const ServiceAppointmentScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  action: 'action',
+  originalAppointmentId: 'originalAppointmentId',
+  appointmentNo: 'appointmentNo',
+  appointDate: 'appointDate',
+  appointOn: 'appointOn',
+  callDateAndTime: 'callDateAndTime',
+  source: 'source',
+  status: 'status',
+  cancleReason: 'cancleReason',
+  estimateCharge: 'estimateCharge',
+  vehicleId: 'vehicleId',
+  currentReading: 'currentReading',
+  customerId: 'customerId',
+  creId: 'creId',
+  serviceAdvisorId: 'serviceAdvisorId',
+  repairOrderTypeId: 'repairOrderTypeId',
+  serviceCategoryId: 'serviceCategoryId',
+  serviceTypeId: 'serviceTypeId'
+} as const
+
+export type ServiceAppointmentScalarFieldEnum = (typeof ServiceAppointmentScalarFieldEnum)[keyof typeof ServiceAppointmentScalarFieldEnum]
+
+
+export const ServiceAppointmentCustomerVoiceScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceAppointmentId: 'serviceAppointmentId',
+  customerVoice: 'customerVoice'
+} as const
+
+export type ServiceAppointmentCustomerVoiceScalarFieldEnum = (typeof ServiceAppointmentCustomerVoiceScalarFieldEnum)[keyof typeof ServiceAppointmentCustomerVoiceScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3455,6 +3642,62 @@ export type ListEnumSourcesFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
 
 
 /**
+ * Reference to a field of type 'appointAction'
+ */
+export type EnumappointActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'appointAction'>
+    
+
+
+/**
+ * Reference to a field of type 'appointAction[]'
+ */
+export type ListEnumappointActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'appointAction[]'>
+    
+
+
+/**
+ * Reference to a field of type 'appointmentSource'
+ */
+export type EnumappointmentSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'appointmentSource'>
+    
+
+
+/**
+ * Reference to a field of type 'appointmentSource[]'
+ */
+export type ListEnumappointmentSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'appointmentSource[]'>
+    
+
+
+/**
+ * Reference to a field of type 'appointmentStatus'
+ */
+export type EnumappointmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'appointmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'appointmentStatus[]'
+ */
+export type ListEnumappointmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'appointmentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'appointCancleReasons'
+ */
+export type EnumappointCancleReasonsFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'appointCancleReasons'>
+    
+
+
+/**
+ * Reference to a field of type 'appointCancleReasons[]'
+ */
+export type ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'appointCancleReasons[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3647,6 +3890,8 @@ export type GlobalOmitConfig = {
   serviceQuotationPart?: Prisma.ServiceQuotationPartOmit
   serviceQuotationLabour?: Prisma.ServiceQuotationLabourOmit
   serviceQuotationCustomerVoice?: Prisma.ServiceQuotationCustomerVoiceOmit
+  serviceAppointment?: Prisma.ServiceAppointmentOmit
+  serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceOmit
 }
 
 /* Types for Logging */

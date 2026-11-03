@@ -18,7 +18,8 @@ import { activatePartCategory, addPartCategory, deactivatePartCategory, getListO
 import { activatePart, addPartMaster, deactivatePart, getListOfParts, getPartDetails, updatePartMaster } from "../../controllers/tenants/Parts/partMasterManagementController";
 import { getListOfPartFitment, getPartFitmentDetails, updatePartFitment } from "../../controllers/tenants/Parts/partFitmentManagementController";
 
-import { createQuotation, getListOfServiceQuotation, getServiceQuotationDetails, searchedServiceQuotation, updateQuotation } from "../../controllers/tenants/ServiceQuotation/serviceQuotaionManagement";
+import { createQuotation, getListOfServiceQuotation, getServiceQuotationDetails, searchedServiceQuotation, updateQuotation } from "../../controllers/tenants/ServiceQuotationAndAppointment/serviceQuotaionManagement";
+import { cancleAppointment, createAppointment, getListOfServiceAppointment, getServiceAppointmentDetails, updateAppointment } from "../../controllers/tenants/ServiceQuotationAndAppointment/serviceAppointmentManagement";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -181,4 +182,12 @@ tenantRoute.get('/tenant/service/quotation/get/all', authenticate, requireTenant
 tenantRoute.get('/tenant/service/quotation/get/:serviceQuotationId', authenticate, requireTenantUser, getServiceQuotationDetails)
 tenantRoute.put('/tenant/service/quotation/:serviceQuotationId/update', authenticate, requireTenantUser, updateQuotation)
 tenantRoute.get('/tenant/service/quotation', authenticate, requireTenantUser, searchedServiceQuotation)
+
+
+//Service Appointment Management 
+tenantRoute.post('/tenant/service/appointment/create', authenticate, requireTenantUser, createAppointment)
+tenantRoute.get('/tenant/service/appointment/get/all', authenticate, requireTenantUser, getListOfServiceAppointment)
+tenantRoute.get('/tenant/service/appointment/get/:serviceAppointmentId', authenticate, requireTenantUser, getServiceAppointmentDetails)
+tenantRoute.put('/tenant/service/appointment/:serviceAppointmentId/update', authenticate, requireTenantUser, updateAppointment)
+tenantRoute.patch('/tenant/service/appointment/:serviceAppointmentId/cancle', authenticate, requireTenantUser, cancleAppointment)
 export default tenantRoute;

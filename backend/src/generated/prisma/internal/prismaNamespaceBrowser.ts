@@ -79,7 +79,9 @@ export const ModelName = {
   ServiceQuotationMaster: 'ServiceQuotationMaster',
   ServiceQuotationPart: 'ServiceQuotationPart',
   ServiceQuotationLabour: 'ServiceQuotationLabour',
-  ServiceQuotationCustomerVoice: 'ServiceQuotationCustomerVoice'
+  ServiceQuotationCustomerVoice: 'ServiceQuotationCustomerVoice',
+  ServiceAppointment: 'ServiceAppointment',
+  ServiceAppointmentCustomerVoice: 'ServiceAppointmentCustomerVoice'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -631,6 +633,43 @@ export const ServiceQuotationCustomerVoiceScalarFieldEnum = {
 } as const
 
 export type ServiceQuotationCustomerVoiceScalarFieldEnum = (typeof ServiceQuotationCustomerVoiceScalarFieldEnum)[keyof typeof ServiceQuotationCustomerVoiceScalarFieldEnum]
+
+
+export const ServiceAppointmentScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  action: 'action',
+  originalAppointmentId: 'originalAppointmentId',
+  appointmentNo: 'appointmentNo',
+  appointDate: 'appointDate',
+  appointOn: 'appointOn',
+  callDateAndTime: 'callDateAndTime',
+  source: 'source',
+  status: 'status',
+  cancleReason: 'cancleReason',
+  estimateCharge: 'estimateCharge',
+  vehicleId: 'vehicleId',
+  currentReading: 'currentReading',
+  customerId: 'customerId',
+  creId: 'creId',
+  serviceAdvisorId: 'serviceAdvisorId',
+  repairOrderTypeId: 'repairOrderTypeId',
+  serviceCategoryId: 'serviceCategoryId',
+  serviceTypeId: 'serviceTypeId'
+} as const
+
+export type ServiceAppointmentScalarFieldEnum = (typeof ServiceAppointmentScalarFieldEnum)[keyof typeof ServiceAppointmentScalarFieldEnum]
+
+
+export const ServiceAppointmentCustomerVoiceScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  serviceAppointmentId: 'serviceAppointmentId',
+  customerVoice: 'customerVoice'
+} as const
+
+export type ServiceAppointmentCustomerVoiceScalarFieldEnum = (typeof ServiceAppointmentCustomerVoiceScalarFieldEnum)[keyof typeof ServiceAppointmentCustomerVoiceScalarFieldEnum]
 
 
 export const SortOrder = {
