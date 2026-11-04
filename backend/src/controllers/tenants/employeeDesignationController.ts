@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../prisma/lib/prisma";
-import { count } from "console";
+import { UploadedFile } from "express-fileupload";
+import * as XLSX from 'xlsx'
 
 export const createEmployeeDesignation = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
@@ -21,9 +22,9 @@ export const createEmployeeDesignation = async (req: Request, res: Response) => 
         //Checking is designation is exist in tenant 
         const checkIsDesignationExists = await prisma.employeeDesignation.findUnique({
             where: {
-                tenantId_code : {
+                tenantId_code: {
                     code: code,
-                tenantId: tenantId
+                    tenantId: tenantId
                 }
             }
         })
@@ -397,6 +398,69 @@ export const mechanicUnassign = async (req: Request, res: Response) => {
         return res.status(500).json({
             success: false,
             message: `Server error : ${error}`
+        })
+    }
+
+}
+
+
+export const createEmployeeDesignationWithExcel = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+    const designationExcelFile = req.files?.file as UploadedFile | null;
+    if (!designationExcelFile) {
+        return res.status(400).json({ error: 'No file uploaded under field "file"' });
+    }
+    try {
+        const readedFile = XLSX.read(designationExcelFile.data, { type: 'buffer' })
+        const sheetName = readedFile.SheetNames[0]
+        const sheet = readedFile.Sheets[sheetName]
+        const sheetData = XLSX.utils.sheet_to_json(sheet)
+        const designationCodes = sheetData.map(
+            (item: any) => item["Designation_Code"].trim()
+        )
+        const checkIsDesignationExists = await prisma.employeeDesignation.findMany({
+            where: {
+
+                code: {
+                    in: designationCodes
+                },
+                tenantId: tenantId
+            },
+            select: {
+                code: true
+            }
+        })
+        if (checkIsDesignationExists.length > 0) {
+            return res.status(409).json({
+                success: false,
+                message: `Designations code is already exists.`,
+                exsistingDesignation: checkIsDesignationExists
+            })
+        }
+        const data = await prisma.employeeDesignation.createMany({
+            data: sheetData.map((designation: any) => ({
+                tenantId: Number(tenantId),
+                code: designation.Designation_Code,
+                name: designation.Designation_Name,
+                description: designation.Description,
+                isMechanic: Boolean(designation.Is_Mechanic),
+                isActive: Boolean(designation.Is_Active)
+            }))
+        })
+        return res.status(201).json({
+            success: true,
+            message: 'Excel Data Successfully Added'
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${err}`
         })
     }
 

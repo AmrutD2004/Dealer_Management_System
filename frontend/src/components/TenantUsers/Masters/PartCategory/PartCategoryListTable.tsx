@@ -114,7 +114,6 @@ const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) =
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
                         <SortableTableHead label="Category Code" sortKey="code" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
                         <SortableTableHead label="Category Name" sortKey="name" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
-                        <SortableTableHead label="Parent Category" sortKey="parentName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
                         <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <SortableTableHead label="Created" sortKey="createdAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <SortableTableHead label="Updated" sortKey="updatedAt" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
@@ -140,7 +139,6 @@ const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) =
                                     </span>
                                     {category.name}
                                 </TableCell>
-                                <TableCell className='text-left font-medium'>{getParentName(category)}</TableCell>
                                 <TableCell className='text-center'>
                                     <Badge variant={category.isActive ? 'success' : 'destructive'}>
                                         {category.isActive ? 'Active' : 'Inactive'}

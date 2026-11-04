@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import { prisma } from "../../prisma/lib/prisma";
+import { UploadedFile } from "express-fileupload";
+import * as XLSX from 'xlsx'
+import { Prisma } from "../../generated/prisma/client";
 
 export const createLabours = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!;
@@ -42,9 +45,9 @@ export const createLabours = async (req: Request, res: Response) => {
         }
         const data = await prisma.labourMaster.create({
             data: {
-                tenant : {
-                    connect :{
-                         id: Number(tenantId),
+                tenant: {
+                    connect: {
+                        id: Number(tenantId),
                     }
                 },
                 labourCode: labourCode,
@@ -328,6 +331,64 @@ export const activateLabours = async (req: Request, res: Response) => {
         return res.status(201).json({
             success: true,
             message: `${data.labourName} labour deactivated`
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${error}`
+        })
+    }
+}
+
+
+export const createLabourWithExcel = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!;
+    const labourFile = req.files?.file as UploadedFile | null;
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: "Not Authorized login again",
+        });
+    }
+
+    try {
+        const readedFile = XLSX.read(labourFile?.data, { type: 'buffer' })
+        const sheetName = readedFile.SheetNames[0]
+        const sheet = readedFile.Sheets[sheetName]
+        const sheetData = XLSX.utils.sheet_to_json(sheet)
+
+        const labourCodes = sheetData.map((l: any) => l['Labour_Code'].trim())
+
+        const isLabourExists = await prisma.labourMaster.findMany({
+            where: {
+                tenantId: Number(tenantId),
+                labourCode: {
+                    in: labourCodes
+                }
+            }
+        })
+        const existingCodes = isLabourExists.map((l: any) => l.labourCode)
+        if (isLabourExists.length > 0) {
+            return res.status(403).json({
+                success: true,
+                message: 'Some labours already exists in master.',
+                existingLabour: existingCodes
+            })
+        }
+        const data = await prisma.labourMaster.createMany({
+            data: sheetData.map((labour: any) => ({
+                tenantId: Number(tenantId),
+                labourCode: labour.Labour_Code,
+                labourName: labour.Labour_Name,
+                labourDescription: labour.Labour_Description ? labour.Labour_Description : '',
+                rate: parseFloat(labour.Rate),
+                standardHours: new Prisma.Decimal(labour.Standard_Hours),
+                isActive: Boolean(labour.Is_Active)
+            }))
+        })
+        return res.status(201).json({
+            success: true,
+            message: 'Labour data inserted'
         })
     } catch (error) {
         return res.status(500).json({

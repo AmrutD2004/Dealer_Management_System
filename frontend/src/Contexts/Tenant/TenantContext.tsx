@@ -11,7 +11,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
     const { isLoggedIn } = useContext(AuthContext)
     const [branchList, setBranchList] = useState<branchListType[]>([])
     const [skip, setSkip] = useState<number>(0)
-    const [take, setTake] = useState<number>(3)
+    const [take, setTake] = useState<number>(10)
     const [totalBranches, setTotalBranches] = useState<number>(0)
 
     const [selectedBranch, setSelectedBranch] = useState<branchListType | null>(null)

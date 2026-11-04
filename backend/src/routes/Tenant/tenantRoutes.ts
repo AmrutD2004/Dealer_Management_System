@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authenticate, requireTenantUser } from "../../middlewares/authMiddleware/loginMiddelware";
-import { activateTenantBranch, createBranch, deactivateTenantBranch, getTenantBranchById, getTenantBranchList, updatedBranch } from "../../controllers/tenants/tenantSectionController";
-import { activateTenantDesignation, createEmployeeDesignation, deactivateTenantDesignation, getAllEmployeeDesignation, getEmployeeDesignationDetails, mechanicAssign, mechanicUnassign, updateDesignation } from "../../controllers/tenants/employeeDesignationController";
+import { activateTenantBranch, createBranch, createBranchWithExcel, deactivateTenantBranch, getTenantBranchById, getTenantBranchList, updatedBranch } from "../../controllers/tenants/tenantSectionController";
+import { activateTenantDesignation, createEmployeeDesignation, createEmployeeDesignationWithExcel, deactivateTenantDesignation, getAllEmployeeDesignation, getEmployeeDesignationDetails, mechanicAssign, mechanicUnassign, updateDesignation } from "../../controllers/tenants/employeeDesignationController";
 import { activateTenantRole, assigningPermissionToRole, createRole, deactivateTenantRole, getAllTenantRole, getRoleDetails, updateRole, updatePermissionToRole, getListOfPermissionToRole, getDetailsPermissionToRole } from "../../controllers/tenants/roleAndPermissionController";
 import { activateEmployee, createEmployee, deactivateEmployee, getListOfTenantEmployee, getTenantEmployeeDetails, updateEmployeeDetails } from "../../controllers/tenants/employeeManagementController";
 import { activateServiceCategory, activateServiceType, createServiceCategory, createServiceType, deactivateServiceCategory, deactivateServiceType, getListOfServiceCategory, getListOfServiceType, getListOfServiceTypeAccordingServiceCategory, getServiceCategoryDetails, getServiceTypeDetails, updateServiceCategory, updateServiceType } from "../../controllers/tenants/Services/serviceController";
@@ -10,12 +10,12 @@ import { activateRepairOrder, createRepairOrder, deactivateRepairOrder, getListO
 import { activateCustomer, createCustomer, deactivateCustomer, findCustomer, getCustomerDetails, getCustomerList, updateCustomer } from "../../controllers/tenants/customerManagementController";
 import { activateVehicle, createVehicle, deactivateVehicle, getListOfVehicle, getVehicleDetails, updateVehicle } from "../../controllers/tenants/vehicalManagementController";
 import { closeJobCard, createJobCard, getJobcardDetails, getListOfJobCard, updateJobCard } from "../../controllers/tenants/jobCardManagement";
-import { activateLabours, createLabours, deactivateLabours, getLaboursDetails, getListOfLabours, updateLabours } from "../../controllers/tenants/labourMasterManagement";
+import { activateLabours, createLabours, createLabourWithExcel, deactivateLabours, getLaboursDetails, getListOfLabours, updateLabours } from "../../controllers/tenants/labourMasterManagement";
 import { activateBay, createBay, deactivateBay, getBayDetails, getListOfBay, updateBay } from "../../controllers/tenants/bayMasterManagementController";
 import { allocateJobCard, getAllocatedJobCardDetails, getListOfAllocatedJobCards, updateAllocatedJobCard } from "../../controllers/tenants/jobCardAllocationController";
 import { activateHSN, createHSN, deactivateHSN, getHSNDetails, getListOfHSN, updateHSN } from "../../controllers/tenants/hsnMasterController";
-import { activatePartCategory, addPartCategory, deactivatePartCategory, getListOfPartCategories, getPartCategoryDetails, updatePartCategory } from "../../controllers/tenants/Parts/partCategoryManagementController";
-import { activatePart, addPartMaster, deactivatePart, getListOfParts, getPartDetails, updatePartMaster } from "../../controllers/tenants/Parts/partMasterManagementController";
+import { activatePartCategory, addPartCategory, createPartCategories, deactivatePartCategory, getListOfPartCategories, getPartCategoryDetails, updatePartCategory } from "../../controllers/tenants/Parts/partCategoryManagementController";
+import { activatePart, addPartMaster, addPartsAndFitmentUsingExcel, deactivatePart, getListOfParts, getPartDetails, updatePartMaster } from "../../controllers/tenants/Parts/partMasterManagementController";
 import { getListOfPartFitment, getPartFitmentDetails, updatePartFitment } from "../../controllers/tenants/Parts/partFitmentManagementController";
 
 import { createQuotation, getListOfServiceQuotation, getServiceQuotationDetails, searchedServiceQuotation, updateQuotation } from "../../controllers/tenants/ServiceQuotationAndAppointment/serviceQuotaionManagement";
@@ -29,6 +29,8 @@ tenantRoute.put('/tenant/branch/:branchId/update', authenticate, requireTenantUs
 tenantRoute.patch('/tenant/branch/:branchId/deactivate', authenticate, requireTenantUser, deactivateTenantBranch)
 tenantRoute.patch('/tenant/branch/:branchId/activate', authenticate, requireTenantUser, activateTenantBranch)
 tenantRoute.get('/tenant/branch/get/:branchId', authenticate, requireTenantUser, getTenantBranchById)
+tenantRoute.post('/tenant/branch/file/upload', authenticate, requireTenantUser, createBranchWithExcel)
+
 
 //Employee Designation Routes
 tenantRoute.post('/tenant/designation/create', authenticate, requireTenantUser, createEmployeeDesignation)
@@ -39,6 +41,7 @@ tenantRoute.patch('/tenant/designation/:designationId/mechanic/assign', authenti
 tenantRoute.patch('/tenant/designation/:designationId/mechanic/unassign', authenticate, requireTenantUser, mechanicUnassign)
 tenantRoute.patch('/tenant/designation/:designationId/activate', authenticate, requireTenantUser, activateTenantDesignation)
 tenantRoute.patch('/tenant/designation/:designationId/deactivate', authenticate, requireTenantUser, deactivateTenantDesignation)
+tenantRoute.post('/tenant/designation/file/upload', authenticate, requireTenantUser, createEmployeeDesignationWithExcel)
 
 //Role Routes
 tenantRoute.post('/tenant/role/create', authenticate, requireTenantUser, createRole)
@@ -117,6 +120,7 @@ tenantRoute.get('/tenant/labour/get/all', authenticate, requireTenantUser, getLi
 tenantRoute.get('/tenant/labour/get/:labourId', authenticate, requireTenantUser, getLaboursDetails)
 tenantRoute.patch('/tenant/labour/:labourId/deactivate', authenticate, requireTenantUser, deactivateLabours)
 tenantRoute.patch('/tenant/labour/:labourId/activate', authenticate, requireTenantUser, activateLabours)
+tenantRoute.post('/tenant/labour/file/upload', authenticate, requireTenantUser, createLabourWithExcel)
 
 
 //Jobcard Management
@@ -158,6 +162,7 @@ tenantRoute.get('/tenant/part/category/get/all', authenticate, requireTenantUser
 tenantRoute.get('/tenant/part/category/get/:categoryId', authenticate, requireTenantUser, getPartCategoryDetails)
 tenantRoute.patch('/tenant/part/category/:categoryId/deactivate', authenticate, requireTenantUser, deactivatePartCategory)
 tenantRoute.patch('/tenant/part/category/:categoryId/activate', authenticate, requireTenantUser, activatePartCategory)
+tenantRoute.post('/tenant/part/category/file/upload', authenticate, requireTenantUser, createPartCategories)
 
 
 //Part Master Management
@@ -167,6 +172,7 @@ tenantRoute.get('/tenant/part/get/all', authenticate, requireTenantUser, getList
 tenantRoute.get('/tenant/part/get/:partId', authenticate, requireTenantUser, getPartDetails)
 tenantRoute.patch('/tenant/part/:partId/deactivate', authenticate, requireTenantUser, deactivatePart)
 tenantRoute.patch('/tenant/part/:partId/activate', authenticate, requireTenantUser, activatePart)
+tenantRoute.post('/tenant/part/file/upload', authenticate, requireTenantUser, addPartsAndFitmentUsingExcel)
 
 
 //Part Fitment Management

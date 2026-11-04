@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../../prisma/lib/prisma";
+import { UploadedFile } from "express-fileupload";
+import * as XLSX from 'xlsx';
 
 export const addPartMaster = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
@@ -459,6 +461,98 @@ export const activatePart = async (req: Request, res: Response) => {
             message: `${data.partNo} part is activated`
         })
     } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error ${err}`
+        })
+    }
+}
+
+
+export const addPartsAndFitmentUsingExcel = async(req : Request, res : Response)=>{
+    const { id, tenantId } = req.user!
+    const partFile = req.files?.file as UploadedFile | null
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+    try{
+        const readedFile = XLSX.read(partFile?.data, {type : 'buffer'})
+        const sheetName = readedFile.SheetNames[0]
+        const sheet = readedFile.Sheets[sheetName]
+        const sheetData = XLSX.utils.sheet_to_json(sheet)
+
+        //Extracting unique brands Names
+        const brandNames =  [ ...new Set(
+            sheetData.map((b : any)=> b['Brands'].trim())
+        )]
+        if(!brandNames){
+            return res.json({
+                message : 'Brands not found in excel'
+            })
+        }
+        //Extracting unique models Names
+        const modelNames = [...new Set(
+            sheetData.map((m : any)=> m['Models'].trim())
+        )]
+
+        if(!modelNames){
+            return res.json({
+                message : 'Models not found in excel'
+            })
+        }
+        const partCategories = 
+            sheetData.map((c : any)=> c['Part_Categories'].trim())
+        if(!partCategories){
+            return res.json({
+                message : 'Part Categories not found in excel'
+            })
+        }
+        const brandIds = await prisma.brandMaster.findMany({
+            where : {
+                brandName :{
+                    in : brandNames,
+                    mode : 'insensitive'
+                }
+            },
+            select : {
+                id : true
+            }
+        })
+        const modelIds = await prisma.vehicleModelMaster.findMany({
+            where : {
+                modelName :{
+                    in : modelNames,
+                    mode : 'insensitive'
+                }
+            },
+            select : {
+                id : true
+            }
+        })
+        const categoryIds = await prisma.partCategoryMaster.findMany({
+            where  : {
+                tenantId : Number(tenantId),
+                name : {
+                    in : partCategories,
+                    mode : 'insensitive'
+                }
+            },
+            select : {
+                id : true
+            }
+        })
+        return res.json({
+            brandIds,
+            brandNames,
+            modelIds ,
+            modelNames,
+            partCategories,
+            categoryIds
+        })
+    }catch (err) {
         return res.status(500).json({
             success: false,
             message: `Server error ${err}`

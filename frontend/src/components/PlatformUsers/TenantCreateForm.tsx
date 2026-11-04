@@ -13,9 +13,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { FieldLabel } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FormSection } from "./FormSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type userCreateType, type tenantCreateType, type branchCreateType } from "@/Types/tenantCreateType";
-import { tenantCreation } from "@/api/endpoints";
+import { getCities, getCountries, getStates, tenantCreation } from "@/api/endpoints";
 import { toast } from "../ui/toast";
 import { cn } from "cn";
 import { Loader2 } from "lucide-react";
@@ -62,11 +62,37 @@ export function TenantCreateForm({ onCancel }: props) {
 
   const [copyTenantAddress, setCopyTenantAddress] = useState(false)
 
+  const [countries, setCountries] = useState<any>([])
+  const [selectedCountry, setSelectedCountry] = useState<any>("")
+  const [states, setStates] = useState<any>([])
+  const [selectedState, setSelectedState] = useState<string>("")
+  const [cities, setCities] = useState<any>([])
+  const fetchCountry = async () => {
+    const data = await getCountries()
+    setCountries(data?.countries)
+  }
+  const fetchStates = async (countryCode: string) => {
+    const data = await getStates(countryCode)
+    setStates(data?.regions)
+  }
+  const fetchCities = async (stateCode : string)=>{
+    const data = await getCities(stateCode, selectedCountry)
+    setCities(data?.settlements)
+  }
+  useEffect(() => {
+    fetchCountry()
+  }, [])
+  useEffect(() => {
+    fetchStates(selectedCountry)
+  }, [selectedCountry])
+   useEffect(() => {
+    fetchCities(selectedState)
+  }, [selectedState])
+
   const syncBranchAddress = (tenant: tenantCreateType) => {
     setInitialBranchData(prev => ({
       ...prev,
       address1: tenant.address,
-      locality: tenant.city,
       city: tenant.city,
       state: tenant.state,
       country: tenant.country,
@@ -191,7 +217,7 @@ export function TenantCreateForm({ onCancel }: props) {
   return (
     <form className="space-y-4 py-5" onSubmit={handleSubmit} >
       {/* Tenant Details */}
-      <FormSection title="Tenant Details"  withSeparator={false}>
+      <FormSection title="Tenant Details" withSeparator={false}>
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">Tenant Name <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
@@ -216,8 +242,8 @@ export function TenantCreateForm({ onCancel }: props) {
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">GST Number <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
-            <Input className="h-7 rounded-none px-2 text-xs uppercase" name="gstNumber" value={tenantData.gstNumber} 
-            required placeholder="27AAECA1234A1Z5" onChange={handleTenantChange} />
+            <Input className="h-7 rounded-none px-2 text-xs uppercase" name="gstNumber" value={tenantData.gstNumber}
+              required placeholder="27AAECA1234A1Z5" onChange={handleTenantChange} />
           </div>
         </div>
 
@@ -229,23 +255,82 @@ export function TenantCreateForm({ onCancel }: props) {
         </div>
 
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-          <FieldLabel className="text-xs font-medium">City <span className="text-red-500">*</span></FieldLabel>
+          <FieldLabel className="text-xs font-medium">Country <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
-            <Input name="city" value={tenantData.city} required placeholder="Pune" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+            <Select
+              items={countries.map((tc: any) => ({ value: String(tc.name), label: tc.name, countryCode: tc.code }))}
+              value={tenantData.country || null}
+              onValueChange={(value) => {
+                const selected = countries.find((c: any) =>
+                  value === c.name
+                )
+                setTenantData((prev) => ({ ...prev, country: value ?? "" }))
+                setSelectedCountry(selected?.code ?? "")
+              }}
+              required
+            >
+              <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                <SelectValue placeholder="Select Country" />
+              </SelectTrigger>
+              <SelectContent align="start" alignItemWithTrigger={false}>
+                {countries.map((tc: any) => (
+                  <SelectItem key={tc.code} value={String(tc.name)}>
+                    {tc.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
-
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">State <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
-            <Input name="state" value={tenantData.state} required placeholder="Maharashtra" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+            <Select
+              items={states.map((ts: any) => ({ value: String(ts.name), label: ts.name, stateId: ts.id }))}
+              value={tenantData.state || null}
+              onValueChange={(value) => {
+                const selected = states.find((s: any) =>
+                  value === s.name
+                )
+                setTenantData((prev) => ({ ...prev, state: value ?? "" }))
+                setSelectedState(selected?.id ?? "")
+              }}
+              required
+            >
+              <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                <SelectValue placeholder="Select State" />
+              </SelectTrigger>
+              <SelectContent align="start" alignItemWithTrigger={false}>
+                {states.map((ts: any) => (
+                  <SelectItem key={ts.id} value={String(ts.name)}>
+                    {ts.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
-
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-          <FieldLabel className="text-xs font-medium">Country <span className="text-red-500">*</span></FieldLabel>
+          <FieldLabel className="text-xs font-medium">City <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
-            <Input name="country" value={tenantData.country} required placeholder="India" onChange={handleTenantChange} className="h-7 rounded-none px-2 text-xs" />
+            <Select
+              items={cities.map((tci: any) => ({ value: String(tci.name), label: tci.name }))}
+              value={tenantData.city || null}
+              onValueChange={(value) => setTenantData((prev) => ({ ...prev, city: value ?? "" }))
+              }
+              required
+            >
+              <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                <SelectValue placeholder="Select City" />
+              </SelectTrigger>
+              <SelectContent align="start" alignItemWithTrigger={false}>
+                {cities.filter((f: any) => f.population > 50000).map((tci: any) => (
+                  <SelectItem key={tci.id} value={String(tci.name)}>
+                    {tci.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -336,7 +421,7 @@ export function TenantCreateForm({ onCancel }: props) {
           <div className="min-w-0 flex-1">
             <Textarea name="address1" value={initialBranchData.address1} required placeholder="Branch address" onChange={handleBranchChange} className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
           </div>
-          
+
         </div>
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="w-[80px] shrink-0 text-xs font-medium">Address 2</FieldLabel>
@@ -369,7 +454,23 @@ export function TenantCreateForm({ onCancel }: props) {
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">Country <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
-            <Input name="country" value={initialBranchData.country} required placeholder="India" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
+            {/* <Select
+                                items={countries.map((tc : any) => ({ value: String(tc.code), label: tc.name }))}
+                                value={formData.branchId || null}
+                                onValueChange={(value) => setFormData((prev) => ({ ...prev, branchId: value ?? "" }))}
+                                required
+                            >
+                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                    <SelectValue placeholder="Select branch" />
+                                </SelectTrigger>
+                                <SelectContent align="start" alignItemWithTrigger={false}>
+                                    {branches.map((b) => (
+                                        <SelectItem key={b.id} value={String(b.id)}>
+                                            {b.branchName}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select> */}
           </div>
         </div>
 
@@ -379,7 +480,7 @@ export function TenantCreateForm({ onCancel }: props) {
             <Input name="phone" value={initialBranchData.phone} required placeholder="98765 43210" onChange={handleBranchChange} className="h-7 rounded-none px-2 text-xs" />
           </div>
         </div>
-        
+
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">Pincode <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
@@ -435,11 +536,11 @@ export function TenantCreateForm({ onCancel }: props) {
       </FormSection>
 
       <div className="flex justify-end gap-2 border-t border-slate-200 pt-4">
-        <Button type="button" variant="outline"   onClick={onCancel} disabled={loading}>
+        <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
           Cancel
         </Button>
 
-        <Button type="submit"  disabled={loading} className={cn(`h-7 px-3 text-xs ${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}`)}>
+        <Button type="submit" disabled={loading} className={cn(`h-7 px-3 text-xs ${loading ? 'flex items-center justify-center gap-2 cursor-not-allowed' : 'cursor-pointer'}`)}>
           {loading ? <span className="flex items-center gap-2"><Loader2 className="h-3 w-3 animate-spin" />Creating...</span> : 'Create Tenant'}
         </Button>
       </div>
