@@ -38,6 +38,8 @@ import JobCardAllocation from "./Pages/TenantUserPages/JobCardAllocation"
 import ServiceQuotation from "./Pages/TenantUserPages/ServiceQuotation"
 import ServiceQuotationCreate from "./Pages/TenantUserPages/ServiceQuotationCreate"
 import ServiceQuotationView from "./Pages/TenantUserPages/ServiceQuotationView"
+import ServiceAppointment from "./Pages/TenantUserPages/ServiceAppointment"
+import ServiceAppointmentCreate from "./Pages/TenantUserPages/ServiceAppointmentCreate"
 import AssignPermissionPage from "./Pages/TenantUserPages/Masters/AssignPermissionPage"
 
 
@@ -83,6 +85,8 @@ export function App() {
             <Route path='/tenant/:id/service-quotation' element={<TenantContextProvider><AuthProtectedRoute><ServiceQuotation /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/service-quotation/create' element={<TenantContextProvider><AuthProtectedRoute><ServiceQuotationCreate /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/service-quotation/view/:quotationId' element={<TenantContextProvider><AuthProtectedRoute><ServiceQuotationView /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/service-appointment' element={<TenantContextProvider><AuthProtectedRoute><ServiceAppointment /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/service-appointment/create' element={<TenantContextProvider><AuthProtectedRoute><ServiceAppointmentCreate /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>

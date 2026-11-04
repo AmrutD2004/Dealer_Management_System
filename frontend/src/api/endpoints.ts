@@ -639,6 +639,33 @@ export const updateServiceQuotation = async (payload: Record<string, unknown>, s
 }
 
 
+//Service Appointment management
+export const createServiceAppointment = async (payload: Record<string, unknown>) => {
+    const response = await api.post(`/api/tenant/service/appointment/create`, payload)
+    return await response.data;
+}
+
+export const getServiceAppointmentList = async () => {
+    const response = await api.get(`/api/tenant/service/appointment/get/all`, { timeout: 20000 })
+    return await response.data;
+}
+
+export const getServiceAppointmentById = async (serviceAppointmentId: number) => {
+    const response = await api.get(`/api/tenant/service/appointment/get/${serviceAppointmentId}`)
+    return await response.data;
+}
+
+export const updateServiceAppointment = async (payload: Record<string, unknown>, serviceAppointmentId: number) => {
+    const response = await api.put(`/api/tenant/service/appointment/${serviceAppointmentId}/update`, payload)
+    return await response.data;
+}
+
+export const cancelServiceAppointment = async (payload: Record<string, unknown>, serviceAppointmentId: number) => {
+    const response = await api.patch(`/api/tenant/service/appointment/${serviceAppointmentId}/cancle`, payload)
+    return await response.data;
+}
+
+
 //Vehicle Brand Routes
 export const createBrand = async (payload: object) => {
     const response = await api.post(`/api/platform/brand/create`, payload)

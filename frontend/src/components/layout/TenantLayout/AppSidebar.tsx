@@ -60,6 +60,10 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/service-quotation` ||
     pathname.startsWith(`/tenant/${id}/service-quotation/`)
 
+  const serviceAppointmentActive =
+    pathname === `/tenant/${id}/service-appointment` ||
+    pathname.startsWith(`/tenant/${id}/service-appointment/`)
+
   const jobCardAllocationActive =
     pathname === `/tenant/${id}/job-card/allocation` ||
     pathname.startsWith(`/tenant/${id}/job-card/allocation/`)
@@ -403,6 +407,39 @@ export function AppSidebar() {
                   </span>
 
                   {serviceQuotationActive && (
+                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={serviceAppointmentActive}
+                  tooltip="Service Appointment"
+                  onClick={handleNavigate}
+                  render={
+                    <Link
+                      to={`/tenant/${id}/service-appointment`}
+                      aria-current={serviceAppointmentActive ? "page" : undefined}
+                    />
+                  }
+                  className={menuButtonClass}
+                >
+                  <CalendarClock
+                    size={18}
+                    strokeWidth={1.8}
+                    className={
+                      serviceAppointmentActive
+                        ? "text-sidebar-ring"
+                        : "text-sidebar-foreground/55"
+                    }
+                  />
+
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Service Appointment
+                  </span>
+
+                  {serviceAppointmentActive && (
                     <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
                   )}
                 </SidebarMenuButton>
