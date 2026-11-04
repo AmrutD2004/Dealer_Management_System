@@ -1,8 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { cn } from 'cn'
-import { Package, Plus } from 'lucide-react'
+import { FileSpreadsheet, Package, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { CreatePartCategoryModal } from '../Modals/CreatePartCategoryModal'
+import { ImportExcelModal } from '../Imports/ImportExcelModal'
+import { partCategoryImportConfig } from '../Imports/importConfigs'
 
 interface PartCategoryHeaderProps {
     onCreated?: () => void
@@ -10,6 +12,7 @@ interface PartCategoryHeaderProps {
 
 const PartCategoryHeader = ({ onCreated }: PartCategoryHeaderProps) => {
     const [open, setOpen] = useState(false)
+    const [importOpen, setImportOpen] = useState(false)
 
     return (
         <>
@@ -20,13 +23,17 @@ const PartCategoryHeader = ({ onCreated }: PartCategoryHeaderProps) => {
                     </div>
                     <p className='text-muted-foreground font-medium text-sm'>Manage the part categories available for this tenant.</p>
                 </div>
-                <div className='ms-auto'>
+                <div className='ms-auto flex items-center gap-2'>
+                    <Button variant='outline' className={cn('flex items-center gap-2')} onClick={() => setImportOpen(true)}>
+                        <FileSpreadsheet />Import Excel
+                    </Button>
                     <Button className={cn('flex items-center gap-2')} onClick={() => setOpen(true)}>
                         <Plus />Create Category
                     </Button>
                 </div>
             </div>
             <CreatePartCategoryModal open={open} setOpen={setOpen} onCreated={onCreated} />
+            <ImportExcelModal open={importOpen} setOpen={setImportOpen} config={partCategoryImportConfig} onImported={onCreated} />
         </>
     )
 }
