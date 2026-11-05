@@ -1,3 +1,4 @@
+
 import {
     createBranch,
     createDesignation,
@@ -22,6 +23,7 @@ const parseBoolean = (value: string) => {
     return ['true', 'yes', 'y', '1', 'mechanic'].includes(normalized)
 }
 
+
 const normalizeLookup = (value: string) => value.trim().toLowerCase()
 
 const parseImportDate = (value: string, useTodayWhenEmpty = false) => {
@@ -43,7 +45,6 @@ const resolveUnitOfMeasure = (value: string) => {
     })
     return option?.value
 }
-
 export const labourImportConfig: ImportExcelConfig = {
     entityLabel: 'Labour',
     templateFileName: 'labour-import-template.xlsx',

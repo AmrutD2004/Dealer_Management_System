@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../../prisma/lib/prisma";
+import { UploadedFile } from "express-fileupload";
+import * as XLSX from 'xlsx'
 
 export const addPartCategory = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
@@ -322,6 +324,60 @@ export const activatePartCategory = async (req: Request, res: Response) => {
         return res.status(201).json({
             success: true,
             message: `${data.name} part category is activated`
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error ${err}`
+        })
+    }
+}
+
+
+export const createPartCategories = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!
+    const partCategoryFile = req.files?.file as UploadedFile;
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+    try {
+        const readedFile = XLSX.read(partCategoryFile.data, { type: 'buffer' })
+        const sheetName = readedFile.SheetNames[0]
+        const sheet = readedFile.Sheets[sheetName]
+        const sheetData = XLSX.utils.sheet_to_json(sheet)
+
+        const categoryCode = sheetData.map((c: any) => c['Code'].trim())
+        const isCategoryExists = await prisma.partCategoryMaster.findMany({
+            where: {
+                tenantId: Number(tenantId),
+                code: {
+                    in: categoryCode
+                }
+            },
+
+        })
+        const existingCodes = isCategoryExists.map((c: any) => c.code)
+        if (isCategoryExists.length > 0) {
+            return res.status(403).json({
+                success: true,
+                message: 'Some part category already exists in master.',
+                existingCodes: existingCodes
+            })
+        }
+        const data = await prisma.partCategoryMaster.createMany({
+            data: sheetData.map((category: any) => ({
+                tenantId: Number(tenantId),
+                code: category.Code,
+                name: category.Name
+            }))
+        })
+
+        return res.status(201).json({
+            success: true,
+            message: 'Part Category Inserted'
         })
     } catch (err) {
         return res.status(500).json({

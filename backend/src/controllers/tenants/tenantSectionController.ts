@@ -1,5 +1,7 @@
 import { Request, Response } from "express"
 import { prisma } from "../../prisma/lib/prisma";
+import { UploadedFile } from "express-fileupload";
+import * as XLSX from 'xlsx'
 
 export const createBranch = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!
@@ -333,6 +335,103 @@ export const getTenantBranchById = async (req: Request, res: Response) => {
             data: branchDetails
         })
     } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${error}`
+        })
+    }
+}
+
+
+export const createBranchWithExcel = async(req : Request , res : Response)=>{
+    const { id, tenantId } = req.user!
+    const branchesExcelData = req.files?.file as UploadedFile | null;
+    if (!id || !tenantId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+    if(!branchesExcelData){
+        return res.status(400).json({
+            success : true,
+            message : 'Excel file not found'
+        })
+    }
+    try{
+        const readedFile = XLSX.read(branchesExcelData.data, {type : 'buffer'})
+        const sheetName = readedFile.SheetNames[0]
+        const sheet = readedFile.Sheets[sheetName]
+        const sheetData = XLSX.utils.sheet_to_json(sheet)
+        const tenant = await prisma.tenant.findUnique({
+            where: {
+                id: Number(tenantId)
+            }
+        })
+        const first2Character = tenant?.tenantName!
+            .trim()
+            .split(/\s+/)
+            .slice(0, 2)
+            .map((word: string) => word[0])
+            .join('')
+            .toUpperCase();
+        const lastTenantBranch = await prisma.branch.findFirst({
+            where: {
+                tenantId: Number(tenantId)
+            },
+            orderBy: {
+                id: 'desc'
+            }
+        })
+        let branchNextNumber = 1
+        if (lastTenantBranch) {
+            const codePart = lastTenantBranch.branchCode.split("-")[1];
+
+            if (codePart) {
+                const numericPart = codePart.slice(-4);
+                branchNextNumber = parseInt(numericPart, 10) + 1;
+            }
+        }
+        const branchesName = sheetData.map((b : any) => b['Branch_Name'].trim())
+
+        const isBranchExits = await prisma.branch.findMany({
+            where : {
+                tenantId : Number(tenantId),
+                branchName : {
+                    in : branchesName
+                }
+            }
+        })
+        const existsingBranchesNames = isBranchExits.map((b : any)=> b.branchName)
+        if(isBranchExits.length > 0){
+            return res.status(403).json({
+                success : true,
+                message : 'Some Branch is already exists in excel',
+                existingBranch : existsingBranchesNames
+            })
+        }
+
+        const data = await prisma.branch.createMany({
+            data : sheetData.map((branch : any, index : any)=>({
+                tenantId: Number(tenantId),
+                branchName: branch.Branch_Name,
+                branchCode: `B-${first2Character}${String(branchNextNumber + index).padStart(4, "0")}`,
+                email: branch.Branch_Email,
+                phone: branch.Branch_Phone,
+                pincode: branch.Branch_Pincode,
+                address1: branch.Branch_Address,
+                address2: branch.Branch_Address2 || null,
+                locality: branch.Branch_Locality,
+                city: branch.Branch_City,
+                state: branch.Branch_State,
+                country: branch.Branch_Country
+            }))
+        })
+        return res.status(201).json({
+            success : true,
+            message : 'Branch Data inserted'
+        })
+    }catch (error) {
         return res.status(500).json({
             success: false,
             message: `Server error : ${error}`

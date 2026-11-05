@@ -26,7 +26,9 @@ import { CancelServiceAppointmentModal } from './Modals/CancelServiceAppointment
 import { EditServiceAppointmentModal } from './Modals/EditServiceAppointmentModal'
 import { ViewServiceAppointmentModal } from './Modals/ViewServiceAppointmentModal'
 
-const TAKE = 9
+
+const TAKE = 10
+
 
 interface ServiceAppointmentListTableProps {
     refreshKey?: number

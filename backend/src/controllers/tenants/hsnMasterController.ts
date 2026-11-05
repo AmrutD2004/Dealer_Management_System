@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../prisma/lib/prisma";
+import XLSX from "xlsx"
+import { UploadedFile } from "express-fileupload";
 
 export const createHSN = async (req: Request, res: Response) => {
     const { id, tenantId } = req.user!;
@@ -47,7 +49,7 @@ export const createHSN = async (req: Request, res: Response) => {
                 hsnCode: hsnCode,
                 taxRate: parseFloat(taxRate) || null,
                 description: description || null,
-                tenantId : Number(tenantId)
+                tenantId: Number(tenantId)
             },
             include: {
                 tenant: {
@@ -342,4 +344,61 @@ export const activateHSN = async (req: Request, res: Response) => {
         });
     }
 
+}
+
+
+export const insertHSNExcelData = async (req: Request, res: Response) => {
+    const { id, tenantId } = req.user!;
+    if (!id || !tenantId) {
+        return res.status(404).json({
+            success: false,
+            message: 'Not authorized login again'
+        })
+    }
+    const hsnxlsx = req.files?.file as UploadedFile
+    try {
+        const HSN = XLSX.read(hsnxlsx?.data, { type: "buffer" })
+        const sheetname = HSN.SheetNames[0]
+        const sheet = HSN.Sheets[sheetname]
+        const jsheet = XLSX.utils.sheet_to_json(sheet)
+
+        const hsnCodes = [...new Set(
+            jsheet.map((h : any)=> h['HSN_code'])
+        )]
+
+        const isHSNExists = await prisma.hSNMaster.findMany({
+            where : {
+                tenantId : Number(tenantId),
+                hsnCode : {
+                    in : hsnCodes
+                }
+            }
+        })
+        const existingCodes = isHSNExists.map((h: any) => h.hsnCode)
+        if (isHSNExists.length > 0) {
+            return res.status(403).json({
+                success: true,
+                message: 'Some HSN codes already exists in master.',
+                existingCodes: existingCodes
+            })
+        }
+        await prisma.hSNMaster.createMany({
+            data: jsheet.map((s: any) => ({
+                hsnCode: s.HSN_code,
+                description: s.HSN_desc,
+                taxRate: parseFloat(s.TAX_rate),
+                tenantId: Number(tenantId),
+                isActive : Boolean(s.Is_Active)
+            }))
+        })
+        return res.status(201).json({
+            success: true,
+            message: `HSN code has been imported successfully`
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error : ${err}`
+        });
+    }
 }
