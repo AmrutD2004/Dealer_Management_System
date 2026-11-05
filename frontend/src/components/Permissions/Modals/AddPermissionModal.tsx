@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/toast"
 import { PlatformUserContext } from "@/Contexts/PlatformUserContext.tsx/PlatformUserContext"
 import type { PermissionCreateType } from "@/Types/permissionType"
-import { cn } from "cn"
+import { cn, getErrorMessage } from "@/lib/utils"
 import { Loader2, Plus } from "lucide-react"
 import { useContext, useState } from "react"
 
@@ -64,10 +64,10 @@ export function AddPermissionModal() {
                     description: data?.message
                 })
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
             setLoading(false)
         } finally {

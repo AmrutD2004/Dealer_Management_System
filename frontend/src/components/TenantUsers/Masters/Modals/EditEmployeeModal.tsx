@@ -1,4 +1,5 @@
 import { editEmployee, getDesignationListWithoutPagination, getRoleListWithoutPagination, getTenantBranchList } from "@/api/endpoints"
+import { getErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -63,7 +64,7 @@ export function EditEmployeeModal({ employee, open, onClose }: EditEmployeeModal
         } catch (err: unknown) {
             toast.add({
                 type: 'error',
-                description: (err as any)?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }
@@ -134,7 +135,7 @@ export function EditEmployeeModal({ employee, open, onClose }: EditEmployeeModal
         } catch (err: unknown) {
             toast.add({
                 type: 'error',
-                description: (err as any)?.response?.data?.message
+                description: getErrorMessage(err)
             })
         } finally {
             setLoading(false)

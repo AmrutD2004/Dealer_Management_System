@@ -1,4 +1,5 @@
 import { useLocation, Link } from "react-router-dom";
+import { getErrorMessage } from "@/lib/utils"
 
 import {
   Building2,
@@ -171,12 +172,13 @@ export function AppSidebar() {
           window.location.replace('/login')
         }, 1500)
       }
-    }catch(err : any){
+    }catch (err){
       toast.add({
         type : 'error',
-        description : err?.response?.data?.message
+        description : getErrorMessage(err)
       })
     }finally{
+      // no cleanup required
     }
   }
 
@@ -249,7 +251,7 @@ export function AppSidebar() {
               </p>
 
               <p className="truncate text-[10px] text-sidebar-foreground/40">
-                {userInfo?.role === 'SUPER_ADMIN' ? 'Administrator' : 'Support Administrator'}
+                {userInfo?.role?.roleCode === 'SUPER_ADMIN' ? 'Administrator' : 'Support Administrator'}
               </p>
             </div>
 

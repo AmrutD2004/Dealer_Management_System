@@ -9,7 +9,8 @@ import {
     getVehicleList,
     updateJobCard,
 } from "@/api/endpoints"
-import type { jobCardListType, labourListType } from "@/Types/tenantCreateType"
+import type { branchListType, customerListType, employeeListType, jobCardListType, labourListType, repairOrderListType, serviceCategoryListType, serviceTypeListType } from "@/Types/tenantCreateType"
+import type { vehicleListType } from "@/Types/vehicleType"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -95,13 +96,13 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
     const [loading, setLoading] = useState<boolean>(false)
     const [formData, setFormData] = useState(initialFormData)
     const [prevJobCard, setPrevJobCard] = useState<jobCardListType | null>(null)
-    const [branches, setBranches] = useState<any[]>([])
-    const [customers, setCustomers] = useState<any[]>([])
-    const [vehicles, setVehicles] = useState<any[]>([])
-    const [serviceCategories, setServiceCategories] = useState<any[]>([])
-    const [serviceTypes, setServiceTypes] = useState<any[]>([])
-    const [repairOrders, setRepairOrders] = useState<any[]>([])
-    const [employees, setEmployees] = useState<any[]>([])
+    const [branches, setBranches] = useState<branchListType[]>([])
+    const [customers, setCustomers] = useState<customerListType[]>([])
+    const [vehicles, setVehicles] = useState<vehicleListType[]>([])
+    const [serviceCategories, setServiceCategories] = useState<serviceCategoryListType[]>([])
+    const [serviceTypes, setServiceTypes] = useState<serviceTypeListType[]>([])
+    const [repairOrders, setRepairOrders] = useState<repairOrderListType[]>([])
+    const [employees, setEmployees] = useState<employeeListType[]>([])
     const [labours, setLabours] = useState<labourListType[]>([])
     const [customerVoices, setCustomerVoices] = useState<CustomerVoiceForm[]>([{ ...emptyCustomerVoice }])
 
@@ -348,7 +349,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                 <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                                     <FieldLabel className="text-xs font-medium">Vehicle <span className="text-red-500">*</span></FieldLabel>
                                     <Select
-                                        items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName || v.manufacturer} ${v.model?.modelName || v.model}` }))}
+                                        items={filteredVehicles.map(v => ({ value: String(v.id), label: `${v.vehicleNumber || v.chassisNumber} - ${v.brand?.brandName || v.manufacturer} ${v.model?.modelName || ""}` }))}
                                         value={formData.vehicleId || null}
                                         onValueChange={(value) => setFormData(prev => ({ ...prev, vehicleId: value ?? "" }))}
                                         required
@@ -359,7 +360,7 @@ export function EditJobCardModal({ jobCard, open, onClose, onUpdated }: EditJobC
                                         <SelectContent align="start" alignItemWithTrigger={false}>
                                             {filteredVehicles.map((v) => (
                                                 <SelectItem key={v.id} value={String(v.id)}>
-                                                    {v.vehicleNumber || v.chassisNumber} - {v.brand?.brandName || v.manufacturer} {v.model?.modelName || v.model}
+                                                    {v.vehicleNumber || v.chassisNumber} - {v.brand?.brandName || v.manufacturer} {v.model?.modelName || ""}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>

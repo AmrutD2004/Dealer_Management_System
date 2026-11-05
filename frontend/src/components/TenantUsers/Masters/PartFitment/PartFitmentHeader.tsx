@@ -1,6 +1,4 @@
-import { Button } from '@/components/ui/button'
-import { cn } from 'cn'
-import { Link2, Plus } from 'lucide-react'
+import { Link2 } from 'lucide-react'
 import { useState } from 'react'
 import { CreatePartFitmentModal } from '../Modals/CreatePartFitmentModal'
 

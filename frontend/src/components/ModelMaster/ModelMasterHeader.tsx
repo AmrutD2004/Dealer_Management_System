@@ -18,7 +18,7 @@ const ModelMasterHeader = ({ onCreated }: ModelMasterHeaderProps) => {
                 </div>
                 <p className='text-muted-foreground font-medium text-sm'>Manage all the vehicle models available on the DMS platform.</p>
             </div>
-            {userInfo?.role === 'SUPER_ADMIN' && <div className='ms-auto'>
+            {userInfo?.role?.roleCode === 'SUPER_ADMIN' && <div className='ms-auto'>
                 <CreateModelModal onCreated={onCreated} />
             </div>}
         </div>

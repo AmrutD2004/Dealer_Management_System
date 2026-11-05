@@ -18,7 +18,7 @@ const VariantMasterHeader = ({ onCreated }: VariantMasterHeaderProps) => {
                 </div>
                 <p className='text-muted-foreground font-medium text-sm'>Manage all the vehicle variants available on the DMS platform.</p>
             </div>
-            {userInfo?.role === 'SUPER_ADMIN' && <div className='ms-auto'>
+            {userInfo?.role?.roleCode === 'SUPER_ADMIN' && <div className='ms-auto'>
                 <CreateVariantModal onCreated={onCreated} />
             </div>}
         </div>

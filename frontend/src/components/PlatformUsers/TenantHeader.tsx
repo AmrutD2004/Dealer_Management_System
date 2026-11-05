@@ -3,7 +3,7 @@ import {  Building2, Plus } from 'lucide-react'
 import { useContext } from 'react'
 import { Button } from '../ui/button'
 import { useNavigate } from 'react-router-dom'
-import { cn } from 'cn'
+import { cn } from "@/lib/utils"
 
 const TenantHeader = () => {
     const navigate = useNavigate()
@@ -17,7 +17,7 @@ const TenantHeader = () => {
              </div>
             <p className='text-muted-foreground font-medium text-sm'>Manage all organizations registered on the DMS platform.</p>
         </div>
-        {userInfo?.role === 'SUPER_ADMIN' && <div className='ms-auto'>
+        {userInfo?.role?.roleCode === 'SUPER_ADMIN' && <div className='ms-auto'>
             <Button className={cn('flex items-center gap-2')} onClick={() => navigate('/platform/tenant/create')}>
                 <Plus />Create Tenant
             </Button>

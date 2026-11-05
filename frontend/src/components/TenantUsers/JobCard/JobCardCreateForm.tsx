@@ -1,7 +1,6 @@
 import {
     createJobCard,
     findCustomer,
-    getCustomerList,
     getEmployeeList,
     getLabourList,
     getRepairOrderList,
@@ -40,7 +39,8 @@ import { Switch } from "@/components/ui/switch"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/toast"
-import { type customerListType, type labourListType } from "@/Types/tenantCreateType"
+import { type branchListType, type customerListType, type employeeListType, type labourListType, type repairOrderListType, type serviceCategoryListType, type serviceTypeListType } from "@/Types/tenantCreateType"
+import type { vehicleListType } from "@/Types/vehicleType"
 import dayjs from "dayjs"
 import { Loader2, Plus, Trash2 } from "lucide-react"
 import { useContext, useEffect, useState } from "react"
@@ -101,18 +101,17 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
     const {userInfo} = useContext(AuthContext)
     const [loading, setLoading] = useState<boolean>(false)
     const [formData, setFormData] = useState(initialFormData)
-    const [branches, setBranches] = useState<any[]>([])
-    const [vehicles, setVehicles] = useState<any[]>([])
-    const [serviceCategories, setServiceCategories] = useState<any[]>([])
-    const [serviceTypes, setServiceTypes] = useState<any[]>([])
-    const [repairOrders, setRepairOrders] = useState<any[]>([])
-    const [employees, setEmployees] = useState<any[]>([])
+    const [branches, setBranches] = useState<branchListType[]>([])
+    const [vehicles, setVehicles] = useState<vehicleListType[]>([])
+    const [serviceCategories, setServiceCategories] = useState<serviceCategoryListType[]>([])
+    const [serviceTypes, setServiceTypes] = useState<serviceTypeListType[]>([])
+    const [repairOrders, setRepairOrders] = useState<repairOrderListType[]>([])
+    const [employees, setEmployees] = useState<employeeListType[]>([])
     const [labours, setLabours] = useState<labourListType[]>([])
     const [customerVoices, setCustomerVoices] = useState<CustomerVoiceForm[]>([{ ...emptyCustomerVoice }])
     const [searchCustomer, setSearchCustomer] = useState<string>('')
     const [customerOpen, setCustomerOpen] = useState<boolean>(false)
     const [findedCustomers, setFindedCustomers] = useState<customerListType[]>([])
-    const [searchingCustomers, setSearchingCustomers] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState<customerListType | null>(null)
     useEffect(() => {
         const fetchData = async () => {
@@ -262,11 +261,8 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
 
         if (!searchTerm) {
             setFindedCustomers([]);
-            setSearchingCustomers(false);
             return;
         }
-
-        setSearchingCustomers(true);
 
         try {
             const response = await findCustomer(searchTerm);
@@ -276,10 +272,8 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
             } else {
                 setFindedCustomers([]);
             }
-        } catch (err: any) {
+        } catch {
             setFindedCustomers([]);
-        } finally {
-            setSearchingCustomers(false);
         }
     };
     useEffect(() => {
@@ -290,7 +284,6 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
         return () => clearTimeout(timer);
     }, [searchCustomer])
 
-    const isServiceAdvisor = userInfo.role.roleCode
     useEffect(() => {
     if (userInfo?.role?.roleCode === "SERVICE_ADVISOR") {
         setFormData(prev => ({
@@ -341,15 +334,6 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                         aria-expanded={customerOpen}
                                         className="h-7 w-full justify-between rounded-none px-2 text-xs font-normal"
                                     >
-                                        {findedCustomers.find(
-                                            (c) => String(c.id) === formData.customerId
-                                        )
-                                            ? (() => {
-                                                const c = findedCustomers.find(
-                                                    (c) => String(c.id) === formData.customerId
-                                                )!;
-                                            })()
-                                            : ""}
                                         {selectedCustomer
                                             ? `${selectedCustomer.firstName} ${selectedCustomer.lastName} - ${selectedCustomer.mobileNo}`
                                             : "Select customer"}
@@ -532,7 +516,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                             <Select
     disabled={userInfo?.role?.roleCode === "SERVICE_ADVISOR"}
     items={employees
-        .filter(e => e.role.roleCode === "SERVICE_ADVISOR")
+        .filter(e => e.role?.roleCode === "SERVICE_ADVISOR")
         .map(e => ({
             value: String(e.id),
             label: `${e.firstName} ${e.lastName}`,
@@ -550,7 +534,7 @@ export function JobCardCreateForm({ onCancel, onCreated }: JobCardCreateFormProp
                                     <SelectValue placeholder="Select" />
                                 </SelectTrigger>
                                 <SelectContent align="start" alignItemWithTrigger={false}>
-                                    {employees.filter((f) => f.role.roleCode === 'SERVICE_ADVISOR').map((e) => (
+                                    {employees.filter((f) => f.role?.roleCode === 'SERVICE_ADVISOR').map((e) => (
                                         <SelectItem key={e.id} value={String(e.id)}>
                                             {e.firstName} {e.lastName}
                                         </SelectItem>

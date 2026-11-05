@@ -1,16 +1,94 @@
-import axios from 'axios'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const api = axios.create({
     baseURL: BASE_URL,
     withCredentials: true
 })
-// export const createPlatformUser = async (payload: {}) => {
+
+const AUTH_ROUTES = ['/api/auth/login']
+
+const getFallbackMessage = (status?: number, code?: string): string => {
+    if (code === 'ECONNABORTED' || code === 'ETIMEDOUT') {
+        return 'The request timed out. Please try again.'
+    }
+    if (!status) {
+        return 'Network error. Please check your connection and try again.'
+    }
+    switch (status) {
+        case 401:
+            return 'Your session has expired. Please log in again.'
+        case 403:
+            return 'You do not have permission to perform this action.'
+        case 404:
+            return 'The requested resource was not found.'
+        default:
+            return status >= 500
+                ? 'Something went wrong on our end. Please try again.'
+                : 'Something went wrong. Please try again.'
+    }
+}
+
+const isAuthRoute = (url?: string) =>
+    Boolean(url && AUTH_ROUTES.some((route) => url.includes(route)))
+
+const clearSession = () => {
+    try {
+        ;['auth', 'token', 'user', 'userInfo'].forEach((key) => {
+            localStorage.removeItem(key)
+        })
+        sessionStorage.clear()
+    } catch {
+        // Storage can be unavailable (private mode / SSR); nothing to clear.
+    }
+}
+
+const redirectToLogin = () => {
+    if (typeof window === 'undefined') return
+    const { pathname, search } = window.location
+    if (pathname === '/login') return
+    const next = encodeURIComponent(`${pathname}${search}`)
+    window.location.replace(`/login?next=${next}`)
+}
+
+api.interceptors.response.use(
+    (response) => response,
+    (error: unknown) => {
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status
+            const body = (error.response?.data ?? {}) as Record<string, unknown>
+            const message =
+                (typeof body.message === 'string' && body.message) ||
+                getFallbackMessage(status, error.code)
+
+            error.message = message
+
+            if (error.response) {
+                error.response.data = { ...body, success: false, message }
+            } else {
+                error.response = {
+                    data: { success: false, message },
+                    status: 0,
+                    statusText: '',
+                    headers: {},
+                    config: error.config as InternalAxiosRequestConfig,
+                }
+            }
+
+            if (status === 401 && !isAuthRoute(error.config?.url)) {
+                clearSession()
+                redirectToLogin()
+            }
+        }
+        return Promise.reject(error)
+    },
+)
+// export const createPlatformUser = async (payload: object) => {
 //     const response = await api.post('/api/platformuser/create', payload)
 //     return await response.data;
 // }
 
-export const unifiedLogin = async (payload: {}) => {
+export const unifiedLogin = async (payload: object) => {
     const response = await api.post(`/api/auth/login`, payload)
     return await response.data;
 }
@@ -27,7 +105,7 @@ export const logout = async () => {
 
 
 //platform user management
-export const createNewPlatformUser = async (payload: {}) => {
+export const createNewPlatformUser = async (payload: object) => {
     const response = await api.post(`/api/platform/newuser/create`, payload)
     return await response.data;
 }
@@ -46,13 +124,13 @@ export const activatePlatformUser = async (id: number) => {
     const response = await api.patch(`/api/platform/user/activate/${id}`)
     return await response.data
 }
-export const editPlatformUser = async (payload: {}, id: number) => {
+export const editPlatformUser = async (payload: object, id: number) => {
     const response = await api.put(`/api/platform/user/update/${id}`, payload)
     return await response.data;
 }
 
 //Tenant management
-export const tenantCreation = async (payload: {}) => {
+export const tenantCreation = async (payload: object) => {
     const response = await api.post(`/api/platform/tenant/create`, payload)
     return await response.data;
 }
@@ -67,7 +145,7 @@ export const getTenantById = async (tenantId: number) => {
     return await response.data
 }
 
-export const editTenant = async (payload: {}, tenantId: number) => {
+export const editTenant = async (payload: object, tenantId: number) => {
     const response = await api.put(`/api/platform/tenant/update/${tenantId}`, payload)
     return await response.data;
 }
@@ -88,7 +166,7 @@ export const activateTenant = async (tenantId: number) => {
 }
 
 
-export const createBranch = async (payload: {}) => {
+export const createBranch = async (payload: object) => {
     const response = await api.post(`/api/tenant/branch/create`, payload)
     return await response.data;
 }
@@ -104,7 +182,7 @@ export const getTenantBranchById = async (branchId: number) => {
     return await response.data;
 }
 
-export const editTenantBranch = async (payload: {}, branchId: number) => {
+export const editTenantBranch = async (payload: object, branchId: number) => {
     const response = await api.put(`/api/tenant/branch/${branchId}/update`, payload)
     return await response.data;
 }
@@ -152,7 +230,7 @@ export const activateDealerBay = async (bayId: number) => {
 
 
 //Employee Designation
-export const createDesignation = async (payload: {}) => {
+export const createDesignation = async (payload: object) => {
     const response = await api.post(`/api/tenant/designation/create`, payload)
     return await response.data;
 }
@@ -172,7 +250,7 @@ export const getDesignationById = async (designationId: number) => {
     return await response.data;
 }
 
-export const editDesignation = async (payload: {}, designationId: number) => {
+export const editDesignation = async (payload: object, designationId: number) => {
     const response = await api.put(`/api/tenant/designation/${designationId}/update`, payload)
     return await response.data;
 }
@@ -189,7 +267,7 @@ export const activateDesignation = async (designationId: number) => {
 
 
 //Role management
-export const createRole = async (payload: {}) => {
+export const createRole = async (payload: object) => {
     const response = await api.post(`/api/tenant/role/create`, payload)
     return await response.data;
 }
@@ -209,7 +287,7 @@ export const getRoleById = async (roleId: number) => {
     return await response.data;
 }
 
-export const editRole = async (payload: {}, roleId: number) => {
+export const editRole = async (payload: object, roleId: number) => {
     const response = await api.put(`/api/tenant/role/${roleId}/update`, payload)
     return await response.data;
 }
@@ -226,7 +304,7 @@ export const activateRole = async (roleId: number) => {
 
 
 //Permission management
-export const createPermission = async (payload: {}) => {
+export const createPermission = async (payload: object) => {
     const response = await api.post(`/api/platform/permission/create`, payload)
     return await response.data;
 }
@@ -246,7 +324,7 @@ export const getPermissionById = async (permissionId: number) => {
     return await response.data
 }
 
-export const editPermission = async (payload: {}, permissionId: number) => {
+export const editPermission = async (payload: object, permissionId: number) => {
     const response = await api.put(`/api/platform/permission/${permissionId}/update`, payload)
     return await response.data;
 }
@@ -263,7 +341,7 @@ export const activatePermission = async (permissionId: number) => {
 
 
 //Assign Permission to roles
-export const assignPermission = async (payload: {}) => {
+export const assignPermission = async (payload: object) => {
     const response = await api.post(`/api/tenant/role/permission/assign`, payload)
     return await response.data
 }
@@ -278,14 +356,14 @@ export const getAssignedPermissionById = async (rolePermissionId: number) => {
     return await response.data
 }
 
-export const updateAssignedPermission = async (payload: {}, rolePermissionId: number) => {
+export const updateAssignedPermission = async (payload: object, rolePermissionId: number) => {
     const response = await api.put(`/api/tenant/role/permission/${rolePermissionId}/update`, payload)
     return await response.data
 }
 
 
 //Employee management
-export const createEmployee = async (payload: {}) => {
+export const createEmployee = async (payload: object) => {
     const response = await api.post(`/api/tenant/employee/new/create`, payload)
     return await response.data;
 }
@@ -300,7 +378,7 @@ export const getEmployeeById = async (employeeId: number) => {
     return await response.data;
 }
 
-export const editEmployee = async (payload: {}, employeeId: number) => {
+export const editEmployee = async (payload: object, employeeId: number) => {
     const response = await api.put(`/api/tenant/employee/${employeeId}/update`, payload)
     return await response.data;
 }
@@ -317,7 +395,7 @@ export const activateEmployee = async (employeeId: number) => {
 
 
 //Service Category management
-export const createServiceCategory = async (payload: {}) => {
+export const createServiceCategory = async (payload: object) => {
     const response = await api.post(`/api/tenant/service/category/create`, payload)
     return await response.data;
 }
@@ -329,7 +407,7 @@ export const getServiceCategoryList = async () => {
 
 
 //Service Type management
-export const createServiceType = async (payload: {}) => {
+export const createServiceType = async (payload: object) => {
     const response = await api.post(`/api/tenant/service/type/create`, payload)
     return await response.data;
 }
@@ -341,7 +419,7 @@ export const getServiceTypeList = async (skip: number, take: number) => {
 
 
 //Repair Order management
-export const createRepairOrder = async (payload: {}) => {
+export const createRepairOrder = async (payload: object) => {
     const response = await api.post(`/api/tenant/repairorder/create`, payload)
     return await response.data;
 }
@@ -353,7 +431,7 @@ export const getRepairOrderList = async () => {
 
 
 //Labour management
-export const createLabour = async (payload: {}) => {
+export const createLabour = async (payload: object) => {
     const response = await api.post(`/api/tenant/labour/create`, payload)
     return await response.data;
 }
@@ -368,7 +446,7 @@ export const getLabourById = async (labourId: number) => {
     return await response.data;
 }
 
-export const editLabour = async (payload: {}, labourId: number) => {
+export const editLabour = async (payload: object, labourId: number) => {
     const response = await api.put(`/api/tenant/labour/${labourId}/update`, payload)
     return await response.data;
 }
@@ -415,9 +493,16 @@ export const activateHSN = async (hsnId: number) => {
     return await response.data;
 }
 
+export const importHSNExcel = async (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    const response = await api.post(`/api/tenant/hsn/file/upload`, formData)
+    return await response.data;
+}
+
 
 //Part Category management
-export const createPartCategory = async (payload: {}) => {
+export const createPartCategory = async (payload: object) => {
     const response = await api.post(`/api/tenant/part/category/create`, payload)
     return await response.data;
 }
@@ -432,7 +517,7 @@ export const getPartCategoryById = async (categoryId: number) => {
     return await response.data;
 }
 
-export const editPartCategory = async (payload: {}, categoryId: number) => {
+export const editPartCategory = async (payload: object, categoryId: number) => {
     const response = await api.put(`/api/tenant/part/category/${categoryId}/update`, payload)
     return await response.data;
 }
@@ -449,7 +534,7 @@ export const activatePartCategory = async (categoryId: number) => {
 
 
 //Part Master management
-export const createPartMaster = async (payload: {}) => {
+export const createPartMaster = async (payload: object) => {
     const response = await api.post(`/api/tenant/part/create`, payload)
     return await response.data;
 }
@@ -464,7 +549,7 @@ export const getPartMasterById = async (partId: number) => {
     return await response.data;
 }
 
-export const editPartMaster = async (payload: {}, partId: number) => {
+export const editPartMaster = async (payload: object, partId: number) => {
     const response = await api.put(`/api/tenant/part/${partId}/update`, payload)
     return await response.data;
 }
@@ -503,7 +588,7 @@ export const editPartFitment = async (payload: Record<string, unknown>, fitmentI
 
 
 //Customer management
-export const createCustomer = async (payload: {}) => {
+export const createCustomer = async (payload: object) => {
     const response = await api.post(`/api/tenant/customer/create`, payload)
     return await response.data;
 }
@@ -518,7 +603,7 @@ export const getCustomerById = async (custId: number) => {
     return await response.data;
 }
 
-export const editCustomer = async (payload: {}, custId: number) => {
+export const editCustomer = async (payload: object, custId: number) => {
     const response = await api.put(`/api/tenant/customer/${custId}/update`, payload)
     return await response.data;
 }
@@ -539,7 +624,7 @@ export const findCustomer = async (custName: string) => {
 }
 
 //Vehicle management
-export const createVehicle = async (payload: {}) => {
+export const createVehicle = async (payload: object) => {
     const response = await api.post(`/api/tenant/vehicle/create`, payload)
     return await response.data;
 }
@@ -554,7 +639,7 @@ export const getVehicleById = async (vehicleId: number) => {
     return await response.data;
 }
 
-export const editVehicle = async (payload: {}, vehicleId: number) => {
+export const editVehicle = async (payload: object, vehicleId: number) => {
     const response = await api.put(`/api/tenant/vehicle/${vehicleId}/update`, payload)
     return await response.data;
 }
@@ -570,7 +655,7 @@ export const activateVehicle = async (vehicleId: number) => {
 }
 
 //Job Card management
-export const createJobCard = async (payload: {}) => {
+export const createJobCard = async (payload: object) => {
     const response = await api.post(`/api/tenant/jobcard/create`, payload)
     return await response.data;
 }
@@ -590,7 +675,7 @@ export const getJobCardById = async (jobCardId: number) => {
     return await response.data;
 }
 
-export const updateJobCard = async (payload: {}, jobCardId: number) => {
+export const updateJobCard = async (payload: object, jobCardId: number) => {
     const response = await api.put(`/api/tenant/jobcard/${jobCardId}/update`, payload)
     return await response.data;
 }
@@ -699,6 +784,13 @@ export const deactivateBrand = async (brandId: number) => {
 
 export const activateBrand = async (brandId: number) => {
     const response = await api.patch(`/api/platform/brand/${brandId}/activate`)
+    return await response.data;
+}
+
+export const importBrandExcel = async (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    const response = await api.post(`/api/platform/vehicle/brand/file/upload`, formData)
     return await response.data;
 }
 

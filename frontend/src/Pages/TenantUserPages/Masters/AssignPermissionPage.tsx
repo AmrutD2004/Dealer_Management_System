@@ -1,12 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogFooter,
-} from '@/components/ui/dialog'
-import {
     Select,
     SelectContent,
     SelectItem,
@@ -22,9 +15,9 @@ import { assignPermission, getPermissionListWithoutpagination, getRoleListWithou
 import type { roleListType } from '@/Types/tenantCreateType'
 import { ArrowLeft, Key, Loader2 } from 'lucide-react'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Field, FieldGroup } from '@/components/ui/field'
+import { FieldGroup } from '@/components/ui/field'
 import DashboardLayout from '@/components/layout/TenantLayout/DashboardLayout'
-import { cn } from 'cn'
+import { cn, getErrorMessage } from "@/lib/utils"
 import { useNavigate, useParams } from 'react-router-dom'
 
 const AssignPermissionPage = () => {
@@ -43,10 +36,10 @@ const AssignPermissionPage = () => {
             if (data?.success) {
                 setPermissionsList(data?.data)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         }
     }
@@ -56,10 +49,10 @@ const AssignPermissionPage = () => {
             if (data?.success) {
                 setRoleList(data?.data)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         }
     }
@@ -74,11 +67,6 @@ const AssignPermissionPage = () => {
         value: String(role.id),
         label: role.roleName
     }))
-    const permissionItems = permissionsList.map((permission: PermissionListType) => ({
-        value: String(permission.id),
-        label: permission.permissionCode
-    }))
-
     const handleSubmit = async (e: React.FormEvent) => {
         setLoading(true)
         e.preventDefault();
@@ -98,10 +86,10 @@ const AssignPermissionPage = () => {
                 setPermissionMappingSkip(0)
                 fetchPermissionMappingList(0, permissionMappingTake)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
             setLoading(false)
         } finally {

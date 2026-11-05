@@ -20,7 +20,7 @@ import {
 import { toast } from "@/components/ui/toast"
 import type { BrandListType } from "@/Types/brandMasterType"
 import type { ModelCreateType } from "@/Types/modelMasterType"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 import { Car, Loader2, Plus } from "lucide-react"
 import { useEffect, useState } from "react"
 import { carBodyTypeOptions } from "../bodyTypeOptions"

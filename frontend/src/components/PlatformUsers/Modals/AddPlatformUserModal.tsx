@@ -15,7 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/components/ui/toast"
 import { PlatformUserContext } from "@/Contexts/PlatformUserContext.tsx/PlatformUserContext"
 import type { PlatformNewuserCreateType } from "@/Types/platformUserType"
-import { cn } from "cn"
+import { cn, getErrorMessage } from "@/lib/utils"
 import { Loader2, Plus } from "lucide-react"
 import { useContext, useState } from "react"
 
@@ -65,10 +65,10 @@ export function AddPlatformUserModal() {
                     description: data?.message
                 })
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
             setLoading(false)
         } finally {
@@ -134,7 +134,7 @@ export function AddPlatformUserModal() {
                                         <Select name='role'
                                             required
                                             value={formData.role}
-                                            onValueChange={(value) => setFormData((prev: any) => ({ ...prev, role: value }))}
+                                            onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value ?? "" }))}
                                         >
                                             <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs" >
                                                 <SelectValue placeholder="Select Role" />

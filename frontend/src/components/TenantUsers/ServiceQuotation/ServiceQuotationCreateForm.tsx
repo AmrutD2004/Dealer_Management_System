@@ -60,7 +60,7 @@ import type {
 import { ChevronsUpDown, Loader2, Plus, Trash2, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { formatCurrency } from "./serviceQuotationUtils"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 interface VehicleOption {
   id: number
@@ -282,8 +282,6 @@ export function ServiceQuotationCreateForm({
   const [findedCustomers, setFindedCustomers] = useState<customerListType[]>([])
   const [selectedCustomer, setSelectedCustomer] =
     useState<customerListType | null>(quotation?.customer ?? null)
-  const [openView, setOpenView] = useState<boolean>(false)
-  const [createdQuotation, setCreatedQuotation] = useState<serviceQuotationListType | null>(null)
   const [supplementOpen, setSupplementOpen] = useState<boolean>(false)
   const [findedQuotation, setFindedQuotation] = useState<serviceQuotationListType[]>([])
   const [searchQuotation, setSearchQuotation] = useState<string>("")

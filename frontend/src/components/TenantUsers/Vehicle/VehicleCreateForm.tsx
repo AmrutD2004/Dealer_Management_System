@@ -1,4 +1,5 @@
 import { createVehicle, getBrandListWithoutPagination, getCustomerList, getModelListWithoutPagination, getVariantListWithoutPagination } from "@/api/endpoints"
+import { getErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
@@ -21,19 +22,6 @@ interface VehicleCreateFormProps {
     onCancel: () => void
     onCreated?: () => void
 }
-
-const fuelTypeOptions = [
-    { value: "Petrol", label: "Petrol" },
-    { value: "Diesel", label: "Diesel" },
-    { value: "CNG", label: "CNG" },
-    { value: "Electric", label: "Electric" },
-    { value: "Hybrid", label: "Hybrid" },
-]
-
-const transmissionOptions = [
-    { value: "Manual", label: "Manual" },
-    { value: "Automatic", label: "Automatic" },
-]
 
 const initialFormData = {
     chassisNumber: "",
@@ -74,10 +62,10 @@ export function VehicleCreateForm({ onCancel, onCreated }: VehicleCreateFormProp
             if (variant?.success) {
                 setVehicleVariant(variant?.data)
             }
-        } catch (err : any) {
+        } catch (err) {
             toast.add({
                 type : 'error',
-                description : err?.response?.data?.message
+                description : getErrorMessage(err)
             })
         }
     }

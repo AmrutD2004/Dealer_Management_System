@@ -1,7 +1,7 @@
 import { Briefcase, FileSpreadsheet, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useContext, useState } from 'react'
-import { cn } from 'cn'
+import { cn } from "@/lib/utils"
 import { TenantContext } from '@/Contexts/Tenant/TenantContext'
 import { CreateDesignationModal } from '../Modals/CreateDesignationModal'
 import { ImportExcelModal } from '../Imports/ImportExcelModal'

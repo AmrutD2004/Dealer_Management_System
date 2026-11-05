@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { type userCreateType, type tenantCreateType, type branchCreateType } from "@/Types/tenantCreateType";
 import { getCities, getCountries, getStates, tenantCreation } from "@/api/endpoints";
 import { toast } from "../ui/toast";
-import { cn } from "cn";
+import { cn, getErrorMessage } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 type props = {
@@ -204,11 +204,11 @@ export function TenantCreateForm({ onCancel }: props) {
           description: data?.message ?? 'Failed to create tenant'
         })
       }
-    } catch (error: any) {
+    } catch (error) {
       setLoading(false)
       toast.add({
         type: 'error',
-        description: error?.response?.data?.message
+        description: getErrorMessage(error)
       })
     } finally {
       setLoading(false)
@@ -347,7 +347,7 @@ export function TenantCreateForm({ onCancel }: props) {
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">Subscription Plan <span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
-            <Select name="subscriptionPlan" required value={tenantData.subscriptionPlan || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionPlan: value }))}>
+            <Select name="subscriptionPlan" required value={tenantData.subscriptionPlan || null} onValueChange={(value) => setTenantData((prev) => ({ ...prev, subscriptionPlan: value ?? "" }))}>
               <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                 <SelectValue placeholder="Select Plan" />
               </SelectTrigger>
@@ -364,7 +364,7 @@ export function TenantCreateForm({ onCancel }: props) {
         <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
           <FieldLabel className="text-xs font-medium">Subscription Status<span className="text-red-500">*</span></FieldLabel>
           <div className="min-w-0">
-            <Select name="subscriptionStatus" required value={tenantData.subscriptionStatus || null} onValueChange={(value) => setTenantData((prev: any) => ({ ...prev, subscriptionStatus: value }))}>
+            <Select name="subscriptionStatus" required value={tenantData.subscriptionStatus || null} onValueChange={(value) => setTenantData((prev) => ({ ...prev, subscriptionStatus: value ?? "" }))}>
               <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                 <SelectValue placeholder="Select Status" />
               </SelectTrigger>

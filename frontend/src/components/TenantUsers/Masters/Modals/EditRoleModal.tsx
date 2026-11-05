@@ -1,4 +1,5 @@
 import { editRole } from "@/api/endpoints"
+import { getErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -138,7 +139,7 @@ export function EditRoleModal({ role, open, onClose }: EditRoleModalProps) {
         } catch (err: unknown) {
             toast.add({
                 type: 'error',
-                description: (err as any)?.response?.data?.message
+                description: getErrorMessage(err)
             })
         } finally {
             setLoading(false)

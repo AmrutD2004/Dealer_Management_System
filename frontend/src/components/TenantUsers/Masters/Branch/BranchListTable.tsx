@@ -1,12 +1,12 @@
 import { getVisiblePageIndices } from '@/lib/pagination'
-import { activateTenantBranch, getTenantBranchList, deactivateTenantBranch } from '@/api/endpoints'
+import { getErrorMessage } from "@/lib/utils"
+import { activateTenantBranch, deactivateTenantBranch } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import SortableTableHead from '@/components/ui/sortable-table-head'
 import { useTableSort } from '@/hooks/useTableSort'
 import { toast } from '@/components/ui/toast'
-import { AuthContext } from '@/Contexts/AuthContext'
 import { type branchListType } from '@/Types/tenantCreateType'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import {
     Pagination,
     PaginationContent,
@@ -16,9 +16,8 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import { Button } from '@/components/ui/button'
-import { cn } from 'cn'
 import { Badge } from '@/components/ui/badge'
-import { Check, EllipsisVertical, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { TenantContext } from '@/Contexts/Tenant/TenantContext'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ViewBranchModal } from '../Modals/ViewBranchModal'
@@ -38,10 +37,10 @@ const BranchListTable = () => {
                 })
                 fetchTenantBranchList(skip, take)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }
@@ -55,10 +54,10 @@ const BranchListTable = () => {
                 })
                 fetchTenantBranchList(skip, take)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }

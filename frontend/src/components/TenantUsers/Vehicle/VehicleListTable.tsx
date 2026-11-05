@@ -25,6 +25,7 @@ import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { ViewVehicleModal } from './Modals/ViewVehicleModal'
 import { EditVehicleModal } from './Modals/EditVehicleModal'
+import type { vehicleListType } from '@/Types/vehicleType'
 
 interface VehicleListTableProps {
     refreshKey?: number
@@ -33,10 +34,10 @@ interface VehicleListTableProps {
 const TAKE = 9
 
 const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
-    const [vehicleList, setVehicleList] = useState<any[]>([])
+    const [vehicleList, setVehicleList] = useState<vehicleListType[]>([])
     const [totalVehicles, setTotalVehicles] = useState(0)
     const [skip, setSkip] = useState(0)
-    const [selectedVehicle, setSelectedVehicle] = useState<any | null>(null)
+    const [selectedVehicle, setSelectedVehicle] = useState<vehicleListType | null>(null)
     const [viewOpen, setViewOpen] = useState(false)
     const [editOpen, setEditOpen] = useState(false)
     const [reloadKey, setReloadKey] = useState(0)
@@ -106,16 +107,15 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
         }
     }
 
-    const openView = (vehicle: any) => {
+    const openView = (vehicle: vehicleListType) => {
         setSelectedVehicle(vehicle)
         setViewOpen(true)
     }
 
-    const openEdit = (vehicle: any) => {
-  console.log("Selected vehicle:", vehicle);
-  setSelectedVehicle(vehicle);
-  setEditOpen(true);
-};
+    const openEdit = (vehicle: vehicleListType) => {
+        setSelectedVehicle(vehicle)
+        setEditOpen(true)
+    };
 
     const closeModals = () => {
         setViewOpen(false)
@@ -159,7 +159,7 @@ const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
                             </TableCell>
                         </TableRow>
                     ) : (
-                        sortedData.map((vehicle: any, idx: number) => (
+                        sortedData.map((vehicle: vehicleListType, idx: number) => (
                             <TableRow key={vehicle.id}>
                                 <TableCell className='text-left font-medium'>{skip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium'>{vehicle.vehicleNumber}</TableCell>

@@ -1,4 +1,5 @@
 import { getVisiblePageIndices } from '@/lib/pagination'
+import { getErrorMessage } from "@/lib/utils"
 import { activateDesignation, deactivateDesignation } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import SortableTableHead from '@/components/ui/sortable-table-head'
@@ -15,7 +16,6 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import { Button } from '@/components/ui/button'
-import { cn } from 'cn'
 import { Badge } from '@/components/ui/badge'
 import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { TenantContext } from '@/Contexts/Tenant/TenantContext'
@@ -46,7 +46,7 @@ const DesignationListTable = () => {
         } catch (err: unknown) {
             toast.add({
                 type: 'error',
-                description: (err as any)?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }
@@ -64,7 +64,7 @@ const DesignationListTable = () => {
         } catch (err: unknown) {
             toast.add({
                 type: 'error',
-                description: (err as any)?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }

@@ -1,7 +1,7 @@
 import { Wrench, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import { cn } from 'cn'
+import { cn } from "@/lib/utils"
 import { CreateRepairOrderModal } from '../Modals/CreateRepairOrderModal'
 
 interface RepairOrderHeaderProps {

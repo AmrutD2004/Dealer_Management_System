@@ -14,7 +14,7 @@ const PermissionHeader = () => {
                     </div>
                     <p className='text-muted-foreground font-medium text-sm'>Manage all the permissions available on the DMS platform.</p>
                 </div>
-                {userInfo?.role === 'SUPER_ADMIN' && <div className='ms-auto'>
+                {userInfo?.role?.roleCode === 'SUPER_ADMIN' && <div className='ms-auto'>
                     <AddPermissionModal />
                 </div>}
 

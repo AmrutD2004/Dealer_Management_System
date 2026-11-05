@@ -12,7 +12,7 @@ import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/toast"
 import type { BrandCreateType } from "@/Types/brandMasterType"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 import { Loader2, Plus, Tag } from "lucide-react"
 import { useState } from "react"
 

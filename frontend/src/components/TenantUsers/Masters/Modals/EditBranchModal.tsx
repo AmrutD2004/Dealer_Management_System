@@ -1,4 +1,5 @@
 import { editTenantBranch } from "@/api/endpoints"
+import { getErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -101,10 +102,10 @@ export function EditBranchModal({ branch, open, onClose }: EditBranchModalProps)
                     description: data?.message
                 })
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         } finally {
             setLoading(false)

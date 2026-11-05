@@ -10,7 +10,6 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import { Button } from '@/components/ui/button'
-import { cn } from 'cn'
 import { Badge } from '@/components/ui/badge'
 import SortableTableHead from '@/components/ui/sortable-table-head'
 import { useTableSort } from '@/hooks/useTableSort'

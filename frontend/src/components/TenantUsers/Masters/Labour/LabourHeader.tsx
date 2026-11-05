@@ -1,7 +1,7 @@
 import { FileSpreadsheet, HardHat, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import { cn } from 'cn'
+import { cn } from "@/lib/utils"
 import { CreateLabourModal } from '../Modals/CreateLabourModal'
 import { ImportExcelModal } from '../Imports/ImportExcelModal'
 import { labourImportConfig } from '../Imports/importConfigs'

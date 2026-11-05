@@ -1,4 +1,5 @@
 import { editVehicle, getBrandListWithoutPagination, getModelListWithoutPagination, getVariantListWithoutPagination } from "@/api/endpoints"
+import { getErrorMessage } from "@/lib/utils"
 import { getCustomerList } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,28 +23,17 @@ import { toast } from "@/components/ui/toast"
 import type { vehicleBrand } from "@/Types/vehicleBrand"
 import type { vehicleModel } from "@/Types/vehicleModel"
 import type { vehicleVariant } from "@/Types/vehicleVariants"
+import type { vehicleListType } from "@/Types/vehicleType"
+import type { customerListType } from "@/Types/tenantCreateType"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 
 interface EditVehicleModalProps {
-  vehicle: any | null
+  vehicle: vehicleListType | null
   open: boolean
   onClose: () => void
   onUpdated?: () => void
 }
-
-const fuelTypeOptions = [
-  { value: "Petrol", label: "Petrol" },
-  { value: "Diesel", label: "Diesel" },
-  { value: "CNG", label: "CNG" },
-  { value: "Electric", label: "Electric" },
-  { value: "Hybrid", label: "Hybrid" },
-]
-
-const transmissionOptions = [
-  { value: "Manual", label: "Manual" },
-  { value: "Automatic", label: "Automatic" },
-]
 
 const initialFormData = {
   chassisNumber: "",
@@ -67,9 +57,9 @@ export function EditVehicleModal({
   onUpdated,
 }: EditVehicleModalProps) {
   const [loading, setLoading] = useState<boolean>(false)
-  const [prevVehicle, setPrevVehicle] = useState<any | null>(null)
+  const [prevVehicle, setPrevVehicle] = useState<vehicleListType | null>(null)
   const [formData, setFormData] = useState(initialFormData)
-  const [customers, setCustomers] = useState<any[]>([])
+  const [customers, setCustomers] = useState<customerListType[]>([])
   const [vehicleBrand, setVehicleBrand] = useState<vehicleBrand[]>([])
   const [vehicleModel, setVehicleModel] = useState<vehicleModel[]>([])
   const [vehicleVariant, setVehicleVariant] = useState<vehicleVariant[]>([])
@@ -91,10 +81,10 @@ export function EditVehicleModal({
       if (variant?.success) {
         setVehicleVariant(variant?.data)
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.add({
         type: 'error',
-        description: err?.response?.data?.message
+        description: getErrorMessage(err)
       })
     }
   }
@@ -106,7 +96,7 @@ export function EditVehicleModal({
         if (res?.success) {
           setCustomers(res?.data || [])
         }
-      } catch (err) {
+      } catch {
         // ignore
       }
     }
@@ -125,9 +115,9 @@ export function EditVehicleModal({
       currentOdometerReading: vehicle.currentOdometerReading?.toString() ?? "",
       customerId: vehicle.customerId?.toString() ?? "",
       engineNumber: vehicle.engineNumber ?? "",
-      brandId: vehicle.brandId.toString() ?? vehicle.brand?.id.toString() ?? "",
-      modelId: vehicle.modelId.toString() ?? vehicle.model?.id.toString() ?? "",
-      variantId: vehicle.variantId.toString() ?? vehicle.variant?.id.toString() ?? "",
+      brandId: String(vehicle.brandId ?? vehicle.brand?.id ?? ""),
+      modelId: String(vehicle.modelId ?? vehicle.model?.id ?? ""),
+      variantId: String(vehicle.variantId ?? vehicle.variant?.id ?? ""),
       manufacturingYear: vehicle.manufacturingYear?.toString() ?? "",
       purchaseDate: vehicle.purchaseDate
         ? vehicle.purchaseDate.slice(0, 10)
