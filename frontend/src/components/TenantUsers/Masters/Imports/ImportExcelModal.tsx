@@ -170,6 +170,7 @@ export function ImportExcelModal({ open, setOpen, config, onImported }: ImportEx
             return
         }
 
+
         setLoading(true)
         setResults([])
         setProgress({ done: 0, total: rows.length })

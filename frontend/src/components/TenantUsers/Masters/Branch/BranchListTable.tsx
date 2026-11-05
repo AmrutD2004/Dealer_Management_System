@@ -63,7 +63,7 @@ const BranchListTable = () => {
         }
     }
     const handlePrevious = () => {
-        skip((prev: number) =>
+        setSkip((prev: number) =>
             Math.max(prev - take, 0)
         )
     }

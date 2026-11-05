@@ -779,3 +779,46 @@ export const searchedServiceQuotation = async (serviceQuotationNo: string) => {
     const response = await api.get(`/api/tenant/service/quotation?serviceQuotationNo=${serviceQuotationNo}`)
     return await response.data;
 }
+
+
+
+// Third Party APIs
+
+export const getCountries = async () => {
+  const response = await fetch(
+    "https://api.placedb.org/v1/countries.json"
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch countries");
+  }
+
+  return response.json();
+};
+
+export const getStates = async (countryCode: string) => {
+  const response = await fetch(
+    `https://api.placedb.org/v1/regions/${countryCode}.json`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch states");
+  }
+
+  return response.json();
+};
+
+export const getCities = async (
+  regionId: number | string,
+  countryCode: string
+) => {
+  const response = await fetch(
+    `https://api.placedb.org/v1/cities/${countryCode}/${regionId}.json`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch cities");
+  }
+
+  return response.json();
+};
