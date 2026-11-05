@@ -24,7 +24,7 @@ import { useEffect, useState } from 'react'
 import { EditServiceQuotationModal } from './Modals/EditServiceQuotationModal'
 import { ViewServiceQuotationModal } from './Modals/ViewServiceQuotationModal'
 
-const TAKE = 10
+const TAKE = 9
 
 const statusLabels: Record<serviceQuotationStatus, string> = {
     DRAFT: 'Draft',

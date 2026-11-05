@@ -30,7 +30,7 @@ interface VehicleListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const VehicleListTable = ({ refreshKey = 0 }: VehicleListTableProps) => {
     const [vehicleList, setVehicleList] = useState<any[]>([])

@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { cn } from 'cn'
-import { PackageSearch, Plus } from 'lucide-react'
+import { FileSpreadsheet, PackageSearch, Plus } from 'lucide-react'
 import { useState } from 'react'
+import { ImportExcelModal } from '../Imports/ImportExcelModal'
+import { partMasterImportConfig } from '../Imports/importConfigs'
 import { CreatePartMasterModal } from '../Modals/CreatePartMasterModal'
 
 interface PartMasterHeaderProps {
@@ -10,6 +12,7 @@ interface PartMasterHeaderProps {
 
 const PartMasterHeader = ({ onCreated }: PartMasterHeaderProps) => {
     const [open, setOpen] = useState(false)
+    const [importOpen, setImportOpen] = useState(false)
 
     return (
         <>
@@ -20,13 +23,17 @@ const PartMasterHeader = ({ onCreated }: PartMasterHeaderProps) => {
                     </div>
                     <p className='text-muted-foreground font-medium text-sm'>Manage the parts available for this tenant.</p>
                 </div>
-                <div className='ms-auto'>
+                <div className='ms-auto flex items-center gap-2'>
+                    <Button variant='outline' className={cn('flex items-center gap-2')} onClick={() => setImportOpen(true)}>
+                        <FileSpreadsheet />Import Excel
+                    </Button>
                     <Button className={cn('flex items-center gap-2')} onClick={() => setOpen(true)}>
                         <Plus />Create Part
                     </Button>
                 </div>
             </div>
             <CreatePartMasterModal open={open} setOpen={setOpen} onCreated={onCreated} />
+            <ImportExcelModal open={importOpen} setOpen={setImportOpen} config={partMasterImportConfig} onImported={onCreated} />
         </>
     )
 }

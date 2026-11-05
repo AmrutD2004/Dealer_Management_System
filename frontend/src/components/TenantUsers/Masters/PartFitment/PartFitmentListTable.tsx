@@ -31,7 +31,7 @@ interface PartFitmentListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const PartFitmentListTable = ({ refreshKey = 0 }: PartFitmentListTableProps) => {
     const [fitmentList, setFitmentList] = useState<PartFitmentListType[]>([])

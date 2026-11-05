@@ -21,7 +21,7 @@ interface RepairOrderListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const RepairOrderListTable = ({ refreshKey = 0 }: RepairOrderListTableProps) => {
     const [repairOrderList, setRepairOrderList] = useState<repairOrderListType[]>([])

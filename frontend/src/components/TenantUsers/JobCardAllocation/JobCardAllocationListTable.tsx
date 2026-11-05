@@ -31,7 +31,7 @@ interface JobCardAllocationListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const formatDateTime = (value: string | null | undefined) => {
     return value ? dayjs(value).format('DD MMM YYYY, hh:mm A') : '—'

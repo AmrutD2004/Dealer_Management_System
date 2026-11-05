@@ -11,7 +11,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
     const { isLoggedIn } = useContext(AuthContext)
     const [branchList, setBranchList] = useState<branchListType[]>([])
     const [skip, setSkip] = useState<number>(0)
-    const [take, setTake] = useState<number>(3)
+    const [take, setTake] = useState<number>(9)
     const [totalBranches, setTotalBranches] = useState<number>(0)
 
     const [selectedBranch, setSelectedBranch] = useState<branchListType | null>(null)
@@ -20,7 +20,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
 
     const [designationList, setDesignationList] = useState<designationListType[]>([])
     const [designationSkip, setDesignationSkip] = useState<number>(0)
-    const [designationTake, setDesignationTake] = useState<number>(3)
+    const [designationTake, setDesignationTake] = useState<number>(9)
     const [totalDesignations, setTotalDesignations] = useState<number>(0)
 
     const [selectedDesignation, setSelectedDesignation] = useState<designationListType | null>(null)
@@ -29,7 +29,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
 
     const [roleList, setRoleList] = useState<roleListType[]>([])
     const [roleSkip, setRoleSkip] = useState<number>(0)
-    const [roleTake, setRoleTake] = useState<number>(3)
+    const [roleTake, setRoleTake] = useState<number>(9)
     const [totalRoles, setTotalRoles] = useState<number>(0)
 
     const [selectedRole, setSelectedRole] = useState<roleListType | null>(null)
@@ -47,7 +47,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
 
     const [employeeList, setEmployeeList] = useState<employeeListType[]>([])
     const [employeeSkip, setEmployeeSkip] = useState<number>(0)
-    const [employeeTake, setEmployeeTake] = useState<number>(3)
+    const [employeeTake, setEmployeeTake] = useState<number>(9)
     const [totalEmployees, setTotalEmployees] = useState<number>(0)
 
     const [selectedEmployee, setSelectedEmployee] = useState<employeeListType | null>(null)

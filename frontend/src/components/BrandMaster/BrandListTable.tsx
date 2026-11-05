@@ -34,7 +34,7 @@ interface BrandListTableProps {
     refreshKey?: number
 }
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 9
 
 const BrandListTable = ({ refreshKey = 0 }: BrandListTableProps) => {
     const [brandList, setBrandList] = useState<BrandListType[]>([])
