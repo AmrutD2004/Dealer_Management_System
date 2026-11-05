@@ -31,7 +31,7 @@ interface CustomerListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const CustomerListTable = ({ refreshKey = 0 }: CustomerListTableProps) => {
     const [customerList, setCustomerList] = useState<customerListType[]>([])

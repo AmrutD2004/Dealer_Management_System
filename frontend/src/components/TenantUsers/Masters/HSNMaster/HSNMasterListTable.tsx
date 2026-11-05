@@ -33,7 +33,7 @@ interface HSNMasterListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const HSNMasterListTable = ({ refreshKey = 0 }: HSNMasterListTableProps) => {
     const [hsnList, setHsnList] = useState<HSNMasterType[]>([])

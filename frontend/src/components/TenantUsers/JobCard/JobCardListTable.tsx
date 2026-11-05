@@ -30,7 +30,7 @@ interface JobCardListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const JobCardListTable = ({ refreshKey = 0 }: JobCardListTableProps) => {
     const [jobCardList, setJobCardList] = useState<jobCardListType[]>([])

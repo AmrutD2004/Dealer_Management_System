@@ -21,7 +21,7 @@ interface ServiceTypeListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const ServiceTypeListTable = ({ refreshKey = 0 }: ServiceTypeListTableProps) => {
     const [serviceTypeList, setServiceTypeList] = useState<serviceTypeListType[]>([])

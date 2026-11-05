@@ -32,7 +32,7 @@ export interface PartFitmentListType {
     tenantId: number,
     partId: number,
     modelId: number,
-    variantId: number,
+    variantId: number | null,
     brandId: number,
     quantity: string,
     position: string | null,

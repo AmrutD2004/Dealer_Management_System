@@ -36,7 +36,7 @@ interface VariantMasterListTableProps {
     refreshKey?: number
 }
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 9
 
 const VariantMasterListTable = ({ refreshKey = 0 }: VariantMasterListTableProps) => {
     const [variantList, setVariantList] = useState<VariantListType[]>([])

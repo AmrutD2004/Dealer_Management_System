@@ -31,7 +31,7 @@ interface LabourListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const LabourListTable = ({ refreshKey = 0 }: LabourListTableProps) => {
     const [labourList, setLabourList] = useState<labourListType[]>([])
