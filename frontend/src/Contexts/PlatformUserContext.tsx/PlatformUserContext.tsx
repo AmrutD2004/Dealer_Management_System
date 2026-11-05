@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { getErrorMessage } from "@/lib/utils"
 import { AuthContext } from "../AuthContext";
 import type { PlatformUsersListType } from "@/Types/platformUserType";
 import { toast } from "@/components/ui/toast";
@@ -6,7 +7,70 @@ import { getPermissionById, getPermissionList, getPlatformUserList, getTenantByI
 import { type tenantType, type tenantDetailType } from "@/Types/tenantCreateType";
 import type { PermissionConfirmActionType, PermissionListType } from "@/Types/permissionType";
 
-export const PlatformUserContext = createContext<any | null>(null)
+interface ConfirmActionState {
+    type: 'suspend' | 'deactivate' | 'activate'
+    tenantId: number
+    tenantName: string
+}
+
+interface PlatformUserContextValue {
+    platformUserCount: number
+    platformUserSkip: number
+    platformUserTake: number
+    setPlatformUserSkip: React.Dispatch<React.SetStateAction<number>>
+    setPlatformUserTake: React.Dispatch<React.SetStateAction<number>>
+    platformUsersList: PlatformUsersListType[]
+    activePlatformUserCount: number
+    fetchPlatformUsersList: (skip: number, take: number) => Promise<void>
+
+    tenantSkip: number
+    tenantTake: number
+    tenantList: tenantType[]
+    totalTenantCount: number
+    setTenantSkip: React.Dispatch<React.SetStateAction<number>>
+    setTenantTake: React.Dispatch<React.SetStateAction<number>>
+    fetchTenantsList: (skip: number, take: number) => Promise<void>
+    selectedTenant: tenantDetailType | null
+    setSelectedTenant: React.Dispatch<React.SetStateAction<tenantDetailType | null>>
+    viewTenantModalOpen: boolean
+    setViewTenantModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editTenantModalOpen: boolean
+    setEditTenantModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    confirmActionModalOpen: boolean
+    setConfirmActionModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    confirmAction: ConfirmActionState | null
+    setConfirmAction: React.Dispatch<React.SetStateAction<ConfirmActionState | null>>
+    openViewTenant: (tenantId: number) => Promise<void>
+    openEditTenant: (tenantId: number) => Promise<void>
+    openConfirmAction: (type: ConfirmActionState['type'], tenantId: number, tenantName: string) => void
+    closeAllModals: () => void
+
+    permissionSkip: number
+    permissionTake: number
+    permissionsList: PermissionListType[]
+    totalPermissionCount: number
+    setPermissionSkip: React.Dispatch<React.SetStateAction<number>>
+    setPermissionTake: React.Dispatch<React.SetStateAction<number>>
+    fetchPermissionsList: (skip: number, take: number) => Promise<void>
+    selectedPermission: PermissionListType | null
+    setSelectedPermission: React.Dispatch<React.SetStateAction<PermissionListType | null>>
+    viewPermissionModalOpen: boolean
+    setViewPermissionModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editPermissionModalOpen: boolean
+    setEditPermissionModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    permissionConfirmActionModalOpen: boolean
+    setPermissionConfirmActionModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    permissionConfirmAction: PermissionConfirmActionType | null
+    setPermissionConfirmAction: React.Dispatch<React.SetStateAction<PermissionConfirmActionType | null>>
+    openViewPermission: (permissionId: number) => Promise<void>
+    openEditPermission: (permissionId: number) => Promise<void>
+    openPermissionConfirmAction: (type: string, permissionId: number, permissionName: string) => void
+    closeAllPermissionModals: () => void
+}
+
+export const PlatformUserContext = createContext<PlatformUserContextValue>(
+    undefined as unknown as PlatformUserContextValue
+)
 
 
 export const PlatformUserContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -25,11 +89,11 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
                 setPlatformUserCount(data?.totalCount)
                 setActivePlatformUserCount(data?.totalActiveCount)
             }
-        } catch (err: any) {
+        } catch (err) {
             console.error(err)
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }
@@ -48,7 +112,7 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
     const [viewTenantModalOpen, setViewTenantModalOpen] = useState(false)
     const [editTenantModalOpen, setEditTenantModalOpen] = useState(false)
     const [confirmActionModalOpen, setConfirmActionModalOpen] = useState(false)
-    const [confirmAction, setConfirmAction] = useState<{ type: string; tenantId: number; tenantName: string } | null>(null)
+    const [confirmAction, setConfirmAction] = useState<ConfirmActionState | null>(null)
 
     const fetchTenantsList = async (skip: number, take: number) => {
         try {
@@ -57,10 +121,10 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
                 setTenantList(data?.data)
                 setTotalTenantCount(data?.count)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         }
     }
@@ -75,10 +139,10 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
             if (data?.success) {
                 setSelectedTenant(data?.data)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         }
     }
@@ -93,7 +157,7 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
         setEditTenantModalOpen(true)
     }
 
-    const openConfirmAction = (type: string, tenantId: number, tenantName: string) => {
+    const openConfirmAction = (type: ConfirmActionState['type'], tenantId: number, tenantName: string) => {
         setConfirmAction({ type, tenantId, tenantName })
         setConfirmActionModalOpen(true)
     }
@@ -125,10 +189,10 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
                 setPermissionsList(data?.data)
                 setTotalPermissionCount(data?.totalCount)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         }
     }
@@ -142,10 +206,10 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
             if (data?.success) {
                 setSelectedPermission(data?.data)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         }
     }

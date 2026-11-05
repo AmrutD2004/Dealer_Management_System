@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
-import { cn } from 'cn'
+import { cn } from "@/lib/utils"
 import { Key, Plus } from 'lucide-react'
-import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const AssignPermissionHeader = () => {

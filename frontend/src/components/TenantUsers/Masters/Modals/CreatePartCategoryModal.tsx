@@ -1,4 +1,4 @@
-import { createPartCategory, getPartCategoryList } from "@/api/endpoints"
+import { createPartCategory } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -10,17 +10,10 @@ import {
 } from "@/components/ui/dialog"
 import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import { toast } from "@/components/ui/toast"
-import type { PartCategoryCreateType, PartCategoryListType } from "@/Types/partCategoryType"
+import type { PartCategoryCreateType } from "@/Types/partCategoryType"
 import { Loader2 } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface CreatePartCategoryModalProps {
     open: boolean
@@ -36,38 +29,12 @@ const initialFormData: PartCategoryCreateType = {
 
 export function CreatePartCategoryModal({ open, setOpen, onCreated }: CreatePartCategoryModalProps) {
     const [loading, setLoading] = useState<boolean>(false)
-    const [categories, setCategories] = useState<PartCategoryListType[]>([])
     const [formData, setFormData] = useState<PartCategoryCreateType>(initialFormData)
-
-    useEffect(() => {
-        const loadCategories = async () => {
-            try {
-                const data = await getPartCategoryList()
-                if (data?.success) {
-                    setCategories(data?.data ?? [])
-                }
-            } catch (err: unknown) {
-                toast.add({
-                    type: 'error',
-                    description: (err as { response?: { data?: { message?: string } } })?.response?.data?.message
-                })
-            }
-        }
-        if (open) loadCategories()
-    }, [open])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData(prev => ({ ...prev, [name]: value }))
     }
-
-    const parentItems = [
-        { value: "none", label: "None (Top Level)" },
-        ...categories.map((category) => ({
-            value: String(category.id),
-            label: `${category.code} - ${category.name}${category.isActive ? "" : " (Inactive)"}`,
-        })),
-    ]
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()

@@ -1,4 +1,5 @@
 import { getPermissionListWithoutpagination, getRoleListWithoutPagination, updateAssignedPermission } from "@/api/endpoints"
+import { getErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -44,10 +45,10 @@ const EditAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
             if (data?.success) {
                 setRoleList(data?.data)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         }
     }
@@ -57,10 +58,10 @@ const EditAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
             if (data?.success) {
                 setPermissionsList(data?.data)
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         }
     }
@@ -117,10 +118,10 @@ const EditAssignedPermissionModal = ({ mapping, open, onClose }: props) => {
                     description: data?.message
                 })
             }
-        } catch (error: any) {
+        } catch (error) {
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
         } finally {
             setLoading(false)

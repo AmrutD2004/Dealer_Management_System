@@ -1,17 +1,111 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { getErrorMessage, getErrorResponse } from "@/lib/utils"
 import { AuthContext } from "../AuthContext";
 import type { branchListType, designationListType, employeeListType, roleListType, rolePermissionMappingType } from "@/Types/tenantCreateType";
 import { getAssignedPermissionById, getAssignedPermissionList, getDesignationById, getDesignationList, getEmployeeById, getEmployeeList, getRoleById, getRoleList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
 import { toast } from "@/components/ui/toast";
 
-export const TenantContext = createContext<any | null>(null)
+interface TenantContextValue {
+    branchList: branchListType[]
+    skip: number
+    take: number
+    setSkip: React.Dispatch<React.SetStateAction<number>>
+    totalBranches: number
+    fetchTenantBranchList: (skip: number, take: number) => Promise<void>
+    selectedBranch: branchListType | null
+    setSelectedBranch: React.Dispatch<React.SetStateAction<branchListType | null>>
+    viewBranchModalOpen: boolean
+    setViewBranchModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editBranchModalOpen: boolean
+    setEditBranchModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    fetchTenantBranchById: (branchId: number) => Promise<void>
+    openViewBranch: (branchId: number) => Promise<void>
+    openEditBranch: (branchId: number) => Promise<void>
+    closeAllModals: () => void
+
+    designationList: designationListType[]
+    designationSkip: number
+    setDesignationSkip: React.Dispatch<React.SetStateAction<number>>
+    designationTake: number
+    setDesignationTake: React.Dispatch<React.SetStateAction<number>>
+    totalDesignations: number
+    fetchDesignationList: (skip: number, take: number) => Promise<void>
+    selectedDesignation: designationListType | null
+    setSelectedDesignation: React.Dispatch<React.SetStateAction<designationListType | null>>
+    viewDesignationModalOpen: boolean
+    setViewDesignationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editDesignationModalOpen: boolean
+    setEditDesignationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    fetchDesignationById: (designationId: number) => Promise<void>
+    openViewDesignation: (designationId: number) => Promise<void>
+    openEditDesignation: (designationId: number) => Promise<void>
+    closeAllDesignationModals: () => void
+
+    roleList: roleListType[]
+    roleSkip: number
+    setRoleSkip: React.Dispatch<React.SetStateAction<number>>
+    roleTake: number
+    setRoleTake: React.Dispatch<React.SetStateAction<number>>
+    totalRoles: number
+    fetchRoleList: (skip: number, take: number) => Promise<void>
+    selectedRole: roleListType | null
+    setSelectedRole: React.Dispatch<React.SetStateAction<roleListType | null>>
+    viewRoleModalOpen: boolean
+    setViewRoleModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editRoleModalOpen: boolean
+    setEditRoleModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    fetchRoleById: (roleId: number) => Promise<void>
+    openViewRole: (roleId: number) => Promise<void>
+    openEditRole: (roleId: number) => Promise<void>
+    closeAllRoleModals: () => void
+
+    permissionMappingList: rolePermissionMappingType[]
+    permissionMappingSkip: number
+    setPermissionMappingSkip: React.Dispatch<React.SetStateAction<number>>
+    permissionMappingTake: number
+    setPermissionMappingTake: React.Dispatch<React.SetStateAction<number>>
+    totalPermissionMappings: number
+    fetchPermissionMappingList: (skip: number, take: number) => Promise<void>
+    selectedPermissionMapping: rolePermissionMappingType | null
+    setSelectedPermissionMapping: React.Dispatch<React.SetStateAction<rolePermissionMappingType | null>>
+    viewPermissionMappingModalOpen: boolean
+    setViewPermissionMappingModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editPermissionMappingModalOpen: boolean
+    setEditPermissionMappingModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    fetchPermissionMappingById: (rolePermissionId: number) => Promise<void>
+    openViewPermissionMapping: (rolePermissionId: number) => Promise<void>
+    openEditPermissionMapping: (rolePermissionId: number) => Promise<void>
+    closeAllPermissionMappingModals: () => void
+
+    employeeList: employeeListType[]
+    employeeSkip: number
+    setEmployeeSkip: React.Dispatch<React.SetStateAction<number>>
+    employeeTake: number
+    setEmployeeTake: React.Dispatch<React.SetStateAction<number>>
+    totalEmployees: number
+    fetchEmployeeList: (skip: number, take: number) => Promise<void>
+    selectedEmployee: employeeListType | null
+    setSelectedEmployee: React.Dispatch<React.SetStateAction<employeeListType | null>>
+    viewEmployeeModalOpen: boolean
+    setViewEmployeeModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editEmployeeModalOpen: boolean
+    setEditEmployeeModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    fetchEmployeeById: (employeeId: number) => Promise<void>
+    openViewEmployee: (employeeId: number) => Promise<void>
+    openEditEmployee: (employeeId: number) => Promise<void>
+    closeAllEmployeeModals: () => void
+}
+
+export const TenantContext = createContext<TenantContextValue>(
+    undefined as unknown as TenantContextValue
+)
 
 
 export const TenantContextProvider = ({children} : {children : React.ReactNode})=>{
     const { isLoggedIn } = useContext(AuthContext)
     const [branchList, setBranchList] = useState<branchListType[]>([])
     const [skip, setSkip] = useState<number>(0)
-    const [take, setTake] = useState<number>(9)
+    const [take] = useState<number>(9)
     const [totalBranches, setTotalBranches] = useState<number>(0)
 
     const [selectedBranch, setSelectedBranch] = useState<branchListType | null>(null)
@@ -61,10 +155,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
                 setBranchList(data?.data)
                 setTotalBranches(data?.count)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }
@@ -75,10 +169,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
             if (data?.success) {
                 setSelectedBranch(data?.data)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }
@@ -106,10 +200,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
                 setDesignationList(data?.data)
                 setTotalDesignations(data?.count)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }, [])
@@ -120,11 +214,11 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
             if (data?.success) {
                 setSelectedDesignation(data?.data)
             }
-        } catch (err: any) {
+        } catch (err) {
             //designation details endpoint responds with 302, payload still carries the record
-            const payload = err?.response?.data
+            const payload = getErrorResponse(err)
             if (payload?.success && payload?.data) {
-                setSelectedDesignation(payload?.data)
+                setSelectedDesignation(payload.data as designationListType)
             } else {
                 toast.add({
                     type: 'error',
@@ -157,10 +251,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
                 setRoleList(data?.data)
                 setTotalRoles(data?.count)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }, [])
@@ -171,11 +265,11 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
             if (data?.success) {
                 setSelectedRole(data?.data)
             }
-        } catch (err: any) {
+        } catch (err) {
             //role details endpoint responds with 302, payload still carries the record
-            const payload = err?.response?.data
+            const payload = getErrorResponse(err)
             if (payload?.success && payload?.data) {
-                setSelectedRole(payload?.data)
+                setSelectedRole(payload.data as roleListType)
             } else {
                 toast.add({
                     type: 'error',
@@ -208,10 +302,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
                 setPermissionMappingList(data?.data)
                 setTotalPermissionMappings(data?.count)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }, [])
@@ -222,10 +316,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
             if (data?.success) {
                 setSelectedPermissionMapping(data?.data)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }
@@ -253,10 +347,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
                 setEmployeeList(data?.data)
                 setTotalEmployees(data?.count)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }, [])
@@ -267,10 +361,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
             if (data?.success) {
                 setSelectedEmployee(data?.data)
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
         }
     }

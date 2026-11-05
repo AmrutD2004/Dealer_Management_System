@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { cn } from 'cn'
+import { cn } from "@/lib/utils"
 import { FileSpreadsheet, Package, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { CreatePartCategoryModal } from '../Modals/CreatePartCategoryModal'

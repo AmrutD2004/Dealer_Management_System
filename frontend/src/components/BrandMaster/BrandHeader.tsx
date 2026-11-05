@@ -18,7 +18,7 @@ const BrandHeader = ({ onCreated }: BrandHeaderProps) => {
                 </div>
                 <p className='text-muted-foreground font-medium text-sm'>Manage all the vehicle brands available on the DMS platform.</p>
             </div>
-            {userInfo?.role === 'SUPER_ADMIN' && <div className='ms-auto'>
+            {userInfo?.role?.roleCode === 'SUPER_ADMIN' && <div className='ms-auto'>
                 <CreateBrandModal onCreated={onCreated} />
             </div>}
         </div>

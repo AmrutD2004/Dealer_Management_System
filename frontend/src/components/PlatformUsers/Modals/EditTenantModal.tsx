@@ -1,4 +1,5 @@
 import type { tenantUpdateType, tenantPlanType, tenantSubscriptionStatusType, tenantDetailType } from '@/Types/tenantCreateType'
+import { getErrorMessage } from "@/lib/utils"
 import React, { useContext, useEffect, useState } from 'react'
 import {
   Dialog,
@@ -102,10 +103,10 @@ const EditTenantModal = ({ tenant, open, onClose }: props) => {
                     description: data?.message
                 })
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
             setLoading(false)
         } finally {

@@ -26,7 +26,7 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { cn } from "@/lib/utils"
+import { cn, getErrorMessage } from "@/lib/utils"
 import { useContext, useState } from "react"
 import { AuthContext } from "@/Contexts/AuthContext"
 import { toast } from "@/components/ui/toast"
@@ -161,12 +161,13 @@ export function AppSidebar() {
           window.location.replace("/login")
         }, 1500)
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.add({
         type: "error",
-        description: err?.response?.data?.message,
+        description: getErrorMessage(err),
       })
     } finally {
+      // no cleanup required
     }
   }
 

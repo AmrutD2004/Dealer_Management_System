@@ -1,4 +1,5 @@
 import { createDesignation } from "@/api/endpoints"
+import { getErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -70,7 +71,7 @@ export function CreateDesignationModal({ open, setOpen }: CreateDesignationModal
         } catch (err: unknown) {
             toast.add({
                 type: 'error',
-                description: (err as any)?.response?.data?.message
+                description: getErrorMessage(err)
             })
         } finally {
             setLoading(false)

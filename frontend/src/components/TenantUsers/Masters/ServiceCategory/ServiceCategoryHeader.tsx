@@ -1,7 +1,7 @@
 import { Tags, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import { cn } from 'cn'
+import { cn } from "@/lib/utils"
 import { CreateServiceCategoryModal } from '../Modals/CreateServiceCategoryModal'
 
 interface ServiceCategoryHeaderProps {

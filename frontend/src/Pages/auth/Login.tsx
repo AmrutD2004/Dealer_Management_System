@@ -10,14 +10,14 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { AuthContext } from "@/Contexts/AuthContext";
 import type { LoginType } from "@/Types/platformUserType";
-import { cn } from "cn";
+import { cn, getErrorMessage } from "@/lib/utils";
 import { Loader2, Moon, Sun } from "lucide-react";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Hashids from "hashids";
 export function Login() {
     const navigate = useNavigate()
-    const { setIsLoggedIn, hashId } = useContext(AuthContext)
+    const { setIsLoggedIn } = useContext(AuthContext)
     const { theme, setTheme } = useTheme()
     const [loading, setLoading] = useState<boolean>(false)
     const [formData, setFormData] = useState<LoginType>({
@@ -71,7 +71,7 @@ export function Login() {
                     passwordHash: ''
                 })
             }
-        } catch (error: any) {
+        } catch (error) {
             console.log(error)
             setFormData({
                 email: '',
@@ -79,7 +79,7 @@ export function Login() {
             })
             toast.add({
                 type: 'error',
-                description: error?.response?.data?.message
+                description: getErrorMessage(error)
             })
             setLoading(false)
         } finally {

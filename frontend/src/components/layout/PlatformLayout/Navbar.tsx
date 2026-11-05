@@ -11,7 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useTheme } from "@/components/theme-provider";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 
 const iconButtonClass =
   "h-10 w-10 border-border bg-background text-muted-foreground shadow-sm hover:bg-muted";

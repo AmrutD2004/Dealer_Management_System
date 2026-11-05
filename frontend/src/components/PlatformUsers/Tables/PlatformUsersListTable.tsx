@@ -1,4 +1,5 @@
 import { getVisiblePageIndices } from '@/lib/pagination'
+import { getErrorMessage } from "@/lib/utils"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import SortableTableHead from '@/components/ui/sortable-table-head'
 import { useTableSort } from '@/hooks/useTableSort'
@@ -14,7 +15,6 @@ import dayjs from 'dayjs'
 import { useContext, useState } from 'react'
 import { PlatformUserContext } from '@/Contexts/PlatformUserContext.tsx/PlatformUserContext'
 import { Button } from '@/components/ui/button'
-import { cn } from 'cn'
 import { type PlatformUserEditType, type PlatformUsersListType } from '@/Types/platformUserType'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -58,10 +58,10 @@ const PlatformUsersListTable = () => {
         })
         fetchPlatformUsersList(platformUserSkip, platformUserTake)
       }
-    }catch(err : any){
+    }catch (err){
       toast.add({
         type : 'error',
-        description : err?.response?.data?.message
+        description : getErrorMessage(err)
       })
     }
   }
@@ -75,10 +75,10 @@ const PlatformUsersListTable = () => {
         })
         fetchPlatformUsersList(platformUserSkip, platformUserTake)
       }
-    }catch(err : any){
+    }catch (err){
       toast.add({
         type : 'error',
-        description : err?.response?.data?.message
+        description : getErrorMessage(err)
       })
     }
   }

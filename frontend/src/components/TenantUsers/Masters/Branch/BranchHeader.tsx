@@ -1,7 +1,7 @@
 import { Building2, FileSpreadsheet, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useContext, useState } from 'react'
-import { cn } from 'cn'
+import { cn } from "@/lib/utils"
 import { TenantContext } from '@/Contexts/Tenant/TenantContext'
 import { CreateBranchModal } from '../Modals/CreateBranchModal'
 import { ImportExcelModal } from '../Imports/ImportExcelModal'

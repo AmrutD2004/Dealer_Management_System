@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { getErrorMessage } from "@/lib/utils"
 import { CheckCircle, Loader2, XCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -24,7 +25,7 @@ type ActionConfig = {
   description: string
   variant: 'default' | 'destructive'
   icon: typeof XCircle
-  actionFn: (permissionId: number) => Promise<any>
+  actionFn: (permissionId: number) => Promise<{ success?: boolean; message?: string }>
 }
 
 type Props = {
@@ -38,7 +39,7 @@ export function ConfirmPermissionActionModal({ confirmAction, open, onClose }: P
   const [loading, setLoading] = useState(false)
 
   const getActionConfig = (): ActionConfig => {
-    if (!confirmAction) return { title: '', description: '', variant: 'destructive', icon: XCircle, actionFn: async () => {} }
+    if (!confirmAction) return { title: '', description: '', variant: 'destructive', icon: XCircle, actionFn: async () => ({}) }
 
     switch (confirmAction.type) {
       case 'activate':
@@ -83,10 +84,10 @@ export function ConfirmPermissionActionModal({ confirmAction, open, onClose }: P
           description: data?.message
         })
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.add({
         type: 'error',
-        description: err?.response?.data?.message
+        description: getErrorMessage(err)
       })
     } finally {
       setLoading(false)

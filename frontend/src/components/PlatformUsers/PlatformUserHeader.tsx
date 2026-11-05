@@ -14,7 +14,7 @@ const PlatformUserHeader = () => {
              </div>
             <p className='text-muted-foreground font-medium text-sm'>Manage the admin team that has access to the DMS platform, and control who is a super admin or a support admin.</p>
         </div>
-        {userInfo?.role === 'SUPER_ADMIN' && <div className='ms-auto'>
+        {userInfo?.role?.roleCode === 'SUPER_ADMIN' && <div className='ms-auto'>
             <AddPlatformUserModal />
         </div> }
         

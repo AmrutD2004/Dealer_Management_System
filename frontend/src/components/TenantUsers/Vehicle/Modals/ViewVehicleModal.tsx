@@ -11,9 +11,10 @@ import {
 import { Label } from "@/components/ui/label"
 import dayjs from "dayjs"
 import { Car, UserRound } from "lucide-react"
+import type { vehicleListType } from "@/Types/vehicleType"
 
 type props = {
-  vehicle: any | null
+  vehicle: vehicleListType | null
   open: boolean
   onClose: () => void
 }

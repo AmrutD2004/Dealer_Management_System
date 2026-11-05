@@ -1,4 +1,5 @@
 import type { PlatformNewuserCreateType, PlatformUserEditType } from '@/Types/platformUserType'
+import { getErrorMessage } from "@/lib/utils"
 import React, { useContext, useEffect, useState } from 'react'
 import {
   Dialog,
@@ -73,10 +74,10 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
                     description: data?.message
                 })
             }
-        } catch (err: any) {
+        } catch (err) {
             toast.add({
                 type: 'error',
-                description: err?.response?.data?.message
+                description: getErrorMessage(err)
             })
             setLoading(false)
         } finally {
@@ -135,7 +136,7 @@ const EditPlatformUserModal = ({ user, open, onClose }: props) => {
                                         <Select name='role'
                                             required
                                             value={formData.role}
-                                            onValueChange={(value) => setFormData((prev: any) => ({ ...prev, role: value }))}
+                                            onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value ?? "" }))}
                                         >
                                             <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs" >
                                                 <SelectValue placeholder="Select Role" />

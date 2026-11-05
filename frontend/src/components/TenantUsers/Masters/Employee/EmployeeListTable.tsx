@@ -23,7 +23,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 import { Button } from "@/components/ui/button"
-import { cn } from "cn"
+import { cn, getErrorMessage } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react"
 import { TenantContext } from "@/Contexts/Tenant/TenantContext"
@@ -77,7 +77,7 @@ const EmployeeListTable = () => {
     } catch (err: unknown) {
       toast.add({
         type: "error",
-        description: (err as any)?.response?.data?.message,
+        description: getErrorMessage(err),
       })
     }
   }
@@ -95,7 +95,7 @@ const EmployeeListTable = () => {
     } catch (err: unknown) {
       toast.add({
         type: "error",
-        description: (err as any)?.response?.data?.message,
+        description: getErrorMessage(err),
       })
     }
   }
