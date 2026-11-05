@@ -21,7 +21,7 @@ interface ServiceCategoryListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const ServiceCategoryListTable = ({ refreshKey = 0 }: ServiceCategoryListTableProps) => {
     const [serviceCategoryList, setServiceCategoryList] = useState<serviceCategoryListType[]>([])

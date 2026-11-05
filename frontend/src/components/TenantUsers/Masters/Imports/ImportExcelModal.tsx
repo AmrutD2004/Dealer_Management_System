@@ -27,6 +27,7 @@ export interface ImportExcelConfig {
     columns: ImportColumn[]
     mapRow: (row: Record<string, string>) => { payload?: Record<string, unknown>; error?: string }
     createRecord: (payload: Record<string, unknown>) => Promise<{ success?: boolean; message?: string }>
+    prepare?: () => Promise<void>
 }
 
 interface ImportExcelModalProps {
@@ -161,6 +162,14 @@ export function ImportExcelModal({ open, setOpen, config, onImported }: ImportEx
 
     const handleImport = async () => {
         if (!rows.length) return
+
+        try {
+            await config.prepare?.()
+        } catch (err) {
+            setFileErrors([`Unable to load required master data. ${getErrorMessage(err)}`])
+            return
+        }
+
 
         setLoading(true)
         setResults([])

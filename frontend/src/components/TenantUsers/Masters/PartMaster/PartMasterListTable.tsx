@@ -33,7 +33,7 @@ interface PartMasterListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const PartMasterListTable = ({ refreshKey = 0 }: PartMasterListTableProps) => {
     const [partList, setPartList] = useState<PartMasterListType[]>([])

@@ -33,7 +33,7 @@ interface DealerBayListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const DealerBayListTable = ({ refreshKey = 0 }: DealerBayListTableProps) => {
     const [bayList, setBayList] = useState<DealerBayMasterType[]>([])

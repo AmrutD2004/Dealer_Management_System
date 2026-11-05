@@ -33,7 +33,7 @@ interface PartCategoryListTableProps {
     refreshKey?: number
 }
 
-const TAKE = 10
+const TAKE = 9
 
 const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) => {
     const [categoryList, setCategoryList] = useState<PartCategoryListType[]>([])

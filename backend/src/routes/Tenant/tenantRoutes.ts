@@ -13,7 +13,7 @@ import { closeJobCard, createJobCard, getJobcardDetails, getListOfJobCard, updat
 import { activateLabours, createLabours, createLabourWithExcel, deactivateLabours, getLaboursDetails, getListOfLabours, updateLabours } from "../../controllers/tenants/labourMasterManagement";
 import { activateBay, createBay, deactivateBay, getBayDetails, getListOfBay, updateBay } from "../../controllers/tenants/bayMasterManagementController";
 import { allocateJobCard, getAllocatedJobCardDetails, getListOfAllocatedJobCards, updateAllocatedJobCard } from "../../controllers/tenants/jobCardAllocationController";
-import { activateHSN, createHSN, deactivateHSN, getHSNDetails, getListOfHSN, updateHSN } from "../../controllers/tenants/hsnMasterController";
+import { activateHSN, createHSN, deactivateHSN, getHSNDetails, getListOfHSN, insertHSNExcelData, updateHSN } from "../../controllers/tenants/hsnMasterController";
 import { activatePartCategory, addPartCategory, createPartCategories, deactivatePartCategory, getListOfPartCategories, getPartCategoryDetails, updatePartCategory } from "../../controllers/tenants/Parts/partCategoryManagementController";
 import { activatePart, addPartMaster, addPartsAndFitmentUsingExcel, deactivatePart, getListOfParts, getPartDetails, updatePartMaster } from "../../controllers/tenants/Parts/partMasterManagementController";
 import { getListOfPartFitment, getPartFitmentDetails, updatePartFitment } from "../../controllers/tenants/Parts/partFitmentManagementController";
@@ -153,6 +153,7 @@ tenantRoute.get('/tenant/hsn/get/all', authenticate, requireTenantUser, getListO
 tenantRoute.get('/tenant/hsn/get/:hsnId', authenticate, requireTenantUser, getHSNDetails)
 tenantRoute.patch('/tenant/hsn/:hsnId/deactivate', authenticate, requireTenantUser, deactivateHSN)
 tenantRoute.patch('/tenant/hsn/:hsnId/activate', authenticate, requireTenantUser, activateHSN)
+tenantRoute.post('/tenant/hsn/file/upload', authenticate, requireTenantUser, insertHSNExcelData)
 
 
 //Part Category Management

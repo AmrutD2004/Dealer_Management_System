@@ -13,7 +13,7 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
     const { isLoggedIn } = useContext(AuthContext)
     const [platformUsersList, setPlatformUsersList] = useState<PlatformUsersListType[]>([])
     const [platformUserSkip, setPlatformUserSkip] = useState<number>(0)
-    const [platformUserTake, setPlatformUserTake] = useState<number>(3)
+    const [platformUserTake, setPlatformUserTake] = useState<number>(9)
     const [platformUserCount, setPlatformUserCount] = useState<number>(0)
     const [activePlatformUserCount, setActivePlatformUserCount] = useState<number>(0)
 
@@ -41,7 +41,7 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
 
     const [tenantList, setTenantList] = useState<tenantType[]>([])
     const [tenantSkip, setTenantSkip] = useState<number>(0)
-    const [tenantTake, setTenantTake] = useState<number>(3)
+    const [tenantTake, setTenantTake] = useState<number>(9)
     const [totalTenantCount, setTotalTenantCount] = useState(0)
 
     const [selectedTenant, setSelectedTenant] = useState<tenantDetailType | null>(null)
@@ -109,7 +109,7 @@ export const PlatformUserContextProvider = ({ children }: { children: React.Reac
 
     const [permissionsList, setPermissionsList] = useState<PermissionListType[]>([])
     const [permissionSkip, setPermissionSkip] = useState<number>(0)
-    const [permissionTake, setPermissionTake] = useState<number>(5)
+    const [permissionTake, setPermissionTake] = useState<number>(9)
     const [totalPermissionCount, setTotalPermissionCount] = useState(0)
 
     const [selectedPermission, setSelectedPermission] = useState<PermissionListType | null>(null)

@@ -522,6 +522,11 @@ export type VehicleVariantMasterScalarRelationFilter = {
   isNot?: Prisma.VehicleVariantMasterWhereInput
 }
 
+export type VehicleVariantMasterNullableScalarRelationFilter = {
+  is?: Prisma.VehicleVariantMasterWhereInput | null
+  isNot?: Prisma.VehicleVariantMasterWhereInput | null
+}
+
 export type VehicleVariantMasterCreateNestedManyWithoutModelInput = {
   create?: Prisma.XOR<Prisma.VehicleVariantMasterCreateWithoutModelInput, Prisma.VehicleVariantMasterUncheckedCreateWithoutModelInput> | Prisma.VehicleVariantMasterCreateWithoutModelInput[] | Prisma.VehicleVariantMasterUncheckedCreateWithoutModelInput[]
   connectOrCreate?: Prisma.VehicleVariantMasterCreateOrConnectWithoutModelInput | Prisma.VehicleVariantMasterCreateOrConnectWithoutModelInput[]
@@ -588,10 +593,12 @@ export type VehicleVariantMasterCreateNestedOneWithoutFitmentInput = {
   connect?: Prisma.VehicleVariantMasterWhereUniqueInput
 }
 
-export type VehicleVariantMasterUpdateOneRequiredWithoutFitmentNestedInput = {
+export type VehicleVariantMasterUpdateOneWithoutFitmentNestedInput = {
   create?: Prisma.XOR<Prisma.VehicleVariantMasterCreateWithoutFitmentInput, Prisma.VehicleVariantMasterUncheckedCreateWithoutFitmentInput>
   connectOrCreate?: Prisma.VehicleVariantMasterCreateOrConnectWithoutFitmentInput
   upsert?: Prisma.VehicleVariantMasterUpsertWithoutFitmentInput
+  disconnect?: Prisma.VehicleVariantMasterWhereInput | boolean
+  delete?: Prisma.VehicleVariantMasterWhereInput | boolean
   connect?: Prisma.VehicleVariantMasterWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.VehicleVariantMasterUpdateToOneWithWhereWithoutFitmentInput, Prisma.VehicleVariantMasterUpdateWithoutFitmentInput>, Prisma.VehicleVariantMasterUncheckedUpdateWithoutFitmentInput>
 }

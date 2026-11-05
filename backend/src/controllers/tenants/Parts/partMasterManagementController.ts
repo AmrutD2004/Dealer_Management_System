@@ -15,7 +15,7 @@ export const addPartMaster = async (req: Request, res: Response) => {
             message: 'Not authorized login again'
         })
     }
-    if (!hsnId || !partDescription || !partNo || !sellingPrice || !taxRate || !unitOfMeasure || !brandId || !modelId || !variantId || !landingPrice || !quantity) {
+    if (!hsnId || !partDescription || !partNo || !sellingPrice || !taxRate || !unitOfMeasure || !brandId || !modelId || !landingPrice || !quantity) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -128,10 +128,10 @@ export const addPartMaster = async (req: Request, res: Response) => {
             return { part, fitment }
         })
 
-
+        const variantLabel = result.fitment.variant ? ` of ${result.fitment.variant.variantName}` : ''
         return res.status(201).json({
             success: true,
-            message: `${result.part.partNo} part is created and fitment is created with ${result.fitment.model.modelName} of ${result.fitment.variant.variantName} ${result.fitment.brand.brandName} brand`
+            message: `${result.part.partNo} part is created and fitment is created with ${result.fitment.model.modelName}${variantLabel} ${result.fitment.brand.brandName} brand`
         })
 
     } catch (err) {

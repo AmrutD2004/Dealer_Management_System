@@ -119,7 +119,7 @@ export const updatePartFitment = async (req: Request, res: Response) => {
             message: 'Not authorized login again'
         })
     }
-    if (!brandId || !modelId || !partId || !variantId) {
+    if (!brandId || !modelId || !partId) {
         return res.status(400).json({
             success: false,
             message: 'All fields are required'
@@ -141,11 +141,13 @@ export const updatePartFitment = async (req: Request, res: Response) => {
             id: Number(modelId)
         }
     })
-    const isVariantExists = await prisma.vehicleVariantMaster.findUnique({
-        where: {
-            id: Number(variantId)
-        }
-    })
+    const isVariantExists = variantId
+        ? await prisma.vehicleVariantMaster.findUnique({
+            where: {
+                id: Number(variantId)
+            }
+        })
+        : null
     const isPartExists = await prisma.partMaster.findUnique({
         where: {
             id: Number(partId)
@@ -163,7 +165,7 @@ export const updatePartFitment = async (req: Request, res: Response) => {
             message: "Model not exists"
         })
     }
-    if (!isVariantExists) {
+    if (variantId && !isVariantExists) {
         return res.status(404).json({
             success: false,
             message: "Variant not exists"
@@ -181,7 +183,7 @@ export const updatePartFitment = async (req: Request, res: Response) => {
                 tenantId: Number(tenantId),
                 brandId: Number(brandId),
                 modelId: Number(modelId),
-                variantId: Number(variantId),
+                variantId: variantId ? Number(variantId) : null,
                 isOem: isOem ?? false,
                 partId: Number(partId),
                 position: position ? position : null,
@@ -215,9 +217,10 @@ export const updatePartFitment = async (req: Request, res: Response) => {
                 }
             }
         });
+        const variantLabel = data.variant ? ` of ${data.variant.variantName}` : ''
         return res.status(201).json({
             success: true,
-            message: `Part having no ${data.part.partNo} fitment is updated with ${data.model.modelName} of ${data.variant.variantName} ${data.brand.brandName} brand`
+            message: `Part having no ${data.part.partNo} fitment is updated with ${data.model.modelName}${variantLabel} ${data.brand.brandName} brand`
         })
     } catch (err) {
         return res.status(500).json({

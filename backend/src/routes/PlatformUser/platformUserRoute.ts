@@ -2,7 +2,7 @@ import { Router } from "express";
 import { authenticate, requirePlatformUser } from "../../middlewares/authMiddleware/loginMiddelware";
 import { activatePermission, activatePlatformUser, addPlatformUsers, createPermission, deactivatePermission, deactivatePlatformUser, editPlatformUser, getListOfPermissions, getListOfPlatformUsers, getPermissonDetails, getPlatformUserById, updatePermission } from "../../controllers/platformUser/platformUserControllers";
 import { createTenant, getTenantList, getTenantById, editTenant, suspendTenant, deactivateTenant, activateTenant } from "../../controllers/platformUser/tenantManagementController";
-import { activateBrand, addBrand, deactivateBrand, getBrandDetails, getListOfBrands, updateBrand } from "../../controllers/platformUser/brandMasterController";
+import { activateBrand, addBrand, addBrandsModelsVarinatsWithExcels, deactivateBrand, getBrandDetails, getListOfBrands, updateBrand } from "../../controllers/platformUser/brandMasterController";
 import { activateModel, addModel, deactivateModel, getListOfModels, getModelDetails, updateModel } from "../../controllers/platformUser/modelMasterController";
 import { activateVariant, addVariants, deactivateVariant, getListOfVariants, getVariantDetails, updateVariant } from "../../controllers/platformUser/vehicleVariantController";
 
@@ -58,4 +58,7 @@ platformUserRoute.patch('/platform/vehicle/variant/:variantId/deactivate', authe
 platformUserRoute.patch('/platform/vehicle/variant/:variantId/activate', authenticate, requirePlatformUser, activateVariant)
 platformUserRoute.get('/platform/vehicle/variant/get/all', authenticate, getListOfVariants)
 platformUserRoute.get('/platform/vehicle/variant/get/:variantId', authenticate, requirePlatformUser, getVariantDetails)
+
+
+platformUserRoute.post('/platform/vehicle/brand/file/upload', authenticate, requirePlatformUser, addBrandsModelsVarinatsWithExcels)
 export default platformUserRoute;

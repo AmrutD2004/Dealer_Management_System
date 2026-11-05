@@ -256,7 +256,7 @@ export type PartFitmentGroupByOutputType = {
   tenantId: number
   partId: number
   modelId: number
-  variantId: number
+  variantId: number | null
   brandId: number
   quantity: runtime.Decimal
   position: string | null
@@ -295,7 +295,7 @@ export type PartFitmentWhereInput = {
   tenantId?: Prisma.IntFilter<"PartFitment"> | number
   partId?: Prisma.IntFilter<"PartFitment"> | number
   modelId?: Prisma.IntFilter<"PartFitment"> | number
-  variantId?: Prisma.IntFilter<"PartFitment"> | number
+  variantId?: Prisma.IntNullableFilter<"PartFitment"> | number | null
   brandId?: Prisma.IntFilter<"PartFitment"> | number
   quantity?: Prisma.DecimalFilter<"PartFitment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.StringNullableFilter<"PartFitment"> | string | null
@@ -307,7 +307,7 @@ export type PartFitmentWhereInput = {
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   part?: Prisma.XOR<Prisma.PartMasterScalarRelationFilter, Prisma.PartMasterWhereInput>
   model?: Prisma.XOR<Prisma.VehicleModelMasterScalarRelationFilter, Prisma.VehicleModelMasterWhereInput>
-  variant?: Prisma.XOR<Prisma.VehicleVariantMasterScalarRelationFilter, Prisma.VehicleVariantMasterWhereInput>
+  variant?: Prisma.XOR<Prisma.VehicleVariantMasterNullableScalarRelationFilter, Prisma.VehicleVariantMasterWhereInput> | null
   brand?: Prisma.XOR<Prisma.BrandMasterScalarRelationFilter, Prisma.BrandMasterWhereInput>
 }
 
@@ -316,7 +316,7 @@ export type PartFitmentOrderByWithRelationInput = {
   tenantId?: Prisma.SortOrder
   partId?: Prisma.SortOrder
   modelId?: Prisma.SortOrder
-  variantId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrderInput | Prisma.SortOrder
   brandId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   position?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -340,7 +340,7 @@ export type PartFitmentWhereUniqueInput = Prisma.AtLeast<{
   tenantId?: Prisma.IntFilter<"PartFitment"> | number
   partId?: Prisma.IntFilter<"PartFitment"> | number
   modelId?: Prisma.IntFilter<"PartFitment"> | number
-  variantId?: Prisma.IntFilter<"PartFitment"> | number
+  variantId?: Prisma.IntNullableFilter<"PartFitment"> | number | null
   brandId?: Prisma.IntFilter<"PartFitment"> | number
   quantity?: Prisma.DecimalFilter<"PartFitment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.StringNullableFilter<"PartFitment"> | string | null
@@ -352,7 +352,7 @@ export type PartFitmentWhereUniqueInput = Prisma.AtLeast<{
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   part?: Prisma.XOR<Prisma.PartMasterScalarRelationFilter, Prisma.PartMasterWhereInput>
   model?: Prisma.XOR<Prisma.VehicleModelMasterScalarRelationFilter, Prisma.VehicleModelMasterWhereInput>
-  variant?: Prisma.XOR<Prisma.VehicleVariantMasterScalarRelationFilter, Prisma.VehicleVariantMasterWhereInput>
+  variant?: Prisma.XOR<Prisma.VehicleVariantMasterNullableScalarRelationFilter, Prisma.VehicleVariantMasterWhereInput> | null
   brand?: Prisma.XOR<Prisma.BrandMasterScalarRelationFilter, Prisma.BrandMasterWhereInput>
 }, "id">
 
@@ -361,7 +361,7 @@ export type PartFitmentOrderByWithAggregationInput = {
   tenantId?: Prisma.SortOrder
   partId?: Prisma.SortOrder
   modelId?: Prisma.SortOrder
-  variantId?: Prisma.SortOrder
+  variantId?: Prisma.SortOrderInput | Prisma.SortOrder
   brandId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   position?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -385,7 +385,7 @@ export type PartFitmentScalarWhereWithAggregatesInput = {
   tenantId?: Prisma.IntWithAggregatesFilter<"PartFitment"> | number
   partId?: Prisma.IntWithAggregatesFilter<"PartFitment"> | number
   modelId?: Prisma.IntWithAggregatesFilter<"PartFitment"> | number
-  variantId?: Prisma.IntWithAggregatesFilter<"PartFitment"> | number
+  variantId?: Prisma.IntNullableWithAggregatesFilter<"PartFitment"> | number | null
   brandId?: Prisma.IntWithAggregatesFilter<"PartFitment"> | number
   quantity?: Prisma.DecimalWithAggregatesFilter<"PartFitment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.StringNullableWithAggregatesFilter<"PartFitment"> | string | null
@@ -407,7 +407,7 @@ export type PartFitmentCreateInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutFitmentInput
   part: Prisma.PartMasterCreateNestedOneWithoutFitmentsInput
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutFitmentInput
-  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
+  variant?: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
   brand: Prisma.BrandMasterCreateNestedOneWithoutFitmentInput
 }
 
@@ -416,7 +416,7 @@ export type PartFitmentUncheckedCreateInput = {
   tenantId: number
   partId: number
   modelId: number
-  variantId: number
+  variantId?: number | null
   brandId: number
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
@@ -438,7 +438,7 @@ export type PartFitmentUpdateInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutFitmentNestedInput
   part?: Prisma.PartMasterUpdateOneRequiredWithoutFitmentsNestedInput
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutFitmentNestedInput
-  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutFitmentNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneWithoutFitmentNestedInput
   brand?: Prisma.BrandMasterUpdateOneRequiredWithoutFitmentNestedInput
 }
 
@@ -447,7 +447,7 @@ export type PartFitmentUncheckedUpdateInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   partId?: Prisma.IntFieldUpdateOperationsInput | number
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -463,7 +463,7 @@ export type PartFitmentCreateManyInput = {
   tenantId: number
   partId: number
   modelId: number
-  variantId: number
+  variantId?: number | null
   brandId: number
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
@@ -489,7 +489,7 @@ export type PartFitmentUncheckedUpdateManyInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   partId?: Prisma.IntFieldUpdateOperationsInput | number
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -799,7 +799,7 @@ export type PartFitmentCreateWithoutBrandInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutFitmentInput
   part: Prisma.PartMasterCreateNestedOneWithoutFitmentsInput
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutFitmentInput
-  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
+  variant?: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
 }
 
 export type PartFitmentUncheckedCreateWithoutBrandInput = {
@@ -807,7 +807,7 @@ export type PartFitmentUncheckedCreateWithoutBrandInput = {
   tenantId: number
   partId: number
   modelId: number
-  variantId: number
+  variantId?: number | null
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
   isOem?: boolean
@@ -851,7 +851,7 @@ export type PartFitmentScalarWhereInput = {
   tenantId?: Prisma.IntFilter<"PartFitment"> | number
   partId?: Prisma.IntFilter<"PartFitment"> | number
   modelId?: Prisma.IntFilter<"PartFitment"> | number
-  variantId?: Prisma.IntFilter<"PartFitment"> | number
+  variantId?: Prisma.IntNullableFilter<"PartFitment"> | number | null
   brandId?: Prisma.IntFilter<"PartFitment"> | number
   quantity?: Prisma.DecimalFilter<"PartFitment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.StringNullableFilter<"PartFitment"> | string | null
@@ -872,7 +872,7 @@ export type PartFitmentCreateWithoutModelInput = {
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutFitmentInput
   part: Prisma.PartMasterCreateNestedOneWithoutFitmentsInput
-  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
+  variant?: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
   brand: Prisma.BrandMasterCreateNestedOneWithoutFitmentInput
 }
 
@@ -880,7 +880,7 @@ export type PartFitmentUncheckedCreateWithoutModelInput = {
   id?: number
   tenantId: number
   partId: number
-  variantId: number
+  variantId?: number | null
   brandId: number
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
@@ -982,7 +982,7 @@ export type PartFitmentCreateWithoutTenantInput = {
   updatedAt?: Date | string
   part: Prisma.PartMasterCreateNestedOneWithoutFitmentsInput
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutFitmentInput
-  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
+  variant?: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
   brand: Prisma.BrandMasterCreateNestedOneWithoutFitmentInput
 }
 
@@ -990,7 +990,7 @@ export type PartFitmentUncheckedCreateWithoutTenantInput = {
   id?: number
   partId: number
   modelId: number
-  variantId: number
+  variantId?: number | null
   brandId: number
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
@@ -1037,7 +1037,7 @@ export type PartFitmentCreateWithoutPartInput = {
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutFitmentInput
   model: Prisma.VehicleModelMasterCreateNestedOneWithoutFitmentInput
-  variant: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
+  variant?: Prisma.VehicleVariantMasterCreateNestedOneWithoutFitmentInput
   brand: Prisma.BrandMasterCreateNestedOneWithoutFitmentInput
 }
 
@@ -1045,7 +1045,7 @@ export type PartFitmentUncheckedCreateWithoutPartInput = {
   id?: number
   tenantId: number
   modelId: number
-  variantId: number
+  variantId?: number | null
   brandId: number
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
@@ -1087,7 +1087,7 @@ export type PartFitmentCreateManyBrandInput = {
   tenantId: number
   partId: number
   modelId: number
-  variantId: number
+  variantId?: number | null
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
   isOem?: boolean
@@ -1108,7 +1108,7 @@ export type PartFitmentUpdateWithoutBrandInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutFitmentNestedInput
   part?: Prisma.PartMasterUpdateOneRequiredWithoutFitmentsNestedInput
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutFitmentNestedInput
-  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutFitmentNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneWithoutFitmentNestedInput
 }
 
 export type PartFitmentUncheckedUpdateWithoutBrandInput = {
@@ -1116,7 +1116,7 @@ export type PartFitmentUncheckedUpdateWithoutBrandInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   partId?: Prisma.IntFieldUpdateOperationsInput | number
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOem?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1131,7 +1131,7 @@ export type PartFitmentUncheckedUpdateManyWithoutBrandInput = {
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   partId?: Prisma.IntFieldUpdateOperationsInput | number
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOem?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1145,7 +1145,7 @@ export type PartFitmentCreateManyModelInput = {
   id?: number
   tenantId: number
   partId: number
-  variantId: number
+  variantId?: number | null
   brandId: number
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
@@ -1166,7 +1166,7 @@ export type PartFitmentUpdateWithoutModelInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutFitmentNestedInput
   part?: Prisma.PartMasterUpdateOneRequiredWithoutFitmentsNestedInput
-  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutFitmentNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneWithoutFitmentNestedInput
   brand?: Prisma.BrandMasterUpdateOneRequiredWithoutFitmentNestedInput
 }
 
@@ -1174,7 +1174,7 @@ export type PartFitmentUncheckedUpdateWithoutModelInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   partId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1189,7 +1189,7 @@ export type PartFitmentUncheckedUpdateManyWithoutModelInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   partId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1263,7 +1263,7 @@ export type PartFitmentCreateManyTenantInput = {
   id?: number
   partId: number
   modelId: number
-  variantId: number
+  variantId?: number | null
   brandId: number
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
@@ -1284,7 +1284,7 @@ export type PartFitmentUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   part?: Prisma.PartMasterUpdateOneRequiredWithoutFitmentsNestedInput
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutFitmentNestedInput
-  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutFitmentNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneWithoutFitmentNestedInput
   brand?: Prisma.BrandMasterUpdateOneRequiredWithoutFitmentNestedInput
 }
 
@@ -1292,7 +1292,7 @@ export type PartFitmentUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   partId?: Prisma.IntFieldUpdateOperationsInput | number
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1307,7 +1307,7 @@ export type PartFitmentUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   partId?: Prisma.IntFieldUpdateOperationsInput | number
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1322,7 +1322,7 @@ export type PartFitmentCreateManyPartInput = {
   id?: number
   tenantId: number
   modelId: number
-  variantId: number
+  variantId?: number | null
   brandId: number
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: string | null
@@ -1343,7 +1343,7 @@ export type PartFitmentUpdateWithoutPartInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutFitmentNestedInput
   model?: Prisma.VehicleModelMasterUpdateOneRequiredWithoutFitmentNestedInput
-  variant?: Prisma.VehicleVariantMasterUpdateOneRequiredWithoutFitmentNestedInput
+  variant?: Prisma.VehicleVariantMasterUpdateOneWithoutFitmentNestedInput
   brand?: Prisma.BrandMasterUpdateOneRequiredWithoutFitmentNestedInput
 }
 
@@ -1351,7 +1351,7 @@ export type PartFitmentUncheckedUpdateWithoutPartInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1366,7 +1366,7 @@ export type PartFitmentUncheckedUpdateManyWithoutPartInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.IntFieldUpdateOperationsInput | number
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
-  variantId?: Prisma.IntFieldUpdateOperationsInput | number
+  variantId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1396,7 +1396,7 @@ export type PartFitmentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   part?: boolean | Prisma.PartMasterDefaultArgs<ExtArgs>
   model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
-  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.PartFitment$variantArgs<ExtArgs>
   brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["partFitment"]>
 
@@ -1417,7 +1417,7 @@ export type PartFitmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   part?: boolean | Prisma.PartMasterDefaultArgs<ExtArgs>
   model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
-  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.PartFitment$variantArgs<ExtArgs>
   brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["partFitment"]>
 
@@ -1438,7 +1438,7 @@ export type PartFitmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   part?: boolean | Prisma.PartMasterDefaultArgs<ExtArgs>
   model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
-  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.PartFitment$variantArgs<ExtArgs>
   brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["partFitment"]>
 
@@ -1463,21 +1463,21 @@ export type PartFitmentInclude<ExtArgs extends runtime.Types.Extensions.Internal
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   part?: boolean | Prisma.PartMasterDefaultArgs<ExtArgs>
   model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
-  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.PartFitment$variantArgs<ExtArgs>
   brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
 }
 export type PartFitmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   part?: boolean | Prisma.PartMasterDefaultArgs<ExtArgs>
   model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
-  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.PartFitment$variantArgs<ExtArgs>
   brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
 }
 export type PartFitmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   part?: boolean | Prisma.PartMasterDefaultArgs<ExtArgs>
   model?: boolean | Prisma.VehicleModelMasterDefaultArgs<ExtArgs>
-  variant?: boolean | Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>
+  variant?: boolean | Prisma.PartFitment$variantArgs<ExtArgs>
   brand?: boolean | Prisma.BrandMasterDefaultArgs<ExtArgs>
 }
 
@@ -1487,7 +1487,7 @@ export type $PartFitmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     tenant: Prisma.$TenantPayload<ExtArgs>
     part: Prisma.$PartMasterPayload<ExtArgs>
     model: Prisma.$VehicleModelMasterPayload<ExtArgs>
-    variant: Prisma.$VehicleVariantMasterPayload<ExtArgs>
+    variant: Prisma.$VehicleVariantMasterPayload<ExtArgs> | null
     brand: Prisma.$BrandMasterPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1495,7 +1495,7 @@ export type $PartFitmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     tenantId: number
     partId: number
     modelId: number
-    variantId: number
+    variantId: number | null
     brandId: number
     quantity: runtime.Decimal
     position: string | null
@@ -1901,7 +1901,7 @@ export interface Prisma__PartFitmentClient<T, Null = never, ExtArgs extends runt
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   part<T extends Prisma.PartMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PartMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__PartMasterClient<runtime.Types.Result.GetResult<Prisma.$PartMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   model<T extends Prisma.VehicleModelMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleModelMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleModelMasterClient<runtime.Types.Result.GetResult<Prisma.$VehicleModelMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  variant<T extends Prisma.VehicleVariantMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleVariantMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleVariantMasterClient<runtime.Types.Result.GetResult<Prisma.$VehicleVariantMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  variant<T extends Prisma.PartFitment$variantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PartFitment$variantArgs<ExtArgs>>): Prisma.Prisma__VehicleVariantMasterClient<runtime.Types.Result.GetResult<Prisma.$VehicleVariantMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   brand<T extends Prisma.BrandMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BrandMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__BrandMasterClient<runtime.Types.Result.GetResult<Prisma.$BrandMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2343,6 +2343,25 @@ export type PartFitmentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many PartFitments to delete.
    */
   limit?: number
+}
+
+/**
+ * PartFitment.variant
+ */
+export type PartFitment$variantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VehicleVariantMaster
+   */
+  select?: Prisma.VehicleVariantMasterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the VehicleVariantMaster
+   */
+  omit?: Prisma.VehicleVariantMasterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VehicleVariantMasterInclude<ExtArgs> | null
+  where?: Prisma.VehicleVariantMasterWhereInput
 }
 
 /**
