@@ -653,7 +653,7 @@ export const addPartsAndFitmentUsingExcel = async (req: Request, res: Response) 
                         brandId: brandId,
                         modelId: modelId,
                         variantId: variantId,
-                        isOem: fitment.OEM==='Yes' || fitment.OEM==='YES' ? true : false ,
+                        isOem: fitment.OEM === 'Yes' || fitment.OEM === 'YES' ? true : false,
                         partId: parts.id,
                         position: fitment.Position ? fitment.Position : null,
                         quantity: fitment.Quantity ? fitment.Quantity : null,
@@ -670,11 +670,11 @@ export const addPartsAndFitmentUsingExcel = async (req: Request, res: Response) 
             return importedData
         });
         return res.status(201).json({
-    success: true,
-    message: 'Parts and fitments imported successfully',
-    importedCount: result.length,
-    data: result
-});
+            success: true,
+            message: 'Parts and fitments imported successfully',
+            importedCount: result.length,
+            data: result
+        });
     } catch (err) {
         return res.status(500).json({
             success: false,

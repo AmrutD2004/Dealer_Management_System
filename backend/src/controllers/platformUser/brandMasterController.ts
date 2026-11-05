@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../prisma/lib/prisma";
+import { UploadedFile } from "express-fileupload";
+import * as XLSX from 'xlsx'
 
 export const addBrand = async (req: Request, res: Response) => {
     const { id, userType } = req.user!;
@@ -292,6 +294,53 @@ export const activateBrand = async (req: Request, res: Response) => {
             message: `Brand ${data.brandName} is activated`
         })
     } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Server error ${error}`
+        })
+    }
+}
+
+
+export const addBrandsModelsVarinatsWithExcels = async(req: Request, res: Response)=>{
+    const { id, userType } = req.user!;
+    const brandModelsVarintsFile = req.files?.file as UploadedFile | null
+    if (!id) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized login'
+        })
+    }
+    if (userType !== 'PLATFORM_USER') {
+        return res.status(401).json({
+            success: false,
+            message: 'Platform User required'
+        })
+    }
+    try{
+        const readedFile = XLSX.read(brandModelsVarintsFile?.data, {type : 'buffer'})
+        const sheetName = readedFile.SheetNames[0]
+        const sheet = readedFile.Sheets[sheetName]
+        const sheetData = XLSX.utils.sheet_to_json(sheet)
+
+        //Extract the brand name
+        const result = await prisma.$transaction(async (tx)=>{
+            const brand = await tx.brandMaster.createMany({
+                data : sheetData.map((b : any)=>({
+                    brandName : b.Brand_Name,
+                    brandCode : b.Brand_Code
+                }))
+            })
+
+            const models = await tx.vehicleModelMaster.createMany({
+                data : sheetData.map((m : any)=>{
+                    brandId : Number(brand.id),
+                    modelName : m.Model_Name,
+                    modelCode : m.Model_Code
+                })
+            })
+        })
+    }catch (error) {
         return res.status(500).json({
             success: false,
             message: `Server error ${error}`
