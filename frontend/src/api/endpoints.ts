@@ -500,6 +500,13 @@ export const importHSNExcel = async (file: File) => {
     return await response.data;
 }
 
+export const importPartsAndFitmentUsingExcel = async (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    const response = await api.post(`/api/tenant/part/file/upload`, formData)
+    return await response.data;
+}
+
 
 //Part Category management
 export const createPartCategory = async (payload: object) => {

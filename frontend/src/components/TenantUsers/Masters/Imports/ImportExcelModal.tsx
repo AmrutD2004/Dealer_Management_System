@@ -26,7 +26,7 @@ export interface ImportExcelConfig {
     templateFileName: string
     columns: ImportColumn[]
     mapRow: (row: Record<string, string>) => { payload?: Record<string, unknown>; error?: string }
-    createRecord: (payload: Record<string, unknown>) => Promise<{ success?: boolean; message?: string }>
+    createRecord: (payload: File | Record<string, unknown>) => Promise<{ success?: boolean; message?: string }>
     prepare?: () => Promise<void>
 }
 
@@ -170,49 +170,40 @@ export function ImportExcelModal({ open, setOpen, config, onImported }: ImportEx
             return
         }
 
+        const file = fileInputRef.current?.files?.[0]
+        if (!file) {
+            setFileErrors(['No file selected'])
+            return
+        }
 
         setLoading(true)
         setResults([])
-        setProgress({ done: 0, total: rows.length })
+        setProgress({ done: 0, total: 1 })
 
         const importResults: ImportRowResult[] = []
-        let successCount = 0
-
-        for (let index = 0; index < rows.length; index += 1) {
-            const rowNumber = index + 2
-            const mapped = config.mapRow(rows[index])
-
-            if (mapped.error || !mapped.payload) {
-                importResults.push({
-                    rowNumber,
-                    success: false,
-                    message: mapped.error ?? 'Invalid row data',
-                })
-            } else {
-                try {
-                    const data = await config.createRecord(mapped.payload)
-                    const success = Boolean(data?.success)
-                    if (success) successCount += 1
-                    importResults.push({
-                        rowNumber,
-                        success,
-                        message: data?.message,
-                    })
-                } catch (err) {
-                    importResults.push({
-                        rowNumber,
-                        success: false,
-                        message: getErrorMessage(err),
-                    })
-                }
-            }
-
-            setProgress({ done: index + 1, total: rows.length })
+        let successCount = importResults.filter((result) => result.success).length
+        let failedResults = importResults.filter((result) => !result.success)
+        try {
+            const data = await config.createRecord(file)
+            const success = Boolean(data?.success)
+            if (success) successCount += 1
+            importResults.push({
+                rowNumber: 1,
+                success,
+                message: data?.message,
+            })
+        } catch (err) {
+            importResults.push({
+                rowNumber: 1,
+                success: false,
+                message: getErrorMessage(err),
+            })
         }
 
-        const failureCount = importResults.length - successCount
-        setResults([...importResults].sort((a, b) => a.rowNumber - b.rowNumber))
         setLoading(false)
+        setProgress({ done: 1, total: 1 })
+
+        setResults([...importResults].sort((a, b) => a.rowNumber - b.rowNumber))
 
         if (successCount > 0) {
             toast.add({
@@ -222,10 +213,10 @@ export function ImportExcelModal({ open, setOpen, config, onImported }: ImportEx
             onImported?.()
         }
 
-        if (failureCount > 0) {
+        if (failedResults.length > 0) {
             toast.add({
                 type: 'error',
-                description: `${failureCount} ${config.entityLabel.toLowerCase()} record(s) failed to import`,
+                description: `${failedResults.length} ${config.entityLabel.toLowerCase()} record(s) failed to import`,
             })
         }
     }

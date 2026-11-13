@@ -357,7 +357,7 @@ export const createLabourWithExcel = async (req: Request, res: Response) => {
         const sheet = readedFile.Sheets[sheetName]
         const sheetData = XLSX.utils.sheet_to_json(sheet)
 
-        const labourCodes = sheetData.map((l: any) => l['Labour_Code'].trim())
+        const labourCodes = sheetData.map((l: any) =>  (l["Labour_Code"] ?? "").trim())
 
         const isLabourExists = await prisma.labourMaster.findMany({
             where: {

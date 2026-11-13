@@ -1,6 +1,6 @@
 export interface Role {
   id: number;
-  roleCode: string;
+  roleCode: any;
   roleName: string;
 }
 
@@ -33,7 +33,7 @@ export interface userInfoType {
   lastLoginAt: string;
   createdAt: string;
   updatedAt: string;
-  role: Role;
+  role: any;
   branch: Branch;
   tenant: Tenant;
 

@@ -5,7 +5,7 @@ import {
     createHSN,
     createLabour,
     createPartCategory,
-    createPartMaster,
+    importPartsAndFitmentUsingExcel,
     getBrandListWithoutPagination,
     getHSNList,
     getModelListWithoutPagination,
@@ -419,104 +419,7 @@ export const partMasterImportConfig: ImportExcelConfig = {
             },
         }
     },
-    createRecord: async (payload) => {
-        let lookups = await loadPartMasterLookups()
-
-        const partCategory = String(payload.partCategory ?? '')
-        const hsnCode = String(payload.hsnCode ?? '')
-        const brandName = String(payload.brand ?? '')
-        const modelName = String(payload.model ?? '')
-        const variantName = String(payload.variant ?? '')
-
-        let category = findCategory(lookups.categories, partCategory)
-        if (!category) {
-            lookups = await refreshPartMasterLookups()
-            category = findCategory(lookups.categories, partCategory)
-        }
-        if (!category) {
-            throw new Error(`Part category "${partCategory}" was not found. Create it in Part Category first.`)
-        }
-
-        let hsn = findHsn(lookups.hsn, hsnCode)
-        if (!hsn) {
-            const taxRateValue = String(payload.taxRate ?? '').trim()
-            if (!taxRateValue) {
-                throw new Error(
-                    `HSN code "${hsnCode}" was not found. Add a Tax Rate in the file so it can be created automatically in HSN Master.`
-                )
-            }
-
-            let createErrorMessage = ''
-            try {
-                await createHSN({
-                    hsnCode,
-                    taxRate: Number(taxRateValue),
-                    description: null,
-                })
-            } catch (err) {
-                createErrorMessage = getApiErrorMessage(err, '')
-            }
-
-            lookups = await refreshPartMasterLookups()
-            hsn = findHsn(lookups.hsn, hsnCode)
-            if (!hsn) {
-                throw new Error(
-                    createErrorMessage ||
-                        `HSN code "${hsnCode}" was not found and could not be created automatically. Create it in HSN Master first.`
-                )
-            }
-        }
-
-        const brand = findBrand(lookups.brands, brandName)
-        if (!brand) {
-            throw new Error(`Brand "${brandName}" was not found.`)
-        }
-
-        const model = findModel(lookups.models, modelName, brand.id)
-        if (!model) {
-            throw new Error(`Model "${modelName}" was not found for brand "${brand.brandName}".`)
-        }
-
-        let variant: PartLookupVariant | undefined
-        if (variantName) {
-            variant = findVariant(lookups.variants, variantName, model.id)
-            if (!variant) {
-                throw new Error(
-                    `Variant "${variantName}" was not found for model "${model.modelName}". Leave the Variant blank to import this part at model level.`
-                )
-            }
-        }
-
-        const taxRate =
-            String(payload.taxRate ?? '').trim() ||
-            (hsn.taxRate !== null && hsn.taxRate !== undefined ? String(hsn.taxRate) : '')
-        if (!taxRate) {
-            throw new Error(`Tax rate is required for HSN ${hsn.hsnCode}. Add a tax rate to the HSN or include it in the file.`)
-        }
-
-        const reorderLevel = String(payload.reorderLevel ?? '').trim()
-
-        return createPartMaster({
-            partNo: String(payload.partNo ?? ''),
-            partDescription: String(payload.partDescription ?? ''),
-            partCategoryId: Number(category.id),
-            hsnId: Number(hsn.id),
-            sellingPrice: String(payload.sellingPrice ?? ''),
-            landingPrice: String(payload.landingPrice ?? ''),
-            taxRate,
-            unitOfMeasure: String(payload.unitOfMeasure ?? ''),
-            reorderLevel: reorderLevel ? Number(reorderLevel) : null,
-            isFastMoving: Boolean(payload.isFastMoving),
-            validFrom: String(payload.validFrom ?? ''),
-            validTo: String(payload.validTo ?? '') || null,
-            brandId: Number(brand.id),
-            modelId: Number(model.id),
-            variantId: variant ? Number(variant.id) : null,
-            isOem: Boolean(payload.isOem),
-            position: String(payload.position ?? '').trim() || null,
-            quantity: Number(payload.quantity),
-            fitmentValidFrom: String(payload.fitmentValidFrom ?? ''),
-            fitmentValidTo: String(payload.fitmentValidTo ?? '') || null,
-        })
+    createRecord: async (file: File | Record<string, unknown>) => {
+        return importPartsAndFitmentUsingExcel(file as File)
     },
 }
