@@ -314,6 +314,8 @@ export type BranchWhereInput = {
   dealerBayMasters?: Prisma.DealerBayMasterListRelationFilter
   serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
   serviceAppointment?: Prisma.ServiceAppointmentListRelationFilter
+  stores?: Prisma.StoreMasterListRelationFilter
+  branchParts?: Prisma.BranchPartMasterListRelationFilter
 }
 
 export type BranchOrderByWithRelationInput = {
@@ -339,6 +341,8 @@ export type BranchOrderByWithRelationInput = {
   dealerBayMasters?: Prisma.DealerBayMasterOrderByRelationAggregateInput
   serviceQuotation?: Prisma.ServiceQuotationMasterOrderByRelationAggregateInput
   serviceAppointment?: Prisma.ServiceAppointmentOrderByRelationAggregateInput
+  stores?: Prisma.StoreMasterOrderByRelationAggregateInput
+  branchParts?: Prisma.BranchPartMasterOrderByRelationAggregateInput
 }
 
 export type BranchWhereUniqueInput = Prisma.AtLeast<{
@@ -368,6 +372,8 @@ export type BranchWhereUniqueInput = Prisma.AtLeast<{
   dealerBayMasters?: Prisma.DealerBayMasterListRelationFilter
   serviceQuotation?: Prisma.ServiceQuotationMasterListRelationFilter
   serviceAppointment?: Prisma.ServiceAppointmentListRelationFilter
+  stores?: Prisma.StoreMasterListRelationFilter
+  branchParts?: Prisma.BranchPartMasterListRelationFilter
 }, "id" | "tenantId_branchCode">
 
 export type BranchOrderByWithAggregationInput = {
@@ -437,6 +443,8 @@ export type BranchCreateInput = {
   dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateInput = {
@@ -461,6 +469,8 @@ export type BranchUncheckedCreateInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterUncheckedCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUpdateInput = {
@@ -484,6 +494,8 @@ export type BranchUpdateInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateInput = {
@@ -508,6 +520,8 @@ export type BranchUncheckedUpdateInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUncheckedUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateManyInput = {
@@ -764,6 +778,34 @@ export type BranchUpdateOneRequiredWithoutServiceAppointmentNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutServiceAppointmentInput, Prisma.BranchUpdateWithoutServiceAppointmentInput>, Prisma.BranchUncheckedUpdateWithoutServiceAppointmentInput>
 }
 
+export type BranchCreateNestedOneWithoutStoresInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutStoresInput, Prisma.BranchUncheckedCreateWithoutStoresInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutStoresInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutStoresNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutStoresInput, Prisma.BranchUncheckedCreateWithoutStoresInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutStoresInput
+  upsert?: Prisma.BranchUpsertWithoutStoresInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutStoresInput, Prisma.BranchUpdateWithoutStoresInput>, Prisma.BranchUncheckedUpdateWithoutStoresInput>
+}
+
+export type BranchCreateNestedOneWithoutBranchPartsInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutBranchPartsInput, Prisma.BranchUncheckedCreateWithoutBranchPartsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutBranchPartsInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutBranchPartsNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutBranchPartsInput, Prisma.BranchUncheckedCreateWithoutBranchPartsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutBranchPartsInput
+  upsert?: Prisma.BranchUpsertWithoutBranchPartsInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutBranchPartsInput, Prisma.BranchUpdateWithoutBranchPartsInput>, Prisma.BranchUncheckedUpdateWithoutBranchPartsInput>
+}
+
 export type BranchCreateWithoutTenantInput = {
   branchCode: string
   branchName: string
@@ -784,6 +826,8 @@ export type BranchCreateWithoutTenantInput = {
   dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutTenantInput = {
@@ -807,6 +851,8 @@ export type BranchUncheckedCreateWithoutTenantInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterUncheckedCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutTenantInput = {
@@ -877,6 +923,8 @@ export type BranchCreateWithoutUsersInput = {
   dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutUsersInput = {
@@ -900,6 +948,8 @@ export type BranchUncheckedCreateWithoutUsersInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterUncheckedCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutUsersInput = {
@@ -938,6 +988,8 @@ export type BranchUpdateWithoutUsersInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutUsersInput = {
@@ -961,6 +1013,8 @@ export type BranchUncheckedUpdateWithoutUsersInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUncheckedUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutJobCardsInput = {
@@ -983,6 +1037,8 @@ export type BranchCreateWithoutJobCardsInput = {
   dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutJobCardsInput = {
@@ -1006,6 +1062,8 @@ export type BranchUncheckedCreateWithoutJobCardsInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterUncheckedCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutJobCardsInput = {
@@ -1044,6 +1102,8 @@ export type BranchUpdateWithoutJobCardsInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutJobCardsInput = {
@@ -1067,6 +1127,8 @@ export type BranchUncheckedUpdateWithoutJobCardsInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUncheckedUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutDealerBayMastersInput = {
@@ -1089,6 +1151,8 @@ export type BranchCreateWithoutDealerBayMastersInput = {
   jobCards?: Prisma.JobCardCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutDealerBayMastersInput = {
@@ -1112,6 +1176,8 @@ export type BranchUncheckedCreateWithoutDealerBayMastersInput = {
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterUncheckedCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutDealerBayMastersInput = {
@@ -1150,6 +1216,8 @@ export type BranchUpdateWithoutDealerBayMastersInput = {
   jobCards?: Prisma.JobCardUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutDealerBayMastersInput = {
@@ -1173,6 +1241,8 @@ export type BranchUncheckedUpdateWithoutDealerBayMastersInput = {
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUncheckedUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutServiceQuotationInput = {
@@ -1195,6 +1265,8 @@ export type BranchCreateWithoutServiceQuotationInput = {
   jobCards?: Prisma.JobCardCreateNestedManyWithoutBranchInput
   dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutServiceQuotationInput = {
@@ -1218,6 +1290,8 @@ export type BranchUncheckedCreateWithoutServiceQuotationInput = {
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutBranchInput
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterUncheckedCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutServiceQuotationInput = {
@@ -1256,6 +1330,8 @@ export type BranchUpdateWithoutServiceQuotationInput = {
   jobCards?: Prisma.JobCardUpdateManyWithoutBranchNestedInput
   dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutServiceQuotationInput = {
@@ -1279,6 +1355,8 @@ export type BranchUncheckedUpdateWithoutServiceQuotationInput = {
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutBranchNestedInput
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUncheckedUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutServiceAppointmentInput = {
@@ -1301,6 +1379,8 @@ export type BranchCreateWithoutServiceAppointmentInput = {
   jobCards?: Prisma.JobCardCreateNestedManyWithoutBranchInput
   dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutServiceAppointmentInput = {
@@ -1324,6 +1404,8 @@ export type BranchUncheckedCreateWithoutServiceAppointmentInput = {
   jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutBranchInput
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutBranchInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterUncheckedCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutServiceAppointmentInput = {
@@ -1362,6 +1444,8 @@ export type BranchUpdateWithoutServiceAppointmentInput = {
   jobCards?: Prisma.JobCardUpdateManyWithoutBranchNestedInput
   dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutServiceAppointmentInput = {
@@ -1385,6 +1469,236 @@ export type BranchUncheckedUpdateWithoutServiceAppointmentInput = {
   jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutBranchNestedInput
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUncheckedUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutStoresInput = {
+  branchCode: string
+  branchName: string
+  email?: string | null
+  phone?: string | null
+  address1?: string | null
+  address2?: string | null
+  locality?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UsersCreateNestedManyWithoutBranchInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutBranchInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutBranchInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutBranchInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutStoresInput = {
+  id?: number
+  tenantId: number
+  branchCode: string
+  branchName: string
+  email?: string | null
+  phone?: string | null
+  address1?: string | null
+  address2?: string | null
+  locality?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UsersUncheckedCreateNestedManyWithoutBranchInput
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutBranchInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutBranchInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutBranchInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutBranchInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutStoresInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutStoresInput, Prisma.BranchUncheckedCreateWithoutStoresInput>
+}
+
+export type BranchUpsertWithoutStoresInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutStoresInput, Prisma.BranchUncheckedUpdateWithoutStoresInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutStoresInput, Prisma.BranchUncheckedCreateWithoutStoresInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutStoresInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutStoresInput, Prisma.BranchUncheckedUpdateWithoutStoresInput>
+}
+
+export type BranchUpdateWithoutStoresInput = {
+  branchCode?: Prisma.StringFieldUpdateOperationsInput | string
+  branchName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UsersUpdateManyWithoutBranchNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutBranchNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutBranchNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutBranchNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutStoresInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  branchCode?: Prisma.StringFieldUpdateOperationsInput | string
+  branchName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UsersUncheckedUpdateManyWithoutBranchNestedInput
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutBranchNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutBranchNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutBranchNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutBranchPartsInput = {
+  branchCode: string
+  branchName: string
+  email?: string | null
+  phone?: string | null
+  address1?: string | null
+  address2?: string | null
+  locality?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UsersCreateNestedManyWithoutBranchInput
+  jobCards?: Prisma.JobCardCreateNestedManyWithoutBranchInput
+  dealerBayMasters?: Prisma.DealerBayMasterCreateNestedManyWithoutBranchInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterCreateNestedManyWithoutBranchInput
+  serviceAppointment?: Prisma.ServiceAppointmentCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutBranchPartsInput = {
+  id?: number
+  tenantId: number
+  branchCode: string
+  branchName: string
+  email?: string | null
+  phone?: string | null
+  address1?: string | null
+  address2?: string | null
+  locality?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  pincode?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UsersUncheckedCreateNestedManyWithoutBranchInput
+  jobCards?: Prisma.JobCardUncheckedCreateNestedManyWithoutBranchInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedCreateNestedManyWithoutBranchInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedCreateNestedManyWithoutBranchInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedCreateNestedManyWithoutBranchInput
+  stores?: Prisma.StoreMasterUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutBranchPartsInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutBranchPartsInput, Prisma.BranchUncheckedCreateWithoutBranchPartsInput>
+}
+
+export type BranchUpsertWithoutBranchPartsInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutBranchPartsInput, Prisma.BranchUncheckedUpdateWithoutBranchPartsInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutBranchPartsInput, Prisma.BranchUncheckedCreateWithoutBranchPartsInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutBranchPartsInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutBranchPartsInput, Prisma.BranchUncheckedUpdateWithoutBranchPartsInput>
+}
+
+export type BranchUpdateWithoutBranchPartsInput = {
+  branchCode?: Prisma.StringFieldUpdateOperationsInput | string
+  branchName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UsersUpdateManyWithoutBranchNestedInput
+  jobCards?: Prisma.JobCardUpdateManyWithoutBranchNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutBranchNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutBranchNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutBranchPartsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  branchCode?: Prisma.StringFieldUpdateOperationsInput | string
+  branchName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  locality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UsersUncheckedUpdateManyWithoutBranchNestedInput
+  jobCards?: Prisma.JobCardUncheckedUpdateManyWithoutBranchNestedInput
+  dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutBranchNestedInput
+  serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutBranchNestedInput
+  serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateManyTenantInput = {
@@ -1425,6 +1739,8 @@ export type BranchUpdateWithoutTenantInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutTenantInput = {
@@ -1448,6 +1764,8 @@ export type BranchUncheckedUpdateWithoutTenantInput = {
   dealerBayMasters?: Prisma.DealerBayMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceQuotation?: Prisma.ServiceQuotationMasterUncheckedUpdateManyWithoutBranchNestedInput
   serviceAppointment?: Prisma.ServiceAppointmentUncheckedUpdateManyWithoutBranchNestedInput
+  stores?: Prisma.StoreMasterUncheckedUpdateManyWithoutBranchNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateManyWithoutTenantInput = {
@@ -1479,6 +1797,8 @@ export type BranchCountOutputType = {
   dealerBayMasters: number
   serviceQuotation: number
   serviceAppointment: number
+  stores: number
+  branchParts: number
 }
 
 export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1487,6 +1807,8 @@ export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   dealerBayMasters?: boolean | BranchCountOutputTypeCountDealerBayMastersArgs
   serviceQuotation?: boolean | BranchCountOutputTypeCountServiceQuotationArgs
   serviceAppointment?: boolean | BranchCountOutputTypeCountServiceAppointmentArgs
+  stores?: boolean | BranchCountOutputTypeCountStoresArgs
+  branchParts?: boolean | BranchCountOutputTypeCountBranchPartsArgs
 }
 
 /**
@@ -1534,6 +1856,20 @@ export type BranchCountOutputTypeCountServiceAppointmentArgs<ExtArgs extends run
   where?: Prisma.ServiceAppointmentWhereInput
 }
 
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountStoresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StoreMasterWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountBranchPartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BranchPartMasterWhereInput
+}
+
 
 export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1558,6 +1894,8 @@ export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   dealerBayMasters?: boolean | Prisma.Branch$dealerBayMastersArgs<ExtArgs>
   serviceQuotation?: boolean | Prisma.Branch$serviceQuotationArgs<ExtArgs>
   serviceAppointment?: boolean | Prisma.Branch$serviceAppointmentArgs<ExtArgs>
+  stores?: boolean | Prisma.Branch$storesArgs<ExtArgs>
+  branchParts?: boolean | Prisma.Branch$branchPartsArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["branch"]>
 
@@ -1628,6 +1966,8 @@ export type BranchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   dealerBayMasters?: boolean | Prisma.Branch$dealerBayMastersArgs<ExtArgs>
   serviceQuotation?: boolean | Prisma.Branch$serviceQuotationArgs<ExtArgs>
   serviceAppointment?: boolean | Prisma.Branch$serviceAppointmentArgs<ExtArgs>
+  stores?: boolean | Prisma.Branch$storesArgs<ExtArgs>
+  branchParts?: boolean | Prisma.Branch$branchPartsArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BranchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1646,6 +1986,8 @@ export type $BranchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     dealerBayMasters: Prisma.$DealerBayMasterPayload<ExtArgs>[]
     serviceQuotation: Prisma.$ServiceQuotationMasterPayload<ExtArgs>[]
     serviceAppointment: Prisma.$ServiceAppointmentPayload<ExtArgs>[]
+    stores: Prisma.$StoreMasterPayload<ExtArgs>[]
+    branchParts: Prisma.$BranchPartMasterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2064,6 +2406,8 @@ export interface Prisma__BranchClient<T, Null = never, ExtArgs extends runtime.T
   dealerBayMasters<T extends Prisma.Branch$dealerBayMastersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$dealerBayMastersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DealerBayMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceQuotation<T extends Prisma.Branch$serviceQuotationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$serviceQuotationArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceAppointment<T extends Prisma.Branch$serviceAppointmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$serviceAppointmentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stores<T extends Prisma.Branch$storesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$storesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoreMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  branchParts<T extends Prisma.Branch$branchPartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$branchPartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPartMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2627,6 +2971,54 @@ export type Branch$serviceAppointmentArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.ServiceAppointmentScalarFieldEnum | Prisma.ServiceAppointmentScalarFieldEnum[]
+}
+
+/**
+ * Branch.stores
+ */
+export type Branch$storesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StoreMaster
+   */
+  select?: Prisma.StoreMasterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StoreMaster
+   */
+  omit?: Prisma.StoreMasterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StoreMasterInclude<ExtArgs> | null
+  where?: Prisma.StoreMasterWhereInput
+  orderBy?: Prisma.StoreMasterOrderByWithRelationInput | Prisma.StoreMasterOrderByWithRelationInput[]
+  cursor?: Prisma.StoreMasterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StoreMasterScalarFieldEnum | Prisma.StoreMasterScalarFieldEnum[]
+}
+
+/**
+ * Branch.branchParts
+ */
+export type Branch$branchPartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BranchPartMaster
+   */
+  select?: Prisma.BranchPartMasterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BranchPartMaster
+   */
+  omit?: Prisma.BranchPartMasterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BranchPartMasterInclude<ExtArgs> | null
+  where?: Prisma.BranchPartMasterWhereInput
+  orderBy?: Prisma.BranchPartMasterOrderByWithRelationInput | Prisma.BranchPartMasterOrderByWithRelationInput[]
+  cursor?: Prisma.BranchPartMasterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BranchPartMasterScalarFieldEnum | Prisma.BranchPartMasterScalarFieldEnum[]
 }
 
 /**

@@ -20,6 +20,8 @@ import { getListOfPartFitment, getPartFitmentDetails, updatePartFitment } from "
 
 import { createQuotation, getListOfServiceQuotation, getServiceQuotationDetails, searchedServiceQuotation, updateQuotation } from "../../controllers/tenants/ServiceQuotationAndAppointment/serviceQuotaionManagement";
 import { cancleAppointment, createAppointment, getListOfServiceAppointment, getServiceAppointmentDetails, updateAppointment } from "../../controllers/tenants/ServiceQuotationAndAppointment/serviceAppointmentManagement";
+import { activateStore, createStores, deactivateStore, getListOfStores, getStoreDetails, updateStoreDetails } from "../../controllers/tenants/storeMasterManagementController";
+import { createBinsInStore, getListOfBinsAccordingToStore, updateBinDetails } from "../../controllers/tenants/binMasterManagementController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -197,4 +199,18 @@ tenantRoute.get('/tenant/service/appointment/get/all', authenticate, requireTena
 tenantRoute.get('/tenant/service/appointment/get/:serviceAppointmentId', authenticate, requireTenantUser, getServiceAppointmentDetails)
 tenantRoute.put('/tenant/service/appointment/:serviceAppointmentId/update', authenticate, requireTenantUser, updateAppointment)
 tenantRoute.patch('/tenant/service/appointment/:serviceAppointmentId/cancle', authenticate, requireTenantUser, cancleAppointment)
+
+
+//Store Master
+tenantRoute.post('/tenant/store/create', authenticate, requireTenantUser, createStores)
+tenantRoute.put('/tenant/store/:storeId/update', authenticate, requireTenantUser, updateStoreDetails)
+tenantRoute.get('/tenant/store/get/all', authenticate, requireTenantUser, getListOfStores)
+tenantRoute.get('/tenant/store/get/:storeId', authenticate, requireTenantUser, getStoreDetails)
+tenantRoute.patch('/tenant/store/:storeId/deactivate', authenticate, requireTenantUser, deactivateStore)
+tenantRoute.patch('/tenant/store/:storeId/activate', authenticate, requireTenantUser, activateStore)
+
+//Bin Master
+tenantRoute.post('/tenant/store/bin/create', authenticate, requireTenantUser, createBinsInStore)
+tenantRoute.put('/tenant/store/bin/:binId/update', authenticate, requireTenantUser, updateBinDetails)
+tenantRoute.get('/tenant/store/bin/get/all', authenticate, requireTenantUser, getListOfBinsAccordingToStore)
 export default tenantRoute;

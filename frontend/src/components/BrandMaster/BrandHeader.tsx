@@ -27,10 +27,11 @@ const BrandHeader = ({ onCreated }: BrandHeaderProps) => {
                     <Button variant='outline' className='flex items-center gap-2' onClick={() => setImportOpen(true)}>
                         <FileSpreadsheet />Import Excel
                     </Button>
+                    {userInfo?.role === 'SUPER_ADMIN' && <div className='ms-auto'>
+                        <CreateBrandModal onCreated={onCreated} />
+                    </div>}
                 </div>}
-                {userInfo?.role?.roleCode === 'SUPER_ADMIN' && <div className='ms-auto'>
-                    <CreateBrandModal onCreated={onCreated} />
-                </div>}
+
             </div>
             <ImportExcelUploadModal open={importOpen} setOpen={setImportOpen} config={brandImportConfig} onImported={onCreated} />
         </>
