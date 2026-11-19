@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { getErrorMessage, getErrorResponse } from "@/lib/utils"
 import { AuthContext } from "../AuthContext";
-import type { branchListType, designationListType, employeeListType, roleListType, rolePermissionMappingType } from "@/Types/tenantCreateType";
-import { getAssignedPermissionById, getAssignedPermissionList, getDesignationById, getDesignationList, getEmployeeById, getEmployeeList, getRoleById, getRoleList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
+import type { binListType, branchListType, designationListType, employeeListType, roleListType, rolePermissionMappingType, storageListType } from "@/Types/tenantCreateType";
+import { getAssignedPermissionById, getAssignedPermissionList, getBinById, getBinList, getDesignationById, getDesignationList, getEmployeeById, getEmployeeList, getRoleById, getRoleList, getStorageById, getStorageList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
 import { toast } from "@/components/ui/toast";
 
 interface TenantContextValue {
@@ -22,6 +22,42 @@ interface TenantContextValue {
     openViewBranch: (branchId: number) => Promise<void>
     openEditBranch: (branchId: number) => Promise<void>
     closeAllModals: () => void
+
+    binList: binListType[]
+    binSkip: number
+    setBinSkip: React.Dispatch<React.SetStateAction<number>>
+    binTake: number
+    setBinTake: React.Dispatch<React.SetStateAction<number>>
+    totalBins: number
+    selectedBin: binListType | null
+    setSelectedBin: React.Dispatch<React.SetStateAction<binListType | null>>
+    viewBinModalOpen: boolean
+    setViewBinModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editBinModalOpen: boolean
+    setEditBinModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    fetchBinList: (skip: number, take: number) => Promise<void>
+    fetchBinById: (binId: number) => Promise<void>
+    openViewBin: (binId: number) => Promise<void>
+    openEditBin: (binId: number) => Promise<void>
+    closeAllBinModals: () => void
+
+    storageList: storageListType[]
+    storageSkip: number
+    setStorageSkip: React.Dispatch<React.SetStateAction<number>>
+    storageTake: number
+    setStorageTake: React.Dispatch<React.SetStateAction<number>>
+    totalStorages: number
+    selectedStorage: storageListType | null
+    setSelectedStorage: React.Dispatch<React.SetStateAction<storageListType | null>>
+    viewStorageModalOpen: boolean
+    setViewStorageModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editStorageModalOpen: boolean
+    setEditStorageModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    fetchStorageList: (skip: number, take: number) => Promise<void>
+    fetchStorageById: (storageId: number) => Promise<void>
+    openViewStorage: (storageId: number) => Promise<void>
+    openEditStorage: (storageId: number) => Promise<void>
+    closeAllStorageModals: () => void
 
     designationList: designationListType[]
     designationSkip: number
@@ -148,6 +184,22 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
     const [selectedEmployee, setSelectedEmployee] = useState<employeeListType | null>(null)
     const [viewEmployeeModalOpen, setViewEmployeeModalOpen] = useState<boolean>(false)
     const [editEmployeeModalOpen, setEditEmployeeModalOpen] = useState<boolean>(false)
+
+    const [binList, setBinList] = useState<binListType[]>([])
+    const [binSkip, setBinSkip] = useState<number>(0)
+    const [binTake, setBinTake] = useState<number>(9)
+    const [totalBins, setTotalBins] = useState<number>(0)
+    const [selectedBin, setSelectedBin] = useState<binListType | null>(null)
+    const [viewBinModalOpen, setViewBinModalOpen] = useState<boolean>(false)
+    const [editBinModalOpen, setEditBinModalOpen] = useState<boolean>(false)
+
+    const [storageList, setStorageList] = useState<storageListType[]>([])
+    const [storageSkip, setStorageSkip] = useState<number>(0)
+    const [storageTake, setStorageTake] = useState<number>(9)
+    const [totalStorages, setTotalStorages] = useState<number>(0)
+    const [selectedStorage, setSelectedStorage] = useState<storageListType | null>(null)
+    const [viewStorageModalOpen, setViewStorageModalOpen] = useState<boolean>(false)
+    const [editStorageModalOpen, setEditStorageModalOpen] = useState<boolean>(false)
 
         const fetchTenantBranchList = async (skip: number, take: number) => {
         try {
@@ -386,6 +438,96 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
         setSelectedEmployee(null)
     }
 
+    const fetchBinList = useCallback(async (skip: number, take: number) => {
+        try {
+            const data = await getBinList(skip, take)
+            if (data?.success) {
+                setBinList(data?.data)
+                setTotalBins(data?.count)
+            }
+        } catch (err) {
+            toast.add({
+                type: 'error',
+                description: getErrorMessage(err)
+            })
+        }
+    }, [])
+
+    const fetchBinById = async (binId: number) => {
+        try {
+            const data = await getBinById(binId)
+            if (data?.success) {
+                setSelectedBin(data?.data)
+            }
+        } catch (err) {
+            toast.add({
+                type: 'error',
+                description: getErrorMessage(err)
+            })
+        }
+    }
+
+    const openViewBin = async (binId: number) => {
+        await fetchBinById(binId)
+        setViewBinModalOpen(true)
+    }
+
+    const openEditBin = async (binId: number) => {
+        await fetchBinById(binId)
+        setEditBinModalOpen(true)
+    }
+
+    const closeAllBinModals = () => {
+        setViewBinModalOpen(false)
+        setEditBinModalOpen(false)
+        setSelectedBin(null)
+    }
+
+    const fetchStorageList = useCallback(async (skip: number, take: number) => {
+        try {
+            const data = await getStorageList(skip, take)
+            if (data?.success) {
+                setStorageList(data?.data)
+                setTotalStorages(data?.count)
+            }
+        } catch (err) {
+            toast.add({
+                type: 'error',
+                description: getErrorMessage(err)
+            })
+        }
+    }, [])
+
+    const fetchStorageById = async (storageId: number) => {
+        try {
+            const data = await getStorageById(storageId)
+            if (data?.success) {
+                setSelectedStorage(data?.data)
+            }
+        } catch (err) {
+            toast.add({
+                type: 'error',
+                description: getErrorMessage(err)
+            })
+        }
+    }
+
+    const openViewStorage = async (storageId: number) => {
+        await fetchStorageById(storageId)
+        setViewStorageModalOpen(true)
+    }
+
+    const openEditStorage = async (storageId: number) => {
+        await fetchStorageById(storageId)
+        setEditStorageModalOpen(true)
+    }
+
+    const closeAllStorageModals = () => {
+        setViewStorageModalOpen(false)
+        setEditStorageModalOpen(false)
+        setSelectedStorage(null)
+    }
+
     useEffect(() => {
         fetchTenantBranchList(skip, take)
     }, [isLoggedIn, skip, take])
@@ -415,7 +557,17 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
             selectedEmployee, setSelectedEmployee,
             viewEmployeeModalOpen, setViewEmployeeModalOpen,
             editEmployeeModalOpen, setEditEmployeeModalOpen,
-            fetchEmployeeById, openViewEmployee, openEditEmployee, closeAllEmployeeModals
+            fetchEmployeeById, openViewEmployee, openEditEmployee, closeAllEmployeeModals,
+            binList, binSkip, setBinSkip, binTake, setBinTake, totalBins, fetchBinList,
+            selectedBin, setSelectedBin,
+            viewBinModalOpen, setViewBinModalOpen,
+            editBinModalOpen, setEditBinModalOpen,
+            fetchBinById, openViewBin, openEditBin, closeAllBinModals,
+            storageList, storageSkip, setStorageSkip, storageTake, setStorageTake, totalStorages, fetchStorageList,
+            selectedStorage, setSelectedStorage,
+            viewStorageModalOpen, setViewStorageModalOpen,
+            editStorageModalOpen, setEditStorageModalOpen,
+            fetchStorageById, openViewStorage, openEditStorage, closeAllStorageModals
         }}>
             {children}
         </TenantContext.Provider>

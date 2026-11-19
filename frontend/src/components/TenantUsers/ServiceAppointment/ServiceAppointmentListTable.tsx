@@ -122,7 +122,7 @@ const ServiceAppointmentListTable = ({ refreshKey = 0 }: ServiceAppointmentListT
     return (
         <div className='w-full'>
             <div className='mt-5 overflow-hidden rounded-xl border border-border bg-card shadow-sm'>
-                <Table className='w-full min-w-[1100px]'>
+                <Table className='w-full min-w-275'>
                     <TableHeader>
                         <TableRow className='border-b bg-muted/40 hover:bg-muted/40'>
                             <TableHead className='w-16 text-center text-muted-foreground'>Sr No.</TableHead>

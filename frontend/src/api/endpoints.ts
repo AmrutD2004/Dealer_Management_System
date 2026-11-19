@@ -881,6 +881,68 @@ export const searchedServiceQuotation = async (serviceQuotationNo: string) => {
 
 
 
+//Bin management
+export const createBin = async (payload: object) => {
+    const response = await api.post(`/api/tenant/bin/create`, payload)
+    return await response.data;
+}
+
+export const getBinList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/bin/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getBinById = async (binId: number) => {
+    const response = await api.get(`/api/tenant/bin/get/${binId}`)
+    return await response.data;
+}
+
+export const editBin = async (payload: object, binId: number) => {
+    const response = await api.put(`/api/tenant/bin/${binId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateBin = async (binId: number) => {
+    const response = await api.patch(`/api/tenant/bin/${binId}/deactivate`)
+    return await response.data
+}
+
+export const activateBin = async (binId: number) => {
+    const response = await api.patch(`/api/tenant/bin/${binId}/activate`)
+    return await response.data
+}
+
+//Storage management
+export const createStorage = async (payload: object) => {
+    const response = await api.post(`/api/tenant/storage/create`, payload)
+    return await response.data;
+}
+
+export const getStorageList = async (skip: number, take: number) => {
+    const response = await api.get(`/api/tenant/storage/get/all?skip=${skip}&take=${take}`)
+    return await response.data;
+}
+
+export const getStorageById = async (storageId: number) => {
+    const response = await api.get(`/api/tenant/storage/get/${storageId}`)
+    return await response.data;
+}
+
+export const editStorage = async (payload: object, storageId: number) => {
+    const response = await api.put(`/api/tenant/storage/${storageId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateStorage = async (storageId: number) => {
+    const response = await api.patch(`/api/tenant/storage/${storageId}/deactivate`)
+    return await response.data
+}
+
+export const activateStorage = async (storageId: number) => {
+    const response = await api.patch(`/api/tenant/storage/${storageId}/activate`)
+    return await response.data
+}
+
 // Third Party APIs
 
 export const getCountries = async () => {
