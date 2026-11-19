@@ -427,7 +427,10 @@ export const ModelName = {
   ServiceQuotationLabour: 'ServiceQuotationLabour',
   ServiceQuotationCustomerVoice: 'ServiceQuotationCustomerVoice',
   ServiceAppointment: 'ServiceAppointment',
-  ServiceAppointmentCustomerVoice: 'ServiceAppointmentCustomerVoice'
+  ServiceAppointmentCustomerVoice: 'ServiceAppointmentCustomerVoice',
+  StoreMaster: 'StoreMaster',
+  BinMaster: 'BinMaster',
+  BranchPartMaster: 'BranchPartMaster'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -443,7 +446,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment" | "serviceQuotationMaster" | "serviceQuotationPart" | "serviceQuotationLabour" | "serviceQuotationCustomerVoice" | "serviceAppointment" | "serviceAppointmentCustomerVoice"
+    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment" | "serviceQuotationMaster" | "serviceQuotationPart" | "serviceQuotationLabour" | "serviceQuotationCustomerVoice" | "serviceAppointment" | "serviceAppointmentCustomerVoice" | "storeMaster" | "binMaster" | "branchPartMaster"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2741,6 +2744,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StoreMaster: {
+      payload: Prisma.$StoreMasterPayload<ExtArgs>
+      fields: Prisma.StoreMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StoreMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StoreMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.StoreMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StoreMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>
+        }
+        findMany: {
+          args: Prisma.StoreMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>[]
+        }
+        create: {
+          args: Prisma.StoreMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>
+        }
+        createMany: {
+          args: Prisma.StoreMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StoreMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.StoreMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>
+        }
+        update: {
+          args: Prisma.StoreMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.StoreMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StoreMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StoreMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.StoreMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.StoreMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStoreMaster>
+        }
+        groupBy: {
+          args: Prisma.StoreMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StoreMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    BinMaster: {
+      payload: Prisma.$BinMasterPayload<ExtArgs>
+      fields: Prisma.BinMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BinMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BinMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.BinMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BinMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>
+        }
+        findMany: {
+          args: Prisma.BinMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>[]
+        }
+        create: {
+          args: Prisma.BinMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>
+        }
+        createMany: {
+          args: Prisma.BinMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BinMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.BinMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>
+        }
+        update: {
+          args: Prisma.BinMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.BinMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BinMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BinMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.BinMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BinMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.BinMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBinMaster>
+        }
+        groupBy: {
+          args: Prisma.BinMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BinMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BinMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BinMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    BranchPartMaster: {
+      payload: Prisma.$BranchPartMasterPayload<ExtArgs>
+      fields: Prisma.BranchPartMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BranchPartMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BranchPartMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.BranchPartMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BranchPartMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>
+        }
+        findMany: {
+          args: Prisma.BranchPartMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>[]
+        }
+        create: {
+          args: Prisma.BranchPartMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>
+        }
+        createMany: {
+          args: Prisma.BranchPartMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BranchPartMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.BranchPartMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>
+        }
+        update: {
+          args: Prisma.BranchPartMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.BranchPartMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BranchPartMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BranchPartMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.BranchPartMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchPartMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.BranchPartMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBranchPartMaster>
+        }
+        groupBy: {
+          args: Prisma.BranchPartMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BranchPartMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BranchPartMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BranchPartMasterCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3352,6 +3577,60 @@ export const ServiceAppointmentCustomerVoiceScalarFieldEnum = {
 export type ServiceAppointmentCustomerVoiceScalarFieldEnum = (typeof ServiceAppointmentCustomerVoiceScalarFieldEnum)[keyof typeof ServiceAppointmentCustomerVoiceScalarFieldEnum]
 
 
+export const StoreMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  description: 'description',
+  IsBlocked: 'IsBlocked',
+  IsActive: 'IsActive',
+  IsMainStore: 'IsMainStore',
+  branchId: 'branchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreMasterScalarFieldEnum = (typeof StoreMasterScalarFieldEnum)[keyof typeof StoreMasterScalarFieldEnum]
+
+
+export const BinMasterScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  binCode: 'binCode',
+  binDescription: 'binDescription',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BinMasterScalarFieldEnum = (typeof BinMasterScalarFieldEnum)[keyof typeof BinMasterScalarFieldEnum]
+
+
+export const BranchPartMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  partId: 'partId',
+  storeId: 'storeId',
+  binId: 'binId',
+  stockInHand: 'stockInHand',
+  isDefaultBin: 'isDefaultBin',
+  isActive: 'isActive',
+  minimumLevel: 'minimumLevel',
+  maximumLevel: 'maximumLevel',
+  reorderLevel: 'reorderLevel',
+  safetyStock: 'safetyStock',
+  reservationQty: 'reservationQty',
+  mrp: 'mrp',
+  sellingPrice: 'sellingPrice',
+  latestLandedCost: 'latestLandedCost',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BranchPartMasterScalarFieldEnum = (typeof BranchPartMasterScalarFieldEnum)[keyof typeof BranchPartMasterScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3892,6 +4171,9 @@ export type GlobalOmitConfig = {
   serviceQuotationCustomerVoice?: Prisma.ServiceQuotationCustomerVoiceOmit
   serviceAppointment?: Prisma.ServiceAppointmentOmit
   serviceAppointmentCustomerVoice?: Prisma.ServiceAppointmentCustomerVoiceOmit
+  storeMaster?: Prisma.StoreMasterOmit
+  binMaster?: Prisma.BinMasterOmit
+  branchPartMaster?: Prisma.BranchPartMasterOmit
 }
 
 /* Types for Logging */

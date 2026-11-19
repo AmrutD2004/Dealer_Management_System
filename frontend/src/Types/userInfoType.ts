@@ -33,7 +33,7 @@ export interface userInfoType {
   lastLoginAt: string;
   createdAt: string;
   updatedAt: string;
-  role: any;
+  role: Role | any;
   branch: Branch;
   tenant: Tenant;
 

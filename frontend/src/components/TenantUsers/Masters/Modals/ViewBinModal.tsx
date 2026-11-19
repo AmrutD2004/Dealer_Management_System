@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import type { binListType } from "@/Types/tenantCreateType"
-import { Trash2 } from "lucide-react"
+import { Archive } from "lucide-react"
 
 type props = {
   bin: binListType | null
@@ -29,7 +29,7 @@ export function ViewBinModal({ bin, open, onClose }: props) {
       >
         <DialogHeader>
           <div className="flex items-center gap-3">
-            <Trash2 className="h-8 w-8 text-primary" />
+            <Archive className="h-8 w-8 text-primary" />
             <div>
               <DialogTitle className="text-lg">Bin Details</DialogTitle>
               <DialogDescription>
@@ -64,27 +64,28 @@ export function ViewBinModal({ bin, open, onClose }: props) {
                 </Badge>
               </span>
             </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
+                Storage ID
+              </Label>
+              <span className="text-xs font-mono font-semibold">{bin.storeId}</span>
+            </div>
             <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
               <Label className="text-xs font-medium text-muted-foreground">
-                Bin Name
+                Storage
               </Label>
-              <span className="text-xs font-medium">{bin.binName}</span>
+              <span className="text-xs font-medium">{bin.store?.code ?? `Storage #${bin.storeId}`}</span>
             </div>
             <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
               <Label className="text-xs font-medium text-muted-foreground">
                 Description
               </Label>
-              <div className="flex items-start gap-2">
-                <Trash2 className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
-                <span className="text-xs font-medium">
-                  {bin.description || "—"}
-                </span>
-              </div>
+              <span className="text-xs font-medium">{bin.binDescription || "—"}</span>
             </div>
           </div></div></div>
         </DialogHeader>
         <DialogFooter>
-          <Button  onClick={onClose} variant="outline" >
+          <Button onClick={onClose} variant="outline" >
             Close
           </Button>
         </DialogFooter>

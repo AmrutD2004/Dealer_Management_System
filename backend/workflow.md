@@ -145,9 +145,108 @@ The HSN data path is:
 
 ```text
 Tenant user (Users.id, Users.tenantId)
-                 │
-                 ▼
-       HSNMaster.tenantId
-                 │
-                 └── HSNMaster.hsnCode (unique within the tenant)
+             │
+             ▼
+   HSNMaster.tenantId
+             │
+             └── HSNMaster.hsnCode (unique within the tenant)
+```
+
+## 10. Tenant User Manages Service Quotations
+
+The tenant router exposes service quotation operations under `/api/tenant/service/quotation`. Every route applies `authenticate` and `requireTenantUser`, so the controller receives the tenant user's ID and tenant ID from the authenticated request. The quotation master stores a quotation number, status, totals, and its owning tenant in `ServiceQuotationMaster`; `(tenantId, quotationNo)` is unique.
+
+| Operation | Endpoint | Behavior |
+|---|---|---|
+| Create | `POST /api/tenant/service/quotation/create` | Requires quotation details (customer, vehicle, service category, type, repair order), validates referenced records, creates the row with that tenant ID. `action` is parsed as NEW or SUPPLEMENT, `status` as DRAFT/INPROGRESS/APPROVED/COMPLETED/GENERATED/REJECTED. `taxRate` is parsed as a number and `description` is optional. |
+| List | `GET /api/tenant/service/quotation/get/all` | Returns quotations and the total count for the authenticated tenant. Optional `skip` and `take` query parameters are passed to Prisma for pagination. |
+| Details | `GET /api/tenant/service/quotation/get/:quotationId` | Fetches one quotation row by ID and includes its tenant relation. Optional `includeLines` query parameter fetches associated parts, labours, and voices. |
+| Update | `PUT /api/tenant/service/quotation/:quotationId/update` | Requires the quotation ID and code, then updates the code, status, action, and description. The update query includes both the quotation ID and authenticated tenant ID. Lines (parts, labours, voices) can be added, removed, or modified in the same call. |
+
+Quotation data path:
+
+```text
+Tenant user (Users.id, Users.tenantId)
+             │
+             ▼
+   ServiceQuotationMaster.tenantId
+             │
+             ├── serviceQuotationParts (parts selected)
+             │     │
+             │     └── PartMaster.partNo (unique within the tenant)
+             │
+             ├── serviceQuotationLabours (labour from LabourMaster)
+             │     │
+             │     └── LabourMaster.labourCode (unique within the tenant)
+             │
+             └── serviceQuotationCustomerVoices (voices from job card)
+                   │
+                   └── JobCardCustomerVoice.actionToBeTaken
+                   │
+                   └── LabourMaster.id
+```
+
+## 11. Tenant User Manages Service Appointments
+
+The tenant router exposes service appointment operations under `/api/tenant/service/appointment` (the server mounts the tenant router under `/api`). Every route applies `authenticate` and `requireTenantUser`, so the controller receives the tenant user's ID and tenant ID from the authenticated request. The appointment stores an action, date, status, and its owning tenant in `ServiceAppointment`; `(tenantId, appointmentNo)` is unique.
+
+| Operation | Endpoint | Behavior |
+|---|---|---|
+| Create | `POST /api/tenant/service/appointment/create` | Requires action (`NEW_REQUIREMENT`, `RE_SCHEDULE`, `CANCEL`), appointment date, source (INWARD_CALL, OUTWARD_CALL, WHATSAPP, SMS, WALK-IN), and validates referenced records (vehicle, customer). Creates the row with that tenant ID. `estimateCharge` is parsed as a Decimal. |
+| List | `GET /api/tenant/service/appointment/get/all` | Returns appointments and the total count for the authenticated tenant. Optional `skip` and `take` query parameters are passed to Prisma for pagination. |
+| Details | `GET /api/tenant/service/appointment/get/:appointmentId` | Fetches one appointment by ID and includes its tenant relation. |
+| Update | `PUT /api/tenant/service/appointment/:appointmentId/update` | Requires the appointment ID, then updates the action, date, status, estimate charge, and source. The update query includes both the appointment ID and authenticated tenant ID. |
+| Cancel | `PATCH /api/tenant/service/appointment/:appointmentId/cancle` | Sets the selected row's `status` to `CANCEL` and writes the `cancleReason`. |
+
+Appointment data path:
+
+```text
+Tenant user (Users.id, Users.tenantId)
+             │
+             ▼
+   ServiceAppointment.tenantId
+             │
+             ├── branchId
+             │
+             ├── vehicleId → Vehicle (chassisNumber, engineNumber)
+             │
+             ├── customerId → Customer
+             │
+             ├── serviceAdvisorId → Users (roleCode = SUPERVISOR)
+             │
+             ├── repairOrderTypeId → RepairOrderTypeMaster
+             │
+             ├── serviceCategoryId → ServiceCategoryMaster
+             │
+             ├── serviceTypeId → ServiceTypeMaster
+             │
+             └── serviceAppointmentCustomerVoices → customer voice entries
+```
+
+## 12. Tenant User Manages Parts Inventory
+
+The tenant router exposes parts management under `/api/tenant/parts`. Every route applies `authenticate` and `requireTenantUser`, so the controller receives the tenant user's ID and tenant ID from the authenticated request. The part master stores a part number, description, category, HSN code, pricing, and active state in `PartMaster`; `(tenantId, partNo)` is unique.
+
+| Operation | Endpoint | Behavior |
+|---|---|---|
+| Create | `POST /api/tenant/part/create` | Requires `partNo`, `partDescription`, validates duplicate within tenant, creates the row with that tenant ID. `partCategoryId` references `PartCategoryMaster`, `hsnId` references `HSNMaster`. `sellingPrice` is required, `landingPrice` is optional. `taxRate` is parsed as a number. `unitOfMeasure` is required. `status` defaults to ACTIVE. |
+| List | `GET /api/tenant/part/get/all` | Returns parts and the total count for the authenticated tenant. Optional `skip` and `take` query parameters are passed to Prisma for pagination. Optional filters include `status`, `category`, and `hsnCode`. |
+| Details | `GET /api/tenant/part/get/:partId` | Fetches one part by ID and includes its tenant, category, and HSN relations. |
+| Update | `PUT /api/tenant/part/:partId/update` | Requires the part ID and code, then updates the description, price, category, HSN, tax rate, and status. The update query includes both the part ID and authenticated tenant ID. |
+| Deactivate / Activate | `PATCH /api/tenant/part/:partId/deactivate` / `PATCH /api/tenant/part/:partId/activate` | Sets the selected row's `isActive` value to `false` or `true`. |
+| Part Fitment | `POST /api/tenant/part/fitment/create` | Requires part ID, validates the part belongs to that tenant, and creates the row with the authenticated tenant ID. Links the part to a vehicle model/variant with quantity and position. The schema makes `(tenantId, partId, modelId)` unique for the fitment. |
+
+Parts data path:
+
+```text
+Tenant user (Users.id, Users.tenantId)
+             │
+             ▼
+   PartMaster.tenantId
+             │
+             ├── category → PartCategoryMaster (code + tenantId unique)
+             │
+             ├── hsn → HSNMaster (hsnCode + tenantId unique)
+             │
+             └── fitments → PartFitment (branchId + partId + modelId scope)
 ```

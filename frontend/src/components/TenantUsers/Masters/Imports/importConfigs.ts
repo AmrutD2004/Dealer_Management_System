@@ -2,7 +2,6 @@
 import {
     createBranch,
     createDesignation,
-    createHSN,
     createLabour,
     createPartCategory,
     importPartsAndFitmentUsingExcel,
@@ -241,57 +240,6 @@ const loadPartMasterLookups = () => {
 const refreshPartMasterLookups = () => {
     partMasterLookupsPromise = null
     return loadPartMasterLookups()
-}
-
-const getApiErrorMessage = (err: unknown, fallback: string) => {
-    const responseMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
-    if (responseMessage) return responseMessage
-    return err instanceof Error ? err.message : fallback
-}
-
-const findCategory = (categories: PartLookupCategory[], value: string) => {
-    const key = normalizeLookup(value)
-    return categories.find(
-        (category) => normalizeLookup(category.code) === key || normalizeLookup(category.name) === key
-    )
-}
-
-const findHsn = (hsnList: PartLookupHsn[], value: string) => {
-    const key = normalizeLookup(value)
-    return hsnList.find(
-        (hsn) =>
-            normalizeLookup(hsn.hsnCode) === key ||
-            (hsn.description ? normalizeLookup(hsn.description) === key : false)
-    )
-}
-
-const findBrand = (brands: PartLookupBrand[], value: string) => {
-    const key = normalizeLookup(value)
-    return brands.find(
-        (brand) =>
-            normalizeLookup(brand.brandName) === key ||
-            (brand.brandCode ? normalizeLookup(brand.brandCode) === key : false)
-    )
-}
-
-const findModel = (models: PartLookupModel[], value: string, brandId: number) => {
-    const key = normalizeLookup(value)
-    return models.find(
-        (model) =>
-            String(model.brandId) === String(brandId) &&
-            (normalizeLookup(model.modelName) === key ||
-                (model.modelCode ? normalizeLookup(model.modelCode) === key : false))
-    )
-}
-
-const findVariant = (variants: PartLookupVariant[], value: string, modelId: number) => {
-    const key = normalizeLookup(value)
-    return variants.find(
-        (variant) =>
-            String(variant.modelId) === String(modelId) &&
-            (normalizeLookup(variant.variantName) === key ||
-                (variant.variantCode ? normalizeLookup(variant.variantCode) === key : false))
-    )
 }
 
 export const partMasterImportConfig: ImportExcelConfig = {

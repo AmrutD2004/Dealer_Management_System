@@ -880,68 +880,53 @@ export const searchedServiceQuotation = async (serviceQuotationNo: string) => {
 }
 
 
-
-//Bin management
-export const createBin = async (payload: object) => {
-    const response = await api.post(`/api/tenant/bin/create`, payload)
-    return await response.data;
-}
-
-export const getBinList = async (skip: number, take: number) => {
-    const response = await api.get(`/api/tenant/bin/get/all?skip=${skip}&take=${take}`)
-    return await response.data;
-}
-
-export const getBinById = async (binId: number) => {
-    const response = await api.get(`/api/tenant/bin/get/${binId}`)
-    return await response.data;
-}
-
-export const editBin = async (payload: object, binId: number) => {
-    const response = await api.put(`/api/tenant/bin/${binId}/update`, payload)
-    return await response.data;
-}
-
-export const deactivateBin = async (binId: number) => {
-    const response = await api.patch(`/api/tenant/bin/${binId}/deactivate`)
-    return await response.data
-}
-
-export const activateBin = async (binId: number) => {
-    const response = await api.patch(`/api/tenant/bin/${binId}/activate`)
-    return await response.data
-}
-
-//Storage management
+//Storage (Store Master) management
 export const createStorage = async (payload: object) => {
-    const response = await api.post(`/api/tenant/storage/create`, payload)
+    const response = await api.post(`/api/tenant/store/create`, payload)
     return await response.data;
 }
 
-export const getStorageList = async (skip: number, take: number) => {
-    const response = await api.get(`/api/tenant/storage/get/all?skip=${skip}&take=${take}`)
+export const getStorageList = async () => {
+    const response = await api.get(`/api/tenant/store/get/all`)
     return await response.data;
 }
 
 export const getStorageById = async (storageId: number) => {
-    const response = await api.get(`/api/tenant/storage/get/${storageId}`)
+    const response = await api.get(`/api/tenant/store/get/${storageId}`)
     return await response.data;
 }
 
 export const editStorage = async (payload: object, storageId: number) => {
-    const response = await api.put(`/api/tenant/storage/${storageId}/update`, payload)
+    const response = await api.put(`/api/tenant/store/${storageId}/update`, payload)
     return await response.data;
 }
 
 export const deactivateStorage = async (storageId: number) => {
-    const response = await api.patch(`/api/tenant/storage/${storageId}/deactivate`)
+    const response = await api.patch(`/api/tenant/store/${storageId}/deactivate`)
     return await response.data
 }
 
 export const activateStorage = async (storageId: number) => {
-    const response = await api.patch(`/api/tenant/storage/${storageId}/activate`)
+    const response = await api.patch(`/api/tenant/store/${storageId}/activate`)
     return await response.data
 }
+
+//Bin management
+export const createBin = async (payload: object) => {
+    const response = await api.post(`/api/tenant/store/bin/create`, payload)
+    return await response.data;
+}
+
+export const getBinList = async () => {
+    const response = await api.get(`/api/tenant/store/bin/get/all`)
+    return await response.data;
+}
+
+export const editBin = async (payload: object, binId: number) => {
+    const response = await api.put(`/api/tenant/store/bin/${binId}/update`, payload)
+    return await response.data;
+}
+
 
 // Third Party APIs
 

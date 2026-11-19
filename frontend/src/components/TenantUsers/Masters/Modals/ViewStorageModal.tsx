@@ -51,7 +51,7 @@ export function ViewStorageModal({ storage, open, onClose }: props) {
                 Storage Code
               </Label>
               <span className="text-xs font-mono font-semibold">
-                {storage.storageCode}
+                {storage.code}
               </span>
             </div>
             <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
@@ -59,32 +59,39 @@ export function ViewStorageModal({ storage, open, onClose }: props) {
                 Status
               </Label>
               <span>
-                <Badge variant={storage.isActive ? "success" : "destructive"}>
-                  {storage.isActive ? "Active" : "Inactive"}
+                <Badge variant={storage.IsActive ? "success" : "destructive"}>
+                  {storage.IsActive ? "Active" : "Inactive"}
                 </Badge>
               </span>
             </div>
-            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
               <Label className="text-xs font-medium text-muted-foreground">
-                Storage Name
+                Branch
               </Label>
-              <span className="text-xs font-medium">{storage.storageName}</span>
+              <span className="text-xs font-medium">{storage.branch?.branchName ?? `#${storage.branchId}`}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
+                Main Store
+              </Label>
+              <span className="text-xs font-medium">{storage.IsMainStore ? "Yes" : "No"}</span>
+            </div>
+            <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
+              <Label className="text-xs font-medium text-muted-foreground">
+                Blocked
+              </Label>
+              <span className="text-xs font-medium">{storage.IsBlocked ? "Yes" : "No"}</span>
             </div>
             <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
               <Label className="text-xs font-medium text-muted-foreground">
                 Description
               </Label>
-              <div className="flex items-start gap-2">
-                <Folder className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
-                <span className="text-xs font-medium">
-                  {storage.description || "—"}
-                </span>
-              </div>
+              <span className="text-xs font-medium">{storage.description || "—"}</span>
             </div>
           </div></div></div>
         </DialogHeader>
         <DialogFooter>
-          <Button  onClick={onClose} variant="outline" >
+          <Button onClick={onClose} variant="outline" >
             Close
           </Button>
         </DialogFooter>

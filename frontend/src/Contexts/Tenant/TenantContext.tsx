@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 import { getErrorMessage, getErrorResponse } from "@/lib/utils"
 import { AuthContext } from "../AuthContext";
 import type { binListType, branchListType, designationListType, employeeListType, roleListType, rolePermissionMappingType, storageListType } from "@/Types/tenantCreateType";
-import { getAssignedPermissionById, getAssignedPermissionList, getBinById, getBinList, getDesignationById, getDesignationList, getEmployeeById, getEmployeeList, getRoleById, getRoleList, getStorageById, getStorageList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
+import { getAssignedPermissionById, getAssignedPermissionList, getBinList, getDesignationById, getDesignationList, getEmployeeById, getEmployeeList, getRoleById, getRoleList, getStorageById, getStorageList, getTenantBranchById, getTenantBranchList } from "@/api/endpoints";
 import { toast } from "@/components/ui/toast";
 
 interface TenantContextValue {
@@ -35,7 +35,7 @@ interface TenantContextValue {
     setViewBinModalOpen: React.Dispatch<React.SetStateAction<boolean>>
     editBinModalOpen: boolean
     setEditBinModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-    fetchBinList: (skip: number, take: number) => Promise<void>
+    fetchBinList: () => Promise<void>
     fetchBinById: (binId: number) => Promise<void>
     openViewBin: (binId: number) => Promise<void>
     openEditBin: (binId: number) => Promise<void>
@@ -53,7 +53,7 @@ interface TenantContextValue {
     setViewStorageModalOpen: React.Dispatch<React.SetStateAction<boolean>>
     editStorageModalOpen: boolean
     setEditStorageModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-    fetchStorageList: (skip: number, take: number) => Promise<void>
+    fetchStorageList: () => Promise<void>
     fetchStorageById: (storageId: number) => Promise<void>
     openViewStorage: (storageId: number) => Promise<void>
     openEditStorage: (storageId: number) => Promise<void>
@@ -141,7 +141,7 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
     const { isLoggedIn } = useContext(AuthContext)
     const [branchList, setBranchList] = useState<branchListType[]>([])
     const [skip, setSkip] = useState<number>(0)
-    const [take, setTake] = useState<number>(10)
+    const [take] = useState<number>(10)
 
     const [totalBranches, setTotalBranches] = useState<number>(0)
 
@@ -438,12 +438,13 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
         setSelectedEmployee(null)
     }
 
-    const fetchBinList = useCallback(async (skip: number, take: number) => {
+    const fetchBinList = useCallback(async () => {
         try {
-            const data = await getBinList(skip, take)
+            const data = await getBinList()
             if (data?.success) {
-                setBinList(data?.data)
-                setTotalBins(data?.count)
+                const bins: binListType[] = data?.data ?? []
+                setBinList(bins)
+                setTotalBins(bins.length)
             }
         } catch (err) {
             toast.add({
@@ -455,9 +456,10 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
 
     const fetchBinById = async (binId: number) => {
         try {
-            const data = await getBinById(binId)
+            const data = await getBinList()
             if (data?.success) {
-                setSelectedBin(data?.data)
+                const bin = ((data?.data ?? []) as binListType[]).find((item) => item.id === binId)
+                if (bin) setSelectedBin(bin)
             }
         } catch (err) {
             toast.add({
@@ -483,12 +485,13 @@ export const TenantContextProvider = ({children} : {children : React.ReactNode})
         setSelectedBin(null)
     }
 
-    const fetchStorageList = useCallback(async (skip: number, take: number) => {
+    const fetchStorageList = useCallback(async () => {
         try {
-            const data = await getStorageList(skip, take)
+            const data = await getStorageList()
             if (data?.success) {
-                setStorageList(data?.data)
-                setTotalStorages(data?.count)
+                const storages: storageListType[] = data?.data ?? []
+                setStorageList(storages)
+                setTotalStorages(storages.length)
             }
         } catch (err) {
             toast.add({

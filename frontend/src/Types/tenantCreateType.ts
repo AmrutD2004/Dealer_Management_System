@@ -287,26 +287,27 @@ export interface labourListType {
 
 export interface binListType {
     id: number,
-    tenantId: number,
+    storeId: number,
     binCode: string,
-    binName: string,
-    description: string | null,
+    binDescription: string | null,
     isActive: boolean,
     createdAt: string,
     updatedAt: string,
-    tenant: { tenantName: string } | null
+    store?: { code: string } | null
 }
 
 export interface storageListType {
     id: number,
     tenantId: number,
-    storageCode: string,
-    storageName: string,
-    description: string | null,
-    isActive: boolean,
+    branchId: number,
+    code: string,
+    description: string,
+    IsBlocked: boolean,
+    IsActive: boolean,
+    IsMainStore: boolean,
     createdAt: string,
     updatedAt: string,
-    tenant: { tenantName: string } | null
+    branch?: { branchName: string, branchCode: number } | null
 }
 
 /* Backend create/update expect all of these keys; `labourDescription` is

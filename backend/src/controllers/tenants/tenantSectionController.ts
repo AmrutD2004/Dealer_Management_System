@@ -354,7 +354,7 @@ export const createBranchWithExcel = async(req : Request , res : Response)=>{
     }
     if(!branchesExcelData){
         return res.status(400).json({
-            success : true,
+            success : false,
             message : 'Excel file not found'
         })
     }

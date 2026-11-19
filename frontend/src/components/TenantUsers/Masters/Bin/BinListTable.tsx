@@ -1,10 +1,7 @@
 import { getVisiblePageIndices } from '@/lib/pagination'
-import { getErrorMessage } from "@/lib/utils"
-import { activateBin, deactivateBin } from '@/api/endpoints'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import SortableTableHead from '@/components/ui/sortable-table-head'
 import { useTableSort } from '@/hooks/useTableSort'
-import { toast } from '@/components/ui/toast'
 import { type binListType } from '@/Types/tenantCreateType'
 import { useContext, useEffect } from 'react'
 import {
@@ -17,60 +14,29 @@ import {
 } from "@/components/ui/pagination"
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Check, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { Eye, MoreHorizontal, Pencil } from 'lucide-react'
 import { TenantContext } from '@/Contexts/Tenant/TenantContext'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { ViewBinModal } from '../Modals/ViewBinModal'
+import { EditBinModal } from '../Modals/EditBinModal'
 
 const BinListTable = () => {
-    const { binList, binSkip, setBinSkip, binTake, totalBins, fetchBinList } = useContext(TenantContext)
+    const {
+        binList, binSkip, setBinSkip, binTake, totalBins, fetchBinList,
+        selectedBin, viewBinModalOpen, editBinModalOpen,
+        openViewBin, openEditBin, closeAllBinModals,
+    } = useContext(TenantContext)
 
     useEffect(() => {
-        fetchBinList(binSkip, binTake)
-    }, [binSkip, binTake, fetchBinList])
+        fetchBinList()
+    }, [fetchBinList])
 
     const noOfPages = Math.ceil(totalBins / binTake)
     const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<binListType>(binList)
-
-    const handleDeactive = async (id: number) => {
-        try {
-            const data = await deactivateBin(Number(id))
-            if (data?.success) {
-                toast.add({
-                    type: 'success',
-                    description: data?.message
-                })
-                fetchBinList(binSkip, binTake)
-            }
-        } catch (err: unknown) {
-            toast.add({
-                type: 'error',
-                description: getErrorMessage(err)
-            })
-        }
-    }
-
-    const handleActive = async (id: number) => {
-        try {
-            const data = await activateBin(Number(id))
-            if (data?.success) {
-                toast.add({
-                    type: 'success',
-                    description: data?.message
-                })
-                fetchBinList(binSkip, binTake)
-            }
-        } catch (err: unknown) {
-            toast.add({
-                type: 'error',
-                description: getErrorMessage(err)
-            })
-        }
-    }
+    const pagedBins = sortedData.slice(binSkip, binSkip + binTake)
 
     const handlePrevious = () => {
-        setBinSkip((prev: number) =>
-            Math.max(prev - binTake, 0)
-        )
+        setBinSkip((prev: number) => Math.max(prev - binTake, 0))
     }
 
     const handleNext = () => {
@@ -87,25 +53,25 @@ const BinListTable = () => {
                     <TableRow className='w-full'>
                         <TableHead className="text-left text-muted-foreground">Sr No.</TableHead>
                         <SortableTableHead label="Bin Code" sortKey="binCode" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
-                        <SortableTableHead label="Bin Name" sortKey="binName" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
-                        <SortableTableHead label="Description" sortKey="description" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Description" sortKey="binDescription" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
+                        <SortableTableHead label="Storage" sortKey="storeId" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} />
                         <SortableTableHead label="Status" sortKey="isActive" activeKey={sortKey} direction={sortDirection} onSort={toggleSort} className="text-center" />
                         <TableHead className="text-right text-muted-foreground">Action</TableHead>
                     </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                    {binList.length === 0 ? (
+                    {pagedBins.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan={6} className='text-center text-muted-foreground'>No bins created</TableCell>
                         </TableRow>
                     ) : (
-                        sortedData.map((bin: binListType, idx: number) => (
+                        pagedBins.map((bin: binListType, idx: number) => (
                             <TableRow key={bin.id}>
                                 <TableCell className='text-left font-medium'>{binSkip + idx + 1}</TableCell>
                                 <TableCell className='text-left font-medium'>{bin.binCode}</TableCell>
-                                <TableCell className='text-left font-medium'>{bin.binName}</TableCell>
-                                <TableCell className='text-left font-medium max-w-[280px] truncate' title={bin.description || ''}>{bin.description || '—'}</TableCell>
+                                <TableCell className='text-left font-medium max-w-[280px] truncate' title={bin.binDescription || ''}>{bin.binDescription || '—'}</TableCell>
+                                <TableCell className='text-left font-medium'>{bin.store?.code ?? `Storage #${bin.storeId}`}</TableCell>
                                 <TableCell className='text-center font-medium'>
                                     <Badge variant={bin.isActive ? 'default' : 'outline'}>{bin.isActive ? 'Active' : 'Deactive'}</Badge>
                                 </TableCell>
@@ -116,7 +82,7 @@ const BinListTable = () => {
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
-                                                    aria-label={`Actions for ${bin.binName}`}
+                                                    aria-label={`Actions for ${bin.binCode}`}
                                                 />
                                             }
                                         >
@@ -124,24 +90,13 @@ const BinListTable = () => {
                                         </DropdownMenuTrigger>
 
                                         <DropdownMenuContent align="end">
-                                            <DropdownMenuItem onClick={() => alert('View')} >
+                                            <DropdownMenuItem onClick={() => openViewBin(bin.id)}>
                                                 <Eye className="mr-2 h-4 w-4" />
                                                 View
                                             </DropdownMenuItem>
-
-                                            <DropdownMenuItem onClick={() => alert('Edit')} >
+                                            <DropdownMenuItem onClick={() => openEditBin(bin.id)}>
                                                 <Pencil className="mr-2 h-4 w-4" />
                                                 Edit
-                                            </DropdownMenuItem>
-
-                                            <DropdownMenuSeparator />
-
-                                            <DropdownMenuItem
-                                                onClick={!bin?.isActive ? () => handleActive(bin.id) : () => handleDeactive(bin.id)}
-                                                className={`${!bin?.isActive ? 'text-green-600 focus:text-green-600' : 'text-destructive focus:text-destructive'}`}
-                                            >
-                                                {!bin?.isActive ? <Check className="mr-2 h-4 w-4" /> : <Trash2 className="mr-2 h-4 w-4" />}
-                                                {!bin?.isActive ? "Activate" : "Deactivate"}
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
@@ -166,7 +121,7 @@ const BinListTable = () => {
                             const pageNext = i * binTake
                             return (
                                 <PaginationItem key={i}>
-                                    <Button  onClick={() => setBinSkip(pageNext)} variant={binSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
+                                    <Button onClick={() => setBinSkip(pageNext)} variant={binSkip === pageNext ? 'default' : 'outline'} >{i + 1}</Button>
                                 </PaginationItem>
                             )
                         })}
@@ -185,6 +140,8 @@ const BinListTable = () => {
                     </PaginationContent>
                 </Pagination>
             </div>
+            <ViewBinModal bin={selectedBin} open={viewBinModalOpen} onClose={closeAllBinModals} />
+            <EditBinModal bin={selectedBin} open={editBinModalOpen} onClose={closeAllBinModals} />
         </div>
     )
 }

@@ -1,7 +1,6 @@
-import { createBin } from "@/api/endpoints"
+import { createBin, getStorageList } from "@/api/endpoints"
 import { getErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
 import {
     Dialog,
     DialogContent,
@@ -12,11 +11,19 @@ import {
 } from "@/components/ui/dialog"
 import { FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { TenantContext } from "@/Contexts/Tenant/TenantContext"
 import { toast } from "@/components/ui/toast"
 import { Loader2 } from "lucide-react"
+import type { storageListType } from "@/Types/tenantCreateType"
 
 interface CreateBinModalProps {
     open: boolean
@@ -25,15 +32,32 @@ interface CreateBinModalProps {
 
 const initialFormData = {
     binCode: "",
-    binName: "",
-    description: "",
-    isActive: true,
+    storeId: "",
+    binDescription: "",
 }
 
 export function CreateBinModal({ open, setOpen }: CreateBinModalProps) {
     const [loading, setLoading] = useState<boolean>(false)
-    const { fetchBinList, binSkip, binTake } = useContext(TenantContext)
+    const [stores, setStores] = useState<storageListType[]>([])
+    const { fetchBinList } = useContext(TenantContext)
     const [formData, setFormData] = useState(initialFormData)
+
+    useEffect(() => {
+        const loadStores = async () => {
+            try {
+                const data = await getStorageList()
+                if (data?.success) {
+                    setStores(data?.data ?? [])
+                }
+            } catch (err: unknown) {
+                toast.add({
+                    type: 'error',
+                    description: getErrorMessage(err)
+                })
+            }
+        }
+        if (open) loadStores()
+    }, [open])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
@@ -42,10 +66,10 @@ export function CreateBinModal({ open, setOpen }: CreateBinModalProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!formData.binCode.trim() || !formData.binName.trim()) {
+        if (!formData.binCode.trim() || !formData.storeId) {
             toast.add({
                 type: 'error',
-                description: 'Bin code and bin name are required'
+                description: 'Bin code and storage location are required'
             })
             return
         }
@@ -53,9 +77,8 @@ export function CreateBinModal({ open, setOpen }: CreateBinModalProps) {
         try {
             const payload = {
                 binCode: formData.binCode.trim(),
-                binName: formData.binName.trim(),
-                description: formData.description.trim() || null,
-                isActive: formData.isActive
+                binDescription: formData.binDescription.trim() || null,
+                storeId: Number(formData.storeId),
             }
             const data = await createBin(payload)
             if (data?.success) {
@@ -64,7 +87,7 @@ export function CreateBinModal({ open, setOpen }: CreateBinModalProps) {
                     description: data?.message
                 })
                 setFormData(initialFormData)
-                fetchBinList(binSkip, binTake)
+                fetchBinList()
                 setTimeout(() => {
                     setOpen(false)
                 }, 10)
@@ -89,7 +112,7 @@ export function CreateBinModal({ open, setOpen }: CreateBinModalProps) {
             <DialogContent showCloseButton={false} className="max-w-sm lg:max-w-2xl w-full md:max-w-xl max-h-[90vh] overflow-y-auto scrollbarHide">
                 <DialogHeader>
                     <DialogTitle>Create New Bin</DialogTitle>
-                    <DialogDescription>Add a new bin to the tenant.</DialogDescription>
+                    <DialogDescription>Add a new bin to a storage location.</DialogDescription>
                 </DialogHeader>
 
                 <form id="bin-create-form" onSubmit={handleSubmit}>
@@ -104,28 +127,31 @@ export function CreateBinModal({ open, setOpen }: CreateBinModalProps) {
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
-                                    <FieldLabel className="text-xs font-medium">Bin Name <span className="text-red-500">*</span></FieldLabel>
+                                    <FieldLabel className="text-xs font-medium">Storage <span className="text-red-500">*</span></FieldLabel>
                                     <div className="min-w-0">
-                                        <Input name='binName' placeholder="e.g. Main Warehouse" required onChange={handleChange} value={formData.binName} className="h-7 rounded-none px-2 text-xs" />
+                                        <Select
+                                            items={stores.map((store) => ({ value: String(store.id), label: `${store.code} - ${store.description}` }))}
+                                            value={formData.storeId || null}
+                                            onValueChange={(value) => setFormData(prev => ({ ...prev, storeId: value ?? "" }))}
+                                            required
+                                        >
+                                            <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
+                                                <SelectValue placeholder="Select storage" />
+                                            </SelectTrigger>
+                                            <SelectContent align="start" alignItemWithTrigger={false}>
+                                                {stores.map((store) => (
+                                                    <SelectItem key={store.id} value={String(store.id)}>
+                                                        {store.code} - {store.description}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
                                     <FieldLabel className="text-xs font-medium">Description</FieldLabel>
                                     <div className="min-w-0">
-                                        <Textarea name='description' placeholder="Optional description" onChange={handleChange} value={formData.description} className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:col-span-2 lg:col-span-2">
-                                    <FieldLabel className="text-xs font-medium">Active</FieldLabel>
-                                    <div className="flex items-center gap-2">
-                                        <Switch
-                                            id="isActive"
-                                            checked={formData.isActive}
-                                            onCheckedChange={(checked: boolean) => setFormData(prev => ({ ...prev, isActive: checked }))}
-                                        />
-                                        <span className="text-sm text-muted-foreground">
-                                            {formData.isActive ? "Yes" : "No"}
-                                        </span>
+                                        <Textarea name='binDescription' placeholder="Optional description" onChange={handleChange} value={formData.binDescription} className="min-h-[48px] rounded-none px-2 py-1 text-xs" />
                                     </div>
                                 </div>
                             </div>
