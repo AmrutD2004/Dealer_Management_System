@@ -26,7 +26,7 @@ const Detail = ({
 }) => (
   <div className="grid grid-cols-[140px_minmax(0,1fr)] items-start gap-x-2 gap-y-1">
     <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
-    <div className="text-xs font-medium break-words text-foreground">
+    <div className="text-xs font-medium wrap-break-word text-foreground">
       {value}
     </div>
   </div>

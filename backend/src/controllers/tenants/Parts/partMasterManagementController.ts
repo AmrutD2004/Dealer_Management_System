@@ -486,7 +486,7 @@ export const addPartsAndFitmentUsingExcel = async (req: Request, res: Response) 
 
         //Extracting unique brands Names
         const brandNames = [...new Set(
-            sheetData.map((b: any) => b['Brands'].trim())
+            sheetData.map((b: any) => (b['Brands'] ?? '').trim())
         )]
         if (!brandNames) {
             return res.json({

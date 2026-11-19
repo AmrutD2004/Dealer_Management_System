@@ -71,13 +71,6 @@ const PartCategoryListTable = ({ refreshKey = 0 }: PartCategoryListTableProps) =
     })
     const pagedCategories = sortedData.slice(skip, skip + TAKE)
 
-    const getParentName = (category: PartCategoryListType) => {
-        if (category.parent) {
-            return `${category.parent.code} - ${category.parent.name}`
-        }
-        return category.parentId ? `#${category.parentId}` : '—'
-    }
-
     const openView = (category: PartCategoryListType) => {
         setSelectedCategory(category)
         setViewOpen(true)

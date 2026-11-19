@@ -500,6 +500,13 @@ export const importHSNExcel = async (file: File) => {
     return await response.data;
 }
 
+export const importPartsAndFitmentUsingExcel = async (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    const response = await api.post(`/api/tenant/part/file/upload`, formData)
+    return await response.data;
+}
+
 
 //Part Category management
 export const createPartCategory = async (payload: object) => {
@@ -872,6 +879,53 @@ export const searchedServiceQuotation = async (serviceQuotationNo: string) => {
     return await response.data;
 }
 
+
+//Storage (Store Master) management
+export const createStorage = async (payload: object) => {
+    const response = await api.post(`/api/tenant/store/create`, payload)
+    return await response.data;
+}
+
+export const getStorageList = async () => {
+    const response = await api.get(`/api/tenant/store/get/all`)
+    return await response.data;
+}
+
+export const getStorageById = async (storageId: number) => {
+    const response = await api.get(`/api/tenant/store/get/${storageId}`)
+    return await response.data;
+}
+
+export const editStorage = async (payload: object, storageId: number) => {
+    const response = await api.put(`/api/tenant/store/${storageId}/update`, payload)
+    return await response.data;
+}
+
+export const deactivateStorage = async (storageId: number) => {
+    const response = await api.patch(`/api/tenant/store/${storageId}/deactivate`)
+    return await response.data
+}
+
+export const activateStorage = async (storageId: number) => {
+    const response = await api.patch(`/api/tenant/store/${storageId}/activate`)
+    return await response.data
+}
+
+//Bin management
+export const createBin = async (payload: object) => {
+    const response = await api.post(`/api/tenant/store/bin/create`, payload)
+    return await response.data;
+}
+
+export const getBinList = async () => {
+    const response = await api.get(`/api/tenant/store/bin/get/all`)
+    return await response.data;
+}
+
+export const editBin = async (payload: object, binId: number) => {
+    const response = await api.put(`/api/tenant/store/bin/${binId}/update`, payload)
+    return await response.data;
+}
 
 
 

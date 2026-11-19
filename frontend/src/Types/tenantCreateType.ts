@@ -285,6 +285,31 @@ export interface labourListType {
     tenant: { tenantName: string } | null
 }
 
+export interface binListType {
+    id: number,
+    storeId: number,
+    binCode: string,
+    binDescription: string | null,
+    isActive: boolean,
+    createdAt: string,
+    updatedAt: string,
+    store?: { code: string } | null
+}
+
+export interface storageListType {
+    id: number,
+    tenantId: number,
+    branchId: number,
+    code: string,
+    description: string,
+    IsBlocked: boolean,
+    IsActive: boolean,
+    IsMainStore: boolean,
+    createdAt: string,
+    updatedAt: string,
+    branch?: { branchName: string, branchCode: number } | null
+}
+
 /* Backend create/update expect all of these keys; `labourDescription` is
    optional. `rate` and `standardHours` are parsed with parseFloat. */
 

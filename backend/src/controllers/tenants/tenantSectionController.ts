@@ -392,7 +392,7 @@ export const createBranchWithExcel = async(req : Request , res : Response)=>{
                 branchNextNumber = parseInt(numericPart, 10) + 1;
             }
         }
-        const branchesName = sheetData.map((b : any) => b['Branch_Name'].trim())
+        const branchesName = sheetData.map((b : any) => (b["Branch_Name"] ?? "").trim())
 
         const isBranchExits = await prisma.branch.findMany({
             where : {

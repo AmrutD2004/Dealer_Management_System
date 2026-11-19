@@ -349,7 +349,7 @@ export const createPartCategories = async (req: Request, res: Response) => {
         const sheet = readedFile.Sheets[sheetName]
         const sheetData = XLSX.utils.sheet_to_json(sheet)
 
-        const categoryCode = sheetData.map((c: any) => c['Code'].trim())
+        const categoryCode = sheetData.map((c: any) =>  (c['Code'] ?? '').trim())
         const isCategoryExists = await prisma.partCategoryMaster.findMany({
             where: {
                 tenantId: Number(tenantId),

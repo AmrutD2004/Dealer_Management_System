@@ -422,7 +422,7 @@ export const createEmployeeDesignationWithExcel = async (req: Request, res: Resp
         const sheet = readedFile.Sheets[sheetName]
         const sheetData = XLSX.utils.sheet_to_json(sheet)
         const designationCodes = sheetData.map(
-            (item: any) => item["Designation_Code"].trim()
+            (item: any) =>  (item["Designation_Code"] ?? "").trim()
         )
         const checkIsDesignationExists = await prisma.employeeDesignation.findMany({
             where: {
