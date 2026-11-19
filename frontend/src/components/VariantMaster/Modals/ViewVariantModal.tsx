@@ -16,7 +16,7 @@ import { Layers } from "lucide-react"
 type props = {
     variant: VariantListType | null
     modelName: string
-    open: boolean
+    open: boolean 
     onClose: () => void
 }
 

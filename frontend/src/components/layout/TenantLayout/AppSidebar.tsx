@@ -1,6 +1,6 @@
 import { useLocation, Link, useParams } from "react-router-dom"
 
-import { Boxes, Briefcase, Building, CalendarClock, Car, ChevronDown, ClipboardList, FileText, HardHat, Key, Layers, LayoutDashboard, Link2, Package, PackageSearch, Percent, ShieldCheck, Tags, Users, UserRound, Warehouse, Wrench } from "lucide-react"
+import { Archive, Boxes, Briefcase, Building, CalendarClock, Car, ChevronDown, ClipboardList, FileText, HardHat, Key, Layers, LayoutDashboard, Link2, Package, PackageSearch, Percent, ShieldCheck, Tags, Folder, Users, UserRound, Warehouse, Wrench } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -27,7 +27,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { cn, getErrorMessage } from "@/lib/utils"
-import { useContext, useState } from "react"
+import { useContext, useLayoutEffect, useRef, useState } from "react"
 import { AuthContext } from "@/Contexts/AuthContext"
 import { toast } from "@/components/ui/toast"
 import { logout } from "@/api/endpoints"
@@ -38,11 +38,28 @@ const groupLabelClass =
 const menuButtonClass =
   "h-10.25 rounded-lg px-3 text-[14px] font-medium text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-active:bg-sidebar-active data-active:text-sidebar-ring group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
 
+let sidebarScrollTop = 0
+
 export function AppSidebar() {
   const { id } = useParams()
   const { pathname } = useLocation()
   const { userInfo } = useContext(AuthContext)
   const { isMobile, setOpenMobile } = useSidebar()
+
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    el.scrollTop = sidebarScrollTop
+    const handleScroll = () => {
+      sidebarScrollTop = el.scrollTop
+    }
+    el.addEventListener("scroll", handleScroll, { passive: true })
+    return () => {
+      el.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   const overviewActive =
     pathname === `/tenant/${id}/dashboard/` ||
@@ -131,10 +148,18 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/masters/dealer-bay` ||
     pathname.startsWith(`/tenant/${id}/masters/dealer-bay/`)
 
+  const binActive =
+    pathname === `/tenant/${id}/masters/bin` ||
+    pathname.startsWith(`/tenant/${id}/masters/bin/`)
+
+  const storageActive =
+    pathname === `/tenant/${id}/masters/storage` ||
+    pathname.startsWith(`/tenant/${id}/masters/storage/`)
+
   const servicesActive = serviceCategoryActive || serviceTypeActive
 
   const [mastersOpen, setMastersOpen] = useState<boolean | undefined>(undefined)
-  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive || partCategoryActive || partMasterActive || hsnActive || partFitmentActive || dealerBayActive)
+  const showMasters = mastersOpen ?? (branchActive || designationActive || roleActive || assignPermission || employeeActive || servicesActive || repairOrderActive || labourActive || partCategoryActive || partMasterActive || hsnActive || partFitmentActive || dealerBayActive || binActive || storageActive)
 
   const [servicesOpen, setServicesOpen] = useState<boolean | undefined>(undefined)
   const showServices = servicesOpen ?? servicesActive
@@ -208,7 +233,7 @@ export function AppSidebar() {
 
       {/* Nav */}
 
-      <SidebarContent className="space-y-7 px-2.5 py-5">
+      <SidebarContent ref={scrollRef} className="space-y-7 px-2.5 py-5">
         <SidebarGroup className="p-0 first:mt-0">
           <SidebarGroupLabel className={groupLabelClass}>
             Tenant
@@ -695,6 +720,34 @@ export function AppSidebar() {
                         }
                       >
                         <span className="flex items-center gap-2 "><Warehouse size={18}/>Dealer's Bay</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={binActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/bin`}
+                            aria-current={binActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Archive size={18}/>Bin</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        isActive={storageActive}
+                        onClick={handleNavigate}
+                        render={
+                          <Link
+                            to={`/tenant/${id}/masters/storage`}
+                            aria-current={storageActive ? "page" : undefined}
+                          />
+                        }
+                      >
+                        <span className="flex items-center gap-2 "><Folder size={18}/>Storage</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>

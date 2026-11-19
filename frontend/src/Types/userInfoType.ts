@@ -1,6 +1,6 @@
 export interface Role {
   id: number;
-  roleCode: string;
+  roleCode: any;
   roleName: string;
 }
 
