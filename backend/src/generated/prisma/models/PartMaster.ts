@@ -359,6 +359,7 @@ export type PartMasterWhereInput = {
   supersedes?: Prisma.PartMasterListRelationFilter
   fitments?: Prisma.PartFitmentListRelationFilter
   serviceQuotationPart?: Prisma.ServiceQuotationPartListRelationFilter
+  branchParts?: Prisma.BranchPartMasterListRelationFilter
 }
 
 export type PartMasterOrderByWithRelationInput = {
@@ -387,6 +388,7 @@ export type PartMasterOrderByWithRelationInput = {
   supersedes?: Prisma.PartMasterOrderByRelationAggregateInput
   fitments?: Prisma.PartFitmentOrderByRelationAggregateInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartOrderByRelationAggregateInput
+  branchParts?: Prisma.BranchPartMasterOrderByRelationAggregateInput
 }
 
 export type PartMasterWhereUniqueInput = Prisma.AtLeast<{
@@ -419,6 +421,7 @@ export type PartMasterWhereUniqueInput = Prisma.AtLeast<{
   supersedes?: Prisma.PartMasterListRelationFilter
   fitments?: Prisma.PartFitmentListRelationFilter
   serviceQuotationPart?: Prisma.ServiceQuotationPartListRelationFilter
+  branchParts?: Prisma.BranchPartMasterListRelationFilter
 }, "id" | "tenantId_partNo">
 
 export type PartMasterOrderByWithAggregationInput = {
@@ -492,6 +495,7 @@ export type PartMasterCreateInput = {
   supersedes?: Prisma.PartMasterCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUncheckedCreateInput = {
@@ -516,6 +520,7 @@ export type PartMasterUncheckedCreateInput = {
   supersedes?: Prisma.PartMasterUncheckedCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUpdateInput = {
@@ -539,6 +544,7 @@ export type PartMasterUpdateInput = {
   supersedes?: Prisma.PartMasterUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateInput = {
@@ -563,6 +569,7 @@ export type PartMasterUncheckedUpdateInput = {
   supersedes?: Prisma.PartMasterUncheckedUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUncheckedUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterCreateManyInput = {
@@ -955,6 +962,20 @@ export type PartMasterUpdateOneRequiredWithoutServiceQuotationPartNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.PartMasterUpdateToOneWithWhereWithoutServiceQuotationPartInput, Prisma.PartMasterUpdateWithoutServiceQuotationPartInput>, Prisma.PartMasterUncheckedUpdateWithoutServiceQuotationPartInput>
 }
 
+export type PartMasterCreateNestedOneWithoutBranchPartsInput = {
+  create?: Prisma.XOR<Prisma.PartMasterCreateWithoutBranchPartsInput, Prisma.PartMasterUncheckedCreateWithoutBranchPartsInput>
+  connectOrCreate?: Prisma.PartMasterCreateOrConnectWithoutBranchPartsInput
+  connect?: Prisma.PartMasterWhereUniqueInput
+}
+
+export type PartMasterUpdateOneRequiredWithoutBranchPartsNestedInput = {
+  create?: Prisma.XOR<Prisma.PartMasterCreateWithoutBranchPartsInput, Prisma.PartMasterUncheckedCreateWithoutBranchPartsInput>
+  connectOrCreate?: Prisma.PartMasterCreateOrConnectWithoutBranchPartsInput
+  upsert?: Prisma.PartMasterUpsertWithoutBranchPartsInput
+  connect?: Prisma.PartMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PartMasterUpdateToOneWithWhereWithoutBranchPartsInput, Prisma.PartMasterUpdateWithoutBranchPartsInput>, Prisma.PartMasterUncheckedUpdateWithoutBranchPartsInput>
+}
+
 export type PartMasterCreateWithoutTenantInput = {
   partNo: string
   partDescription: string
@@ -975,6 +996,7 @@ export type PartMasterCreateWithoutTenantInput = {
   supersedes?: Prisma.PartMasterCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUncheckedCreateWithoutTenantInput = {
@@ -998,6 +1020,7 @@ export type PartMasterUncheckedCreateWithoutTenantInput = {
   supersedes?: Prisma.PartMasterUncheckedCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterCreateOrConnectWithoutTenantInput = {
@@ -1070,6 +1093,7 @@ export type PartMasterCreateWithoutHsnInput = {
   supersedes?: Prisma.PartMasterCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUncheckedCreateWithoutHsnInput = {
@@ -1093,6 +1117,7 @@ export type PartMasterUncheckedCreateWithoutHsnInput = {
   supersedes?: Prisma.PartMasterUncheckedCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterCreateOrConnectWithoutHsnInput = {
@@ -1141,6 +1166,7 @@ export type PartMasterCreateWithoutCategoryInput = {
   supersedes?: Prisma.PartMasterCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUncheckedCreateWithoutCategoryInput = {
@@ -1164,6 +1190,7 @@ export type PartMasterUncheckedCreateWithoutCategoryInput = {
   supersedes?: Prisma.PartMasterUncheckedCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterCreateOrConnectWithoutCategoryInput = {
@@ -1212,6 +1239,7 @@ export type PartMasterCreateWithoutSupersedesInput = {
   supersededBy?: Prisma.PartMasterCreateNestedOneWithoutSupersedesInput
   fitments?: Prisma.PartFitmentCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUncheckedCreateWithoutSupersedesInput = {
@@ -1235,6 +1263,7 @@ export type PartMasterUncheckedCreateWithoutSupersedesInput = {
   updatedAt?: Date | string
   fitments?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterCreateOrConnectWithoutSupersedesInput = {
@@ -1262,6 +1291,7 @@ export type PartMasterCreateWithoutSupersededByInput = {
   supersedes?: Prisma.PartMasterCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUncheckedCreateWithoutSupersededByInput = {
@@ -1285,6 +1315,7 @@ export type PartMasterUncheckedCreateWithoutSupersededByInput = {
   supersedes?: Prisma.PartMasterUncheckedCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutPartInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterCreateOrConnectWithoutSupersededByInput = {
@@ -1328,6 +1359,7 @@ export type PartMasterUpdateWithoutSupersedesInput = {
   supersededBy?: Prisma.PartMasterUpdateOneWithoutSupersedesNestedInput
   fitments?: Prisma.PartFitmentUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateWithoutSupersedesInput = {
@@ -1351,6 +1383,7 @@ export type PartMasterUncheckedUpdateWithoutSupersedesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fitments?: Prisma.PartFitmentUncheckedUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUpsertWithWhereUniqueWithoutSupersededByInput = {
@@ -1389,6 +1422,7 @@ export type PartMasterCreateWithoutFitmentsInput = {
   supersededBy?: Prisma.PartMasterCreateNestedOneWithoutSupersedesInput
   supersedes?: Prisma.PartMasterCreateNestedManyWithoutSupersededByInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUncheckedCreateWithoutFitmentsInput = {
@@ -1412,6 +1446,7 @@ export type PartMasterUncheckedCreateWithoutFitmentsInput = {
   updatedAt?: Date | string
   supersedes?: Prisma.PartMasterUncheckedCreateNestedManyWithoutSupersededByInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutPartsInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterCreateOrConnectWithoutFitmentsInput = {
@@ -1450,6 +1485,7 @@ export type PartMasterUpdateWithoutFitmentsInput = {
   supersededBy?: Prisma.PartMasterUpdateOneWithoutSupersedesNestedInput
   supersedes?: Prisma.PartMasterUpdateManyWithoutSupersededByNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateWithoutFitmentsInput = {
@@ -1473,6 +1509,7 @@ export type PartMasterUncheckedUpdateWithoutFitmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   supersedes?: Prisma.PartMasterUncheckedUpdateManyWithoutSupersededByNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterCreateWithoutServiceQuotationPartInput = {
@@ -1495,6 +1532,7 @@ export type PartMasterCreateWithoutServiceQuotationPartInput = {
   supersededBy?: Prisma.PartMasterCreateNestedOneWithoutSupersedesInput
   supersedes?: Prisma.PartMasterCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentCreateNestedManyWithoutPartInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterUncheckedCreateWithoutServiceQuotationPartInput = {
@@ -1518,6 +1556,7 @@ export type PartMasterUncheckedCreateWithoutServiceQuotationPartInput = {
   updatedAt?: Date | string
   supersedes?: Prisma.PartMasterUncheckedCreateNestedManyWithoutSupersededByInput
   fitments?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutPartInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartMasterCreateOrConnectWithoutServiceQuotationPartInput = {
@@ -1556,6 +1595,7 @@ export type PartMasterUpdateWithoutServiceQuotationPartInput = {
   supersededBy?: Prisma.PartMasterUpdateOneWithoutSupersedesNestedInput
   supersedes?: Prisma.PartMasterUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUpdateManyWithoutPartNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateWithoutServiceQuotationPartInput = {
@@ -1579,6 +1619,117 @@ export type PartMasterUncheckedUpdateWithoutServiceQuotationPartInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   supersedes?: Prisma.PartMasterUncheckedUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUncheckedUpdateManyWithoutPartNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutPartNestedInput
+}
+
+export type PartMasterCreateWithoutBranchPartsInput = {
+  partNo: string
+  partDescription: string
+  sellingPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitOfMeasure: $Enums.UnitOfMeasure
+  reorderLevel?: number | null
+  isFastMoving?: boolean
+  status?: $Enums.PartStatus
+  validFrom?: Date | string
+  validTo?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutPartsInput
+  category?: Prisma.PartCategoryMasterCreateNestedOneWithoutPartsInput
+  hsn: Prisma.HSNMasterCreateNestedOneWithoutPartsInput
+  supersededBy?: Prisma.PartMasterCreateNestedOneWithoutSupersedesInput
+  supersedes?: Prisma.PartMasterCreateNestedManyWithoutSupersededByInput
+  fitments?: Prisma.PartFitmentCreateNestedManyWithoutPartInput
+  serviceQuotationPart?: Prisma.ServiceQuotationPartCreateNestedManyWithoutPartsInput
+}
+
+export type PartMasterUncheckedCreateWithoutBranchPartsInput = {
+  id?: number
+  tenantId: number
+  partNo: string
+  partDescription: string
+  partCategoryId?: number | null
+  hsnId: number
+  sellingPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitOfMeasure: $Enums.UnitOfMeasure
+  reorderLevel?: number | null
+  isFastMoving?: boolean
+  status?: $Enums.PartStatus
+  supersededById?: number | null
+  validFrom?: Date | string
+  validTo?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  supersedes?: Prisma.PartMasterUncheckedCreateNestedManyWithoutSupersededByInput
+  fitments?: Prisma.PartFitmentUncheckedCreateNestedManyWithoutPartInput
+  serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedCreateNestedManyWithoutPartsInput
+}
+
+export type PartMasterCreateOrConnectWithoutBranchPartsInput = {
+  where: Prisma.PartMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.PartMasterCreateWithoutBranchPartsInput, Prisma.PartMasterUncheckedCreateWithoutBranchPartsInput>
+}
+
+export type PartMasterUpsertWithoutBranchPartsInput = {
+  update: Prisma.XOR<Prisma.PartMasterUpdateWithoutBranchPartsInput, Prisma.PartMasterUncheckedUpdateWithoutBranchPartsInput>
+  create: Prisma.XOR<Prisma.PartMasterCreateWithoutBranchPartsInput, Prisma.PartMasterUncheckedCreateWithoutBranchPartsInput>
+  where?: Prisma.PartMasterWhereInput
+}
+
+export type PartMasterUpdateToOneWithWhereWithoutBranchPartsInput = {
+  where?: Prisma.PartMasterWhereInput
+  data: Prisma.XOR<Prisma.PartMasterUpdateWithoutBranchPartsInput, Prisma.PartMasterUncheckedUpdateWithoutBranchPartsInput>
+}
+
+export type PartMasterUpdateWithoutBranchPartsInput = {
+  partNo?: Prisma.StringFieldUpdateOperationsInput | string
+  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  sellingPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitOfMeasure?: Prisma.EnumUnitOfMeasureFieldUpdateOperationsInput | $Enums.UnitOfMeasure
+  reorderLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isFastMoving?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPartStatusFieldUpdateOperationsInput | $Enums.PartStatus
+  validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutPartsNestedInput
+  category?: Prisma.PartCategoryMasterUpdateOneWithoutPartsNestedInput
+  hsn?: Prisma.HSNMasterUpdateOneRequiredWithoutPartsNestedInput
+  supersededBy?: Prisma.PartMasterUpdateOneWithoutSupersedesNestedInput
+  supersedes?: Prisma.PartMasterUpdateManyWithoutSupersededByNestedInput
+  fitments?: Prisma.PartFitmentUpdateManyWithoutPartNestedInput
+  serviceQuotationPart?: Prisma.ServiceQuotationPartUpdateManyWithoutPartsNestedInput
+}
+
+export type PartMasterUncheckedUpdateWithoutBranchPartsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  partNo?: Prisma.StringFieldUpdateOperationsInput | string
+  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  partCategoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hsnId?: Prisma.IntFieldUpdateOperationsInput | number
+  sellingPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  landingPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitOfMeasure?: Prisma.EnumUnitOfMeasureFieldUpdateOperationsInput | $Enums.UnitOfMeasure
+  reorderLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isFastMoving?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPartStatusFieldUpdateOperationsInput | $Enums.PartStatus
+  supersededById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  supersedes?: Prisma.PartMasterUncheckedUpdateManyWithoutSupersededByNestedInput
+  fitments?: Prisma.PartFitmentUncheckedUpdateManyWithoutPartNestedInput
+  serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutPartsNestedInput
 }
 
 export type PartMasterCreateManyTenantInput = {
@@ -1621,6 +1772,7 @@ export type PartMasterUpdateWithoutTenantInput = {
   supersedes?: Prisma.PartMasterUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateWithoutTenantInput = {
@@ -1644,6 +1796,7 @@ export type PartMasterUncheckedUpdateWithoutTenantInput = {
   supersedes?: Prisma.PartMasterUncheckedUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUncheckedUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateManyWithoutTenantInput = {
@@ -1706,6 +1859,7 @@ export type PartMasterUpdateWithoutHsnInput = {
   supersedes?: Prisma.PartMasterUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateWithoutHsnInput = {
@@ -1729,6 +1883,7 @@ export type PartMasterUncheckedUpdateWithoutHsnInput = {
   supersedes?: Prisma.PartMasterUncheckedUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUncheckedUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateManyWithoutHsnInput = {
@@ -1791,6 +1946,7 @@ export type PartMasterUpdateWithoutCategoryInput = {
   supersedes?: Prisma.PartMasterUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateWithoutCategoryInput = {
@@ -1814,6 +1970,7 @@ export type PartMasterUncheckedUpdateWithoutCategoryInput = {
   supersedes?: Prisma.PartMasterUncheckedUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUncheckedUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateManyWithoutCategoryInput = {
@@ -1876,6 +2033,7 @@ export type PartMasterUpdateWithoutSupersededByInput = {
   supersedes?: Prisma.PartMasterUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateWithoutSupersededByInput = {
@@ -1899,6 +2057,7 @@ export type PartMasterUncheckedUpdateWithoutSupersededByInput = {
   supersedes?: Prisma.PartMasterUncheckedUpdateManyWithoutSupersededByNestedInput
   fitments?: Prisma.PartFitmentUncheckedUpdateManyWithoutPartNestedInput
   serviceQuotationPart?: Prisma.ServiceQuotationPartUncheckedUpdateManyWithoutPartsNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartMasterUncheckedUpdateManyWithoutSupersededByInput = {
@@ -1930,12 +2089,14 @@ export type PartMasterCountOutputType = {
   supersedes: number
   fitments: number
   serviceQuotationPart: number
+  branchParts: number
 }
 
 export type PartMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   supersedes?: boolean | PartMasterCountOutputTypeCountSupersedesArgs
   fitments?: boolean | PartMasterCountOutputTypeCountFitmentsArgs
   serviceQuotationPart?: boolean | PartMasterCountOutputTypeCountServiceQuotationPartArgs
+  branchParts?: boolean | PartMasterCountOutputTypeCountBranchPartsArgs
 }
 
 /**
@@ -1969,6 +2130,13 @@ export type PartMasterCountOutputTypeCountServiceQuotationPartArgs<ExtArgs exten
   where?: Prisma.ServiceQuotationPartWhereInput
 }
 
+/**
+ * PartMasterCountOutputType without action
+ */
+export type PartMasterCountOutputTypeCountBranchPartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BranchPartMasterWhereInput
+}
+
 
 export type PartMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1996,6 +2164,7 @@ export type PartMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   supersedes?: boolean | Prisma.PartMaster$supersedesArgs<ExtArgs>
   fitments?: boolean | Prisma.PartMaster$fitmentsArgs<ExtArgs>
   serviceQuotationPart?: boolean | Prisma.PartMaster$serviceQuotationPartArgs<ExtArgs>
+  branchParts?: boolean | Prisma.PartMaster$branchPartsArgs<ExtArgs>
   _count?: boolean | Prisma.PartMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["partMaster"]>
 
@@ -2079,6 +2248,7 @@ export type PartMasterInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   supersedes?: boolean | Prisma.PartMaster$supersedesArgs<ExtArgs>
   fitments?: boolean | Prisma.PartMaster$fitmentsArgs<ExtArgs>
   serviceQuotationPart?: boolean | Prisma.PartMaster$serviceQuotationPartArgs<ExtArgs>
+  branchParts?: boolean | Prisma.PartMaster$branchPartsArgs<ExtArgs>
   _count?: boolean | Prisma.PartMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PartMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2104,6 +2274,7 @@ export type $PartMasterPayload<ExtArgs extends runtime.Types.Extensions.Internal
     supersedes: Prisma.$PartMasterPayload<ExtArgs>[]
     fitments: Prisma.$PartFitmentPayload<ExtArgs>[]
     serviceQuotationPart: Prisma.$ServiceQuotationPartPayload<ExtArgs>[]
+    branchParts: Prisma.$BranchPartMasterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2525,6 +2696,7 @@ export interface Prisma__PartMasterClient<T, Null = never, ExtArgs extends runti
   supersedes<T extends Prisma.PartMaster$supersedesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PartMaster$supersedesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fitments<T extends Prisma.PartMaster$fitmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PartMaster$fitmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartFitmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceQuotationPart<T extends Prisma.PartMaster$serviceQuotationPartArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PartMaster$serviceQuotationPartArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceQuotationPartPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  branchParts<T extends Prisma.PartMaster$branchPartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PartMaster$branchPartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPartMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3080,6 +3252,30 @@ export type PartMaster$serviceQuotationPartArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.ServiceQuotationPartScalarFieldEnum | Prisma.ServiceQuotationPartScalarFieldEnum[]
+}
+
+/**
+ * PartMaster.branchParts
+ */
+export type PartMaster$branchPartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BranchPartMaster
+   */
+  select?: Prisma.BranchPartMasterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BranchPartMaster
+   */
+  omit?: Prisma.BranchPartMasterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BranchPartMasterInclude<ExtArgs> | null
+  where?: Prisma.BranchPartMasterWhereInput
+  orderBy?: Prisma.BranchPartMasterOrderByWithRelationInput | Prisma.BranchPartMasterOrderByWithRelationInput[]
+  cursor?: Prisma.BranchPartMasterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BranchPartMasterScalarFieldEnum | Prisma.BranchPartMasterScalarFieldEnum[]
 }
 
 /**

@@ -81,7 +81,10 @@ export const ModelName = {
   ServiceQuotationLabour: 'ServiceQuotationLabour',
   ServiceQuotationCustomerVoice: 'ServiceQuotationCustomerVoice',
   ServiceAppointment: 'ServiceAppointment',
-  ServiceAppointmentCustomerVoice: 'ServiceAppointmentCustomerVoice'
+  ServiceAppointmentCustomerVoice: 'ServiceAppointmentCustomerVoice',
+  StoreMaster: 'StoreMaster',
+  BinMaster: 'BinMaster',
+  BranchPartMaster: 'BranchPartMaster'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -670,6 +673,60 @@ export const ServiceAppointmentCustomerVoiceScalarFieldEnum = {
 } as const
 
 export type ServiceAppointmentCustomerVoiceScalarFieldEnum = (typeof ServiceAppointmentCustomerVoiceScalarFieldEnum)[keyof typeof ServiceAppointmentCustomerVoiceScalarFieldEnum]
+
+
+export const StoreMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  description: 'description',
+  IsBlocked: 'IsBlocked',
+  IsActive: 'IsActive',
+  IsMainStore: 'IsMainStore',
+  branchId: 'branchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreMasterScalarFieldEnum = (typeof StoreMasterScalarFieldEnum)[keyof typeof StoreMasterScalarFieldEnum]
+
+
+export const BinMasterScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  binCode: 'binCode',
+  binDescription: 'binDescription',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BinMasterScalarFieldEnum = (typeof BinMasterScalarFieldEnum)[keyof typeof BinMasterScalarFieldEnum]
+
+
+export const BranchPartMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  partId: 'partId',
+  storeId: 'storeId',
+  binId: 'binId',
+  stockInHand: 'stockInHand',
+  isDefaultBin: 'isDefaultBin',
+  isActive: 'isActive',
+  minimumLevel: 'minimumLevel',
+  maximumLevel: 'maximumLevel',
+  reorderLevel: 'reorderLevel',
+  safetyStock: 'safetyStock',
+  reservationQty: 'reservationQty',
+  mrp: 'mrp',
+  sellingPrice: 'sellingPrice',
+  latestLandedCost: 'latestLandedCost',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BranchPartMasterScalarFieldEnum = (typeof BranchPartMasterScalarFieldEnum)[keyof typeof BranchPartMasterScalarFieldEnum]
 
 
 export const SortOrder = {

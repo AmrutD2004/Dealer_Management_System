@@ -173,28 +173,31 @@ model Tenant {
   // Relations
   createdByUser PlatformUser @relation(fields: [createdBy], references: [id])
 
-  users                          Users[]
-  roles                          Role[]
-  employeeDesignations           EmployeeDesignation[]
-  branches                       Branch[]
-  serviceCategoryMasters         ServiceCategoryMaster[]
-  serviceTypes                   ServiceTypeMaster[]
-  repairOrderType                RepairOrderTypeMaster[]
-  customers                      Customer[]
-  vehicles                       Vehicle[]
-  jobCards                       JobCard[]
-  labour                         LabourMaster[]
-  dealerBayMasters               DealerBayMaster[]
-  hsnMasters                     HSNMaster[]
-  partCategory                   PartCategoryMaster[]
-  parts                          PartMaster[]
-  fitment                        PartFitment[]
-  serviceQuotation               ServiceQuotationMaster[]
-  serviceQuotationParts          ServiceQuotationPart[]
-  serviceQuotationLabours        ServiceQuotationLabour[]
-  serviceQuotationCustomerVoices ServiceQuotationCustomerVoice[]
-  serviceAppointment      ServiceAppointment[]
+  users                           Users[]
+  roles                           Role[]
+  employeeDesignations            EmployeeDesignation[]
+  branches                        Branch[]
+  serviceCategoryMasters          ServiceCategoryMaster[]
+  serviceTypes                    ServiceTypeMaster[]
+  repairOrderType                 RepairOrderTypeMaster[]
+  customers                       Customer[]
+  vehicles                        Vehicle[]
+  jobCards                        JobCard[]
+  labour                          LabourMaster[]
+  dealerBayMasters                DealerBayMaster[]
+  hsnMasters                      HSNMaster[]
+  partCategory                    PartCategoryMaster[]
+  parts                           PartMaster[]
+  fitment                         PartFitment[]
+  serviceQuotation                ServiceQuotationMaster[]
+  serviceQuotationParts           ServiceQuotationPart[]
+  serviceQuotationLabours         ServiceQuotationLabour[]
+  serviceQuotationCustomerVoices  ServiceQuotationCustomerVoice[]
+  serviceAppointment              ServiceAppointment[]
   serviceAppointmentCustomerVoice ServiceAppointmentCustomerVoice[]
+  stores                          StoreMaster[]
+  branchParts BranchPartMaster[]
+
   @@index([createdBy])
 }
 
@@ -220,12 +223,14 @@ model Branch {
   updatedAt DateTime @updatedAt
 
   // Relations
-  tenant           Tenant                   @relation(fields: [tenantId], references: [id])
-  users            Users[]
-  jobCards         JobCard[]
-  dealerBayMasters DealerBayMaster[]
-  serviceQuotation ServiceQuotationMaster[]
-  serviceAppointment  ServiceAppointment[]
+  tenant             Tenant                   @relation(fields: [tenantId], references: [id])
+  users              Users[]
+  jobCards           JobCard[]
+  dealerBayMasters   DealerBayMaster[]
+  serviceQuotation   ServiceQuotationMaster[]
+  serviceAppointment ServiceAppointment[]
+  stores             StoreMaster[]
+  branchParts   BranchPartMaster[]
 
   @@unique([tenantId, branchCode])
   @@index([tenantId])
@@ -257,13 +262,14 @@ model Users {
 
   authorizedCustomers Customer[]
 
-  supervisedJobCards JobCard[]                @relation("JobCardSupervisor")
-  technicianJobCards JobCard[]                @relation("JobCardTechnician")
-  createdJobCards    JobCard[]                @relation("JobCardCreatedBy")
-  jobCardAllocations JobCardAllocation[]      @relation("JobCardAllocationMechanic")
-  serviceQuotation   ServiceQuotationMaster[]
-  serviceAppointmentServiceAdvisor  ServiceAppointment[]  @relation("ServiceAdvisor")
-  serviceAppointmentCRE   ServiceAppointment[]  @relation("CustomerRelationshipExecutive")
+  supervisedJobCards               JobCard[]                @relation("JobCardSupervisor")
+  technicianJobCards               JobCard[]                @relation("JobCardTechnician")
+  createdJobCards                  JobCard[]                @relation("JobCardCreatedBy")
+  jobCardAllocations               JobCardAllocation[]      @relation("JobCardAllocationMechanic")
+  serviceQuotation                 ServiceQuotationMaster[]
+  serviceAppointmentServiceAdvisor ServiceAppointment[]     @relation("ServiceAdvisor")
+  serviceAppointmentCRE            ServiceAppointment[]     @relation("CustomerRelationshipExecutive")
+
   @@unique([tenantId, employeeCode])
   @@unique([tenantId, email])
   @@index([tenantId])
@@ -350,18 +356,19 @@ enum ServiceCategoryMasterCode {
 model ServiceCategoryMaster {
   id          Int                       @id @default(autoincrement())
   tenantId    Int
-  code        ServiceCategoryMasterCode 
+  code        ServiceCategoryMasterCode
   name        String
   description String?
   isActive    Boolean                   @default(true)
   createdAt   DateTime                  @default(now())
   updatedAt   DateTime                  @updatedAt
 
-  tenant           Tenant                   @relation(fields: [tenantId], references: [id])
-  serviceTypes     ServiceTypeMaster[]
-  jobCards         JobCard[]
-  serviceQuotation ServiceQuotationMaster[]
-  serviceAppointment  ServiceAppointment[]
+  tenant             Tenant                   @relation(fields: [tenantId], references: [id])
+  serviceTypes       ServiceTypeMaster[]
+  jobCards           JobCard[]
+  serviceQuotation   ServiceQuotationMaster[]
+  serviceAppointment ServiceAppointment[]
+
   @@unique([code, tenantId])
   @@map("ServiceCategoryMaster")
 }
@@ -414,10 +421,11 @@ model RepairOrderTypeMaster {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tenant           Tenant                   @relation(fields: [tenantId], references: [id])
-  jobCards         JobCard[]
-  serviceQuotation ServiceQuotationMaster[]
-  serviceAppointment  ServiceAppointment[]
+  tenant             Tenant                   @relation(fields: [tenantId], references: [id])
+  jobCards           JobCard[]
+  serviceQuotation   ServiceQuotationMaster[]
+  serviceAppointment ServiceAppointment[]
+
   @@unique([tenantId, code])
   @@map("RepairOrderTypeMaster")
 }
@@ -458,12 +466,13 @@ model Customer {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tenant           Tenant                   @relation(fields: [tenantId], references: [id])
-  authorizedByUser Users                    @relation(fields: [authorizedBy], references: [id])
-  vehicles         Vehicle[]
-  jobCards         JobCard[]
-  serviceQuotation ServiceQuotationMaster[]
-  serviceAppointment  ServiceAppointment[]
+  tenant             Tenant                   @relation(fields: [tenantId], references: [id])
+  authorizedByUser   Users                    @relation(fields: [authorizedBy], references: [id])
+  vehicles           Vehicle[]
+  jobCards           JobCard[]
+  serviceQuotation   ServiceQuotationMaster[]
+  serviceAppointment ServiceAppointment[]
+
   @@unique([tenantId, customerCode])
   @@map("Customer")
 }
@@ -500,9 +509,10 @@ model Vehicle {
   model    VehicleModelMaster   @relation(fields: [modelId], references: [id])
   variant  VehicleVariantMaster @relation(fields: [variantId], references: [id])
 
-  jobCards         JobCard[]
-  serviceQuotation ServiceQuotationMaster[]
-  serviceAppointment  ServiceAppointment[]
+  jobCards           JobCard[]
+  serviceQuotation   ServiceQuotationMaster[]
+  serviceAppointment ServiceAppointment[]
+
   @@unique([tenantId, chassisNumber])
   @@unique([tenantId, engineNumber])
   @@index([tenantId, vehicleNumber])
@@ -537,7 +547,7 @@ model JobCard {
   vehicleStatus JobCardVehicleStatus
 
   serviceAdvisorId Int?
-  technicianId Int?
+  technicianId     Int?
 
   serviceCategoryId Int
   serviceTypeId     Int
@@ -571,9 +581,9 @@ model JobCard {
   vehicle  Vehicle  @relation(fields: [vehicleId], references: [id])
   customer Customer @relation(fields: [customerId], references: [id])
 
-  serviceAdvisor    Users? @relation("JobCardSupervisor", fields: [serviceAdvisorId], references: [id])
-  technician    Users? @relation("JobCardTechnician", fields: [technicianId], references: [id])
-  createdByUser Users  @relation("JobCardCreatedBy", fields: [createdBy], references: [id])
+  serviceAdvisor Users? @relation("JobCardSupervisor", fields: [serviceAdvisorId], references: [id])
+  technician     Users? @relation("JobCardTechnician", fields: [technicianId], references: [id])
+  createdByUser  Users  @relation("JobCardCreatedBy", fields: [createdBy], references: [id])
 
   serviceCategory       ServiceCategoryMaster  @relation(fields: [serviceCategoryId], references: [id])
   serviceType           ServiceTypeMaster      @relation(fields: [serviceTypeId], references: [id])
@@ -615,14 +625,14 @@ model LabourMaster {
   labourDescription String?
   standardHours     Decimal @db.Decimal(6, 2)
   rate              Decimal @db.Decimal(10, 2)
-  hsnId   Int?
-  isActive Boolean @default(true)
+  hsnId             Int?
+  isActive          Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   tenant                  Tenant                   @relation(fields: [tenantId], references: [id])
-  hsn HSNMaster? @relation(fields: [hsnId], references: [id])
+  hsn                     HSNMaster?               @relation(fields: [hsnId], references: [id])
   actionToBeTaken         JobCardCustomerVoice[]
   serviceQuotationLabours ServiceQuotationLabour[]
 
@@ -689,10 +699,10 @@ model HSNMaster {
 
   isActive Boolean @default(true)
 
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
   parts     PartMaster[]
-  tenant    Tenant       @relation(fields: [tenantId], references: [id])
+  tenant    Tenant         @relation(fields: [tenantId], references: [id])
   labour    LabourMaster[]
 
   @@unique([tenantId, hsnCode])
@@ -770,7 +780,7 @@ model PartMaster {
   serviceQuotationPart ServiceQuotationPart[]
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @updatedAt
-
+  branchParts BranchPartMaster[]
   @@unique([tenantId, partNo])
   @@index([tenantId, status])
   @@index([tenantId, partCategoryId])
@@ -783,7 +793,7 @@ model PartFitment {
   partId   Int
 
   modelId   Int
-  variantId Int?
+  variantId Int
   brandId   Int
 
   quantity Decimal @default(1) @db.Decimal(10, 2)
@@ -795,9 +805,9 @@ model PartFitment {
 
   tenant    Tenant               @relation(fields: [tenantId], references: [id])
   part      PartMaster           @relation(fields: [partId], references: [id])
-  model     VehicleModelMaster    @relation(fields: [modelId], references: [id])
-  variant   VehicleVariantMaster? @relation(fields: [variantId], references: [id])
-  brand     BrandMaster           @relation(fields: [brandId], references: [id])
+  model     VehicleModelMaster   @relation(fields: [modelId], references: [id])
+  variant   VehicleVariantMaster @relation(fields: [variantId], references: [id])
+  brand     BrandMaster          @relation(fields: [brandId], references: [id])
   createdAt DateTime             @default(now())
   updatedAt DateTime             @updatedAt
 
@@ -976,73 +986,148 @@ enum appointAction {
   RE_SCHEDULE
   CANCEL
 }
+
 enum appointmentSource {
-  INWARD_CALL 
-  OUTWARD_CALL 
-  WHATSAPP 
-  SMS 
+  INWARD_CALL
+  OUTWARD_CALL
+  WHATSAPP
+  SMS
   WALK_IN
 }
+
 enum appointmentStatus {
-  OPEN 
-  RE_SCHEDULE 
-  CANCEL 
+  OPEN
+  RE_SCHEDULE
+  CANCEL
 }
+
 enum appointCancleReasons {
-  CUSTOMER_IN_HURRY 
-  PARTS_NOT_AVAILABLE 
-  CUSTOMER_BUSY 
-  BAY_NOT_AVAILABLE 
-
+  CUSTOMER_IN_HURRY
+  PARTS_NOT_AVAILABLE
+  CUSTOMER_BUSY
+  BAY_NOT_AVAILABLE
 }
-model ServiceAppointment {
-  id Int @id @default(autoincrement())
-  tenantId  Int
-  branchId  Int
-  action appointAction
-  originalAppointmentId Int?
-  appointmentNo String
-  appointDate   DateTime @default(now())
-  appointOn     DateTime
-  callDateAndTime DateTime
-  source  appointmentSource
-  status  appointmentStatus
-  cancleReason  appointCancleReasons?
-  estimateCharge  Decimal? @db.Decimal(12, 2)
-  vehicleId   Int
-  currentReading        String?
-  customerId  Int
-  creId      Int
-  serviceAdvisorId  Int
-  repairOrderTypeId Int
-  serviceCategoryId Int
-  serviceTypeId   Int
-  originalAppointment ServiceAppointment?  @relation("OriginalServiceAppointment", fields: [originalAppointmentId], references: [id])
-  originalServiceAppointment ServiceAppointment[] @relation("OriginalServiceAppointment")
-  serviceAppointmentCustomerVoice ServiceAppointmentCustomerVoice[]
-  tenant  Tenant  @relation(fields: [tenantId], references: [id])
-  serviceType ServiceTypeMaster @relation(fields: [serviceTypeId], references: [id])
-  serviceCategory ServiceCategoryMaster @relation(fields: [serviceCategoryId], references: [id])
-  repairOrderType RepairOrderTypeMaster @relation(fields: [repairOrderTypeId], references: [id])
-  serviceAdvisor  Users   @relation("ServiceAdvisor", fields: [serviceAdvisorId], references: [id])
-  cre   Users @relation("CustomerRelationshipExecutive", fields: [creId], references: [id])
-  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
-  customer Customer   @relation(fields: [customerId], references: [id])
-  branch  Branch  @relation(fields: [branchId], references: [id])
 
-  @@map("ServiceAppointment")
+model ServiceAppointment {
+  id                              Int                               @id @default(autoincrement())
+  tenantId                        Int
+  branchId                        Int
+  action                          appointAction
+  originalAppointmentId           Int?
+  appointmentNo                   String
+  appointDate                     DateTime                          @default(now())
+  appointOn                       DateTime
+  callDateAndTime                 DateTime
+  source                          appointmentSource
+  status                          appointmentStatus
+  cancleReason                    appointCancleReasons?
+  estimateCharge                  Decimal?                          @db.Decimal(12, 2)
+  vehicleId                       Int
+  currentReading                  String?
+  customerId                      Int
+  creId                           Int
+  serviceAdvisorId                Int
+  repairOrderTypeId               Int
+  serviceCategoryId               Int
+  serviceTypeId                   Int
+  originalAppointment             ServiceAppointment?               @relation("OriginalServiceAppointment", fields: [originalAppointmentId], references: [id])
+  originalServiceAppointment      ServiceAppointment[]              @relation("OriginalServiceAppointment")
+  serviceAppointmentCustomerVoice ServiceAppointmentCustomerVoice[]
+  tenant                          Tenant                            @relation(fields: [tenantId], references: [id])
+  serviceType                     ServiceTypeMaster                 @relation(fields: [serviceTypeId], references: [id])
+  serviceCategory                 ServiceCategoryMaster             @relation(fields: [serviceCategoryId], references: [id])
+  repairOrderType                 RepairOrderTypeMaster             @relation(fields: [repairOrderTypeId], references: [id])
+  serviceAdvisor                  Users                             @relation("ServiceAdvisor", fields: [serviceAdvisorId], references: [id])
+  cre                             Users                             @relation("CustomerRelationshipExecutive", fields: [creId], references: [id])
+  vehicle                         Vehicle                           @relation(fields: [vehicleId], references: [id])
+  customer                        Customer                          @relation(fields: [customerId], references: [id])
+  branch                          Branch                            @relation(fields: [branchId], references: [id])
+
   @@unique([tenantId, appointmentNo])
   @@index([tenantId, appointmentNo])
+  @@map("ServiceAppointment")
 }
 
 model ServiceAppointmentCustomerVoice {
-   id Int @id @default(autoincrement())
-   tenantId Int
-   serviceAppointmentId Int
-   customerVoice String
-   serviceAppointment ServiceAppointment  @relation(fields: [serviceAppointmentId], references: [id])
-   tenant Tenant  @relation(fields: [tenantId], references: [id])
+  id                   Int                @id @default(autoincrement())
+  tenantId             Int
+  serviceAppointmentId Int
+  customerVoice        String
+  serviceAppointment   ServiceAppointment @relation(fields: [serviceAppointmentId], references: [id])
+  tenant               Tenant             @relation(fields: [tenantId], references: [id])
 
-   @@index([tenantId, serviceAppointmentId])
-   @@map("ServiceAppointmentCustomerVoice")
+  @@index([tenantId, serviceAppointmentId])
+  @@map("ServiceAppointmentCustomerVoice")
+}
+
+  model StoreMaster {
+    id          Int         @id @default(autoincrement())
+    tenantId    Int
+    code        String
+    description String
+    IsBlocked   Boolean
+    IsActive    Boolean
+    IsMainStore Boolean
+    branchId    Int
+    branch      Branch      @relation(fields: [branchId], references: [id])
+    tenant      Tenant      @relation(fields: [tenantId], references: [id])
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    bins         BinMaster[]
+    branchParts BranchPartMaster[]
+    @@unique([code, tenantId, branchId])
+    @@map("StoreMaster")
+  }
+
+  model BinMaster {
+    id             Int         @id @default(autoincrement())
+    storeId        Int
+    binCode        String
+    binDescription String?
+    isActive       Boolean     @default(true)
+    store          StoreMaster @relation(fields: [storeId], references: [id])
+    createdAt      DateTime    @default(now())
+    updatedAt      DateTime    @updatedAt
+    branchParts BranchPartMaster[]
+    @@unique([binCode, storeId])
+    @@map("BinMaster")
+  }
+
+  model BranchPartMaster {
+  id       Int @id @default(autoincrement())
+  tenantId Int
+  branchId Int
+  partId   Int
+  storeId  Int
+  binId    Int
+
+  // Stock detail fields from the manual
+  stockInHand   Decimal @default(0) @db.Decimal(14, 3)
+  isDefaultBin  Boolean @default(false)
+  isActive      Boolean @default(true)
+
+  // Optional but useful master fields shown on Branch Part Master screen
+  minimumLevel  Int?
+  maximumLevel  Int?
+  reorderLevel  Int?
+  safetyStock   Int?
+  reservationQty Int?
+  mrp           Decimal? @db.Decimal(12, 2)
+  sellingPrice  Decimal? @db.Decimal(12, 2)
+  latestLandedCost Decimal? @db.Decimal(12, 2)
+
+  tenant Tenant      @relation(fields: [tenantId], references: [id])
+  branch Branch      @relation(fields: [branchId], references: [id])
+  part   PartMaster  @relation(fields: [partId], references: [id])
+  store  StoreMaster @relation(fields: [storeId], references: [id])
+  bin    BinMaster   @relation(fields: [binId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // One stock record per part per bin per store
+  @@unique([tenantId, branchId, partId, storeId, binId])
+  @@index([tenantId, partId])
+  @@index([tenantId, storeId, binId])
+  @@map("BranchPartMaster")
 }

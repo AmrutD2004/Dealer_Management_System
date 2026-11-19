@@ -172,3 +172,18 @@ export type ServiceAppointment = Prisma.ServiceAppointmentModel
  * 
  */
 export type ServiceAppointmentCustomerVoice = Prisma.ServiceAppointmentCustomerVoiceModel
+/**
+ * Model StoreMaster
+ * 
+ */
+export type StoreMaster = Prisma.StoreMasterModel
+/**
+ * Model BinMaster
+ * 
+ */
+export type BinMaster = Prisma.BinMasterModel
+/**
+ * Model BranchPartMaster
+ * 
+ */
+export type BranchPartMaster = Prisma.BranchPartMasterModel
