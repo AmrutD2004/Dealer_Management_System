@@ -22,6 +22,7 @@ import { createQuotation, getListOfServiceQuotation, getServiceQuotationDetails,
 import { cancleAppointment, createAppointment, getListOfServiceAppointment, getServiceAppointmentDetails, updateAppointment } from "../../controllers/tenants/ServiceQuotationAndAppointment/serviceAppointmentManagement";
 import { activateStore, createStores, deactivateStore, getListOfStores, getStoreDetails, updateStoreDetails } from "../../controllers/tenants/storeMasterManagementController";
 import { createBinsInStore, getListOfBinsAccordingToStore, updateBinDetails } from "../../controllers/tenants/binMasterManagementController";
+import { addBranchPartMaster, getDetailsOfBranchPartMaster, getListOfBranchPartMaster, updateBranchPartMaster } from "../../controllers/tenants/Parts/branchPartMasterManagementController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -213,4 +214,11 @@ tenantRoute.patch('/tenant/store/:storeId/activate', authenticate, requireTenant
 tenantRoute.post('/tenant/store/bin/create', authenticate, requireTenantUser, createBinsInStore)
 tenantRoute.put('/tenant/store/bin/:binId/update', authenticate, requireTenantUser, updateBinDetails)
 tenantRoute.get('/tenant/store/bin/get/all', authenticate, requireTenantUser, getListOfBinsAccordingToStore)
+
+
+//Branch Part Master
+tenantRoute.post('/tenant/branch/parts/create', authenticate, requireTenantUser, addBranchPartMaster)
+tenantRoute.put('/tenant/branch/parts/:branchPartId/update', authenticate, requireTenantUser, updateBranchPartMaster)
+tenantRoute.get('/tenant/branch/parts/get/all', authenticate, requireTenantUser, getListOfBranchPartMaster)
+tenantRoute.get('/tenant/branch/parts/get/:branchPartId', authenticate, requireTenantUser, getDetailsOfBranchPartMaster)
 export default tenantRoute;
