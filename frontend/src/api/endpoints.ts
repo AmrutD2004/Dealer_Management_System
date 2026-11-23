@@ -571,6 +571,27 @@ export const activatePartMaster = async (partId: number) => {
     return await response.data
 }
 
+//Branch wise Part Master management
+export const createBranchPartMaster = async (payload: object) => {
+    const response = await api.post(`/api/tenant/branch/parts/create`, payload)
+    return await response.data;
+}
+
+export const updateBranchPartMaster = async (payload: object, branchPartId: number) => {
+    const response = await api.put(`/api/tenant/branch/parts/${branchPartId}/update`, payload)
+    return await response.data;
+}
+
+export const getBranchPartMasterList = async () => {
+    const response = await api.get(`/api/tenant/branch/parts/get/all`)
+    return await response.data;
+}
+
+export const getBranchPartMasterById = async (branchPartId: number) => {
+    const response = await api.get(`/api/tenant/branch/parts/get/${branchPartId}`)
+    return await response.data;
+}
+
 
 //Part Fitment management
 export const createPartFitment = async (payload: Record<string, unknown>) => {
@@ -928,6 +949,17 @@ export const editBin = async (payload: object, binId: number) => {
 }
 
 
+
+//MRN management
+export const createMRN = async (payload: object) => {
+    const response = await api.post(`/api/tenant/mrn/create`, payload)
+    return await response.data;
+}
+
+export const getMRNList = async () => {
+    const response = await api.get(`/api/tenant/mrn/get/all`)
+    return await response.data;
+}
 
 // Third Party APIs
 

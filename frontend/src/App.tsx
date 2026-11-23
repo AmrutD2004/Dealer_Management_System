@@ -30,6 +30,7 @@ import PartFitment from "./Pages/TenantUserPages/Masters/PartFitment"
 import DealerBay from "./Pages/TenantUserPages/Masters/DealerBay"
 import Bin from "./Pages/TenantUserPages/Masters/Bin/Bin"
 import Storage from "./Pages/TenantUserPages/Masters/Storage/Storage"
+import BranchPartMaster from "./Pages/TenantUserPages/Masters/BranchPartMaster/BranchPartMaster"
 import Customer from "./Pages/TenantUserPages/Customer"
 import CustomerCreate from "./Pages/TenantUserPages/CustomerCreate"
 import Vehicle from "./Pages/TenantUserPages/Vehicle"
@@ -42,6 +43,7 @@ import ServiceQuotationCreate from "./Pages/TenantUserPages/ServiceQuotationCrea
 import ServiceQuotationView from "./Pages/TenantUserPages/ServiceQuotationView"
 import ServiceAppointment from "./Pages/TenantUserPages/ServiceAppointment"
 import ServiceAppointmentCreate from "./Pages/TenantUserPages/ServiceAppointmentCreate"
+import MRN from "./Pages/TenantUserPages/MRN"
 import AssignPermissionPage from "./Pages/TenantUserPages/Masters/AssignPermissionPage"
 
 
@@ -79,6 +81,7 @@ export function App() {
             <Route path='/tenant/:id/masters/dealer-bay' element={<TenantContextProvider><AuthProtectedRoute><DealerBay /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/bin' element={<TenantContextProvider><AuthProtectedRoute><Bin /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/masters/storage' element={<TenantContextProvider><AuthProtectedRoute><Storage /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/masters/branch-part-master' element={<TenantContextProvider><AuthProtectedRoute><BranchPartMaster /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/customer' element={<TenantContextProvider><AuthProtectedRoute><Customer /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/customer/create' element={<TenantContextProvider><AuthProtectedRoute><CustomerCreate /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/vehicle' element={<TenantContextProvider><AuthProtectedRoute><Vehicle /></AuthProtectedRoute></TenantContextProvider>} />
@@ -91,6 +94,7 @@ export function App() {
             <Route path='/tenant/:id/service-quotation/view/:quotationId' element={<TenantContextProvider><AuthProtectedRoute><ServiceQuotationView /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/service-appointment' element={<TenantContextProvider><AuthProtectedRoute><ServiceAppointment /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/service-appointment/create' element={<TenantContextProvider><AuthProtectedRoute><ServiceAppointmentCreate /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/mrn' element={<TenantContextProvider><AuthProtectedRoute><MRN /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>
