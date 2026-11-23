@@ -238,6 +238,7 @@ export type BinMasterWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"BinMaster"> | Date | string
   store?: Prisma.XOR<Prisma.StoreMasterScalarRelationFilter, Prisma.StoreMasterWhereInput>
   branchParts?: Prisma.BranchPartMasterListRelationFilter
+  mrnDetails?: Prisma.MRNDetailListRelationFilter
 }
 
 export type BinMasterOrderByWithRelationInput = {
@@ -250,6 +251,7 @@ export type BinMasterOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   store?: Prisma.StoreMasterOrderByWithRelationInput
   branchParts?: Prisma.BranchPartMasterOrderByRelationAggregateInput
+  mrnDetails?: Prisma.MRNDetailOrderByRelationAggregateInput
 }
 
 export type BinMasterWhereUniqueInput = Prisma.AtLeast<{
@@ -266,6 +268,7 @@ export type BinMasterWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"BinMaster"> | Date | string
   store?: Prisma.XOR<Prisma.StoreMasterScalarRelationFilter, Prisma.StoreMasterWhereInput>
   branchParts?: Prisma.BranchPartMasterListRelationFilter
+  mrnDetails?: Prisma.MRNDetailListRelationFilter
 }, "id" | "binCode_storeId">
 
 export type BinMasterOrderByWithAggregationInput = {
@@ -304,6 +307,7 @@ export type BinMasterCreateInput = {
   updatedAt?: Date | string
   store: Prisma.StoreMasterCreateNestedOneWithoutBinsInput
   branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBinInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBinInput
 }
 
 export type BinMasterUncheckedCreateInput = {
@@ -315,6 +319,7 @@ export type BinMasterUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBinInput
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBinInput
 }
 
 export type BinMasterUpdateInput = {
@@ -325,6 +330,7 @@ export type BinMasterUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   store?: Prisma.StoreMasterUpdateOneRequiredWithoutBinsNestedInput
   branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBinNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBinNestedInput
 }
 
 export type BinMasterUncheckedUpdateInput = {
@@ -336,6 +342,7 @@ export type BinMasterUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBinNestedInput
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBinNestedInput
 }
 
 export type BinMasterCreateManyInput = {
@@ -482,6 +489,20 @@ export type BinMasterUpdateOneRequiredWithoutBranchPartsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BinMasterUpdateToOneWithWhereWithoutBranchPartsInput, Prisma.BinMasterUpdateWithoutBranchPartsInput>, Prisma.BinMasterUncheckedUpdateWithoutBranchPartsInput>
 }
 
+export type BinMasterCreateNestedOneWithoutMrnDetailsInput = {
+  create?: Prisma.XOR<Prisma.BinMasterCreateWithoutMrnDetailsInput, Prisma.BinMasterUncheckedCreateWithoutMrnDetailsInput>
+  connectOrCreate?: Prisma.BinMasterCreateOrConnectWithoutMrnDetailsInput
+  connect?: Prisma.BinMasterWhereUniqueInput
+}
+
+export type BinMasterUpdateOneRequiredWithoutMrnDetailsNestedInput = {
+  create?: Prisma.XOR<Prisma.BinMasterCreateWithoutMrnDetailsInput, Prisma.BinMasterUncheckedCreateWithoutMrnDetailsInput>
+  connectOrCreate?: Prisma.BinMasterCreateOrConnectWithoutMrnDetailsInput
+  upsert?: Prisma.BinMasterUpsertWithoutMrnDetailsInput
+  connect?: Prisma.BinMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BinMasterUpdateToOneWithWhereWithoutMrnDetailsInput, Prisma.BinMasterUpdateWithoutMrnDetailsInput>, Prisma.BinMasterUncheckedUpdateWithoutMrnDetailsInput>
+}
+
 export type BinMasterCreateWithoutStoreInput = {
   binCode: string
   binDescription?: string | null
@@ -489,6 +510,7 @@ export type BinMasterCreateWithoutStoreInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBinInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBinInput
 }
 
 export type BinMasterUncheckedCreateWithoutStoreInput = {
@@ -499,6 +521,7 @@ export type BinMasterUncheckedCreateWithoutStoreInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBinInput
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBinInput
 }
 
 export type BinMasterCreateOrConnectWithoutStoreInput = {
@@ -547,6 +570,7 @@ export type BinMasterCreateWithoutBranchPartsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   store: Prisma.StoreMasterCreateNestedOneWithoutBinsInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBinInput
 }
 
 export type BinMasterUncheckedCreateWithoutBranchPartsInput = {
@@ -557,6 +581,7 @@ export type BinMasterUncheckedCreateWithoutBranchPartsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBinInput
 }
 
 export type BinMasterCreateOrConnectWithoutBranchPartsInput = {
@@ -582,6 +607,7 @@ export type BinMasterUpdateWithoutBranchPartsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   store?: Prisma.StoreMasterUpdateOneRequiredWithoutBinsNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBinNestedInput
 }
 
 export type BinMasterUncheckedUpdateWithoutBranchPartsInput = {
@@ -592,6 +618,65 @@ export type BinMasterUncheckedUpdateWithoutBranchPartsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBinNestedInput
+}
+
+export type BinMasterCreateWithoutMrnDetailsInput = {
+  binCode: string
+  binDescription?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  store: Prisma.StoreMasterCreateNestedOneWithoutBinsInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutBinInput
+}
+
+export type BinMasterUncheckedCreateWithoutMrnDetailsInput = {
+  id?: number
+  storeId: number
+  binCode: string
+  binDescription?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutBinInput
+}
+
+export type BinMasterCreateOrConnectWithoutMrnDetailsInput = {
+  where: Prisma.BinMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.BinMasterCreateWithoutMrnDetailsInput, Prisma.BinMasterUncheckedCreateWithoutMrnDetailsInput>
+}
+
+export type BinMasterUpsertWithoutMrnDetailsInput = {
+  update: Prisma.XOR<Prisma.BinMasterUpdateWithoutMrnDetailsInput, Prisma.BinMasterUncheckedUpdateWithoutMrnDetailsInput>
+  create: Prisma.XOR<Prisma.BinMasterCreateWithoutMrnDetailsInput, Prisma.BinMasterUncheckedCreateWithoutMrnDetailsInput>
+  where?: Prisma.BinMasterWhereInput
+}
+
+export type BinMasterUpdateToOneWithWhereWithoutMrnDetailsInput = {
+  where?: Prisma.BinMasterWhereInput
+  data: Prisma.XOR<Prisma.BinMasterUpdateWithoutMrnDetailsInput, Prisma.BinMasterUncheckedUpdateWithoutMrnDetailsInput>
+}
+
+export type BinMasterUpdateWithoutMrnDetailsInput = {
+  binCode?: Prisma.StringFieldUpdateOperationsInput | string
+  binDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  store?: Prisma.StoreMasterUpdateOneRequiredWithoutBinsNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBinNestedInput
+}
+
+export type BinMasterUncheckedUpdateWithoutMrnDetailsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  storeId?: Prisma.IntFieldUpdateOperationsInput | number
+  binCode?: Prisma.StringFieldUpdateOperationsInput | string
+  binDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBinNestedInput
 }
 
 export type BinMasterCreateManyStoreInput = {
@@ -610,6 +695,7 @@ export type BinMasterUpdateWithoutStoreInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchParts?: Prisma.BranchPartMasterUpdateManyWithoutBinNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBinNestedInput
 }
 
 export type BinMasterUncheckedUpdateWithoutStoreInput = {
@@ -620,6 +706,7 @@ export type BinMasterUncheckedUpdateWithoutStoreInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutBinNestedInput
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBinNestedInput
 }
 
 export type BinMasterUncheckedUpdateManyWithoutStoreInput = {
@@ -638,10 +725,12 @@ export type BinMasterUncheckedUpdateManyWithoutStoreInput = {
 
 export type BinMasterCountOutputType = {
   branchParts: number
+  mrnDetails: number
 }
 
 export type BinMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branchParts?: boolean | BinMasterCountOutputTypeCountBranchPartsArgs
+  mrnDetails?: boolean | BinMasterCountOutputTypeCountMrnDetailsArgs
 }
 
 /**
@@ -661,6 +750,13 @@ export type BinMasterCountOutputTypeCountBranchPartsArgs<ExtArgs extends runtime
   where?: Prisma.BranchPartMasterWhereInput
 }
 
+/**
+ * BinMasterCountOutputType without action
+ */
+export type BinMasterCountOutputTypeCountMrnDetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MRNDetailWhereInput
+}
+
 
 export type BinMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -672,6 +768,7 @@ export type BinMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updatedAt?: boolean
   store?: boolean | Prisma.StoreMasterDefaultArgs<ExtArgs>
   branchParts?: boolean | Prisma.BinMaster$branchPartsArgs<ExtArgs>
+  mrnDetails?: boolean | Prisma.BinMaster$mrnDetailsArgs<ExtArgs>
   _count?: boolean | Prisma.BinMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["binMaster"]>
 
@@ -711,6 +808,7 @@ export type BinMasterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type BinMasterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   store?: boolean | Prisma.StoreMasterDefaultArgs<ExtArgs>
   branchParts?: boolean | Prisma.BinMaster$branchPartsArgs<ExtArgs>
+  mrnDetails?: boolean | Prisma.BinMaster$mrnDetailsArgs<ExtArgs>
   _count?: boolean | Prisma.BinMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BinMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -725,6 +823,7 @@ export type $BinMasterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     store: Prisma.$StoreMasterPayload<ExtArgs>
     branchParts: Prisma.$BranchPartMasterPayload<ExtArgs>[]
+    mrnDetails: Prisma.$MRNDetailPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1130,6 +1229,7 @@ export interface Prisma__BinMasterClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   store<T extends Prisma.StoreMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__StoreMasterClient<runtime.Types.Result.GetResult<Prisma.$StoreMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   branchParts<T extends Prisma.BinMaster$branchPartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BinMaster$branchPartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPartMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mrnDetails<T extends Prisma.BinMaster$mrnDetailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BinMaster$mrnDetailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MRNDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1588,6 +1688,30 @@ export type BinMaster$branchPartsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.BranchPartMasterScalarFieldEnum | Prisma.BranchPartMasterScalarFieldEnum[]
+}
+
+/**
+ * BinMaster.mrnDetails
+ */
+export type BinMaster$mrnDetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MRNDetail
+   */
+  select?: Prisma.MRNDetailSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MRNDetail
+   */
+  omit?: Prisma.MRNDetailOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MRNDetailInclude<ExtArgs> | null
+  where?: Prisma.MRNDetailWhereInput
+  orderBy?: Prisma.MRNDetailOrderByWithRelationInput | Prisma.MRNDetailOrderByWithRelationInput[]
+  cursor?: Prisma.MRNDetailWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MRNDetailScalarFieldEnum | Prisma.MRNDetailScalarFieldEnum[]
 }
 
 /**

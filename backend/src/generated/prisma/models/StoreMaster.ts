@@ -268,6 +268,7 @@ export type StoreMasterWhereInput = {
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   bins?: Prisma.BinMasterListRelationFilter
   branchParts?: Prisma.BranchPartMasterListRelationFilter
+  mrn?: Prisma.MRNMasterListRelationFilter
 }
 
 export type StoreMasterOrderByWithRelationInput = {
@@ -285,6 +286,7 @@ export type StoreMasterOrderByWithRelationInput = {
   tenant?: Prisma.TenantOrderByWithRelationInput
   bins?: Prisma.BinMasterOrderByRelationAggregateInput
   branchParts?: Prisma.BranchPartMasterOrderByRelationAggregateInput
+  mrn?: Prisma.MRNMasterOrderByRelationAggregateInput
 }
 
 export type StoreMasterWhereUniqueInput = Prisma.AtLeast<{
@@ -306,6 +308,7 @@ export type StoreMasterWhereUniqueInput = Prisma.AtLeast<{
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   bins?: Prisma.BinMasterListRelationFilter
   branchParts?: Prisma.BranchPartMasterListRelationFilter
+  mrn?: Prisma.MRNMasterListRelationFilter
 }, "id" | "code_tenantId_branchId">
 
 export type StoreMasterOrderByWithAggregationInput = {
@@ -354,6 +357,7 @@ export type StoreMasterCreateInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutStoresInput
   bins?: Prisma.BinMasterCreateNestedManyWithoutStoreInput
   branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterUncheckedCreateInput = {
@@ -369,6 +373,7 @@ export type StoreMasterUncheckedCreateInput = {
   updatedAt?: Date | string
   bins?: Prisma.BinMasterUncheckedCreateNestedManyWithoutStoreInput
   branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterUpdateInput = {
@@ -383,6 +388,7 @@ export type StoreMasterUpdateInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutStoresNestedInput
   bins?: Prisma.BinMasterUpdateManyWithoutStoreNestedInput
   branchParts?: Prisma.BranchPartMasterUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterUncheckedUpdateInput = {
@@ -398,6 +404,7 @@ export type StoreMasterUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bins?: Prisma.BinMasterUncheckedUpdateManyWithoutStoreNestedInput
   branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterCreateManyInput = {
@@ -620,6 +627,20 @@ export type StoreMasterUpdateOneRequiredWithoutBranchPartsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreMasterUpdateToOneWithWhereWithoutBranchPartsInput, Prisma.StoreMasterUpdateWithoutBranchPartsInput>, Prisma.StoreMasterUncheckedUpdateWithoutBranchPartsInput>
 }
 
+export type StoreMasterCreateNestedOneWithoutMrnInput = {
+  create?: Prisma.XOR<Prisma.StoreMasterCreateWithoutMrnInput, Prisma.StoreMasterUncheckedCreateWithoutMrnInput>
+  connectOrCreate?: Prisma.StoreMasterCreateOrConnectWithoutMrnInput
+  connect?: Prisma.StoreMasterWhereUniqueInput
+}
+
+export type StoreMasterUpdateOneRequiredWithoutMrnNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreMasterCreateWithoutMrnInput, Prisma.StoreMasterUncheckedCreateWithoutMrnInput>
+  connectOrCreate?: Prisma.StoreMasterCreateOrConnectWithoutMrnInput
+  upsert?: Prisma.StoreMasterUpsertWithoutMrnInput
+  connect?: Prisma.StoreMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreMasterUpdateToOneWithWhereWithoutMrnInput, Prisma.StoreMasterUpdateWithoutMrnInput>, Prisma.StoreMasterUncheckedUpdateWithoutMrnInput>
+}
+
 export type StoreMasterCreateWithoutTenantInput = {
   code: string
   description: string
@@ -631,6 +652,7 @@ export type StoreMasterCreateWithoutTenantInput = {
   branch: Prisma.BranchCreateNestedOneWithoutStoresInput
   bins?: Prisma.BinMasterCreateNestedManyWithoutStoreInput
   branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterUncheckedCreateWithoutTenantInput = {
@@ -645,6 +667,7 @@ export type StoreMasterUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   bins?: Prisma.BinMasterUncheckedCreateNestedManyWithoutStoreInput
   branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterCreateOrConnectWithoutTenantInput = {
@@ -700,6 +723,7 @@ export type StoreMasterCreateWithoutBranchInput = {
   tenant: Prisma.TenantCreateNestedOneWithoutStoresInput
   bins?: Prisma.BinMasterCreateNestedManyWithoutStoreInput
   branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterUncheckedCreateWithoutBranchInput = {
@@ -714,6 +738,7 @@ export type StoreMasterUncheckedCreateWithoutBranchInput = {
   updatedAt?: Date | string
   bins?: Prisma.BinMasterUncheckedCreateNestedManyWithoutStoreInput
   branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterCreateOrConnectWithoutBranchInput = {
@@ -753,6 +778,7 @@ export type StoreMasterCreateWithoutBinsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutStoresInput
   tenant: Prisma.TenantCreateNestedOneWithoutStoresInput
   branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterUncheckedCreateWithoutBinsInput = {
@@ -767,6 +793,7 @@ export type StoreMasterUncheckedCreateWithoutBinsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterCreateOrConnectWithoutBinsInput = {
@@ -796,6 +823,7 @@ export type StoreMasterUpdateWithoutBinsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutStoresNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutStoresNestedInput
   branchParts?: Prisma.BranchPartMasterUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterUncheckedUpdateWithoutBinsInput = {
@@ -810,6 +838,7 @@ export type StoreMasterUncheckedUpdateWithoutBinsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterCreateWithoutBranchPartsInput = {
@@ -823,6 +852,7 @@ export type StoreMasterCreateWithoutBranchPartsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutStoresInput
   tenant: Prisma.TenantCreateNestedOneWithoutStoresInput
   bins?: Prisma.BinMasterCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterUncheckedCreateWithoutBranchPartsInput = {
@@ -837,6 +867,7 @@ export type StoreMasterUncheckedCreateWithoutBranchPartsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   bins?: Prisma.BinMasterUncheckedCreateNestedManyWithoutStoreInput
+  mrn?: Prisma.MRNMasterUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreMasterCreateOrConnectWithoutBranchPartsInput = {
@@ -866,6 +897,7 @@ export type StoreMasterUpdateWithoutBranchPartsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutStoresNestedInput
   tenant?: Prisma.TenantUpdateOneRequiredWithoutStoresNestedInput
   bins?: Prisma.BinMasterUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterUncheckedUpdateWithoutBranchPartsInput = {
@@ -880,6 +912,81 @@ export type StoreMasterUncheckedUpdateWithoutBranchPartsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bins?: Prisma.BinMasterUncheckedUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreMasterCreateWithoutMrnInput = {
+  code: string
+  description: string
+  IsBlocked: boolean
+  IsActive: boolean
+  IsMainStore: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutStoresInput
+  tenant: Prisma.TenantCreateNestedOneWithoutStoresInput
+  bins?: Prisma.BinMasterCreateNestedManyWithoutStoreInput
+  branchParts?: Prisma.BranchPartMasterCreateNestedManyWithoutStoreInput
+}
+
+export type StoreMasterUncheckedCreateWithoutMrnInput = {
+  id?: number
+  tenantId: number
+  code: string
+  description: string
+  IsBlocked: boolean
+  IsActive: boolean
+  IsMainStore: boolean
+  branchId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bins?: Prisma.BinMasterUncheckedCreateNestedManyWithoutStoreInput
+  branchParts?: Prisma.BranchPartMasterUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreMasterCreateOrConnectWithoutMrnInput = {
+  where: Prisma.StoreMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreMasterCreateWithoutMrnInput, Prisma.StoreMasterUncheckedCreateWithoutMrnInput>
+}
+
+export type StoreMasterUpsertWithoutMrnInput = {
+  update: Prisma.XOR<Prisma.StoreMasterUpdateWithoutMrnInput, Prisma.StoreMasterUncheckedUpdateWithoutMrnInput>
+  create: Prisma.XOR<Prisma.StoreMasterCreateWithoutMrnInput, Prisma.StoreMasterUncheckedCreateWithoutMrnInput>
+  where?: Prisma.StoreMasterWhereInput
+}
+
+export type StoreMasterUpdateToOneWithWhereWithoutMrnInput = {
+  where?: Prisma.StoreMasterWhereInput
+  data: Prisma.XOR<Prisma.StoreMasterUpdateWithoutMrnInput, Prisma.StoreMasterUncheckedUpdateWithoutMrnInput>
+}
+
+export type StoreMasterUpdateWithoutMrnInput = {
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  IsActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  IsMainStore?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutStoresNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutStoresNestedInput
+  bins?: Prisma.BinMasterUpdateManyWithoutStoreNestedInput
+  branchParts?: Prisma.BranchPartMasterUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreMasterUncheckedUpdateWithoutMrnInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  IsBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  IsActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  IsMainStore?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  branchId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bins?: Prisma.BinMasterUncheckedUpdateManyWithoutStoreNestedInput
+  branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterCreateManyTenantInput = {
@@ -905,6 +1012,7 @@ export type StoreMasterUpdateWithoutTenantInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutStoresNestedInput
   bins?: Prisma.BinMasterUpdateManyWithoutStoreNestedInput
   branchParts?: Prisma.BranchPartMasterUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterUncheckedUpdateWithoutTenantInput = {
@@ -919,6 +1027,7 @@ export type StoreMasterUncheckedUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bins?: Prisma.BinMasterUncheckedUpdateManyWithoutStoreNestedInput
   branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterUncheckedUpdateManyWithoutTenantInput = {
@@ -956,6 +1065,7 @@ export type StoreMasterUpdateWithoutBranchInput = {
   tenant?: Prisma.TenantUpdateOneRequiredWithoutStoresNestedInput
   bins?: Prisma.BinMasterUpdateManyWithoutStoreNestedInput
   branchParts?: Prisma.BranchPartMasterUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterUncheckedUpdateWithoutBranchInput = {
@@ -970,6 +1080,7 @@ export type StoreMasterUncheckedUpdateWithoutBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bins?: Prisma.BinMasterUncheckedUpdateManyWithoutStoreNestedInput
   branchParts?: Prisma.BranchPartMasterUncheckedUpdateManyWithoutStoreNestedInput
+  mrn?: Prisma.MRNMasterUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreMasterUncheckedUpdateManyWithoutBranchInput = {
@@ -992,11 +1103,13 @@ export type StoreMasterUncheckedUpdateManyWithoutBranchInput = {
 export type StoreMasterCountOutputType = {
   bins: number
   branchParts: number
+  mrn: number
 }
 
 export type StoreMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bins?: boolean | StoreMasterCountOutputTypeCountBinsArgs
   branchParts?: boolean | StoreMasterCountOutputTypeCountBranchPartsArgs
+  mrn?: boolean | StoreMasterCountOutputTypeCountMrnArgs
 }
 
 /**
@@ -1023,6 +1136,13 @@ export type StoreMasterCountOutputTypeCountBranchPartsArgs<ExtArgs extends runti
   where?: Prisma.BranchPartMasterWhereInput
 }
 
+/**
+ * StoreMasterCountOutputType without action
+ */
+export type StoreMasterCountOutputTypeCountMrnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MRNMasterWhereInput
+}
+
 
 export type StoreMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1039,6 +1159,7 @@ export type StoreMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   bins?: boolean | Prisma.StoreMaster$binsArgs<ExtArgs>
   branchParts?: boolean | Prisma.StoreMaster$branchPartsArgs<ExtArgs>
+  mrn?: boolean | Prisma.StoreMaster$mrnArgs<ExtArgs>
   _count?: boolean | Prisma.StoreMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["storeMaster"]>
 
@@ -1091,6 +1212,7 @@ export type StoreMasterInclude<ExtArgs extends runtime.Types.Extensions.Internal
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   bins?: boolean | Prisma.StoreMaster$binsArgs<ExtArgs>
   branchParts?: boolean | Prisma.StoreMaster$branchPartsArgs<ExtArgs>
+  mrn?: boolean | Prisma.StoreMaster$mrnArgs<ExtArgs>
   _count?: boolean | Prisma.StoreMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoreMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1109,6 +1231,7 @@ export type $StoreMasterPayload<ExtArgs extends runtime.Types.Extensions.Interna
     tenant: Prisma.$TenantPayload<ExtArgs>
     bins: Prisma.$BinMasterPayload<ExtArgs>[]
     branchParts: Prisma.$BranchPartMasterPayload<ExtArgs>[]
+    mrn: Prisma.$MRNMasterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1519,6 +1642,7 @@ export interface Prisma__StoreMasterClient<T, Null = never, ExtArgs extends runt
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   bins<T extends Prisma.StoreMaster$binsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreMaster$binsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BinMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   branchParts<T extends Prisma.StoreMaster$branchPartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreMaster$branchPartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPartMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mrn<T extends Prisma.StoreMaster$mrnArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreMaster$mrnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MRNMasterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2004,6 +2128,30 @@ export type StoreMaster$branchPartsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.BranchPartMasterScalarFieldEnum | Prisma.BranchPartMasterScalarFieldEnum[]
+}
+
+/**
+ * StoreMaster.mrn
+ */
+export type StoreMaster$mrnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MRNMaster
+   */
+  select?: Prisma.MRNMasterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MRNMaster
+   */
+  omit?: Prisma.MRNMasterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MRNMasterInclude<ExtArgs> | null
+  where?: Prisma.MRNMasterWhereInput
+  orderBy?: Prisma.MRNMasterOrderByWithRelationInput | Prisma.MRNMasterOrderByWithRelationInput[]
+  cursor?: Prisma.MRNMasterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MRNMasterScalarFieldEnum | Prisma.MRNMasterScalarFieldEnum[]
 }
 
 /**
