@@ -389,6 +389,7 @@ export type BranchPartMasterWhereInput = {
   part?: Prisma.XOR<Prisma.PartMasterScalarRelationFilter, Prisma.PartMasterWhereInput>
   store?: Prisma.XOR<Prisma.StoreMasterScalarRelationFilter, Prisma.StoreMasterWhereInput>
   bin?: Prisma.XOR<Prisma.BinMasterScalarRelationFilter, Prisma.BinMasterWhereInput>
+  mrnDetails?: Prisma.MRNDetailListRelationFilter
 }
 
 export type BranchPartMasterOrderByWithRelationInput = {
@@ -416,6 +417,7 @@ export type BranchPartMasterOrderByWithRelationInput = {
   part?: Prisma.PartMasterOrderByWithRelationInput
   store?: Prisma.StoreMasterOrderByWithRelationInput
   bin?: Prisma.BinMasterOrderByWithRelationInput
+  mrnDetails?: Prisma.MRNDetailOrderByRelationAggregateInput
 }
 
 export type BranchPartMasterWhereUniqueInput = Prisma.AtLeast<{
@@ -447,6 +449,7 @@ export type BranchPartMasterWhereUniqueInput = Prisma.AtLeast<{
   part?: Prisma.XOR<Prisma.PartMasterScalarRelationFilter, Prisma.PartMasterWhereInput>
   store?: Prisma.XOR<Prisma.StoreMasterScalarRelationFilter, Prisma.StoreMasterWhereInput>
   bin?: Prisma.XOR<Prisma.BinMasterScalarRelationFilter, Prisma.BinMasterWhereInput>
+  mrnDetails?: Prisma.MRNDetailListRelationFilter
 }, "id" | "tenantId_branchId_partId_storeId_binId">
 
 export type BranchPartMasterOrderByWithAggregationInput = {
@@ -520,6 +523,7 @@ export type BranchPartMasterCreateInput = {
   part: Prisma.PartMasterCreateNestedOneWithoutBranchPartsInput
   store: Prisma.StoreMasterCreateNestedOneWithoutBranchPartsInput
   bin: Prisma.BinMasterCreateNestedOneWithoutBranchPartsInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterUncheckedCreateInput = {
@@ -542,6 +546,7 @@ export type BranchPartMasterUncheckedCreateInput = {
   latestLandedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterUpdateInput = {
@@ -563,6 +568,7 @@ export type BranchPartMasterUpdateInput = {
   part?: Prisma.PartMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   store?: Prisma.StoreMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   bin?: Prisma.BinMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateInput = {
@@ -585,6 +591,7 @@ export type BranchPartMasterUncheckedUpdateInput = {
   latestLandedCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterCreateManyInput = {
@@ -765,6 +772,11 @@ export type BranchPartMasterSumOrderByAggregateInput = {
   mrp?: Prisma.SortOrder
   sellingPrice?: Prisma.SortOrder
   latestLandedCost?: Prisma.SortOrder
+}
+
+export type BranchPartMasterScalarRelationFilter = {
+  is?: Prisma.BranchPartMasterWhereInput
+  isNot?: Prisma.BranchPartMasterWhereInput
 }
 
 export type BranchPartMasterCreateNestedManyWithoutTenantInput = {
@@ -977,6 +989,20 @@ export type BranchPartMasterUncheckedUpdateManyWithoutBinNestedInput = {
   deleteMany?: Prisma.BranchPartMasterScalarWhereInput | Prisma.BranchPartMasterScalarWhereInput[]
 }
 
+export type BranchPartMasterCreateNestedOneWithoutMrnDetailsInput = {
+  create?: Prisma.XOR<Prisma.BranchPartMasterCreateWithoutMrnDetailsInput, Prisma.BranchPartMasterUncheckedCreateWithoutMrnDetailsInput>
+  connectOrCreate?: Prisma.BranchPartMasterCreateOrConnectWithoutMrnDetailsInput
+  connect?: Prisma.BranchPartMasterWhereUniqueInput
+}
+
+export type BranchPartMasterUpdateOneRequiredWithoutMrnDetailsNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchPartMasterCreateWithoutMrnDetailsInput, Prisma.BranchPartMasterUncheckedCreateWithoutMrnDetailsInput>
+  connectOrCreate?: Prisma.BranchPartMasterCreateOrConnectWithoutMrnDetailsInput
+  upsert?: Prisma.BranchPartMasterUpsertWithoutMrnDetailsInput
+  connect?: Prisma.BranchPartMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchPartMasterUpdateToOneWithWhereWithoutMrnDetailsInput, Prisma.BranchPartMasterUpdateWithoutMrnDetailsInput>, Prisma.BranchPartMasterUncheckedUpdateWithoutMrnDetailsInput>
+}
+
 export type BranchPartMasterCreateWithoutTenantInput = {
   stockInHand?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefaultBin?: boolean
@@ -995,6 +1021,7 @@ export type BranchPartMasterCreateWithoutTenantInput = {
   part: Prisma.PartMasterCreateNestedOneWithoutBranchPartsInput
   store: Prisma.StoreMasterCreateNestedOneWithoutBranchPartsInput
   bin: Prisma.BinMasterCreateNestedOneWithoutBranchPartsInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterUncheckedCreateWithoutTenantInput = {
@@ -1016,6 +1043,7 @@ export type BranchPartMasterUncheckedCreateWithoutTenantInput = {
   latestLandedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterCreateOrConnectWithoutTenantInput = {
@@ -1087,6 +1115,7 @@ export type BranchPartMasterCreateWithoutBranchInput = {
   part: Prisma.PartMasterCreateNestedOneWithoutBranchPartsInput
   store: Prisma.StoreMasterCreateNestedOneWithoutBranchPartsInput
   bin: Prisma.BinMasterCreateNestedOneWithoutBranchPartsInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterUncheckedCreateWithoutBranchInput = {
@@ -1108,6 +1137,7 @@ export type BranchPartMasterUncheckedCreateWithoutBranchInput = {
   latestLandedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterCreateOrConnectWithoutBranchInput = {
@@ -1154,6 +1184,7 @@ export type BranchPartMasterCreateWithoutPartInput = {
   branch: Prisma.BranchCreateNestedOneWithoutBranchPartsInput
   store: Prisma.StoreMasterCreateNestedOneWithoutBranchPartsInput
   bin: Prisma.BinMasterCreateNestedOneWithoutBranchPartsInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterUncheckedCreateWithoutPartInput = {
@@ -1175,6 +1206,7 @@ export type BranchPartMasterUncheckedCreateWithoutPartInput = {
   latestLandedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterCreateOrConnectWithoutPartInput = {
@@ -1221,6 +1253,7 @@ export type BranchPartMasterCreateWithoutStoreInput = {
   branch: Prisma.BranchCreateNestedOneWithoutBranchPartsInput
   part: Prisma.PartMasterCreateNestedOneWithoutBranchPartsInput
   bin: Prisma.BinMasterCreateNestedOneWithoutBranchPartsInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterUncheckedCreateWithoutStoreInput = {
@@ -1242,6 +1275,7 @@ export type BranchPartMasterUncheckedCreateWithoutStoreInput = {
   latestLandedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterCreateOrConnectWithoutStoreInput = {
@@ -1288,6 +1322,7 @@ export type BranchPartMasterCreateWithoutBinInput = {
   branch: Prisma.BranchCreateNestedOneWithoutBranchPartsInput
   part: Prisma.PartMasterCreateNestedOneWithoutBranchPartsInput
   store: Prisma.StoreMasterCreateNestedOneWithoutBranchPartsInput
+  mrnDetails?: Prisma.MRNDetailCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterUncheckedCreateWithoutBinInput = {
@@ -1309,6 +1344,7 @@ export type BranchPartMasterUncheckedCreateWithoutBinInput = {
   latestLandedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedCreateNestedManyWithoutBranchPartInput
 }
 
 export type BranchPartMasterCreateOrConnectWithoutBinInput = {
@@ -1335,6 +1371,108 @@ export type BranchPartMasterUpdateWithWhereUniqueWithoutBinInput = {
 export type BranchPartMasterUpdateManyWithWhereWithoutBinInput = {
   where: Prisma.BranchPartMasterScalarWhereInput
   data: Prisma.XOR<Prisma.BranchPartMasterUpdateManyMutationInput, Prisma.BranchPartMasterUncheckedUpdateManyWithoutBinInput>
+}
+
+export type BranchPartMasterCreateWithoutMrnDetailsInput = {
+  stockInHand?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefaultBin?: boolean
+  isActive?: boolean
+  minimumLevel?: number | null
+  maximumLevel?: number | null
+  reorderLevel?: number | null
+  safetyStock?: number | null
+  reservationQty?: number | null
+  mrp?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellingPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latestLandedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutBranchPartsInput
+  branch: Prisma.BranchCreateNestedOneWithoutBranchPartsInput
+  part: Prisma.PartMasterCreateNestedOneWithoutBranchPartsInput
+  store: Prisma.StoreMasterCreateNestedOneWithoutBranchPartsInput
+  bin: Prisma.BinMasterCreateNestedOneWithoutBranchPartsInput
+}
+
+export type BranchPartMasterUncheckedCreateWithoutMrnDetailsInput = {
+  id?: number
+  tenantId: number
+  branchId: number
+  partId: number
+  storeId: number
+  binId: number
+  stockInHand?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefaultBin?: boolean
+  isActive?: boolean
+  minimumLevel?: number | null
+  maximumLevel?: number | null
+  reorderLevel?: number | null
+  safetyStock?: number | null
+  reservationQty?: number | null
+  mrp?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellingPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latestLandedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BranchPartMasterCreateOrConnectWithoutMrnDetailsInput = {
+  where: Prisma.BranchPartMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchPartMasterCreateWithoutMrnDetailsInput, Prisma.BranchPartMasterUncheckedCreateWithoutMrnDetailsInput>
+}
+
+export type BranchPartMasterUpsertWithoutMrnDetailsInput = {
+  update: Prisma.XOR<Prisma.BranchPartMasterUpdateWithoutMrnDetailsInput, Prisma.BranchPartMasterUncheckedUpdateWithoutMrnDetailsInput>
+  create: Prisma.XOR<Prisma.BranchPartMasterCreateWithoutMrnDetailsInput, Prisma.BranchPartMasterUncheckedCreateWithoutMrnDetailsInput>
+  where?: Prisma.BranchPartMasterWhereInput
+}
+
+export type BranchPartMasterUpdateToOneWithWhereWithoutMrnDetailsInput = {
+  where?: Prisma.BranchPartMasterWhereInput
+  data: Prisma.XOR<Prisma.BranchPartMasterUpdateWithoutMrnDetailsInput, Prisma.BranchPartMasterUncheckedUpdateWithoutMrnDetailsInput>
+}
+
+export type BranchPartMasterUpdateWithoutMrnDetailsInput = {
+  stockInHand?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefaultBin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minimumLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maximumLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reorderLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  safetyStock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reservationQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mrp?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellingPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latestLandedCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutBranchPartsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutBranchPartsNestedInput
+  part?: Prisma.PartMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+  store?: Prisma.StoreMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+  bin?: Prisma.BinMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+}
+
+export type BranchPartMasterUncheckedUpdateWithoutMrnDetailsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.IntFieldUpdateOperationsInput | number
+  branchId?: Prisma.IntFieldUpdateOperationsInput | number
+  partId?: Prisma.IntFieldUpdateOperationsInput | number
+  storeId?: Prisma.IntFieldUpdateOperationsInput | number
+  binId?: Prisma.IntFieldUpdateOperationsInput | number
+  stockInHand?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefaultBin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minimumLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maximumLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reorderLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  safetyStock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reservationQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mrp?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellingPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latestLandedCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BranchPartMasterCreateManyTenantInput = {
@@ -1376,6 +1514,7 @@ export type BranchPartMasterUpdateWithoutTenantInput = {
   part?: Prisma.PartMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   store?: Prisma.StoreMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   bin?: Prisma.BinMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateWithoutTenantInput = {
@@ -1397,6 +1536,7 @@ export type BranchPartMasterUncheckedUpdateWithoutTenantInput = {
   latestLandedCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateManyWithoutTenantInput = {
@@ -1459,6 +1599,7 @@ export type BranchPartMasterUpdateWithoutBranchInput = {
   part?: Prisma.PartMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   store?: Prisma.StoreMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   bin?: Prisma.BinMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateWithoutBranchInput = {
@@ -1480,6 +1621,7 @@ export type BranchPartMasterUncheckedUpdateWithoutBranchInput = {
   latestLandedCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateManyWithoutBranchInput = {
@@ -1542,6 +1684,7 @@ export type BranchPartMasterUpdateWithoutPartInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutBranchPartsNestedInput
   store?: Prisma.StoreMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   bin?: Prisma.BinMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateWithoutPartInput = {
@@ -1563,6 +1706,7 @@ export type BranchPartMasterUncheckedUpdateWithoutPartInput = {
   latestLandedCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateManyWithoutPartInput = {
@@ -1625,6 +1769,7 @@ export type BranchPartMasterUpdateWithoutStoreInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutBranchPartsNestedInput
   part?: Prisma.PartMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   bin?: Prisma.BinMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateWithoutStoreInput = {
@@ -1646,6 +1791,7 @@ export type BranchPartMasterUncheckedUpdateWithoutStoreInput = {
   latestLandedCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateManyWithoutStoreInput = {
@@ -1708,6 +1854,7 @@ export type BranchPartMasterUpdateWithoutBinInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutBranchPartsNestedInput
   part?: Prisma.PartMasterUpdateOneRequiredWithoutBranchPartsNestedInput
   store?: Prisma.StoreMasterUpdateOneRequiredWithoutBranchPartsNestedInput
+  mrnDetails?: Prisma.MRNDetailUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateWithoutBinInput = {
@@ -1729,6 +1876,7 @@ export type BranchPartMasterUncheckedUpdateWithoutBinInput = {
   latestLandedCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mrnDetails?: Prisma.MRNDetailUncheckedUpdateManyWithoutBranchPartNestedInput
 }
 
 export type BranchPartMasterUncheckedUpdateManyWithoutBinInput = {
@@ -1752,6 +1900,35 @@ export type BranchPartMasterUncheckedUpdateManyWithoutBinInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type BranchPartMasterCountOutputType
+ */
+
+export type BranchPartMasterCountOutputType = {
+  mrnDetails: number
+}
+
+export type BranchPartMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  mrnDetails?: boolean | BranchPartMasterCountOutputTypeCountMrnDetailsArgs
+}
+
+/**
+ * BranchPartMasterCountOutputType without action
+ */
+export type BranchPartMasterCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BranchPartMasterCountOutputType
+   */
+  select?: Prisma.BranchPartMasterCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * BranchPartMasterCountOutputType without action
+ */
+export type BranchPartMasterCountOutputTypeCountMrnDetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MRNDetailWhereInput
+}
 
 
 export type BranchPartMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1779,6 +1956,8 @@ export type BranchPartMasterSelect<ExtArgs extends runtime.Types.Extensions.Inte
   part?: boolean | Prisma.PartMasterDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreMasterDefaultArgs<ExtArgs>
   bin?: boolean | Prisma.BinMasterDefaultArgs<ExtArgs>
+  mrnDetails?: boolean | Prisma.BranchPartMaster$mrnDetailsArgs<ExtArgs>
+  _count?: boolean | Prisma.BranchPartMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["branchPartMaster"]>
 
 export type BranchPartMasterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1864,6 +2043,8 @@ export type BranchPartMasterInclude<ExtArgs extends runtime.Types.Extensions.Int
   part?: boolean | Prisma.PartMasterDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreMasterDefaultArgs<ExtArgs>
   bin?: boolean | Prisma.BinMasterDefaultArgs<ExtArgs>
+  mrnDetails?: boolean | Prisma.BranchPartMaster$mrnDetailsArgs<ExtArgs>
+  _count?: boolean | Prisma.BranchPartMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BranchPartMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
@@ -1888,6 +2069,7 @@ export type $BranchPartMasterPayload<ExtArgs extends runtime.Types.Extensions.In
     part: Prisma.$PartMasterPayload<ExtArgs>
     store: Prisma.$StoreMasterPayload<ExtArgs>
     bin: Prisma.$BinMasterPayload<ExtArgs>
+    mrnDetails: Prisma.$MRNDetailPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2308,6 +2490,7 @@ export interface Prisma__BranchPartMasterClient<T, Null = never, ExtArgs extends
   part<T extends Prisma.PartMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PartMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__PartMasterClient<runtime.Types.Result.GetResult<Prisma.$PartMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   store<T extends Prisma.StoreMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__StoreMasterClient<runtime.Types.Result.GetResult<Prisma.$StoreMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   bin<T extends Prisma.BinMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BinMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__BinMasterClient<runtime.Types.Result.GetResult<Prisma.$BinMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  mrnDetails<T extends Prisma.BranchPartMaster$mrnDetailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchPartMaster$mrnDetailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MRNDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2754,6 +2937,30 @@ export type BranchPartMasterDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many BranchPartMasters to delete.
    */
   limit?: number
+}
+
+/**
+ * BranchPartMaster.mrnDetails
+ */
+export type BranchPartMaster$mrnDetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MRNDetail
+   */
+  select?: Prisma.MRNDetailSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MRNDetail
+   */
+  omit?: Prisma.MRNDetailOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MRNDetailInclude<ExtArgs> | null
+  where?: Prisma.MRNDetailWhereInput
+  orderBy?: Prisma.MRNDetailOrderByWithRelationInput | Prisma.MRNDetailOrderByWithRelationInput[]
+  cursor?: Prisma.MRNDetailWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MRNDetailScalarFieldEnum | Prisma.MRNDetailScalarFieldEnum[]
 }
 
 /**

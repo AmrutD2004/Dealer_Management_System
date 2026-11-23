@@ -220,3 +220,41 @@ export const appointCancleReasons = {
 } as const
 
 export type appointCancleReasons = (typeof appointCancleReasons)[keyof typeof appointCancleReasons]
+
+
+export const MRNType = {
+  CREDIT: 'CREDIT',
+  CASH: 'CASH',
+  AGAINST_DC: 'AGAINST_DC'
+} as const
+
+export type MRNType = (typeof MRNType)[keyof typeof MRNType]
+
+
+export const MRNStatus = {
+  GENERATED: 'GENERATED',
+  PARTIALLY_RECEIVED: 'PARTIALLY_RECEIVED',
+  FULLY_RECEIVED: 'FULLY_RECEIVED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type MRNStatus = (typeof MRNStatus)[keyof typeof MRNStatus]
+
+
+export const PurchaseType = {
+  LOCAL_STATE: 'LOCAL_STATE',
+  OTHER_STATE: 'OTHER_STATE'
+} as const
+
+export type PurchaseType = (typeof PurchaseType)[keyof typeof PurchaseType]
+
+
+export const PartyType = {
+  PRINCIPAL: 'PRINCIPAL',
+  SUPPLIER: 'SUPPLIER',
+  CO_DEALER: 'CO_DEALER',
+  DISTRIBUTOR: 'DISTRIBUTOR',
+  OFF_LINE_DISTRIBUTOR: 'OFF_LINE_DISTRIBUTOR'
+} as const
+
+export type PartyType = (typeof PartyType)[keyof typeof PartyType]

@@ -209,3 +209,13 @@ export type BinMaster = Prisma.BinMasterModel
  * 
  */
 export type BranchPartMaster = Prisma.BranchPartMasterModel
+/**
+ * Model MRNMaster
+ * 
+ */
+export type MRNMaster = Prisma.MRNMasterModel
+/**
+ * Model MRNDetail
+ * 
+ */
+export type MRNDetail = Prisma.MRNDetailModel

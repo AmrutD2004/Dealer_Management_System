@@ -430,7 +430,9 @@ export const ModelName = {
   ServiceAppointmentCustomerVoice: 'ServiceAppointmentCustomerVoice',
   StoreMaster: 'StoreMaster',
   BinMaster: 'BinMaster',
-  BranchPartMaster: 'BranchPartMaster'
+  BranchPartMaster: 'BranchPartMaster',
+  MRNMaster: 'MRNMaster',
+  MRNDetail: 'MRNDetail'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -446,7 +448,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment" | "serviceQuotationMaster" | "serviceQuotationPart" | "serviceQuotationLabour" | "serviceQuotationCustomerVoice" | "serviceAppointment" | "serviceAppointmentCustomerVoice" | "storeMaster" | "binMaster" | "branchPartMaster"
+    modelProps: "platformUser" | "brandMaster" | "vehicleModelMaster" | "vehicleVariantMaster" | "tenant" | "branch" | "users" | "employeeDesignation" | "role" | "permission" | "rolePermissionMapping" | "serviceCategoryMaster" | "serviceTypeMaster" | "repairOrderTypeMaster" | "customer" | "vehicle" | "jobCard" | "jobCardCustomerVoice" | "labourMaster" | "dealerBayMaster" | "jobCardAllocation" | "hSNMaster" | "partCategoryMaster" | "partMaster" | "partFitment" | "serviceQuotationMaster" | "serviceQuotationPart" | "serviceQuotationLabour" | "serviceQuotationCustomerVoice" | "serviceAppointment" | "serviceAppointmentCustomerVoice" | "storeMaster" | "binMaster" | "branchPartMaster" | "mRNMaster" | "mRNDetail"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2966,6 +2968,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MRNMaster: {
+      payload: Prisma.$MRNMasterPayload<ExtArgs>
+      fields: Prisma.MRNMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MRNMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MRNMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.MRNMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MRNMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>
+        }
+        findMany: {
+          args: Prisma.MRNMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>[]
+        }
+        create: {
+          args: Prisma.MRNMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>
+        }
+        createMany: {
+          args: Prisma.MRNMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MRNMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.MRNMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>
+        }
+        update: {
+          args: Prisma.MRNMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.MRNMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MRNMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MRNMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.MRNMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.MRNMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMRNMaster>
+        }
+        groupBy: {
+          args: Prisma.MRNMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MRNMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MRNMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MRNMasterCountAggregateOutputType> | number
+        }
+      }
+    }
+    MRNDetail: {
+      payload: Prisma.$MRNDetailPayload<ExtArgs>
+      fields: Prisma.MRNDetailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MRNDetailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MRNDetailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>
+        }
+        findFirst: {
+          args: Prisma.MRNDetailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MRNDetailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>
+        }
+        findMany: {
+          args: Prisma.MRNDetailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>[]
+        }
+        create: {
+          args: Prisma.MRNDetailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>
+        }
+        createMany: {
+          args: Prisma.MRNDetailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MRNDetailCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>[]
+        }
+        delete: {
+          args: Prisma.MRNDetailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>
+        }
+        update: {
+          args: Prisma.MRNDetailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>
+        }
+        deleteMany: {
+          args: Prisma.MRNDetailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MRNDetailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MRNDetailUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>[]
+        }
+        upsert: {
+          args: Prisma.MRNDetailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MRNDetailPayload>
+        }
+        aggregate: {
+          args: Prisma.MRNDetailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMRNDetail>
+        }
+        groupBy: {
+          args: Prisma.MRNDetailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MRNDetailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MRNDetailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MRNDetailCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3631,6 +3781,62 @@ export const BranchPartMasterScalarFieldEnum = {
 export type BranchPartMasterScalarFieldEnum = (typeof BranchPartMasterScalarFieldEnum)[keyof typeof BranchPartMasterScalarFieldEnum]
 
 
+export const MRNMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  storeId: 'storeId',
+  mrnNo: 'mrnNo',
+  mrnDate: 'mrnDate',
+  mrnType: 'mrnType',
+  purchaseType: 'purchaseType',
+  partyType: 'partyType',
+  partyCode: 'partyCode',
+  partyName: 'partyName',
+  dcNo: 'dcNo',
+  dcDate: 'dcDate',
+  invoiceNo: 'invoiceNo',
+  invoiceDate: 'invoiceDate',
+  status: 'status',
+  totalTaxableValue: 'totalTaxableValue',
+  totalDiscountValue: 'totalDiscountValue',
+  totalInvoiceValue: 'totalInvoiceValue',
+  totalMRNValue: 'totalMRNValue',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MRNMasterScalarFieldEnum = (typeof MRNMasterScalarFieldEnum)[keyof typeof MRNMasterScalarFieldEnum]
+
+
+export const MRNDetailScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  mrnId: 'mrnId',
+  branchPartId: 'branchPartId',
+  binId: 'binId',
+  invoiceQty: 'invoiceQty',
+  receivedQty: 'receivedQty',
+  shortQty: 'shortQty',
+  damageQty: 'damageQty',
+  excessQty: 'excessQty',
+  rate: 'rate',
+  discount: 'discount',
+  taxRate: 'taxRate',
+  taxAmount: 'taxAmount',
+  lineTotal: 'lineTotal',
+  reason: 'reason',
+  isReceived: 'isReceived',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MRNDetailScalarFieldEnum = (typeof MRNDetailScalarFieldEnum)[keyof typeof MRNDetailScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3977,6 +4183,62 @@ export type ListEnumappointCancleReasonsFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
+ * Reference to a field of type 'MRNType'
+ */
+export type EnumMRNTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MRNType'>
+    
+
+
+/**
+ * Reference to a field of type 'MRNType[]'
+ */
+export type ListEnumMRNTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MRNType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PurchaseType'
+ */
+export type EnumPurchaseTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseType'>
+    
+
+
+/**
+ * Reference to a field of type 'PurchaseType[]'
+ */
+export type ListEnumPurchaseTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PartyType'
+ */
+export type EnumPartyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PartyType'>
+    
+
+
+/**
+ * Reference to a field of type 'PartyType[]'
+ */
+export type ListEnumPartyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PartyType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MRNStatus'
+ */
+export type EnumMRNStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MRNStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MRNStatus[]'
+ */
+export type ListEnumMRNStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MRNStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4174,6 +4436,8 @@ export type GlobalOmitConfig = {
   storeMaster?: Prisma.StoreMasterOmit
   binMaster?: Prisma.BinMasterOmit
   branchPartMaster?: Prisma.BranchPartMasterOmit
+  mRNMaster?: Prisma.MRNMasterOmit
+  mRNDetail?: Prisma.MRNDetailOmit
 }
 
 /* Types for Logging */
