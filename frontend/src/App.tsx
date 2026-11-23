@@ -43,6 +43,7 @@ import ServiceQuotationCreate from "./Pages/TenantUserPages/ServiceQuotationCrea
 import ServiceQuotationView from "./Pages/TenantUserPages/ServiceQuotationView"
 import ServiceAppointment from "./Pages/TenantUserPages/ServiceAppointment"
 import ServiceAppointmentCreate from "./Pages/TenantUserPages/ServiceAppointmentCreate"
+import MRN from "./Pages/TenantUserPages/MRN"
 import AssignPermissionPage from "./Pages/TenantUserPages/Masters/AssignPermissionPage"
 
 
@@ -93,6 +94,7 @@ export function App() {
             <Route path='/tenant/:id/service-quotation/view/:quotationId' element={<TenantContextProvider><AuthProtectedRoute><ServiceQuotationView /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/service-appointment' element={<TenantContextProvider><AuthProtectedRoute><ServiceAppointment /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/service-appointment/create' element={<TenantContextProvider><AuthProtectedRoute><ServiceAppointmentCreate /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/mrn' element={<TenantContextProvider><AuthProtectedRoute><MRN /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>

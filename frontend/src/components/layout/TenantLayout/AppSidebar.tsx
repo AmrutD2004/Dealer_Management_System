@@ -107,6 +107,10 @@ export function AppSidebar() {
     pathname === `/tenant/${id}/service-appointment` ||
     pathname.startsWith(`/tenant/${id}/service-appointment/`)
 
+  const mrnActive =
+    pathname === `/tenant/${id}/mrn` ||
+    pathname.startsWith(`/tenant/${id}/mrn/`)
+
   const jobCardAllocationActive =
     pathname === `/tenant/${id}/job-card/allocation` ||
     pathname.startsWith(`/tenant/${id}/job-card/allocation/`)
@@ -529,6 +533,39 @@ export function AppSidebar() {
                   </span>
 
                   {serviceAppointmentActive && (
+                    <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={mrnActive}
+                  tooltip="MRN"
+                  onClick={handleNavigate}
+                  render={
+                    <Link
+                      to={`/tenant/${id}/mrn`}
+                      aria-current={mrnActive ? "page" : undefined}
+                    />
+                  }
+                  className={menuButtonClass}
+                >
+                  <PackagePlus
+                    size={18}
+                    strokeWidth={1.8}
+                    className={
+                      mrnActive
+                        ? "text-sidebar-ring"
+                        : "text-sidebar-foreground/55"
+                    }
+                  />
+
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    MRN
+                  </span>
+
+                  {mrnActive && (
                     <span className="absolute right-3 h-1.5 w-1.5 rounded-full bg-sidebar-ring group-data-[collapsible=icon]:hidden" />
                   )}
                 </SidebarMenuButton>

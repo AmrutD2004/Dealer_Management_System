@@ -950,6 +950,17 @@ export const editBin = async (payload: object, binId: number) => {
 
 
 
+//MRN management
+export const createMRN = async (payload: object) => {
+    const response = await api.post(`/api/tenant/mrn/create`, payload)
+    return await response.data;
+}
+
+export const getMRNList = async () => {
+    const response = await api.get(`/api/tenant/mrn/get/all`)
+    return await response.data;
+}
+
 // Third Party APIs
 
 export const getCountries = async () => {
