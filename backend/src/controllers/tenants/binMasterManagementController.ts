@@ -146,6 +146,9 @@ export const getListOfBinsAccordingToStore = async (req: Request, res: Response)
                 storeId : {
                     in : StoreId
                 } 
+            },
+            include : {
+                store : true
             }
         })
         return res.status(200).json({

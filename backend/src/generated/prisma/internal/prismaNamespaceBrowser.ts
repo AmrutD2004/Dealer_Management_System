@@ -84,7 +84,9 @@ export const ModelName = {
   ServiceAppointmentCustomerVoice: 'ServiceAppointmentCustomerVoice',
   StoreMaster: 'StoreMaster',
   BinMaster: 'BinMaster',
-  BranchPartMaster: 'BranchPartMaster'
+  BranchPartMaster: 'BranchPartMaster',
+  MRNMaster: 'MRNMaster',
+  MRNDetail: 'MRNDetail'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -727,6 +729,62 @@ export const BranchPartMasterScalarFieldEnum = {
 } as const
 
 export type BranchPartMasterScalarFieldEnum = (typeof BranchPartMasterScalarFieldEnum)[keyof typeof BranchPartMasterScalarFieldEnum]
+
+
+export const MRNMasterScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  storeId: 'storeId',
+  mrnNo: 'mrnNo',
+  mrnDate: 'mrnDate',
+  mrnType: 'mrnType',
+  purchaseType: 'purchaseType',
+  partyType: 'partyType',
+  partyCode: 'partyCode',
+  partyName: 'partyName',
+  dcNo: 'dcNo',
+  dcDate: 'dcDate',
+  invoiceNo: 'invoiceNo',
+  invoiceDate: 'invoiceDate',
+  status: 'status',
+  totalTaxableValue: 'totalTaxableValue',
+  totalDiscountValue: 'totalDiscountValue',
+  totalInvoiceValue: 'totalInvoiceValue',
+  totalMRNValue: 'totalMRNValue',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MRNMasterScalarFieldEnum = (typeof MRNMasterScalarFieldEnum)[keyof typeof MRNMasterScalarFieldEnum]
+
+
+export const MRNDetailScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  branchId: 'branchId',
+  mrnId: 'mrnId',
+  branchPartId: 'branchPartId',
+  binId: 'binId',
+  invoiceQty: 'invoiceQty',
+  receivedQty: 'receivedQty',
+  shortQty: 'shortQty',
+  damageQty: 'damageQty',
+  excessQty: 'excessQty',
+  rate: 'rate',
+  discount: 'discount',
+  taxRate: 'taxRate',
+  taxAmount: 'taxAmount',
+  lineTotal: 'lineTotal',
+  reason: 'reason',
+  isReceived: 'isReceived',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MRNDetailScalarFieldEnum = (typeof MRNDetailScalarFieldEnum)[keyof typeof MRNDetailScalarFieldEnum]
 
 
 export const SortOrder = {

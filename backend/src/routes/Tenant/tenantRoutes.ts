@@ -23,6 +23,7 @@ import { cancleAppointment, createAppointment, getListOfServiceAppointment, getS
 import { activateStore, createStores, deactivateStore, getListOfStores, getStoreDetails, updateStoreDetails } from "../../controllers/tenants/storeMasterManagementController";
 import { createBinsInStore, getListOfBinsAccordingToStore, updateBinDetails } from "../../controllers/tenants/binMasterManagementController";
 import { addBranchPartMaster, getDetailsOfBranchPartMaster, getListOfBranchPartMaster, updateBranchPartMaster } from "../../controllers/tenants/Parts/branchPartMasterManagementController";
+import { createMRN, getListOfMRNS } from "../../controllers/tenants/mrnManagementController";
 
 const tenantRoute = Router();
 //Branch Management routes
@@ -221,4 +222,8 @@ tenantRoute.post('/tenant/branch/parts/create', authenticate, requireTenantUser,
 tenantRoute.put('/tenant/branch/parts/:branchPartId/update', authenticate, requireTenantUser, updateBranchPartMaster)
 tenantRoute.get('/tenant/branch/parts/get/all', authenticate, requireTenantUser, getListOfBranchPartMaster)
 tenantRoute.get('/tenant/branch/parts/get/:branchPartId', authenticate, requireTenantUser, getDetailsOfBranchPartMaster)
+
+//MRN Master
+tenantRoute.post('/tenant/mrn/create', authenticate, requireTenantUser, createMRN)
+tenantRoute.get('/tenant/mrn/get/all', authenticate, requireTenantUser, getListOfMRNS)
 export default tenantRoute;
