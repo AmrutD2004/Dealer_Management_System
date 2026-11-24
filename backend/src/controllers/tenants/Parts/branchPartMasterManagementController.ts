@@ -312,3 +312,56 @@ export const getDetailsOfBranchPartMaster = async (req: Request, res: Response) 
         })
     }
 }
+
+
+export const searchedBranchParts = async(req : Request, res : Response)=>{
+    const {id, tenantId, branchId} = req.user!
+    const {part, store} = req.query
+    if(!id || !tenantId || !branchId){
+        return res.status(401).json({
+            success : false,
+            message : 'Not authorized login again'
+        })
+    }
+    if(!part || !store){
+        return res.status(400).json({
+            success : false,
+            message : 'Store id and part is required'
+        })
+    }
+    try {
+        const branchParts = await prisma.branchPartMaster.findMany({
+            where : {
+                storeId : Number(store),
+                part : {
+                    partNo : {
+                        contains : String(part),
+                        mode : 'insensitive'
+                    },
+                }
+            },
+            include : {
+                part : {
+                    include : {
+                        hsn : true
+                    }
+                }
+            }
+        })
+        if(!branchParts){
+            return res.status(403).json({
+                success : false,
+                message : 'Branch not exists.'
+            })
+        }
+        return res.status(200).json({
+            success : true,
+            data : branchParts
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success : false,
+            message : `Server error ${error}`
+        })
+    }
+}

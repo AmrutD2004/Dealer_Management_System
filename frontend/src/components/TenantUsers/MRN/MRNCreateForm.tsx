@@ -1,13 +1,5 @@
 import { createMRN, getBinList, getBranchPartMasterList, getStorageList } from "@/api/endpoints"
 import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog"
 import { toast } from "@/components/ui/toast"
 import { getErrorMessage } from "@/lib/utils"
 import type { BranchPartMasterListType } from "@/Types/branchPartMasterType"
@@ -17,13 +9,12 @@ import { useEffect, useState } from "react"
 import MRNFormFields from "./MRNFormFields"
 import { buildMrnPayload, createInitialMrnForm, validateMrnForm } from "./mrnForm"
 
-interface CreateMRNModalProps {
-    open: boolean
-    setOpen: (open: boolean) => void
+interface MRNCreateFormProps {
+    onCancel: () => void
     onCreated: () => void
 }
 
-export function CreateMRNModal({ open, setOpen, onCreated }: CreateMRNModalProps) {
+export function MRNCreateForm({ onCancel, onCreated }: MRNCreateFormProps) {
     const [loading, setLoading] = useState(false)
     const [stores, setStores] = useState<storageListType[]>([])
     const [bins, setBins] = useState<binListType[]>([])
@@ -45,11 +36,8 @@ export function CreateMRNModal({ open, setOpen, onCreated }: CreateMRNModalProps
                 toast.add({ type: "error", description: getErrorMessage(err) })
             }
         }
-        if (open) {
-            setFormData(createInitialMrnForm())
-            loadOptions()
-        }
-    }, [open])
+        loadOptions()
+    }, [])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -65,7 +53,6 @@ export function CreateMRNModal({ open, setOpen, onCreated }: CreateMRNModalProps
                 toast.add({ type: "success", description: data?.message })
                 setFormData(createInitialMrnForm())
                 onCreated()
-                setTimeout(() => setOpen(false), 10)
             } else {
                 toast.add({ type: "error", description: data?.message })
             }
@@ -77,31 +64,24 @@ export function CreateMRNModal({ open, setOpen, onCreated }: CreateMRNModalProps
     }
 
     return (
-        <Dialog open={open}>
-            <DialogContent showCloseButton={false} className="max-w-sm w-full md:max-w-5xl lg:max-w-6xl max-h-[90vh] overflow-y-auto scrollbarHide">
-                <DialogHeader>
-                    <DialogTitle>Create MRN</DialogTitle>
-                    <DialogDescription>Record the incoming parts against a delivery note or invoice.</DialogDescription>
-                </DialogHeader>
+        <form id="mrn-create-form" onSubmit={handleSubmit} className="py-6">
+            <MRNFormFields
+                formData={formData}
+                setFormData={setFormData}
+                stores={stores}
+                bins={bins}
+                parts={parts}
+            />
 
-                <form id="mrn-create-form" onSubmit={handleSubmit}>
-                    <MRNFormFields
-                        formData={formData}
-                        setFormData={setFormData}
-                        stores={stores}
-                        bins={bins}
-                        parts={parts}
-                    />
-                </form>
-
-                <DialogFooter>
-                    <Button type="button" variant="outline" disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
-                    <Button form="mrn-create-form" type="submit" disabled={loading}>
-                        {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
-                        Create MRN
-                    </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+            <div className="mt-6 flex justify-end gap-2">
+                <Button type="button" variant="outline" disabled={loading} onClick={onCancel}>
+                    Cancel
+                </Button>
+                <Button type="submit" disabled={loading}>
+                    {loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
+                    Create MRN
+                </Button>
+            </div>
+        </form>
     )
 }

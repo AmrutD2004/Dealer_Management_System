@@ -8,11 +8,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+} from "@/components/ui/popover";
+
+import {
+    Command,
+    CommandInput,
+    CommandList,
+    CommandEmpty,
+    CommandGroup,
+    CommandItem,
+} from "@/components/ui/command";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import type { binListType, storageListType } from "@/Types/tenantCreateType"
 import type { BranchPartMasterListType } from "@/Types/branchPartMasterType"
 import type { mrnFormType } from "@/Types/mrnType"
-import { Plus, Trash2 } from "lucide-react"
+import { ChevronsUpDown, Plus, Trash2 } from "lucide-react"
 import {
     calculateLineTotal,
     calculateTaxAmount,
@@ -24,6 +38,9 @@ import {
     PURCHASE_TYPE_OPTIONS,
     toNumberInputValue,
 } from "./mrnForm"
+import { useEffect, useState } from "react";
+import { getSearchedBranchPart } from "@/api/endpoints";
+import { toast } from "@/components/ui/toast";
 
 interface MRNFormFieldsProps {
     formData: mrnFormType
@@ -39,7 +56,11 @@ const partLabel = (part: BranchPartMasterListType) =>
         ? `${part.part.partNo} - ${part.part.partDescription}`
         : `Part #${part.id}`
 
-function MRNFormFields({ formData, setFormData, stores, bins, parts, lockIdentity = false }: MRNFormFieldsProps) {
+function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFieldsProps) {
+    const [openPartRow, setOpenPartRow] = useState<number | null>(null)
+    const [searchPartByRow, setSearchPartByRow] = useState<Record<number, string>>({})
+    const [searchedPartsByRow, setSearchedPartsByRow] = useState<Record<number, BranchPartMasterListType[]>>({})
+    const [selectedPartByRow, setSelectedPartByRow] = useState<Record<number, BranchPartMasterListType>>({})
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
@@ -48,35 +69,14 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts, lockIdentit
     const updatePart = (index: number, patch: Partial<mrnFormType["parts"][number]>) => {
         setFormData((prev) => ({
             ...prev,
-            parts: prev.parts.map((part, partIndex) => {
-                if (partIndex !== index) return part
-                const updatedPart = { ...part, ...patch }
-                if ("taxAmount" in patch) {
-                    return {
-                        ...updatedPart,
-                        taxSource: "amount" as const,
-                        taxRate: toNumberInputValue(calculateTaxRate(updatedPart)),
-                    }
-                }
-                if ("taxRate" in patch) {
-                    return {
-                        ...updatedPart,
-                        taxSource: "rate" as const,
-                        taxAmount: toNumberInputValue(calculateTaxAmount(updatedPart)),
-                    }
-                }
-                if ("invoiceQty" in patch || "rate" in patch || "discount" in patch) {
-                    return updatedPart.taxSource === "amount"
-                        ? { ...updatedPart, taxRate: toNumberInputValue(calculateTaxRate(updatedPart)) }
-                        : { ...updatedPart, taxAmount: toNumberInputValue(calculateTaxAmount(updatedPart)) }
-                }
-                return updatedPart
-            }),
+            parts: prev.parts.map((part, partIndex) =>
+                partIndex === index ? { ...part, ...patch } : part
+            ),
         }))
     }
 
-    const handlePartChange = (index: number, value: string) => {
-        const selectedPart = parts.find((part) => String(part.id) === value)
+    const handlePartChange = (index: number, value: string, selectedRecord?: BranchPartMasterListType) => {
+        const selectedPart = selectedRecord ?? parts.find((part) => String(part.id) === value)
         const partBins = bins.filter(
             (bin) => String(bin.storeId) === String(selectedPart?.storeId)
         )
@@ -95,6 +95,26 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts, lockIdentit
         })
     }
 
+
+    useEffect(() => {
+        let cancelled = false
+        Object.entries(searchPartByRow).forEach(async ([rowKey, query]) => {
+            const rowIndex = Number(rowKey)
+            if (!query.trim()) {
+                setSearchedPartsByRow((prev) => ({ ...prev, [rowIndex]: [] }))
+                return
+            }
+            const data = await getSearchedBranchPart(formData.storeId, query)
+            if (!cancelled) {
+                setSearchedPartsByRow((prev) => ({
+                    ...prev,
+                    [rowIndex]: data?.success ? data.data ?? [] : [],
+                }))
+            }
+        })
+        return () => { cancelled = true }
+    }, [searchPartByRow, formData.storeId])
+
     return (
         <div className="space-y-4 py-3">
             <div>
@@ -110,7 +130,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts, lockIdentit
                                 value={formData.storeId || null}
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, storeId: value ?? "" }))}
                                 required
-                                disabled={lockIdentity}
+                               
                             >
                                 <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                     <SelectValue placeholder="Select store" />
@@ -128,7 +148,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts, lockIdentit
                     <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                         <FieldLabel className="text-xs font-medium">MRN Date <span className="text-red-500">*</span></FieldLabel>
                         <div className="min-w-0">
-                            <Input name="mrnDate" type="date" required disabled={lockIdentity} value={formData.mrnDate} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            <Input name="mrnDate" type="date" required  value={formData.mrnDate} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
                         </div>
                     </div>
                     <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
@@ -139,7 +159,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts, lockIdentit
                                 value={formData.mrnType || null}
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, mrnType: (value ?? "") as mrnFormType["mrnType"] }))}
                                 required
-                                disabled={lockIdentity}
+                                
                             >
                                 <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                     <SelectValue placeholder="Select MRN type" />
@@ -280,28 +300,74 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts, lockIdentit
                         </TableHeader>
                         <TableBody>
                             {formData.parts.map((part, index) => {
-                                const selectedPart = parts.find((item) => String(item.id) === part.branchPartId)
+                                const selectedPart = selectedPartByRow[index] ?? parts.find((item) => String(item.id) === part.branchPartId)
+                                const searchedParts = searchedPartsByRow[index] ?? []
                                 const partBins = bins.filter(
                                     (bin) => String(bin.storeId) === String(selectedPart?.storeId)
                                 )
                                 return (
                                     <TableRow key={index}>
                                         <TableCell>
-                                            <Select
-                                                items={parts.map((item) => ({ value: String(item.id), label: partLabel(item) }))}
-                                                value={part.branchPartId || null}
-                                                onValueChange={(value) => handlePartChange(index, value ?? "")}
-                                                required
-                                            >
-                                                <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
-                                                    <SelectValue placeholder="Select part" />
-                                                </SelectTrigger>
-                                                <SelectContent align="start" alignItemWithTrigger={false}>
-                                                    {parts.map((item) => (
-                                                        <SelectItem key={item.id} value={String(item.id)}>{partLabel(item)}</SelectItem>
+                                            <Popover open={openPartRow === index} onOpenChange={
+                                                (open) => {
+                                                    setOpenPartRow(open ? index : null)}} >
+                                <PopoverTrigger disabled={!formData.storeId}>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        role="combobox"
+                                        disabled={!formData.storeId}
+                                        className="h-7 w-full justify-between rounded-none px-2 text-xs font-normal"
+                                    >
+                                        {selectedPart
+                                            ? `${selectedPart.part?.partNo ?? "Part"}`
+                                            : "Select Part"}
+
+                                        <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
+                                    </Button>
+                                </PopoverTrigger>
+
+                                <PopoverContent
+                                    align="center"
+                                    className="p-0 "
+                                    
+                                >
+                                    <Command shouldFilter={false}>
+                                        <CommandInput
+                                            placeholder="Enter Part No..."
+                                            value={searchPartByRow[index] ?? ""}
+                                            onValueChange={(value) => setSearchPartByRow((prev) => ({ ...prev, [index]: value }))}
+                                            className="h-8 text-xs"
+                                        />
+
+                                        <CommandList>
+                                            {searchedParts.length === 0 ? (
+                                                <CommandEmpty className="py-3 text-xs">
+                                                    No parts found.
+                                                </CommandEmpty>
+                                            ) : (
+                                                <CommandGroup>
+                                                    {searchedParts.map((c) => (
+                                                        <CommandItem
+                                                            key={c.id}
+                                                            value={String(c.id)}
+                                                            onSelect={() => {
+                                                                handlePartChange(index, String(c.id), c)
+                                                                setSelectedPartByRow((prev) => ({ ...prev, [index]: c }))
+                                                                setOpenPartRow(null)
+                                                                setSearchPartByRow((prev) => ({ ...prev, [index]: "" }))
+                                                            }}
+                                                            className="text-xs"
+                                                        >
+                                                            {c.part?.partNo}
+                                                        </CommandItem>
                                                     ))}
-                                                </SelectContent>
-                                            </Select>
+                                                </CommandGroup>
+                                            )}
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
                                         </TableCell>
                                         <TableCell>
                                             <Select

@@ -592,6 +592,11 @@ export const getBranchPartMasterById = async (branchPartId: number) => {
     return await response.data;
 }
 
+export const getSearchedBranchPart = async(storeId : string, part : string)=>{
+    const response = await api.get(`/api/tenant/branch/part/find?part=${part}&store=${storeId}`)
+    return await response.data;
+}
+
 
 //Part Fitment management
 export const createPartFitment = async (payload: Record<string, unknown>) => {
@@ -960,11 +965,13 @@ export const getMRNList = async () => {
     const response = await api.get(`/api/tenant/mrn/get/all`)
     return await response.data;
 }
-
-export const updateMRN = async (payload: object, mrnId: number) => {
-    const response = await api.put(`/api/tenant/mrn/update/${mrnId}`, payload)
+export const updateMRN = async (payload: object, mrnId : number) => {
+    const response = await api.put(`/api/tenant/mrn/update/${mrnId}`,payload)
     return await response.data;
 }
+
+
+
 
 // Third Party APIs
 

@@ -44,6 +44,8 @@ import ServiceQuotationView from "./Pages/TenantUserPages/ServiceQuotationView"
 import ServiceAppointment from "./Pages/TenantUserPages/ServiceAppointment"
 import ServiceAppointmentCreate from "./Pages/TenantUserPages/ServiceAppointmentCreate"
 import MRN from "./Pages/TenantUserPages/MRN"
+import MRNCreate from "./Pages/TenantUserPages/MRNCreate"
+import MRNEdit from "./Pages/TenantUserPages/MRNEdit"
 import AssignPermissionPage from "./Pages/TenantUserPages/Masters/AssignPermissionPage"
 
 
@@ -95,6 +97,8 @@ export function App() {
             <Route path='/tenant/:id/service-appointment' element={<TenantContextProvider><AuthProtectedRoute><ServiceAppointment /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/service-appointment/create' element={<TenantContextProvider><AuthProtectedRoute><ServiceAppointmentCreate /></AuthProtectedRoute></TenantContextProvider>} />
             <Route path='/tenant/:id/mrn' element={<TenantContextProvider><AuthProtectedRoute><MRN /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/mrn/create' element={<TenantContextProvider><AuthProtectedRoute><MRNCreate /></AuthProtectedRoute></TenantContextProvider>} />
+            <Route path='/tenant/:id/mrn/edit/:mrnId' element={<TenantContextProvider><AuthProtectedRoute><MRNEdit /></AuthProtectedRoute></TenantContextProvider>} />
           </Routes>
         </AuthContextProvider>
       </Router>

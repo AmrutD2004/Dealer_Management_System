@@ -24,21 +24,21 @@ import { getErrorMessage } from "@/lib/utils"
 import type { mrnListType } from "@/Types/mrnType"
 import { Eye, Loader2, MoreHorizontal, Pencil } from "lucide-react"
 import { useEffect, useMemo, useState } from "react"
-import { EditMRNModal } from "./EditMRNModal"
+import { useNavigate, useParams } from "react-router-dom"
 import { formatCurrency, formatDate, formatEnumLabel, isMrnEditable } from "./mrnForm"
 import { ViewMRNModal } from "./ViewMRNModal"
 
 const TAKE = 9
 
 const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
+    const navigate = useNavigate()
+    const { id } = useParams()
     const [mrns, setMrns] = useState<mrnListType[]>([])
     const [totalMrns, setTotalMrns] = useState(0)
     const [skip, setSkip] = useState(0)
     const [loading, setLoading] = useState(false)
     const [selectedMrn, setSelectedMrn] = useState<mrnListType | null>(null)
     const [viewOpen, setViewOpen] = useState(false)
-    const [editOpen, setEditOpen] = useState(false)
-    const [localRefresh, setLocalRefresh] = useState(0)
     const { sortedData, sortKey, sortDirection, toggleSort } = useTableSort<mrnListType>(mrns)
 
     useEffect(() => {
@@ -64,7 +64,7 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
         return () => {
             cancelled = true
         }
-    }, [refreshKey, localRefresh])
+    }, [refreshKey])
 
     const noOfPages = Math.ceil(totalMrns / TAKE)
     const pagedMrns = useMemo(() => sortedData.slice(skip, skip + TAKE), [sortedData, skip])
@@ -75,13 +75,11 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
     }
 
     const handleOpenEdit = (mrn: mrnListType) => {
-        setSelectedMrn(mrn)
-        setEditOpen(true)
+        navigate(`/tenant/${id}/mrn/edit/${mrn.id}`)
     }
 
-    const closeModals = () => {
+    const closeViewModal = () => {
         setViewOpen(false)
-        setEditOpen(false)
         setSelectedMrn(null)
     }
 
@@ -199,14 +197,7 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
             <ViewMRNModal
                 mrn={selectedMrn}
                 open={viewOpen}
-                onClose={closeModals}
-            />
-            <EditMRNModal
-                key={selectedMrn?.id ?? "none"}
-                mrn={selectedMrn}
-                open={editOpen}
-                onClose={closeModals}
-                onUpdated={() => setLocalRefresh((key) => key + 1)}
+                onClose={closeViewModal}
             />
         </div>
     )
