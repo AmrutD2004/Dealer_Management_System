@@ -16,7 +16,6 @@ import { formatCurrency, formatDate, formatEnumLabel } from "./mrnForm"
 
 interface ViewMRNModalProps {
     mrn: mrnListType | null
-    partLabels: Map<number, string>
     open: boolean
     onClose: () => void
 }
@@ -28,7 +27,7 @@ const Detail = ({ label, value }: { label: string; value: React.ReactNode }) => 
     </div>
 )
 
-export function ViewMRNModal({ mrn, partLabels, open, onClose }: ViewMRNModalProps) {
+export function ViewMRNModal({ mrn, open, onClose }: ViewMRNModalProps) {
     if (!mrn) return null
 
     return (
@@ -94,13 +93,21 @@ export function ViewMRNModal({ mrn, partLabels, open, onClose }: ViewMRNModalPro
                                         <TableCell colSpan={3} className="text-center text-xs text-muted-foreground">No parts recorded</TableCell>
                                     </TableRow>
                                 ) : (
-                                    mrn.mrnDetails.map((detail, index) => (
-                                        <TableRow key={detail.id}>
-                                            <TableCell className="text-xs">{index + 1}</TableCell>
-                                            <TableCell className="text-xs">{partLabels.get(detail.branchPartId) ?? `Part #${detail.branchPartId}`}</TableCell>
-                                            <TableCell className="text-xs font-mono">{detail.branchPartId}</TableCell>
-                                        </TableRow>
-                                    ))
+                                    mrn.mrnDetails.map((detail, index) => {
+                                        const branchPart = detail.branchPart
+                                        const label = branchPart?.part
+                                            ? `${branchPart.part.partNo} - ${branchPart.part.partDescription}`
+                                            : branchPart?.id != null
+                                                ? `Part #${branchPart.id}`
+                                                : "—"
+                                        return (
+                                            <TableRow key={detail.id}>
+                                                <TableCell className="text-xs">{index + 1}</TableCell>
+                                                <TableCell className="text-xs">{label}</TableCell>
+                                                <TableCell className="text-xs font-mono">{detail.branchPartId ?? branchPart?.id}</TableCell>
+                                            </TableRow>
+                                        )
+                                    })
                                 )}
                             </TableBody>
                         </Table>

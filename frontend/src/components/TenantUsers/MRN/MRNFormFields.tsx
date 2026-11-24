@@ -63,6 +63,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFi
         updatePart(index, {
             branchPartId: value,
             binId: defaultBin,
+            taxRate : selectedPart?.part?.taxRate !=null ? String(selectedPart?.part?.taxRate) : "",
             rate: selectedPart?.latestLandedCost != null
                 ? String(selectedPart.latestLandedCost)
                 : "",
