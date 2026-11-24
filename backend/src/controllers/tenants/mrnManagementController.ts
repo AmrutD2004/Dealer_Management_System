@@ -222,7 +222,24 @@ export const getListOfMRNS = async (req: Request, res: Response) => {
                     },
                     mrnDetails: {
                         select: {
-                            branchPart: true
+                            id: true,
+                            branchPartId: true,
+                            binId: true,
+                            invoiceQty: true,
+                            receivedQty: true,
+                            shortQty: true,
+                            damageQty: true,
+                            excessQty: true,
+                            rate: true,
+                            discount: true,
+                            taxRate: true,
+                            taxAmount: true,
+                            lineTotal: true,
+                            reason: true,
+                            isReceived: true,
+                            branchPart: {
+                                include: { part: true }
+                            }
                         }
                     }
                 }
@@ -259,10 +276,23 @@ export const getListOfMRNS = async (req: Request, res: Response) => {
                 },
                 mrnDetails: {
                     select: {
+                        id: true,
+                        branchPartId: true,
+                        binId: true,
+                        invoiceQty: true,
+                        receivedQty: true,
+                        shortQty: true,
+                        damageQty: true,
+                        excessQty: true,
+                        rate: true,
+                        discount: true,
+                        taxRate: true,
+                        taxAmount: true,
+                        lineTotal: true,
+                        reason: true,
+                        isReceived: true,
                         branchPart: {
-                            include : {
-                                part : true
-                            }
+                            include: { part: true }
                         }
                     }
                 }

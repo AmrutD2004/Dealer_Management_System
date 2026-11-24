@@ -15,11 +15,14 @@ import type { mrnFormType } from "@/Types/mrnType"
 import { Plus, Trash2 } from "lucide-react"
 import {
     calculateLineTotal,
+    calculateTaxAmount,
+    calculateTaxRate,
     emptyMrnPart,
     formatCurrency,
     MRN_TYPE_OPTIONS,
     PARTY_TYPE_OPTIONS,
     PURCHASE_TYPE_OPTIONS,
+    toNumberInputValue,
 } from "./mrnForm"
 
 interface MRNFormFieldsProps {
@@ -28,6 +31,7 @@ interface MRNFormFieldsProps {
     stores: storageListType[]
     bins: binListType[]
     parts: BranchPartMasterListType[]
+    lockIdentity?: boolean
 }
 
 const partLabel = (part: BranchPartMasterListType) =>
@@ -35,7 +39,7 @@ const partLabel = (part: BranchPartMasterListType) =>
         ? `${part.part.partNo} - ${part.part.partDescription}`
         : `Part #${part.id}`
 
-function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFieldsProps) {
+function MRNFormFields({ formData, setFormData, stores, bins, parts, lockIdentity = false }: MRNFormFieldsProps) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
@@ -44,9 +48,30 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFi
     const updatePart = (index: number, patch: Partial<mrnFormType["parts"][number]>) => {
         setFormData((prev) => ({
             ...prev,
-            parts: prev.parts.map((part, partIndex) =>
-                partIndex === index ? { ...part, ...patch } : part
-            ),
+            parts: prev.parts.map((part, partIndex) => {
+                if (partIndex !== index) return part
+                const updatedPart = { ...part, ...patch }
+                if ("taxAmount" in patch) {
+                    return {
+                        ...updatedPart,
+                        taxSource: "amount" as const,
+                        taxRate: toNumberInputValue(calculateTaxRate(updatedPart)),
+                    }
+                }
+                if ("taxRate" in patch) {
+                    return {
+                        ...updatedPart,
+                        taxSource: "rate" as const,
+                        taxAmount: toNumberInputValue(calculateTaxAmount(updatedPart)),
+                    }
+                }
+                if ("invoiceQty" in patch || "rate" in patch || "discount" in patch) {
+                    return updatedPart.taxSource === "amount"
+                        ? { ...updatedPart, taxRate: toNumberInputValue(calculateTaxRate(updatedPart)) }
+                        : { ...updatedPart, taxAmount: toNumberInputValue(calculateTaxAmount(updatedPart)) }
+                }
+                return updatedPart
+            }),
         }))
     }
 
@@ -85,6 +110,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFi
                                 value={formData.storeId || null}
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, storeId: value ?? "" }))}
                                 required
+                                disabled={lockIdentity}
                             >
                                 <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                     <SelectValue placeholder="Select store" />
@@ -102,7 +128,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFi
                     <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                         <FieldLabel className="text-xs font-medium">MRN Date <span className="text-red-500">*</span></FieldLabel>
                         <div className="min-w-0">
-                            <Input name="mrnDate" type="date" required value={formData.mrnDate} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            <Input name="mrnDate" type="date" required disabled={lockIdentity} value={formData.mrnDate} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
                         </div>
                     </div>
                     <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
@@ -113,6 +139,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFi
                                 value={formData.mrnType || null}
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, mrnType: (value ?? "") as mrnFormType["mrnType"] }))}
                                 required
+                                disabled={lockIdentity}
                             >
                                 <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                     <SelectValue placeholder="Select MRN type" />

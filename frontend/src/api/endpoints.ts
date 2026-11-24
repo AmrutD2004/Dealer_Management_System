@@ -961,6 +961,11 @@ export const getMRNList = async () => {
     return await response.data;
 }
 
+export const updateMRN = async (payload: object, mrnId: number) => {
+    const response = await api.put(`/api/tenant/mrn/update/${mrnId}`, payload)
+    return await response.data;
+}
+
 // Third Party APIs
 
 export const getCountries = async () => {

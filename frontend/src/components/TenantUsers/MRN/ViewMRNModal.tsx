@@ -101,7 +101,7 @@ export function ViewMRNModal({ mrn, open, onClose }: ViewMRNModalProps) {
                                                 ? `Part #${branchPart.id}`
                                                 : "—"
                                         return (
-                                            <TableRow key={detail.id}>
+                                            <TableRow key={detail.id ?? index}>
                                                 <TableCell className="text-xs">{index + 1}</TableCell>
                                                 <TableCell className="text-xs">{label}</TableCell>
                                                 <TableCell className="text-xs font-mono">{detail.branchPartId ?? branchPart?.id}</TableCell>

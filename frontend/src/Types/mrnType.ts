@@ -21,7 +21,20 @@ export type mrnStatusValue =
 export interface mrnDetailType {
     id: number
     branchPartId: number
+    binId: number
     branchPart: BranchPartMasterRecordType | null
+    invoiceQty: string | number
+    receivedQty: string | number
+    shortQty: string | number
+    damageQty: string | number
+    excessQty: string | number
+    rate: string | number
+    discount: string | number
+    taxRate: string | number
+    taxAmount: string | number
+    lineTotal: string | number
+    reason: string | null
+    isReceived: boolean
 }
 
 export interface mrnAuditUserType {
@@ -64,6 +77,7 @@ export interface mrnListType {
 }
 
 export interface mrnPartFormType {
+    id?: number
     branchPartId: string
     binId: string
     invoiceQty: string
@@ -75,6 +89,7 @@ export interface mrnPartFormType {
     discount: string
     taxRate: string
     taxAmount: string
+    taxSource?: "rate" | "amount"
     reason: string
 }
 
