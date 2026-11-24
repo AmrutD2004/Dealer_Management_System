@@ -1,9 +1,12 @@
+import type { PartMasterListType } from "./partMasterType"
+
 export interface BranchPartMasterPartType {
     id: number,
     partNo: string,
     partDescription: string,
     sellingPrice?: string | number | null,
     unitOfMeasure?: string | null
+    taxRate : string  | undefined
 }
 
 export interface BranchPartMasterStoreType {
@@ -23,6 +26,7 @@ export interface BranchPartMasterBinType {
 
 export interface BranchPartMasterRecordType {
     id: number,
+    part : BranchPartMasterPartType | null
     tenantId: number,
     branchId: number,
     partId: number,

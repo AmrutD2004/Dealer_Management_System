@@ -1,4 +1,4 @@
-import { getBranchPartMasterList, getMRNList } from "@/api/endpoints"
+import { getMRNList } from "@/api/endpoints"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -44,21 +44,27 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
         const load = async () => {
             setLoading(true)
             try {
-                const [mrnData, partData] = await Promise.all([
-                    getMRNList(),
-                    getBranchPartMasterList(),
-                ])
+                const mrnData = await getMRNList()
                 if (cancelled) return
                 const list: mrnListType[] = Array.isArray(mrnData?.data) ? mrnData.data : []
                 setMrns(list)
                 setTotalMrns(typeof mrnData?.count === "number" ? mrnData.count : list.length)
                 setSkip((prev) => (prev < list.length ? prev : 0))
 
+                // Build partLabels from the MRN details instead of a separate API call
                 const labels = new Map<number, string>()
-                for (const part of partData?.data ?? []) {
-                    labels.set(part.id, part.part
-                        ? `${part.part.partNo} - ${part.part.partDescription}`
-                        : `Part #${part.id}`)
+                for (const mrn of list) {
+                    for (const detail of mrn.mrnDetails) {
+                        const branchPart = detail.branchPart
+                        if (branchPart && branchPart.id != null) {
+                            labels.set(
+                                branchPart.id,
+                                branchPart.part
+                                    ? `${branchPart.part.partNo} - ${branchPart.part.partDescription}`
+                                    : `Part #${branchPart.id}`
+                            )
+                        }
+                    }
                 }
                 setPartLabels(labels)
             } catch (err: unknown) {
@@ -190,7 +196,6 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
 
             <ViewMRNModal
                 mrn={selectedMrn}
-                partLabels={partLabels}
                 open={viewOpen}
                 onClose={() => {
                     setViewOpen(false)
