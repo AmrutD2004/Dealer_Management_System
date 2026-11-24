@@ -1,5 +1,3 @@
-import type { PartMasterListType } from "./partMasterType"
-
 export interface BranchPartMasterPartType {
     id: number,
     partNo: string,

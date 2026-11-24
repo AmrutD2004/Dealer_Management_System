@@ -22,16 +22,18 @@ import { useTableSort } from "@/hooks/useTableSort"
 import { getVisiblePageIndices } from "@/lib/pagination"
 import { getErrorMessage } from "@/lib/utils"
 import type { mrnListType } from "@/Types/mrnType"
-import { Eye, Loader2, MoreHorizontal } from "lucide-react"
+import { Eye, Loader2, MoreHorizontal, Pencil } from "lucide-react"
 import { useEffect, useMemo, useState } from "react"
-import { formatCurrency, formatDate, formatEnumLabel } from "./mrnForm"
+import { useNavigate, useParams } from "react-router-dom"
+import { formatCurrency, formatDate, formatEnumLabel, isMrnEditable } from "./mrnForm"
 import { ViewMRNModal } from "./ViewMRNModal"
 
 const TAKE = 9
 
 const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
+    const navigate = useNavigate()
+    const { id } = useParams()
     const [mrns, setMrns] = useState<mrnListType[]>([])
-    const [partLabels, setPartLabels] = useState<Map<number, string>>(new Map())
     const [totalMrns, setTotalMrns] = useState(0)
     const [skip, setSkip] = useState(0)
     const [loading, setLoading] = useState(false)
@@ -50,23 +52,6 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
                 setMrns(list)
                 setTotalMrns(typeof mrnData?.count === "number" ? mrnData.count : list.length)
                 setSkip((prev) => (prev < list.length ? prev : 0))
-
-                // Build partLabels from the MRN details instead of a separate API call
-                const labels = new Map<number, string>()
-                for (const mrn of list) {
-                    for (const detail of mrn.mrnDetails) {
-                        const branchPart = detail.branchPart
-                        if (branchPart && branchPart.id != null) {
-                            labels.set(
-                                branchPart.id,
-                                branchPart.part
-                                    ? `${branchPart.part.partNo} - ${branchPart.part.partDescription}`
-                                    : `Part #${branchPart.id}`
-                            )
-                        }
-                    }
-                }
-                setPartLabels(labels)
             } catch (err: unknown) {
                 if (!cancelled) {
                     toast.add({ type: "error", description: getErrorMessage(err) })
@@ -87,6 +72,15 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
     const handleOpenView = (mrn: mrnListType) => {
         setSelectedMrn(mrn)
         setViewOpen(true)
+    }
+
+    const handleOpenEdit = (mrn: mrnListType) => {
+        navigate(`/tenant/${id}/mrn/edit/${mrn.id}`)
+    }
+
+    const closeViewModal = () => {
+        setViewOpen(false)
+        setSelectedMrn(null)
     }
 
     return (
@@ -153,6 +147,12 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
                                                 <Eye className="mr-2 h-4 w-4" />
                                                 View
                                             </DropdownMenuItem>
+                                            {isMrnEditable(mrn) && (
+                                                <DropdownMenuItem onClick={() => handleOpenEdit(mrn)}>
+                                                    <Pencil className="mr-2 h-4 w-4" />
+                                                    Edit
+                                                </DropdownMenuItem>
+                                            )}
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </TableCell>
@@ -197,10 +197,7 @@ const MRNListTable = ({ refreshKey = 0 }: { refreshKey?: number }) => {
             <ViewMRNModal
                 mrn={selectedMrn}
                 open={viewOpen}
-                onClose={() => {
-                    setViewOpen(false)
-                    setSelectedMrn(null)
-                }}
+                onClose={closeViewModal}
             />
         </div>
     )

@@ -29,11 +29,14 @@ import type { mrnFormType } from "@/Types/mrnType"
 import { ChevronsUpDown, Plus, Trash2 } from "lucide-react"
 import {
     calculateLineTotal,
+    calculateTaxAmount,
+    calculateTaxRate,
     emptyMrnPart,
     formatCurrency,
     MRN_TYPE_OPTIONS,
     PARTY_TYPE_OPTIONS,
     PURCHASE_TYPE_OPTIONS,
+    toNumberInputValue,
 } from "./mrnForm"
 import { useEffect, useState } from "react";
 import { getSearchedBranchPart } from "@/api/endpoints";
@@ -45,6 +48,7 @@ interface MRNFormFieldsProps {
     stores: storageListType[]
     bins: binListType[]
     parts: BranchPartMasterListType[]
+    lockIdentity?: boolean
 }
 
 const partLabel = (part: BranchPartMasterListType) =>
@@ -126,6 +130,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFi
                                 value={formData.storeId || null}
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, storeId: value ?? "" }))}
                                 required
+                               
                             >
                                 <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                     <SelectValue placeholder="Select store" />
@@ -143,7 +148,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFi
                     <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
                         <FieldLabel className="text-xs font-medium">MRN Date <span className="text-red-500">*</span></FieldLabel>
                         <div className="min-w-0">
-                            <Input name="mrnDate" type="date" required value={formData.mrnDate} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
+                            <Input name="mrnDate" type="date" required  value={formData.mrnDate} onChange={handleChange} className="h-7 rounded-none px-2 text-xs" />
                         </div>
                     </div>
                     <div className="grid grid-cols-[110px_minmax(0,1fr)] items-center gap-x-2 gap-y-1">
@@ -154,6 +159,7 @@ function MRNFormFields({ formData, setFormData, stores, bins, parts }: MRNFormFi
                                 value={formData.mrnType || null}
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, mrnType: (value ?? "") as mrnFormType["mrnType"] }))}
                                 required
+                                
                             >
                                 <SelectTrigger className="h-7 w-full rounded-none px-2 text-xs">
                                     <SelectValue placeholder="Select MRN type" />
